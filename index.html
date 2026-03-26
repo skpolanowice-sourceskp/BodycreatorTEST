@@ -1,0 +1,2161 @@
+<!DOCTYPE html>
+<html lang="pl">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Body Creator — Studio Treningu | Wrocław</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Bebas+Neue&family=DM+Sans:wght@300;400;500;600&family=Space+Mono:wght@400;700&display=swap" rel="stylesheet">
+<style>
+  :root {
+    --yellow: #F5C800;
+    --yellow-dim: #c9a200;
+    --black: #0a0a0a;
+    --dark: #111111;
+    --card: #161616;
+    --border: #222222;
+    --white: #f5f5f0;
+    --gray: #888888;
+    --light-gray: #2a2a2a;
+  }
+
+  *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+
+  html { scroll-behavior: smooth; }
+
+  body {
+    background: var(--black);
+    color: var(--white);
+    font-family: 'DM Sans', sans-serif;
+    font-weight: 300;
+    line-height: 1.6;
+    overflow-x: hidden;
+  }
+
+  /* HERO CANVAS */
+  #heroCanvas {
+    position: absolute;
+    inset: 0;
+    width: 100%;
+    height: 100%;
+    z-index: 0;
+    pointer-events: none;
+  }
+
+  #home .hero-content {
+    position: relative;
+    z-index: 1;
+  }
+
+  /* NOISE TEXTURE OVERLAY */
+  body::before {
+    content: '';
+    position: fixed;
+    inset: 0;
+    background-image: url("data:image/svg+xml,%3Csvg viewBox='0 0 256 256' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='noise'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.9' numOctaves='4' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23noise)' opacity='0.035'/%3E%3C/svg%3E");
+    pointer-events: none;
+    z-index: 9999;
+    opacity: 0.4;
+  }
+
+  /* ─── NAV ─────────────────────────────────── */
+  nav {
+    position: fixed;
+    top: 0; left: 0; right: 0;
+    z-index: 100;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    padding: 0 5vw;
+    height: 70px;
+    background: rgba(10,10,10,0.88);
+    backdrop-filter: blur(20px);
+    border-bottom: 1px solid var(--border);
+  }
+
+  .nav-logo {
+    font-family: 'Bebas Neue', sans-serif;
+    font-size: 1.7rem;
+    letter-spacing: 0.08em;
+    text-decoration: none;
+    color: var(--white);
+  }
+
+  .nav-logo span { color: var(--yellow); }
+
+  .nav-links {
+    display: flex;
+    gap: 2.5rem;
+    list-style: none;
+  }
+
+  .nav-links a {
+    text-decoration: none;
+    color: var(--gray);
+    font-size: 0.78rem;
+    font-weight: 500;
+    letter-spacing: 0.12em;
+    text-transform: uppercase;
+    transition: color 0.2s;
+  }
+
+  .nav-links a:hover { color: var(--yellow); }
+
+  .nav-cta {
+    background: var(--yellow);
+    color: var(--black) !important;
+    padding: 0.5rem 1.4rem;
+    border-radius: 2px;
+    font-weight: 600 !important;
+    transition: background 0.2s !important;
+  }
+
+  .nav-cta:hover { background: var(--yellow-dim) !important; color: var(--black) !important; }
+
+  /* hamburger */
+  .hamburger {
+    display: none;
+    flex-direction: column;
+    gap: 5px;
+    cursor: pointer;
+    background: none;
+    border: none;
+    padding: 4px;
+  }
+  .hamburger span {
+    display: block;
+    width: 24px;
+    height: 2px;
+    background: var(--white);
+    transition: all 0.3s;
+  }
+
+  /* ─── HERO ─────────────────────────────────── */
+  #home {
+    min-height: 100vh;
+    display: flex;
+    align-items: center;
+    padding: 80px 5vw 0;
+    position: relative;
+    overflow: hidden;
+  }
+
+  .hero-bg {
+    position: absolute;
+    inset: 0;
+    background:
+      radial-gradient(ellipse 60% 50% at 70% 50%, rgba(245,200,0,0.08) 0%, transparent 70%),
+      radial-gradient(ellipse 30% 60% at 10% 80%, rgba(245,200,0,0.04) 0%, transparent 60%);
+  }
+
+  .hero-line {
+    position: absolute;
+    top: 0; bottom: 0;
+    right: 38%;
+    width: 1px;
+    background: linear-gradient(to bottom, transparent, var(--yellow) 30%, var(--yellow) 70%, transparent);
+    opacity: 0.25;
+  }
+
+  .hero-content {
+    position: relative;
+    max-width: 680px;
+    animation: fadeUp 0.9s ease both;
+  }
+
+  .hero-tag {
+    display: inline-flex;
+    align-items: center;
+    gap: 0.5rem;
+    font-family: 'Space Mono', monospace;
+    font-size: 0.7rem;
+    letter-spacing: 0.2em;
+    text-transform: uppercase;
+    color: var(--yellow);
+    margin-bottom: 1.5rem;
+  }
+
+  .hero-tag::before {
+    content: '';
+    display: block;
+    width: 30px;
+    height: 1px;
+    background: var(--yellow);
+  }
+
+  .hero-title {
+    font-family: 'Bebas Neue', sans-serif;
+    font-size: clamp(4.5rem, 10vw, 9rem);
+    line-height: 0.92;
+    letter-spacing: 0.02em;
+    margin-bottom: 1.5rem;
+  }
+
+  .hero-title .hl { color: var(--yellow); }
+
+  .hero-sub {
+    font-size: 1.05rem;
+    color: #aaaaaa;
+    max-width: 500px;
+    margin-bottom: 2.5rem;
+    font-weight: 300;
+    line-height: 1.7;
+  }
+
+  .hero-btns {
+    display: flex;
+    gap: 1rem;
+    flex-wrap: wrap;
+  }
+
+  .btn-primary {
+    display: inline-flex;
+    align-items: center;
+    gap: 0.6rem;
+    background: var(--yellow);
+    color: var(--black);
+    padding: 0.95rem 2rem;
+    font-weight: 600;
+    font-size: 0.85rem;
+    letter-spacing: 0.1em;
+    text-transform: uppercase;
+    text-decoration: none;
+    border: none;
+    cursor: pointer;
+    border-radius: 2px;
+    transition: background 0.2s, transform 0.15s;
+  }
+
+  .btn-primary:hover { background: var(--yellow-dim); transform: translateY(-2px); }
+
+  .btn-outline {
+    display: inline-flex;
+    align-items: center;
+    gap: 0.6rem;
+    background: transparent;
+    color: var(--white);
+    padding: 0.95rem 2rem;
+    font-weight: 500;
+    font-size: 0.85rem;
+    letter-spacing: 0.1em;
+    text-transform: uppercase;
+    text-decoration: none;
+    border: 1px solid var(--border);
+    cursor: pointer;
+    border-radius: 2px;
+    transition: border-color 0.2s, color 0.2s, transform 0.15s;
+  }
+
+  .btn-outline:hover { border-color: var(--yellow); color: var(--yellow); transform: translateY(-2px); }
+
+  .hero-stats {
+    display: flex;
+    gap: 2.5rem;
+    margin-top: 4rem;
+    padding-top: 2.5rem;
+    border-top: 1px solid var(--border);
+    flex-wrap: wrap;
+    animation: fadeUp 0.9s 0.2s ease both;
+  }
+
+  .stat-item { }
+  .stat-number {
+    font-family: 'Bebas Neue', sans-serif;
+    font-size: 2.4rem;
+    color: var(--yellow);
+    line-height: 1;
+  }
+  .stat-label {
+    font-size: 0.72rem;
+    color: var(--gray);
+    letter-spacing: 0.08em;
+    text-transform: uppercase;
+    margin-top: 0.2rem;
+  }
+
+  /* ─── SECTION BASE ─────────────────────────── */
+  section { padding: 7rem 5vw; }
+
+  .section-tag {
+    font-family: 'Space Mono', monospace;
+    font-size: 0.68rem;
+    letter-spacing: 0.25em;
+    text-transform: uppercase;
+    color: var(--yellow);
+    margin-bottom: 1rem;
+  }
+
+  .section-title {
+    font-family: 'Bebas Neue', sans-serif;
+    font-size: clamp(2.8rem, 6vw, 5rem);
+    line-height: 0.95;
+    letter-spacing: 0.02em;
+    margin-bottom: 1.5rem;
+  }
+
+  .section-title .hl { color: var(--yellow); }
+
+  .section-sub {
+    font-size: 1rem;
+    color: #999;
+    max-width: 560px;
+    line-height: 1.8;
+  }
+
+  /* ─── ABOUT / DIFF ─────────────────────────── */
+  #about {
+    background: var(--dark);
+    border-top: 1px solid var(--border);
+    border-bottom: 1px solid var(--border);
+  }
+
+  .about-grid {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 5rem;
+    align-items: center;
+    max-width: 1200px;
+    margin: 0 auto;
+  }
+
+  .about-features {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 1.5rem;
+    margin-top: 2.5rem;
+  }
+
+  .feat-card {
+    background: var(--card);
+    border: 1px solid var(--border);
+    border-radius: 4px;
+    padding: 1.4rem;
+    transition: border-color 0.25s;
+  }
+
+  .feat-card:hover { border-color: var(--yellow); }
+
+  .feat-icon {
+    font-size: 1.4rem;
+    margin-bottom: 0.7rem;
+    color: var(--yellow);
+    display: flex;
+  }
+
+  .feat-title {
+    font-weight: 600;
+    font-size: 0.88rem;
+    margin-bottom: 0.4rem;
+    color: var(--white);
+  }
+
+  .feat-text {
+    font-size: 0.8rem;
+    color: var(--gray);
+    line-height: 1.6;
+  }
+
+  .about-right {
+    position: relative;
+  }
+
+  .about-big-number {
+    font-family: 'Bebas Neue', sans-serif;
+    font-size: clamp(6rem, 12vw, 12rem);
+    line-height: 1;
+    color: var(--yellow);
+    opacity: 0.08;
+    position: absolute;
+    top: -2rem;
+    right: 0;
+    pointer-events: none;
+    user-select: none;
+  }
+
+  .about-points {
+    list-style: none;
+    display: flex;
+    flex-direction: column;
+    gap: 1.2rem;
+  }
+
+  .about-points li {
+    display: flex;
+    align-items: flex-start;
+    gap: 1rem;
+    font-size: 0.95rem;
+    color: #ccc;
+    line-height: 1.5;
+  }
+
+  .about-points li::before {
+    content: '→';
+    color: var(--yellow);
+    font-weight: 700;
+    flex-shrink: 0;
+    margin-top: 1px;
+  }
+
+  /* ─── SERVICES ─────────────────────────────── */
+  #services { }
+
+  .services-header {
+    display: flex;
+    justify-content: space-between;
+    align-items: flex-end;
+    margin-bottom: 3rem;
+    flex-wrap: wrap;
+    gap: 1rem;
+  }
+
+  .services-grid {
+    perspective: 1000px;
+    display: grid;
+    grid-template-columns: repeat(4, 1fr);
+    gap: 1.5px;
+    background: var(--border);
+    border: 1px solid var(--border);
+    border-radius: 4px;
+    overflow: hidden;
+    max-width: 1200px;
+    margin: 0 auto;
+  }
+
+  .service-card {
+    background: var(--card);
+    padding: 2.5rem 2rem;
+    display: flex;
+    flex-direction: column;
+    transition: background 0.3s;
+    cursor: pointer;
+    position: relative;
+    overflow: hidden;
+    will-change: transform;
+  }
+
+  .service-card::before {
+    content: '';
+    position: absolute;
+    bottom: 0; left: 0; right: 0;
+    height: 3px;
+    background: var(--yellow);
+    transform: scaleX(0);
+    transition: transform 0.3s;
+    transform-origin: left;
+  }
+
+  .service-card:hover::before { transform: scaleX(1); }
+  .service-card:hover { background: #1a1a1a; }
+
+  .service-num {
+    font-family: 'Space Mono', monospace;
+    font-size: 0.65rem;
+    color: var(--yellow);
+    letter-spacing: 0.15em;
+    margin-bottom: 1.5rem;
+  }
+
+  .service-name {
+    font-family: 'Bebas Neue', sans-serif;
+    font-size: 1.6rem;
+    letter-spacing: 0.04em;
+    line-height: 1.1;
+    margin-bottom: 1rem;
+  }
+
+  .service-desc {
+    font-size: 0.82rem;
+    color: var(--gray);
+    line-height: 1.7;
+    flex: 1;
+  }
+
+  .service-arrow {
+    display: inline-flex;
+    align-items: center;
+    gap: 0.6rem;
+    font-size: 0.75rem;
+    font-weight: 600;
+    letter-spacing: 0.1em;
+    text-transform: uppercase;
+    color: var(--yellow);
+    margin-top: 1.5rem;
+    text-decoration: none;
+    cursor: pointer;
+  }
+
+  /* ─── TEAM ─────────────────────────────────── */
+  #team {
+    background: var(--dark);
+    border-top: 1px solid var(--border);
+    border-bottom: 1px solid var(--border);
+  }
+
+  .team-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+    gap: 2rem;
+    max-width: 900px;
+    margin: 3rem auto 0;
+  }
+
+  .team-card {
+    background: var(--card);
+    border: 1px solid var(--border);
+    border-radius: 4px;
+    overflow: hidden;
+    transition: border-color 0.25s, transform 0.25s;
+  }
+
+  .team-card:hover { border-color: var(--yellow); transform: translateY(-4px); }
+
+  .team-photo {
+    width: 100%;
+    height: 280px;
+    background: linear-gradient(135deg, #1e1e1e 0%, #2a2a2a 100%);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    position: relative;
+    overflow: hidden;
+  }
+
+  .team-photo-placeholder {
+    font-family: 'Bebas Neue', sans-serif;
+    font-size: 5rem;
+    color: var(--yellow);
+    opacity: 0.15;
+  }
+
+  .team-photo-icon {
+    position: absolute;
+    inset: 0;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+  }
+
+  .team-photo-icon svg { width: 80px; height: 80px; opacity: 0.12; }
+
+  .team-info { padding: 1.8rem; }
+
+  .team-role {
+    font-family: 'Space Mono', monospace;
+    font-size: 0.65rem;
+    letter-spacing: 0.2em;
+    text-transform: uppercase;
+    color: var(--yellow);
+    margin-bottom: 0.4rem;
+  }
+
+  .team-name {
+    font-family: 'Bebas Neue', sans-serif;
+    font-size: 1.8rem;
+    letter-spacing: 0.04em;
+    margin-bottom: 0.8rem;
+  }
+
+  .team-desc {
+    font-size: 0.82rem;
+    color: var(--gray);
+    line-height: 1.7;
+  }
+
+  /* ─── BOOKING ─────────────────────────────── */
+  #booking {
+    position: relative;
+    overflow: hidden;
+  }
+
+  .booking-bg {
+    position: absolute;
+    inset: 0;
+    background: radial-gradient(ellipse 50% 80% at 80% 50%, rgba(245,200,0,0.06) 0%, transparent 70%);
+  }
+
+  .booking-wrap {
+    display: grid;
+    grid-template-columns: 1fr 1.2fr;
+    gap: 5rem;
+    align-items: start;
+    max-width: 1200px;
+    margin: 0 auto;
+    position: relative;
+  }
+
+  .booking-left { }
+
+  .booking-steps {
+    margin-top: 2.5rem;
+    display: flex;
+    flex-direction: column;
+    gap: 1.5rem;
+  }
+
+  .booking-step {
+    display: flex;
+    gap: 1.2rem;
+    align-items: flex-start;
+  }
+
+  .step-num {
+    width: 36px;
+    height: 36px;
+    background: var(--yellow);
+    color: var(--black);
+    font-family: 'Bebas Neue', sans-serif;
+    font-size: 1.1rem;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    flex-shrink: 0;
+    border-radius: 2px;
+  }
+
+  .step-content .step-title {
+    font-weight: 600;
+    font-size: 0.9rem;
+    margin-bottom: 0.25rem;
+  }
+
+  .step-content .step-text {
+    font-size: 0.82rem;
+    color: var(--gray);
+    line-height: 1.6;
+  }
+
+  /* FORM */
+  .booking-form {
+    background: var(--card);
+    border: 1px solid var(--border);
+    border-radius: 6px;
+    padding: 2.5rem;
+  }
+
+  .form-title {
+    font-family: 'Bebas Neue', sans-serif;
+    font-size: 1.8rem;
+    letter-spacing: 0.04em;
+    margin-bottom: 0.4rem;
+  }
+
+  .form-subtitle {
+    font-size: 0.82rem;
+    color: var(--gray);
+    margin-bottom: 2rem;
+  }
+
+  .form-row {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 1rem;
+  }
+
+  .form-group {
+    display: flex;
+    flex-direction: column;
+    gap: 0.4rem;
+    margin-bottom: 1rem;
+  }
+
+  .form-group label {
+    font-size: 0.72rem;
+    letter-spacing: 0.12em;
+    text-transform: uppercase;
+    color: var(--gray);
+    font-weight: 500;
+  }
+
+  .form-group input,
+  .form-group select,
+  .form-group textarea {
+    background: var(--black);
+    border: 1px solid var(--border);
+    color: var(--white);
+    padding: 0.75rem 1rem;
+    font-family: 'DM Sans', sans-serif;
+    font-size: 0.9rem;
+    border-radius: 2px;
+    outline: none;
+    transition: border-color 0.2s;
+    width: 100%;
+  }
+
+  .form-group input:focus,
+  .form-group select:focus,
+  .form-group textarea:focus {
+    border-color: var(--yellow);
+  }
+
+  .form-group select option { background: #1a1a1a; }
+
+  .form-group textarea { resize: vertical; min-height: 100px; }
+
+  /* Calendar embed section */
+  .calendar-section {
+    margin-top: 1.5rem;
+    border-top: 1px solid var(--border);
+    padding-top: 1.5rem;
+  }
+
+  .calendar-section-title {
+    font-size: 0.75rem;
+    letter-spacing: 0.12em;
+    text-transform: uppercase;
+    color: var(--yellow);
+    margin-bottom: 1rem;
+    font-family: 'Space Mono', monospace;
+    display: flex;
+    align-items: center;
+    gap: 0.5rem;
+  }
+
+  .calendar-buttons {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 0.75rem;
+    margin-bottom: 1rem;
+  }
+
+  .trainer-btn {
+    background: var(--light-gray);
+    border: 1px solid var(--border);
+    color: var(--white);
+    padding: 0.7rem 1rem;
+    font-family: 'DM Sans', sans-serif;
+    font-size: 0.82rem;
+    cursor: pointer;
+    border-radius: 2px;
+    transition: all 0.2s;
+    text-align: center;
+  }
+
+  .trainer-btn:hover,
+  .trainer-btn.active {
+    background: var(--yellow);
+    color: var(--black);
+    border-color: var(--yellow);
+    font-weight: 600;
+  }
+
+  .calendar-frame {
+    background: #0d0d0d;
+    border: 1px solid var(--border);
+    border-radius: 4px;
+    overflow: hidden;
+    min-height: 200px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    flex-direction: column;
+    gap: 1rem;
+    padding: 2rem;
+    text-align: center;
+  }
+
+  .calendar-frame-icon { font-size: 2.5rem; opacity: 0.4; }
+
+  .calendar-frame-text {
+    font-size: 0.82rem;
+    color: var(--gray);
+    line-height: 1.6;
+  }
+
+  .calendar-link {
+    display: inline-flex;
+    align-items: center;
+    gap: 0.5rem;
+    background: transparent;
+    border: 1px solid var(--yellow);
+    color: var(--yellow);
+    padding: 0.6rem 1.2rem;
+    font-family: 'DM Sans', sans-serif;
+    font-size: 0.8rem;
+    font-weight: 600;
+    letter-spacing: 0.08em;
+    text-transform: uppercase;
+    text-decoration: none;
+    cursor: pointer;
+    border-radius: 2px;
+    transition: all 0.2s;
+  }
+
+  .calendar-link:hover { background: var(--yellow); color: var(--black); }
+
+  /* ─── REVIEWS ───────────────────────────────── */
+  #reviews {
+    background: var(--dark);
+    border-top: 1px solid var(--border);
+    border-bottom: 1px solid var(--border);
+  }
+
+  .reviews-slider {
+    position: relative;
+    overflow: hidden;
+    margin-top: 3rem;
+  }
+
+  .reviews-track {
+    display: flex;
+    gap: 1.5rem;
+    transition: transform 0.4s ease;
+  }
+
+  .review-card {
+    background: var(--card);
+    border: 1px solid var(--border);
+    border-radius: 4px;
+    padding: 2rem;
+    min-width: 320px;
+    flex-shrink: 0;
+  }
+
+  .review-stars {
+    color: var(--yellow);
+    display: flex;
+    gap: 3px;
+    align-items: center;
+    margin-bottom: 1rem;
+  }
+
+  .review-text {
+    font-size: 0.9rem;
+    color: #ccc;
+    line-height: 1.7;
+    margin-bottom: 1.5rem;
+    font-style: italic;
+  }
+
+  .review-author {
+    font-weight: 600;
+    font-size: 0.85rem;
+    color: var(--white);
+  }
+
+  .review-date {
+    font-size: 0.72rem;
+    color: var(--gray);
+    margin-top: 0.2rem;
+  }
+
+  .slider-controls {
+    display: flex;
+    gap: 0.75rem;
+    justify-content: center;
+    margin-top: 2rem;
+  }
+
+  .slider-btn {
+    width: 44px;
+    height: 44px;
+    background: var(--card);
+    border: 1px solid var(--border);
+    color: var(--white);
+    cursor: pointer;
+    border-radius: 2px;
+    font-size: 1.1rem;
+    transition: all 0.2s;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+  }
+
+  .slider-btn:hover { background: var(--yellow); color: var(--black); border-color: var(--yellow); }
+
+  /* ─── LOCATION ──────────────────────────────── */
+  #location { }
+
+  .location-grid {
+    display: grid;
+    grid-template-columns: 1fr 1.5fr;
+    gap: 4rem;
+    align-items: center;
+    max-width: 1200px;
+    margin: 0 auto;
+  }
+
+  .location-info { }
+
+  .location-detail {
+    display: flex;
+    align-items: flex-start;
+    gap: 1rem;
+    margin-bottom: 1.5rem;
+  }
+
+  .loc-icon {
+    width: 40px;
+    height: 40px;
+    background: rgba(245,200,0,0.1);
+    border: 1px solid rgba(245,200,0,0.3);
+    color: var(--yellow);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    flex-shrink: 0;
+    border-radius: 2px;
+    font-size: 1rem;
+  }
+
+  .loc-label {
+    font-size: 0.72rem;
+    letter-spacing: 0.12em;
+    text-transform: uppercase;
+    color: var(--gray);
+    margin-bottom: 0.2rem;
+  }
+
+  .loc-value {
+    font-size: 0.95rem;
+    color: var(--white);
+    font-weight: 500;
+  }
+
+  .map-embed {
+    background: var(--card);
+    border: 1px solid var(--border);
+    border-radius: 6px;
+    overflow: hidden;
+    height: 380px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    position: relative;
+  }
+
+  .map-embed iframe {
+    width: 100%;
+    height: 100%;
+    border: none;
+    filter: invert(90%) hue-rotate(180deg) saturate(0.6);
+  }
+
+  /* ─── SOCIALS STRIP ─────────────────────────── */
+  .socials-strip {
+    background: var(--yellow);
+    padding: 2rem 5vw;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    flex-wrap: wrap;
+    gap: 1.5rem;
+  }
+
+  .socials-text {
+    font-family: 'Bebas Neue', sans-serif;
+    font-size: 1.6rem;
+    color: var(--black);
+    letter-spacing: 0.06em;
+  }
+
+  .socials-links {
+    display: flex;
+    gap: 1rem;
+  }
+
+  .social-btn {
+    display: inline-flex;
+    align-items: center;
+    gap: 0.6rem;
+    background: var(--black);
+    color: var(--yellow);
+    padding: 0.65rem 1.3rem;
+    font-weight: 600;
+    font-size: 0.8rem;
+    letter-spacing: 0.1em;
+    text-decoration: none;
+    border-radius: 2px;
+    transition: opacity 0.2s;
+  }
+
+  .social-btn:hover { opacity: 0.85; }
+
+  /* ─── FOOTER ─────────────────────────────────── */
+  footer {
+    background: var(--black);
+    border-top: 1px solid var(--border);
+    padding: 3.5rem 5vw 2rem;
+  }
+
+  .footer-grid {
+    display: grid;
+    grid-template-columns: 2fr 1fr 1fr;
+    gap: 3rem;
+    margin-bottom: 3rem;
+  }
+
+  .footer-brand .nav-logo { display: block; margin-bottom: 1rem; font-size: 1.5rem; }
+
+  .footer-brand p {
+    font-size: 0.83rem;
+    color: var(--gray);
+    line-height: 1.7;
+    max-width: 300px;
+  }
+
+  .footer-col h4 {
+    font-family: 'Space Mono', monospace;
+    font-size: 0.65rem;
+    letter-spacing: 0.2em;
+    text-transform: uppercase;
+    color: var(--yellow);
+    margin-bottom: 1.2rem;
+  }
+
+  .footer-col ul { list-style: none; }
+  .footer-col ul li { margin-bottom: 0.7rem; }
+  .footer-col ul li a {
+    text-decoration: none;
+    color: var(--gray);
+    font-size: 0.85rem;
+    transition: color 0.2s;
+  }
+  .footer-col ul li a:hover { color: var(--white); }
+
+  .footer-bottom {
+    border-top: 1px solid var(--border);
+    padding-top: 1.5rem;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    flex-wrap: wrap;
+    gap: 1rem;
+  }
+
+  .footer-bottom p {
+    font-size: 0.75rem;
+    color: #555;
+  }
+
+  /* ─── ANIMATIONS ─────────────────────────────── */
+  @keyframes fadeUp {
+    from { opacity: 0; transform: translateY(30px); }
+    to { opacity: 1; transform: translateY(0); }
+  }
+
+  .reveal {
+    opacity: 0;
+    transform: translateY(25px);
+    transition: opacity 0.7s ease, transform 0.7s ease;
+  }
+
+  .reveal.visible {
+    opacity: 1;
+    transform: none;
+  }
+
+  /* ─── MODAL ─────────────────────────────────── */
+  .modal-overlay {
+    position: fixed;
+    inset: 0;
+    background: rgba(0,0,0,0.85);
+    backdrop-filter: blur(8px);
+    z-index: 200;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    padding: 1rem;
+    opacity: 0;
+    pointer-events: none;
+    transition: opacity 0.3s;
+  }
+
+  .modal-overlay.open { opacity: 1; pointer-events: all; }
+
+  .modal {
+    background: var(--card);
+    border: 1px solid var(--border);
+    border-radius: 6px;
+    padding: 2.5rem;
+    max-width: 520px;
+    width: 100%;
+    max-height: 80vh;
+    overflow-y: auto;
+    transform: translateY(20px);
+    transition: transform 0.3s;
+  }
+
+  .modal-overlay.open .modal { transform: none; }
+
+  .modal-header {
+    display: flex;
+    justify-content: space-between;
+    align-items: flex-start;
+    margin-bottom: 1.5rem;
+  }
+
+  .modal-close {
+    background: none;
+    border: none;
+    color: var(--gray);
+    font-size: 1.5rem;
+    cursor: pointer;
+    line-height: 1;
+    transition: color 0.2s;
+  }
+
+  .modal-close:hover { color: var(--white); }
+
+  .modal-title {
+    font-family: 'Bebas Neue', sans-serif;
+    font-size: 2rem;
+    letter-spacing: 0.04em;
+  }
+
+  .modal-body { font-size: 0.9rem; color: #bbb; line-height: 1.7; }
+  .modal-body ul { margin: 1rem 0 1rem 1rem; }
+  .modal-body ul li { margin-bottom: 0.5rem; }
+  .modal-body strong { color: var(--white); }
+
+  /* ─── TOAST ─────────────────────────────────── */
+  .toast {
+    position: fixed;
+    bottom: 2rem;
+    right: 2rem;
+    background: var(--yellow);
+    color: var(--black);
+    padding: 1rem 1.5rem;
+    border-radius: 4px;
+    font-weight: 600;
+    font-size: 0.88rem;
+    z-index: 300;
+    transform: translateY(80px);
+    opacity: 0;
+    transition: all 0.4s ease;
+  }
+
+  .toast.show { transform: none; opacity: 1; }
+
+  /* ─── RESPONSIVE ─────────────────────────────── */
+  @media (max-width: 1024px) {
+    .services-grid {
+    perspective: 1000px; grid-template-columns: 1fr 1fr; }
+    .about-grid { grid-template-columns: 1fr; gap: 3rem; }
+    .booking-wrap { grid-template-columns: 1fr; gap: 3rem; }
+    .location-grid { grid-template-columns: 1fr; }
+    .map-embed { height: 280px; }
+  }
+
+  @media (max-width: 768px) {
+    .nav-links { display: none; }
+    .hamburger { display: flex; }
+    .services-grid {
+    perspective: 1000px; grid-template-columns: 1fr; }
+    .team-grid { grid-template-columns: 1fr; }
+    .hero-stats { gap: 1.5rem; }
+    .footer-grid { grid-template-columns: 1fr; }
+    .about-features { grid-template-columns: 1fr; }
+    .form-row { grid-template-columns: 1fr; }
+    .calendar-buttons { grid-template-columns: 1fr; }
+    .socials-strip { flex-direction: column; align-items: flex-start; }
+    section { padding: 4.5rem 5vw; }
+    .footer-bottom { flex-direction: column; align-items: flex-start; }
+  }
+
+  /* Mobile menu */
+  .mobile-menu {
+    position: fixed;
+    inset: 0;
+    background: var(--black);
+    z-index: 150;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    gap: 2rem;
+    transform: translateX(100%);
+    transition: transform 0.3s ease;
+  }
+
+  .mobile-menu.open { transform: none; }
+
+  .mobile-menu a {
+    font-family: 'Bebas Neue', sans-serif;
+    font-size: 3rem;
+    letter-spacing: 0.06em;
+    color: var(--white);
+    text-decoration: none;
+    transition: color 0.2s;
+  }
+
+  .mobile-menu a:hover { color: var(--yellow); }
+
+  .mobile-close {
+    position: absolute;
+    top: 1.5rem; right: 5vw;
+    background: none;
+    border: none;
+    color: var(--white);
+    font-size: 1.8rem;
+    cursor: pointer;
+  }
+</style>
+</head>
+<body>
+
+<!-- MOBILE MENU -->
+<div class="mobile-menu" id="mobileMenu">
+  <button class="mobile-close" onclick="toggleMenu()"><svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"><line x1="18" y1="6" x2="6" y2="18"/><line x1="6" y1="6" x2="18" y2="18"/></svg></button>
+  <a href="#home" onclick="toggleMenu()">Strona Główna</a>
+  <a href="#services" onclick="toggleMenu()">Oferta</a>
+  <a href="#team" onclick="toggleMenu()">Zespół</a>
+  <a href="#location" onclick="toggleMenu()">Lokalizacja</a>
+  <a href="#reviews" onclick="toggleMenu()">Opinie</a>
+  <a href="#booking" onclick="toggleMenu()">Kontakt</a>
+</div>
+
+<!-- NAV -->
+<nav>
+  <a href="#home" class="nav-logo">BODY <span>CREATOR</span></a>
+  <ul class="nav-links">
+    <li><a href="#about">O Nas</a></li>
+    <li><a href="#services">Oferta</a></li>
+    <li><a href="#team">Zespół</a></li>
+    <li><a href="#location">Lokalizacja</a></li>
+    <li><a href="#reviews">Opinie</a></li>
+    <li><a href="#booking" class="nav-cta">Zapisz się</a></li>
+  </ul>
+  <button class="hamburger" onclick="toggleMenu()">
+    <span></span><span></span><span></span>
+  </button>
+</nav>
+
+<!-- HERO -->
+<section id="home">
+  <canvas id="heroCanvas"></canvas>
+  <div class="hero-content">
+    <div class="hero-tag" id="heroTag">Studio Treningu · Wrocław Sołtysowice</div>
+    <h1 class="hero-title">
+      <span class="title-line" id="tl1">TWOJE</span><br>
+      <span class="title-line" id="tl2">MIEJSCE</span><br>
+      <span class="hl title-line" id="tl3">TRENINGU</span>
+    </h1>
+    <p class="hero-sub">
+      Profesjonalne studio treningowe, w którym spokój i komfort treningu są na pierwszym miejscu. Pomagamy osiągać cele — sylwetkowe i zdrowotne.
+    </p>
+    <div class="hero-btns" id="heroBtns">
+      <a href="#booking" class="btn-primary">
+        Zapisz się na trening <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><line x1="5" y1="12" x2="19" y2="12"/><polyline points="12 5 19 12 12 19"/></svg>
+      </a>
+      <a href="#services" class="btn-outline">
+        Zobacz ofertę
+      </a>
+    </div>
+    <div class="hero-stats" id="heroStats">
+      <div class="stat-item">
+        <div class="stat-number">5.0</div>
+        <div class="stat-label">Ocena Google</div>
+      </div>
+      <div class="stat-item">
+        <div class="stat-number">10k+</div>
+        <div class="stat-label">Treningów personalnych</div>
+      </div>
+      <div class="stat-item">
+        <div class="stat-number">100%</div>
+        <div class="stat-label">Zadowolonych klientów</div>
+      </div>
+      <div class="stat-item">
+        <div class="stat-number">∞</div>
+        <div class="stat-label">Możliwości</div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ABOUT / DIFF -->
+<section id="about">
+  <div class="about-grid">
+    <div>
+      <p class="section-tag" data-anime="fadeUp">// Czym się wyróżniamy</p>
+      <h2 class="section-title" data-anime="fadeUp">CO NAS ODRÓŻNIA OD <span class="hl">SIŁOWNI</span> KOMERCYJNEJ?</h2>
+      <p class="section-sub" data-anime="fadeUp">
+        Jesteśmy profesjonalnym studiem treningowym, w którym panuje spokój i komfort. Nie bijemy się o sprzęt — tu trenujesz Ty.
+      </p>
+      <div class="about-features" data-anime="staggerCards">
+        <div class="feat-card">
+          <div class="feat-icon"><svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round"><path d="M3 9.5L12 3l9 6.5V20a1 1 0 01-1 1H4a1 1 0 01-1-1V9.5z"/><path d="M9 21V12h6v9"/></svg></div>
+          <div class="feat-title">Kameralna przestrzeń</div>
+          <div class="feat-text">Rodzinna atmosfera, spokój i brak tłumów — poczujesz się jak w domu.</div>
+        </div>
+        <div class="feat-card">
+          <div class="feat-icon"><svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="10"/><circle cx="12" cy="12" r="6"/><circle cx="12" cy="12" r="2"/></svg></div>
+          <div class="feat-title">Indywidualne podejście</div>
+          <div class="feat-text">Zadbamy o technikę i bezpieczeństwo. Ty przynieś tylko pozytywne nastawienie.</div>
+        </div>
+        <div class="feat-card">
+          <div class="feat-icon"><svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round"><path d="M12 2C6 2 3 8 3 12c0 5 4 9 9 9s9-4 9-9c0-4-2-8-5-9-1 3-3 5-4 9"/><path d="M12 21V12"/></svg></div>
+          <div class="feat-title">Dieta & Suplementacja</div>
+          <div class="feat-text">Kontrolujemy Twój progres, żywienie i wszystkie parametry treningowe.</div>
+        </div>
+        <div class="feat-card">
+          <div class="feat-icon"><svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round"><path d="M13 2L3 14h9l-1 8 10-12h-9l1-8z"/></svg></div>
+          <div class="feat-title">Profesjonalny sprzęt</div>
+          <div class="feat-text">Najwyższej klasy sprzęt do treningu siłowego, motorycznego i funkcjonalnego.</div>
+        </div>
+      </div>
+    </div>
+    <div class="about-right" data-anime="slideRight">
+      <div class="about-big-number">BC</div>
+      <ul class="about-points" data-anime="staggerPoints">
+        <li>Poprawiamy wady postawy i przywracamy prawidłowe wzorce ruchowe</li>
+        <li>Redukujemy tkankę tłuszczową poprzez ścisłą kontrolę parametrów</li>
+        <li>Budujemy masę mięśniową z pełną diagnostyką sylwetki</li>
+        <li>Pomagamy uporać się z kontuzjami kręgosłupa, kolan i barków</li>
+        <li>Każda historia ma szczęśliwe zakończenie — to nasza misja</li>
+      </ul>
+    </div>
+  </div>
+</section>
+
+<!-- SERVICES -->
+<section id="services">
+  <div class="services-header" data-anime="fadeUp">
+    <div>
+      <p class="section-tag">// Warianty współpracy</p>
+      <h2 class="section-title">ZNAJDŹ SWOJĄ <span class="hl">ŚCIEŻKĘ</span></h2>
+    </div>
+    <a href="#booking" class="btn-outline">Umów konsultację <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><line x1="5" y1="12" x2="19" y2="12"/><polyline points="12 5 19 12 12 19"/></svg></a>
+  </div>
+  <div class="services-grid" data-anime="staggerCards">
+    <div class="service-card" onclick="openModal('personal')">
+      <div class="service-num">01 /</div>
+      <div class="service-name">TRENING PERSONALNY</div>
+      <div class="service-desc">
+        Trenujesz skutecznie, bezpiecznie i z jasnym planem. Pełna diagnostyka sylwetki, monitoring postępów i korekta techniki na każdym kroku.
+      </div>
+      <span class="service-arrow"><svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><line x1="5" y1="12" x2="19" y2="12"/><polyline points="12 5 19 12 12 19"/></svg> Sprawdź</span>
+    </div>
+    <div class="service-card" onclick="openModal('hybrid')">
+      <div class="service-num">02 /</div>
+      <div class="service-name">WSPÓŁPRACA HYBRYDOWA</div>
+      <div class="service-desc">
+        Połączenie treningów z trenerem i samodzielnych sesji. Idealne dla osób bardziej doświadczonych, które chcą większej elastyczności.
+      </div>
+      <span class="service-arrow"><svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><line x1="5" y1="12" x2="19" y2="12"/><polyline points="12 5 19 12 12 19"/></svg> Sprawdź</span>
+    </div>
+    <div class="service-card" onclick="openModal('group')">
+      <div class="service-num">03 /</div>
+      <div class="service-name">MINI GRUPY</div>
+      <div class="service-desc">
+        Zajęcia dla dzieci i dorosłych. Wt. i Czw. o 17:00. Motywująca atmosfera, ćwiczenia z zakresu siły, zdrowia i wytrzymałości.
+      </div>
+      <span class="service-arrow"><svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><line x1="5" y1="12" x2="19" y2="12"/><polyline points="12 5 19 12 12 19"/></svg> Sprawdź</span>
+    </div>
+    <div class="service-card" onclick="openModal('online')">
+      <div class="service-num">04 /</div>
+      <div class="service-name">ONLINE</div>
+      <div class="service-desc">
+        Spersonalizowany plan treningowy z filmikami instruktażowymi, konsultacjami i raportem postępów. Trenujesz kiedy i gdzie chcesz.
+      </div>
+      <span class="service-arrow"><svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><line x1="5" y1="12" x2="19" y2="12"/><polyline points="12 5 19 12 12 19"/></svg> Sprawdź</span>
+    </div>
+  </div>
+</section>
+
+<!-- TEAM -->
+<section id="team">
+  <div style="text-align: center; margin-bottom: 1rem;">
+    <p class="section-tag" data-anime="fadeUp">// Nasz Zespół</p>
+    <h2 class="section-title" data-anime="fadeUp">PROFESJONALIŚCI <span class="hl">Z PASJĄ</span></h2>
+    <p class="section-sub" data-anime="fadeUp" style="margin: 0 auto;">
+      Trenerzy z ogromnym bagażem doświadczeń, pomagający ludziom zarówno z problemami zdrowotnymi jak i w dążeniu do sylwetki marzeń.
+    </p>
+  </div>
+  <div class="team-grid" data-anime="staggerCards">
+    <div class="team-card">
+      <div class="team-photo">
+        <div class="team-photo-placeholder">JC</div>
+        <div class="team-photo-icon">
+          <svg viewBox="0 0 80 80" fill="none" xmlns="http://www.w3.org/2000/svg">
+            <circle cx="40" cy="28" r="16" fill="#F5C800"/>
+            <path d="M10 72c0-16.57 13.43-30 30-30s30 13.43 30 30" fill="#F5C800"/>
+          </svg>
+        </div>
+      </div>
+      <div class="team-info">
+        <div class="team-role">Trener Personalny · Właściciel</div>
+        <div class="team-name">JAKUB CYNDECKI</div>
+        <div class="team-desc">Specjalista od treningu siłowego i rehabilitacyjnego. Pomaga klientom w powrocie do formy po kontuzjach i osiąganiu najwyższych celów sylwetkowych.</div>
+      </div>
+    </div>
+    <div class="team-card">
+      <div class="team-photo">
+        <div class="team-photo-placeholder">AD</div>
+        <div class="team-photo-icon">
+          <svg viewBox="0 0 80 80" fill="none" xmlns="http://www.w3.org/2000/svg">
+            <circle cx="40" cy="28" r="16" fill="#F5C800"/>
+            <path d="M10 72c0-16.57 13.43-30 30-30s30 13.43 30 30" fill="#F5C800"/>
+          </svg>
+        </div>
+      </div>
+      <div class="team-info">
+        <div class="team-role">Trener Personalny · Właścicielka</div>
+        <div class="team-name">ALEKSANDRA DUNAJEWSKA</div>
+        <div class="team-desc">Ekspertka od żywienia, suplementacji i treningu funkcjonalnego. Jej podejście łączy wiedzę naukową z indywidualnym podejściem do każdego klienta.</div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- BOOKING + CALENDAR -->
+<section id="booking">
+  <div class="booking-bg"></div>
+  <div class="booking-wrap">
+    <div class="booking-left" data-anime="slideLeft">
+      <p class="section-tag">// Zacznij już dziś</p>
+      <h2 class="section-title">DOŁĄCZ DO <span class="hl">BODY CREATOR</span></h2>
+      <p class="section-sub">Mały krok do wielkiej zmiany. Postępuj według planu i zostań najlepszą wersją siebie.</p>
+      <div class="booking-steps" data-anime="staggerCards">
+        <div class="booking-step">
+          <div class="step-num">1</div>
+          <div class="step-content">
+            <div class="step-title">Wybierz termin</div>
+            <div class="step-text">Zarezerwuj wolny slot w kalendarzu wybranego trenera.</div>
+          </div>
+        </div>
+        <div class="booking-step">
+          <div class="step-num">2</div>
+          <div class="step-content">
+            <div class="step-title">Wywiad przed treningiem</div>
+            <div class="step-text">Poznajemy Twoje potrzeby, historię treningową i stan zdrowia.</div>
+          </div>
+        </div>
+        <div class="booking-step">
+          <div class="step-num">3</div>
+          <div class="step-content">
+            <div class="step-title">Diagnostyka sylwetki</div>
+            <div class="step-text">Profesjonalna ocena mobilności, stabilności i predyspozycji.</div>
+          </div>
+        </div>
+        <div class="booking-step">
+          <div class="step-num">4</div>
+          <div class="step-content">
+            <div class="step-title">Gotowy? Start!</div>
+            <div class="step-text">Pierwszy trening i indywidualny plan działania. Zaczynamy.</div>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <div class="booking-form" data-anime="slideRight">
+      <div class="form-title">ZAREZERWUJ TERMIN</div>
+      <div class="form-subtitle">Wybierz trenera i wolny slot — rezerwacja zajmuje 30 sekund.</div>
+
+      <div class="calendar-section" style="margin-top:0; border-top:none; padding-top:0;">
+        <div class="calendar-section-title"><svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><rect x="3" y="4" width="18" height="18" rx="2"/><line x1="16" y1="2" x2="16" y2="6"/><line x1="8" y1="2" x2="8" y2="6"/><line x1="3" y1="10" x2="21" y2="10"/></svg> Wybierz trenera</div>
+        <div class="calendar-buttons">
+          <button class="trainer-btn active" onclick="selectTrainer(this, 'Jakub')">Jakub Cyndecki</button>
+          <button class="trainer-btn" onclick="selectTrainer(this, 'Aleksandra')">Aleksandra Dunajewska</button>
+        </div>
+        <div style="border-radius:6px; overflow:hidden; border: 1px solid var(--border); margin-top: 0.75rem; background:#fff;">
+          <iframe
+            id="calendarIframe"
+            src="https://calendar.app.google/CpnqEPfSTqr75yWj8"
+            style="width:100%; height:700px; border:none; display:block; background:#fff; color-scheme: light;"
+            title="Rezerwacja konsultacji — Body Creator"
+            loading="lazy"
+            allow="payment">
+          </iframe>
+        </div>
+        <p style="font-size:0.72rem; color: #555; margin-top: 0.75rem; line-height:1.6;">
+          * Trener aktualizuje dostępność co tydzień. Potwierdzenie rezerwacji przyjdzie e-mailem.
+        </p>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- REVIEWS -->
+<section id="reviews">
+  <div style="text-align:center; margin-bottom:3rem;">
+    <p class="section-tag" data-anime="fadeUp">// Opinie Klientów</p>
+    <h2 class="section-title" data-anime="fadeUp">CO MÓWIĄ O <span class="hl">NAS</span></h2>
+  </div>
+  <div class="reviews-slider">
+    <div class="reviews-track" id="reviewsTrack">
+      <div class="review-card">
+        <div class="review-stars"><svg width="14" height="14" viewBox="0 0 24 24" fill="currentColor" stroke="none"><polygon points="12 2 15.09 8.26 22 9.27 17 14.14 18.18 21.02 12 17.77 5.82 21.02 7 14.14 2 9.27 8.91 8.26 12 2"/></svg> <svg width="14" height="14" viewBox="0 0 24 24" fill="currentColor" stroke="none"><polygon points="12 2 15.09 8.26 22 9.27 17 14.14 18.18 21.02 12 17.77 5.82 21.02 7 14.14 2 9.27 8.91 8.26 12 2"/></svg> <svg width="14" height="14" viewBox="0 0 24 24" fill="currentColor" stroke="none"><polygon points="12 2 15.09 8.26 22 9.27 17 14.14 18.18 21.02 12 17.77 5.82 21.02 7 14.14 2 9.27 8.91 8.26 12 2"/></svg> <svg width="14" height="14" viewBox="0 0 24 24" fill="currentColor" stroke="none"><polygon points="12 2 15.09 8.26 22 9.27 17 14.14 18.18 21.02 12 17.77 5.82 21.02 7 14.14 2 9.27 8.91 8.26 12 2"/></svg> <svg width="14" height="14" viewBox="0 0 24 24" fill="currentColor" stroke="none"><polygon points="12 2 15.09 8.26 22 9.27 17 14.14 18.18 21.02 12 17.77 5.82 21.02 7 14.14 2 9.27 8.91 8.26 12 2"/></svg></div>
+        <p class="review-text">"Zacząłem od bolącego kręgosłupa i brakiem kondycji. Po 3 miesiącach z Jakubem czuję się jak nowy człowiek. Profesjonalne podejście i świetna atmosfera!"</p>
+        <div class="review-author">Marcin W.</div>
+        <div class="review-date">Google · 2 miesiące temu</div>
+      </div>
+      <div class="review-card">
+        <div class="review-stars"><svg width="14" height="14" viewBox="0 0 24 24" fill="currentColor" stroke="none"><polygon points="12 2 15.09 8.26 22 9.27 17 14.14 18.18 21.02 12 17.77 5.82 21.02 7 14.14 2 9.27 8.91 8.26 12 2"/></svg> <svg width="14" height="14" viewBox="0 0 24 24" fill="currentColor" stroke="none"><polygon points="12 2 15.09 8.26 22 9.27 17 14.14 18.18 21.02 12 17.77 5.82 21.02 7 14.14 2 9.27 8.91 8.26 12 2"/></svg> <svg width="14" height="14" viewBox="0 0 24 24" fill="currentColor" stroke="none"><polygon points="12 2 15.09 8.26 22 9.27 17 14.14 18.18 21.02 12 17.77 5.82 21.02 7 14.14 2 9.27 8.91 8.26 12 2"/></svg> <svg width="14" height="14" viewBox="0 0 24 24" fill="currentColor" stroke="none"><polygon points="12 2 15.09 8.26 22 9.27 17 14.14 18.18 21.02 12 17.77 5.82 21.02 7 14.14 2 9.27 8.91 8.26 12 2"/></svg> <svg width="14" height="14" viewBox="0 0 24 24" fill="currentColor" stroke="none"><polygon points="12 2 15.09 8.26 22 9.27 17 14.14 18.18 21.02 12 17.77 5.82 21.02 7 14.14 2 9.27 8.91 8.26 12 2"/></svg></div>
+        <p class="review-text">"Studio na najwyższym poziomie. Ola to świetna trenerka — zawsze wytłumaczy, poprawi technikę i zmotywuje. W końcu lubię ćwiczyć!"</p>
+        <div class="review-author">Karolina M.</div>
+        <div class="review-date">Google · 1 miesiąc temu</div>
+      </div>
+      <div class="review-card">
+        <div class="review-stars"><svg width="14" height="14" viewBox="0 0 24 24" fill="currentColor" stroke="none"><polygon points="12 2 15.09 8.26 22 9.27 17 14.14 18.18 21.02 12 17.77 5.82 21.02 7 14.14 2 9.27 8.91 8.26 12 2"/></svg> <svg width="14" height="14" viewBox="0 0 24 24" fill="currentColor" stroke="none"><polygon points="12 2 15.09 8.26 22 9.27 17 14.14 18.18 21.02 12 17.77 5.82 21.02 7 14.14 2 9.27 8.91 8.26 12 2"/></svg> <svg width="14" height="14" viewBox="0 0 24 24" fill="currentColor" stroke="none"><polygon points="12 2 15.09 8.26 22 9.27 17 14.14 18.18 21.02 12 17.77 5.82 21.02 7 14.14 2 9.27 8.91 8.26 12 2"/></svg> <svg width="14" height="14" viewBox="0 0 24 24" fill="currentColor" stroke="none"><polygon points="12 2 15.09 8.26 22 9.27 17 14.14 18.18 21.02 12 17.77 5.82 21.02 7 14.14 2 9.27 8.91 8.26 12 2"/></svg> <svg width="14" height="14" viewBox="0 0 24 24" fill="currentColor" stroke="none"><polygon points="12 2 15.09 8.26 22 9.27 17 14.14 18.18 21.02 12 17.77 5.82 21.02 7 14.14 2 9.27 8.91 8.26 12 2"/></svg></div>
+        <p class="review-text">"Moje dziecko chodzi na zajęcia grupowe od pół roku. Ogromne zmiany w koordynacji i sprawności. Polecam każdemu rodzicowi!"</p>
+        <div class="review-author">Anna K.</div>
+        <div class="review-date">Google · 3 tygodnie temu</div>
+      </div>
+      <div class="review-card">
+        <div class="review-stars"><svg width="14" height="14" viewBox="0 0 24 24" fill="currentColor" stroke="none"><polygon points="12 2 15.09 8.26 22 9.27 17 14.14 18.18 21.02 12 17.77 5.82 21.02 7 14.14 2 9.27 8.91 8.26 12 2"/></svg> <svg width="14" height="14" viewBox="0 0 24 24" fill="currentColor" stroke="none"><polygon points="12 2 15.09 8.26 22 9.27 17 14.14 18.18 21.02 12 17.77 5.82 21.02 7 14.14 2 9.27 8.91 8.26 12 2"/></svg> <svg width="14" height="14" viewBox="0 0 24 24" fill="currentColor" stroke="none"><polygon points="12 2 15.09 8.26 22 9.27 17 14.14 18.18 21.02 12 17.77 5.82 21.02 7 14.14 2 9.27 8.91 8.26 12 2"/></svg> <svg width="14" height="14" viewBox="0 0 24 24" fill="currentColor" stroke="none"><polygon points="12 2 15.09 8.26 22 9.27 17 14.14 18.18 21.02 12 17.77 5.82 21.02 7 14.14 2 9.27 8.91 8.26 12 2"/></svg> <svg width="14" height="14" viewBox="0 0 24 24" fill="currentColor" stroke="none"><polygon points="12 2 15.09 8.26 22 9.27 17 14.14 18.18 21.02 12 17.77 5.82 21.02 7 14.14 2 9.27 8.91 8.26 12 2"/></svg></div>
+        <p class="review-text">"Zdecydowałem się na współpracę hybrydową — idealnie dopasowana do mojego grafiku. Plan treningowy jest na wysokim poziomie, czuję postępy co tydzień."</p>
+        <div class="review-author">Tomasz R.</div>
+        <div class="review-date">Google · 5 dni temu</div>
+      </div>
+      <div class="review-card">
+        <div class="review-stars"><svg width="14" height="14" viewBox="0 0 24 24" fill="currentColor" stroke="none"><polygon points="12 2 15.09 8.26 22 9.27 17 14.14 18.18 21.02 12 17.77 5.82 21.02 7 14.14 2 9.27 8.91 8.26 12 2"/></svg> <svg width="14" height="14" viewBox="0 0 24 24" fill="currentColor" stroke="none"><polygon points="12 2 15.09 8.26 22 9.27 17 14.14 18.18 21.02 12 17.77 5.82 21.02 7 14.14 2 9.27 8.91 8.26 12 2"/></svg> <svg width="14" height="14" viewBox="0 0 24 24" fill="currentColor" stroke="none"><polygon points="12 2 15.09 8.26 22 9.27 17 14.14 18.18 21.02 12 17.77 5.82 21.02 7 14.14 2 9.27 8.91 8.26 12 2"/></svg> <svg width="14" height="14" viewBox="0 0 24 24" fill="currentColor" stroke="none"><polygon points="12 2 15.09 8.26 22 9.27 17 14.14 18.18 21.02 12 17.77 5.82 21.02 7 14.14 2 9.27 8.91 8.26 12 2"/></svg> <svg width="14" height="14" viewBox="0 0 24 24" fill="currentColor" stroke="none"><polygon points="12 2 15.09 8.26 22 9.27 17 14.14 18.18 21.02 12 17.77 5.82 21.02 7 14.14 2 9.27 8.91 8.26 12 2"/></svg></div>
+        <p class="review-text">"Przyszłam z kontuzją barku i zero wiedzy o treningu. Teraz po 4 miesiącach nie tylko barku nie czuję, ale zrzuciłam 12 kg. Dziękuję Body Creator!"</p>
+        <div class="review-author">Patrycja L.</div>
+        <div class="review-date">Google · 1 tydzień temu</div>
+      </div>
+    </div>
+  </div>
+  <div class="slider-controls">
+    <button class="slider-btn" onclick="slideReviews(-1)"><svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><line x1="19" y1="12" x2="5" y2="12"/><polyline points="12 19 5 12 12 5"/></svg></button>
+    <button class="slider-btn" onclick="slideReviews(1)"><svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><line x1="5" y1="12" x2="19" y2="12"/><polyline points="12 5 19 12 12 19"/></svg></button>
+  </div>
+</section>
+
+<!-- LOCATION -->
+<section id="location">
+  <div class="location-grid">
+    <div data-anime="slideLeft">
+      <p class="section-tag">// Gdzie nas znajdziesz</p>
+      <h2 class="section-title">NASZE <span class="hl">STUDIO</span></h2>
+      <p class="section-sub" style="margin-bottom: 2.5rem;">Znajdziesz nas na Wrocławskich Sołtysowicach — spokojna dzielnica, idealna na kameralny trening.</p>
+      <div class="location-detail">
+        <div class="loc-icon"><svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M21 10c0 7-9 13-9 13S3 17 3 10a9 9 0 0118 0z"/><circle cx="12" cy="10" r="3"/></svg></div>
+        <div>
+          <div class="loc-label">Adres</div>
+          <div class="loc-value">ul. Rafała Wojaczka 3g, Wrocław<br><span style="color:var(--gray); font-size:0.85rem;">Sołtysowice</span></div>
+        </div>
+      </div>
+      <div class="location-detail">
+        <div class="loc-icon"><svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="10"/><polyline points="12 6 12 12 16 14"/></svg></div>
+        <div>
+          <div class="loc-label">Godziny zajęć grupowych</div>
+          <div class="loc-value">Wt. & Czw. — 17:00</div>
+        </div>
+      </div>
+      <div class="location-detail">
+        <div class="loc-icon"><svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M22 16.92v3a2 2 0 01-2.18 2 19.79 19.79 0 01-8.63-3.07A19.5 19.5 0 013.07 10.8 19.79 19.79 0 01.06 2.18 2 2 0 012.06 0h3a2 2 0 012 1.72c.127.96.361 1.903.7 2.81a2 2 0 01-.45 2.11L6.09 7.91a16 16 0 006 6l1.27-1.27a2 2 0 012.11-.45c.907.339 1.85.573 2.81.7A2 2 0 0122 16.92z"/></svg></div>
+        <div>
+          <div class="loc-label">Kontakt</div>
+          <div class="loc-value">Zapisz się przez formularz lub media społecznościowe</div>
+        </div>
+      </div>
+      <a href="#booking" class="btn-primary" style="margin-top:1rem;">Zapisz się na pierwszy trening <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><line x1="5" y1="12" x2="19" y2="12"/><polyline points="12 5 19 12 12 19"/></svg></a>
+    </div>
+    <div class="map-embed" data-anime="slideRight">
+      <iframe
+        src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d2505.7183936!2d17.0813!3d51.1347!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x470fc2810d4fff!2sRafa%C5%82a%20Wojaczka%203g%2C%2051-163%20Wroc%C5%82aw!5e0!3m2!1spl!2spl!4v1700000000000"
+        allowfullscreen=""
+        loading="lazy"
+        referrerpolicy="no-referrer-when-downgrade"
+        title="Body Creator — Mapa Wrocław Sołtysowice">
+      </iframe>
+    </div>
+  </div>
+</section>
+
+<!-- SOCIAL STRIP -->
+<div class="socials-strip">
+  <div class="socials-text">ŚLEDŹ NAS I DOŁĄCZ DO SPOŁECZNOŚCI</div>
+  <div class="socials-links">
+    <a href="#" class="social-btn"><svg width="16" height="16" viewBox="0 0 24 24" fill="currentColor"><path d="M18 2h-3a5 5 0 00-5 5v3H7v4h3v8h4v-8h3l1-4h-4V7a1 1 0 011-1h3z"/></svg> Facebook</a>
+    <a href="#" class="social-btn"><svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="2" y="2" width="20" height="20" rx="5"/><circle cx="12" cy="12" r="5"/><circle cx="17.5" cy="6.5" r="1.5" fill="currentColor" stroke="none"/></svg> Instagram</a>
+    <a href="#" class="social-btn"><svg width="16" height="16" viewBox="0 0 24 24" fill="currentColor"><path d="M19.59 6.69a4.83 4.83 0 01-3.77-4.25V2h-3.45v13.67a2.89 2.89 0 01-2.88 2.5 2.89 2.89 0 01-2.89-2.89 2.89 2.89 0 012.89-2.89c.28 0 .54.04.79.1V9.01a6.32 6.32 0 00-.79-.05 6.34 6.34 0 00-6.34 6.34 6.34 6.34 0 006.34 6.34 6.34 6.34 0 006.33-6.34V8.69a8.18 8.18 0 004.78 1.52V6.76a4.85 4.85 0 01-1.01-.07z"/></svg> TikTok</a>
+  </div>
+</div>
+
+<!-- FOOTER -->
+<footer>
+  <div class="footer-grid">
+    <div class="footer-brand">
+      <a href="#home" class="nav-logo">BODY <span>CREATOR</span></a>
+      <p>Studio Treningu na Wrocławskich Sołtysowicach. Pomagamy ludziom stać się ich najlepszą wersją siebie — sylwetkową i zdrowotną.</p>
+    </div>
+    <div class="footer-col">
+      <h4>Nawigacja</h4>
+      <ul>
+        <li><a href="#about">O Nas</a></li>
+        <li><a href="#services">Oferta</a></li>
+        <li><a href="#team">Zespół</a></li>
+        <li><a href="#location">Lokalizacja</a></li>
+        <li><a href="#reviews">Opinie</a></li>
+      </ul>
+    </div>
+    <div class="footer-col">
+      <h4>Kontakt</h4>
+      <ul>
+        <li><a href="#">Instagram</a></li>
+        <li><a href="#">Facebook</a></li>
+        <li><a href="#">TikTok</a></li>
+        <li><a href="#booking">Zarezerwuj termin</a></li>
+      </ul>
+    </div>
+  </div>
+  <div class="footer-bottom">
+    <p>© 2025 Body Creator — Studio Treningu Wrocław. Wszelkie prawa zastrzeżone.</p>
+    <p style="color: #333;">ul. Rafała Wojaczka 3g · Wrocław · Sołtysowice</p>
+  </div>
+</footer>
+
+<!-- MODALS -->
+<div class="modal-overlay" id="modalOverlay" onclick="closeModal(event)">
+  <div class="modal">
+    <div class="modal-header">
+      <div class="modal-title" id="modalTitle">TRENING PERSONALNY</div>
+      <button class="modal-close" onclick="closeModal()"><svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"><line x1="18" y1="6" x2="6" y2="18"/><line x1="6" y1="6" x2="18" y2="18"/></svg></button>
+    </div>
+    <div class="modal-body" id="modalBody"></div>
+  </div>
+</div>
+
+<!-- TOAST -->
+<div class="toast" id="toast"><svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><polyline points="20 6 9 17 4 12"/></svg> Zgłoszenie wysłane! Odezwiemy się wkrótce.</div>
+
+<script>
+  // Mobile menu
+  function toggleMenu() {
+    document.getElementById('mobileMenu').classList.toggle('open');
+  }
+
+  // scroll reveal handled by anime.js below
+
+  // Reviews slider
+  let reviewIndex = 0;
+  function slideReviews(dir) {
+    const track = document.getElementById('reviewsTrack');
+    const cards = track.querySelectorAll('.review-card');
+    const cardW = cards[0].offsetWidth + 24;
+    const maxIdx = cards.length - Math.floor(track.parentElement.offsetWidth / cardW);
+    reviewIndex = Math.max(0, Math.min(reviewIndex + dir, maxIdx));
+    track.style.transform = `translateX(-${reviewIndex * cardW}px)`;
+  }
+
+  // Trainer calendar
+  let selectedTrainer = 'Jakub';
+  const trainerLinks = {
+    'Jakub': 'https://calendar.app.google/CpnqEPfSTqr75yWj8',
+    'Aleksandra': 'https://calendar.app.google/CpnqEPfSTqr75yWj8' // zastąp linkiem Aleksandry
+  };
+
+  function selectTrainer(btn, name) {
+    document.querySelectorAll('.trainer-btn').forEach(b => b.classList.remove('active'));
+    btn.classList.add('active');
+    selectedTrainer = name;
+    document.getElementById('calendarIframe').src = trainerLinks[name];
+  }
+
+  // Service modals
+  const modalData = {
+    personal: {
+      title: 'TRENING PERSONALNY',
+      body: `<p><strong>Chcesz trenować skutecznie, bezpiecznie i z jasnym planem działania?</strong></p>
+      <p style="margin-top:1rem;">Pomożemy Ci osiągnąć cel — niezależnie od poziomu. Chcesz poprawić zdrowie, sylwetkę czy wrócić do formy po kontuzji? Jesteśmy tu dla Ciebie.</p>
+      <p style="margin-top:1rem;">Podczas współpracy:</p>
+      <ul>
+        <li>Analizujemy Twoje potrzeby i możliwości</li>
+        <li>Przeprowadzamy pełną diagnostykę ciała (mobilność, stabilność)</li>
+        <li>Uczymy prawidłowej i bezpiecznej techniki ćwiczeń</li>
+        <li>Monitorujemy postępy i wprowadzamy potrzebne zmiany</li>
+      </ul>
+      <p style="margin-top:1.5rem; color: var(--yellow); font-weight:600;">Trenuj świadomie, skutecznie, bezpiecznie.</p>`
+    },
+    hybrid: {
+      title: 'WSPÓŁPRACA HYBRYDOWA',
+      body: `<p><strong>Połączenie treningów z trenerem i samodzielnych sesji na siłowni lub w domu.</strong></p>
+      <p style="margin-top:1rem;">Otrzymujesz:</p>
+      <ul>
+        <li>Indywidualny plan treningowy</li>
+        <li>Instruktaże ćwiczeń (filmy)</li>
+        <li>Wskazówki dot. ilości serii, powtórzeń i obciążeń</li>
+        <li>Stały kontakt z trenerem i analizę wyników</li>
+      </ul>
+      <p style="margin-top:1rem;"><strong>Idealne dla osób bardziej doświadczonych</strong>, które chcą elastyczności i niezależności w harmonogramie.</p>`
+    },
+    group: {
+      title: 'MINI GRUPY',
+      body: `<p><strong>Zajęcia dla dzieci i dorosłych — wtorek i czwartek o 17:00.</strong></p>
+      <p style="margin-top:1rem;">Trening w mini grupie to świetne rozwiązanie dla osób, które chcą zadbać o formę w motywującej atmosferze pod opieką doświadczonego trenera.</p>
+      <p style="margin-top:1rem;">Oferujemy:</p>
+      <ul>
+        <li>Ćwiczenia ukierunkowane na zdrowie, siłę i wytrzymałość</li>
+        <li>Zajęcia dla dzieci i młodzieży — koordynacja i zdrowe nawyki</li>
+        <li>Kameralna grupa — każdy jest zaopiekowany</li>
+        <li>Poprawa wad postawy i sprawności ruchowej</li>
+      </ul>`
+    },
+    online: {
+      title: 'WSPÓŁPRACA ONLINE',
+      body: `<p><strong>Trenujesz kiedy i gdzie chcesz — z pełnym wsparciem trenera.</strong></p>
+      <p style="margin-top:1rem;">Opcja dla osób z opanowanymi podstawowymi wzorcami ruchowymi, które cenią elastyczność.</p>
+      <p style="margin-top:1rem;">Otrzymujesz:</p>
+      <ul>
+        <li>Spersonalizowany plan treningowy</li>
+        <li>Filmy instruktażowe do każdego ćwiczenia</li>
+        <li>Raport postępów i monitoring rezultatów</li>
+        <li>Konsultacje online (na żywo lub kamera)</li>
+        <li>Stały kontakt i korekta planu na bieżąco</li>
+      </ul>`
+    }
+  };
+
+  function openModal(type) {
+    const data = modalData[type];
+    document.getElementById('modalTitle').textContent = data.title;
+    document.getElementById('modalBody').innerHTML = data.body;
+    document.getElementById('modalOverlay').classList.add('open');
+    document.body.style.overflow = 'hidden';
+  }
+
+  function closeModal(e) {
+    if (!e || e.target === document.getElementById('modalOverlay') || e.target.closest('.modal-close')) {
+      document.getElementById('modalOverlay').classList.remove('open');
+      document.body.style.overflow = '';
+    }
+  }
+
+  // Form submit
+  function submitForm() {
+    const name = document.getElementById('fName').value.trim();
+    const email = document.getElementById('fEmail').value.trim();
+    if (!name || !email) {
+      alert('Proszę podać imię i adres e-mail.');
+      return;
+    }
+    const toast = document.getElementById('toast');
+    toast.classList.add('show');
+    setTimeout(() => toast.classList.remove('show'), 4000);
+    // Clear form
+    ['fName','fPhone','fEmail','fMsg'].forEach(id => document.getElementById(id).value = '');
+    document.getElementById('fType').value = '';
+  }
+
+  // Nav active on scroll
+  window.addEventListener('scroll', () => {
+    const nav = document.querySelector('nav');
+    if (window.scrollY > 50) {
+      nav.style.borderBottomColor = 'rgba(245,200,0,0.15)';
+    } else {
+      nav.style.borderBottomColor = 'var(--border)';
+    }
+  });
+</script>
+
+<!-- ANIME.JS -->
+<script src="https://cdnjs.cloudflare.com/ajax/libs/animejs/3.2.1/anime.min.js"></script>
+
+<script>
+/* ============================================================
+   HERO CANVAS — animated geometric particle field
+   ============================================================ */
+(function() {
+  const canvas = document.getElementById('heroCanvas');
+  const ctx = canvas.getContext('2d');
+  const YELLOW = 'rgba(245,200,0,';
+  const WHITE  = 'rgba(255,255,255,';
+  let W, H, mouse = { x: -999, y: -999 };
+
+  function resize() {
+    W = canvas.width  = canvas.offsetWidth;
+    H = canvas.height = canvas.offsetHeight;
+  }
+  resize();
+  window.addEventListener('resize', resize);
+
+  document.getElementById('home').addEventListener('mousemove', e => {
+    const r = canvas.getBoundingClientRect();
+    mouse.x = e.clientX - r.left;
+    mouse.y = e.clientY - r.top;
+  });
+  document.getElementById('home').addEventListener('mouseleave', () => {
+    mouse.x = -999; mouse.y = -999;
+  });
+
+  /* --- Particles --- */
+  const COUNT = 55;
+  const particles = [];
+
+  class Particle {
+    constructor() { this.reset(true); }
+    reset(init) {
+      this.x  = Math.random() * W;
+      this.y  = init ? Math.random() * H : H + 20;
+      this.vx = (Math.random() - 0.5) * 0.35;
+      this.vy = -(Math.random() * 0.4 + 0.1);
+      this.r  = Math.random() * 1.8 + 0.4;
+      this.alpha = Math.random() * 0.5 + 0.1;
+      this.type = Math.random() < 0.25 ? 'cross' : 'dot';
+    }
+    update() {
+      // mouse repulsion
+      const dx = this.x - mouse.x, dy = this.y - mouse.y;
+      const dist = Math.sqrt(dx*dx + dy*dy);
+      if (dist < 120) {
+        const force = (120 - dist) / 120 * 0.4;
+        this.x += dx / dist * force;
+        this.y += dy / dist * force;
+      }
+      this.x += this.vx;
+      this.y += this.vy;
+      if (this.y < -20 || this.x < -20 || this.x > W + 20) this.reset(false);
+    }
+    draw() {
+      ctx.save();
+      ctx.globalAlpha = this.alpha;
+      ctx.strokeStyle = YELLOW + '1)';
+      ctx.fillStyle   = YELLOW + '1)';
+      if (this.type === 'cross') {
+        ctx.lineWidth = 0.8;
+        ctx.beginPath();
+        ctx.moveTo(this.x - this.r * 3, this.y);
+        ctx.lineTo(this.x + this.r * 3, this.y);
+        ctx.moveTo(this.x, this.y - this.r * 3);
+        ctx.lineTo(this.x, this.y + this.r * 3);
+        ctx.stroke();
+      } else {
+        ctx.beginPath();
+        ctx.arc(this.x, this.y, this.r, 0, Math.PI * 2);
+        ctx.fill();
+      }
+      ctx.restore();
+    }
+  }
+
+  for (let i = 0; i < COUNT; i++) particles.push(new Particle());
+
+  /* --- Connection lines --- */
+  function drawLines() {
+    for (let i = 0; i < particles.length; i++) {
+      for (let j = i + 1; j < particles.length; j++) {
+        const a = particles[i], b = particles[j];
+        const dx = a.x - b.x, dy = a.y - b.y;
+        const d  = Math.sqrt(dx*dx + dy*dy);
+        if (d < 140) {
+          const op = (1 - d / 140) * 0.18;
+          ctx.save();
+          ctx.globalAlpha = op;
+          ctx.strokeStyle = YELLOW + '1)';
+          ctx.lineWidth = 0.6;
+          ctx.beginPath();
+          ctx.moveTo(a.x, a.y);
+          ctx.lineTo(b.x, b.y);
+          ctx.stroke();
+          ctx.restore();
+        }
+      }
+    }
+  }
+
+  /* --- Slow geometric shapes in background --- */
+  const shapes = [];
+  const SHAPE_COUNT = 6;
+  class Shape {
+    constructor() {
+      this.x     = Math.random() * W;
+      this.y     = Math.random() * H;
+      this.size  = Math.random() * 60 + 30;
+      this.rot   = Math.random() * Math.PI * 2;
+      this.vrot  = (Math.random() - 0.5) * 0.003;
+      this.vx    = (Math.random() - 0.5) * 0.12;
+      this.vy    = (Math.random() - 0.5) * 0.08;
+      this.alpha = Math.random() * 0.04 + 0.01;
+      this.sides = [3, 4, 6][Math.floor(Math.random() * 3)];
+    }
+    update() {
+      this.x   += this.vx; this.y += this.vy; this.rot += this.vrot;
+      if (this.x < -this.size) this.x = W + this.size;
+      if (this.x > W + this.size) this.x = -this.size;
+      if (this.y < -this.size) this.y = H + this.size;
+      if (this.y > H + this.size) this.y = -this.size;
+    }
+    draw() {
+      ctx.save();
+      ctx.translate(this.x, this.y);
+      ctx.rotate(this.rot);
+      ctx.globalAlpha = this.alpha;
+      ctx.strokeStyle = YELLOW + '1)';
+      ctx.lineWidth = 1;
+      ctx.beginPath();
+      for (let i = 0; i < this.sides; i++) {
+        const a = (i / this.sides) * Math.PI * 2 - Math.PI / 2;
+        const x = Math.cos(a) * this.size, y = Math.sin(a) * this.size;
+        i === 0 ? ctx.moveTo(x, y) : ctx.lineTo(x, y);
+      }
+      ctx.closePath();
+      ctx.stroke();
+      ctx.restore();
+    }
+  }
+  for (let i = 0; i < SHAPE_COUNT; i++) shapes.push(new Shape());
+
+  /* --- Scan line effect --- */
+  let scanY = 0;
+  function drawScan() {
+    const grad = ctx.createLinearGradient(0, scanY - 80, 0, scanY + 80);
+    grad.addColorStop(0,   'rgba(245,200,0,0)');
+    grad.addColorStop(0.5, 'rgba(245,200,0,0.025)');
+    grad.addColorStop(1,   'rgba(245,200,0,0)');
+    ctx.fillStyle = grad;
+    ctx.fillRect(0, scanY - 80, W, 160);
+    scanY += 0.6;
+    if (scanY > H + 80) scanY = -80;
+  }
+
+  /* --- Main loop --- */
+  function loop() {
+    ctx.clearRect(0, 0, W, H);
+
+    // deep bg gradient
+    const bg = ctx.createRadialGradient(W * 0.7, H * 0.5, 0, W * 0.7, H * 0.5, W * 0.8);
+    bg.addColorStop(0, 'rgba(245,200,0,0.055)');
+    bg.addColorStop(1, 'rgba(0,0,0,0)');
+    ctx.fillStyle = bg;
+    ctx.fillRect(0, 0, W, H);
+
+    drawScan();
+    shapes.forEach(s => { s.update(); s.draw(); });
+    particles.forEach(p => { p.update(); p.draw(); });
+    drawLines();
+    requestAnimationFrame(loop);
+  }
+  loop();
+})();
+
+/* ============================================================
+   ANIME.JS — Hero entrance sequence
+   ============================================================ */
+function splitToChars(el) {
+  const text = el.textContent;
+  el.innerHTML = '';
+  return [...text].map(ch => {
+    const span = document.createElement('span');
+    span.className = 'title-char';
+    span.textContent = ch === ' ' ? ' ' : ch;
+    el.appendChild(span);
+    return span;
+  });
+}
+
+window.addEventListener('DOMContentLoaded', () => {
+
+  // Split title lines into chars
+  const chars1 = splitToChars(document.getElementById('tl1'));
+  const chars2 = splitToChars(document.getElementById('tl2'));
+  const chars3 = splitToChars(document.getElementById('tl3'));
+
+  // NAV entrance
+  anime({
+    targets: 'nav',
+    opacity: [0, 1],
+    translateY: [-20, 0],
+    easing: 'easeOutExpo',
+    duration: 800,
+    delay: 100
+  });
+
+  // Hero tag
+  anime({
+    targets: '#heroTag',
+    opacity: [0, 1],
+    translateX: [-30, 0],
+    easing: 'easeOutExpo',
+    duration: 900,
+    delay: 300
+  });
+
+  // Title line 1
+  anime({
+    targets: chars1,
+    translateY: ['110%', '0%'],
+    opacity: [0, 1],
+    easing: 'easeOutExpo',
+    duration: 900,
+    delay: anime.stagger(40, { start: 450 })
+  });
+
+  // Title line 2
+  anime({
+    targets: chars2,
+    translateY: ['110%', '0%'],
+    opacity: [0, 1],
+    easing: 'easeOutExpo',
+    duration: 900,
+    delay: anime.stagger(40, { start: 600 })
+  });
+
+  // Title line 3 — yellow accent, slightly more dramatic
+  anime({
+    targets: chars3,
+    translateY: ['110%', '0%'],
+    opacity: [0, 1],
+    scaleX: [0.85, 1],
+    easing: 'easeOutElastic(1, .6)',
+    duration: 1100,
+    delay: anime.stagger(50, { start: 780 })
+  });
+
+  // Hero subtitle
+  anime({
+    targets: '.hero-sub',
+    opacity: [0, 1],
+    translateY: [20, 0],
+    easing: 'easeOutExpo',
+    duration: 900,
+    delay: 1100
+  });
+
+  // CTA buttons
+  anime({
+    targets: '#heroBtns a',
+    opacity: [0, 1],
+    translateY: [15, 0],
+    scale: [0.95, 1],
+    easing: 'easeOutBack',
+    duration: 700,
+    delay: anime.stagger(120, { start: 1250 })
+  });
+
+  // Stats bar
+  anime({
+    targets: '#heroStats',
+    opacity: [0, 1],
+    translateY: [20, 0],
+    easing: 'easeOutExpo',
+    duration: 800,
+    delay: 1450
+  });
+
+  /* ---- STAT COUNTER ---- */
+  setTimeout(() => {
+    document.querySelectorAll('.stat-number[data-count]').forEach(el => {
+      const target = parseFloat(el.dataset.count);
+      const suffix = el.dataset.suffix || '';
+      const isFloat = el.dataset.count.includes('.');
+      anime({
+        targets: { val: 0 },
+        val: target,
+        duration: 1800,
+        easing: 'easeOutExpo',
+        update(anim) {
+          const v = anim.animations[0].currentValue;
+          el.textContent = (isFloat ? v.toFixed(1) : Math.round(v)) + suffix;
+        }
+      });
+    });
+  }, 1600);
+
+  /* ---- SCROLL-BASED ANIMATIONS ---- */
+  const observed = new Map();
+
+  function onScroll() {
+    document.querySelectorAll('[data-anime]').forEach(el => {
+      if (observed.get(el)) return;
+      const rect = el.getBoundingClientRect();
+      if (rect.top < window.innerHeight * 0.88) {
+        observed.set(el, true);
+        const type = el.dataset.anime;
+
+        if (type === 'fadeUp') {
+          anime({ targets: el, opacity: [0,1], translateY: [40,0], easing: 'easeOutExpo', duration: 900 });
+        }
+        if (type === 'staggerCards') {
+          anime({
+            targets: el.querySelectorAll('.feat-card, .service-card, .team-card, .review-card, .booking-step'),
+            opacity: [0, 1],
+            translateY: [50, 0],
+            scale: [0.96, 1],
+            easing: 'easeOutExpo',
+            duration: 800,
+            delay: anime.stagger(110)
+          });
+        }
+        if (type === 'slideLeft') {
+          anime({ targets: el, opacity: [0,1], translateX: [-60,0], easing: 'easeOutExpo', duration: 1000 });
+        }
+        if (type === 'slideRight') {
+          anime({ targets: el, opacity: [0,1], translateX: [60,0], easing: 'easeOutExpo', duration: 1000 });
+        }
+        if (type === 'drawLine') {
+          anime({ targets: el, scaleX: [0,1], easing: 'easeOutExpo', duration: 900, delay: 200 });
+        }
+        if (type === 'popIn') {
+          anime({ targets: el, opacity: [0,1], scale: [0.88,1], easing: 'easeOutBack(1.4)', duration: 700 });
+        }
+        if (type === 'staggerPoints') {
+          anime({
+            targets: el.querySelectorAll('li'),
+            opacity: [0, 1],
+            translateX: [-30, 0],
+            easing: 'easeOutExpo',
+            duration: 700,
+            delay: anime.stagger(90)
+          });
+        }
+      }
+    });
+  }
+
+  window.addEventListener('scroll', onScroll, { passive: true });
+  onScroll();
+
+  /* ---- SERVICE CARD HOVER - magnetic tilt ---- */
+  document.querySelectorAll('.service-card').forEach(card => {
+    card.addEventListener('mousemove', e => {
+      const r = card.getBoundingClientRect();
+      const cx = r.left + r.width / 2, cy = r.top + r.height / 2;
+      const dx = (e.clientX - cx) / (r.width / 2);
+      const dy = (e.clientY - cy) / (r.height / 2);
+      anime({
+        targets: card,
+        rotateX: -dy * 4,
+        rotateY: dx * 4,
+        translateZ: 10,
+        easing: 'easeOutQuad',
+        duration: 200
+      });
+    });
+    card.addEventListener('mouseleave', () => {
+      anime({
+        targets: card,
+        rotateX: 0, rotateY: 0, translateZ: 0,
+        easing: 'easeOutElastic(1, .5)',
+        duration: 700
+      });
+    });
+    card.style.transformStyle = 'preserve-3d';
+    card.style.perspective = '600px';
+  });
+
+  /* ---- FEAT CARD hover glow pulse ---- */
+  document.querySelectorAll('.feat-card').forEach(card => {
+    card.addEventListener('mouseenter', () => {
+      anime({
+        targets: card.querySelector('.feat-icon'),
+        scale: [1, 1.25, 1],
+        easing: 'easeOutElastic(1, .4)',
+        duration: 600
+      });
+    });
+  });
+
+  /* ---- NAV link hover underline ---- */
+  document.querySelectorAll('.nav-links a:not(.nav-cta)').forEach(a => {
+    const line = document.createElement('span');
+    line.style.cssText = 'display:block;height:1px;background:var(--yellow);transform:scaleX(0);transform-origin:left;margin-top:2px;';
+    a.style.display = 'flex';
+    a.style.flexDirection = 'column';
+    a.appendChild(line);
+    a.addEventListener('mouseenter', () => anime({ targets: line, scaleX: [0,1], easing: 'easeOutExpo', duration: 300 }));
+    a.addEventListener('mouseleave', () => anime({ targets: line, scaleX: [1,0], easing: 'easeInExpo', duration: 200, transformOrigin: 'right' }));
+  });
+
+  /* ---- Yellow accent line under section titles ---- */
+  document.querySelectorAll('.section-title').forEach(el => {
+    const line = document.createElement('div');
+    line.style.cssText = 'width:60px;height:3px;background:var(--yellow);margin-top:0.6rem;transform:scaleX(0);transform-origin:left;border-radius:2px;';
+    line.dataset.anime = 'drawLine';
+    el.after(line);
+  });
+
+});
+</script>
+</body>
+</html>
