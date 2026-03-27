@@ -10,7 +10,7 @@
     <!-- Google Fonts -->
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800;900&family=Playfair+Display:wght@700;800;900&display=swap" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800;900&display=swap" rel="stylesheet">
 
     <!-- Font Awesome Icons -->
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css">
@@ -20,8 +20,8 @@
            CSS VARIABLES & RESET
            ============================================ */
         :root {
-            --yellow: #F2C94C;
-            --yellow-hover: #E5B82A;
+            --yellow: #FED525;
+            --yellow-hover: #E5C000;
             --dark: #0A0A0A;
             --dark-2: #111111;
             --dark-3: #1A1A1A;
@@ -33,7 +33,7 @@
             --transition: 0.3s cubic-bezier(0.4, 0, 0.2, 1);
             --transition-slow: 0.6s cubic-bezier(0.4, 0, 0.2, 1);
             --font-primary: 'Inter', sans-serif;
-            --font-display: 'Playfair Display', serif;
+            --font-display: 'Inter', sans-serif;
             --container: 1200px;
             --section-padding: 120px;
         }
@@ -199,6 +199,8 @@
             font-size: clamp(2rem, 4vw, 3.2rem);
             font-weight: 800;
             line-height: 1.15;
+            letter-spacing: 1.5px;
+            text-transform: uppercase;
             margin-bottom: 24px;
         }
 
@@ -241,23 +243,14 @@
         }
 
         .logo {
-            font-size: 1.6rem;
-            font-weight: 900;
-            letter-spacing: -0.5px;
             z-index: 1001;
+            display: flex;
+            align-items: center;
         }
 
-        .logo-yellow { color: var(--yellow); }
-        .logo-white { color: var(--white); }
-
-        .logo-sub {
-            display: block;
-            font-size: 0.55rem;
-            font-weight: 500;
-            letter-spacing: 4px;
-            text-transform: uppercase;
-            color: var(--gray);
-            margin-top: -2px;
+        .logo img {
+            height: 48px;
+            width: auto;
         }
 
         .nav-toggle {
@@ -320,6 +313,8 @@
             font-size: clamp(1.6rem, 4vw, 2.8rem);
             font-family: var(--font-display);
             font-weight: 700;
+            letter-spacing: 2px;
+            text-transform: uppercase;
             color: var(--white);
             position: relative;
             transition: var(--transition);
@@ -402,7 +397,9 @@
             font-family: var(--font-display);
             font-size: clamp(3rem, 7vw, 5.5rem);
             font-weight: 900;
-            line-height: 1.05;
+            line-height: 1.1;
+            letter-spacing: 2px;
+            text-transform: uppercase;
             margin-bottom: 24px;
             animation: fadeInUp 0.8s ease 0.15s forwards;
             opacity: 0;
@@ -558,6 +555,7 @@
         .services-slider-wrapper {
             position: relative;
             overflow: hidden;
+            padding-top: 8px;
         }
 
         .services-slider {
@@ -1588,8 +1586,7 @@
     <nav class="navbar" id="navbar">
         <div class="container">
             <a href="#" class="logo">
-                <span class="logo-yellow">Body</span><span class="logo-white">Creator</span>
-                <span class="logo-sub">Studio Treningu</span>
+                <img src="logo.png" alt="Body Creator">
             </a>
             <div class="nav-toggle" id="navToggle" aria-label="Menu">
                 <span></span>
@@ -2268,9 +2265,8 @@
         <div class="container">
             <div class="footer-content">
                 <div>
-                    <a href="#" class="logo" style="font-size:1.3rem;">
-                        <span class="logo-yellow">Body</span><span class="logo-white">Creator</span>
-                        <span class="logo-sub">Studio Treningu</span>
+                    <a href="#" class="logo">
+                        <img src="logo.png" alt="Body Creator" style="height:40px;">
                     </a>
                 </div>
                 <p class="footer-copy">&copy; 2025 Body Creator. Wszelkie prawa zastrzeżone.</p>
