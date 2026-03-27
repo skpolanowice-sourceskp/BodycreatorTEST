@@ -562,9 +562,9 @@
 
         .services-slider {
             display: flex;
+            flex-wrap: wrap;
             gap: 24px;
             transition: transform 0.5s ease;
-            cursor: grab;
         }
 
         .services-slider:active {
@@ -572,8 +572,8 @@
         }
 
         .service-card {
-            min-width: calc(33.333% - 16px);
-            flex-shrink: 0;
+            flex: 1 1 calc(25% - 18px);
+            min-width: 220px;
             background: var(--dark-2);
             border-radius: 16px;
             padding: 40px 32px;
@@ -646,7 +646,7 @@
         }
 
         .slider-controls {
-            display: flex;
+            display: none;
             justify-content: center;
             gap: 12px;
             margin-top: 40px;
@@ -1486,8 +1486,26 @@
                 display: none;
             }
 
+            /* Slider mode for services */
+            .services-slider-wrapper {
+                overflow: hidden;
+            }
+
+            .services-slider {
+                flex-wrap: nowrap;
+                cursor: grab;
+            }
+
+            .services-slider:active {
+                cursor: grabbing;
+            }
+
             .service-card {
-                min-width: calc(50% - 12px);
+                flex: 0 0 auto;
+            }
+
+            .services-slider-wrapper ~ .slider-controls {
+                display: flex;
             }
 
             .review-card {
@@ -2321,23 +2339,48 @@
             if (!slider || !prevBtn || !nextBtn) return;
 
             let currentIndex = 0;
+            const gap = 24;
+
+            function isSliderMode() {
+                return window.innerWidth <= 1024;
+            }
 
             function getVisibleCards() {
                 const width = window.innerWidth;
                 if (width <= 768) return 1;
-                if (width <= 1024) return 2;
-                return 3;
+                return 2;
+            }
+
+            function setCardWidths() {
+                const wrapper = slider.parentElement;
+                if (!isSliderMode()) {
+                    Array.from(slider.children).forEach(card => {
+                        card.style.minWidth = '';
+                        card.style.maxWidth = '';
+                    });
+                    return;
+                }
+                const visible = getVisibleCards();
+                const cardWidth = (wrapper.offsetWidth - gap * (visible - 1)) / visible;
+                Array.from(slider.children).forEach(card => {
+                    card.style.minWidth = cardWidth + 'px';
+                    card.style.maxWidth = cardWidth + 'px';
+                });
             }
 
             function getCardWidth() {
                 const card = slider.children[0];
                 if (!card) return 0;
-                const style = getComputedStyle(slider);
-                const gap = parseInt(style.gap) || 24;
                 return card.offsetWidth + gap;
             }
 
             function updateSlider() {
+                setCardWidths();
+                if (!isSliderMode()) {
+                    slider.style.transform = '';
+                    currentIndex = 0;
+                    return;
+                }
                 const maxIndex = Math.max(0, slider.children.length - getVisibleCards());
                 currentIndex = Math.min(currentIndex, maxIndex);
                 currentIndex = Math.max(currentIndex, 0);
@@ -2386,6 +2429,8 @@
             });
 
             window.addEventListener('resize', updateSlider);
+
+            setCardWidths();
         }
 
         createSlider('servicesSlider', 'servicesPrev', 'servicesNext');
