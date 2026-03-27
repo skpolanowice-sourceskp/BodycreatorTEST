@@ -1314,6 +1314,24 @@
             margin-bottom: 72px;
         }
 
+        @keyframes stepFlow {
+            0%          { background-position: -60% 0; opacity: 0; }
+            8%          { opacity: 1; }
+            92%         { opacity: 1; }
+            100%        { background-position: 120% 0; opacity: 0; }
+        }
+
+        @keyframes stepPulse {
+            0%, 100% {
+                box-shadow: 0 0 0 0 rgba(242,201,76,0);
+                border-color: rgba(242,201,76,0.22);
+            }
+            50% {
+                box-shadow: 0 0 22px 6px rgba(242,201,76,0.28);
+                border-color: rgba(242,201,76,0.85);
+            }
+        }
+
         .steps-grid {
             display: grid;
             grid-template-columns: repeat(4, 1fr);
@@ -1321,20 +1339,44 @@
             position: relative;
         }
 
+        /* Tor bazowy */
         .steps-grid::before {
             content: '';
             position: absolute;
-            top: 40px;
-            left: 15%;
-            right: 15%;
+            top: 39px;
+            left: 12.5%;
+            right: 12.5%;
             height: 2px;
-            background: linear-gradient(90deg, transparent, var(--yellow), transparent);
-            opacity: 0.2;
+            background: rgba(242,201,76,0.1);
+            border-radius: 2px;
+            z-index: 0;
+        }
+
+        /* Animowany świetlik — opacity fade na krańcach przez keyframes */
+        .steps-grid::after {
+            content: '';
+            position: absolute;
+            top: 39px;
+            left: 12.5%;
+            right: 12.5%;
+            height: 2px;
+            border-radius: 2px;
+            background: linear-gradient(90deg,
+                transparent 0%,
+                rgba(242,201,76,0.45) 35%,
+                rgba(242,201,76,0.9) 50%,
+                rgba(242,201,76,0.45) 65%,
+                transparent 100%);
+            background-size: 55% 100%;
+            background-repeat: no-repeat;
+            animation: stepFlow 4s ease-in-out infinite;
+            z-index: 0;
         }
 
         .step-card {
             text-align: center;
             position: relative;
+            z-index: 1;
         }
 
         .step-number {
@@ -1344,8 +1386,9 @@
             align-items: center;
             justify-content: center;
             margin: 0 auto 24px;
-            background: rgba(242, 201, 76, 0.1);
-            border: 2px solid rgba(242, 201, 76, 0.2);
+            /* solid background = zakrywa linię za kółkiem */
+            background: var(--dark-2);
+            border: 2px solid rgba(242,201,76,0.22);
             border-radius: 50%;
             font-size: 1.8rem;
             font-weight: 800;
@@ -1353,6 +1396,20 @@
             position: relative;
             z-index: 1;
         }
+
+        /*
+         * Opóźnienia obliczone z pozycji glow na osi czasu:
+         * Animacja: bg-pos od -60% do 120% = 180% zakresu w 4s
+         * Glow center = bg-pos + 27.5% (bg-size 55% / 2)
+         * Koła leżą na 0%, 33.3%, 66.7%, 100% długości toru
+         * → bg-pos przy kole: -27.5%, 5.8%, 39.2%, 72.5%
+         * → czas przy kole: 0.72s, 1.46s, 2.21s, 2.95s
+         * peak stepPulse = 50% cyklu = 2s → delay = czas_koła - 2s
+         */
+        .step-card:nth-child(1) .step-number { animation: stepPulse 4s ease-in-out infinite; animation-delay: -1.28s; }
+        .step-card:nth-child(2) .step-number { animation: stepPulse 4s ease-in-out infinite; animation-delay: -0.54s; }
+        .step-card:nth-child(3) .step-number { animation: stepPulse 4s ease-in-out infinite; animation-delay:  0.21s; }
+        .step-card:nth-child(4) .step-number { animation: stepPulse 4s ease-in-out infinite; animation-delay:  0.95s; }
 
         .step-card h3 {
             font-size: 1rem;
@@ -1917,7 +1974,8 @@
                 gap: 40px;
             }
 
-            .steps-grid::before {
+            .steps-grid::before,
+            .steps-grid::after {
                 display: none;
             }
 
