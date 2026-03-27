@@ -272,7 +272,7 @@
         }
 
         .nav-toggle.active span:nth-child(1) {
-            transform: rotate(45deg) translateY(5.5px);
+            transform: rotate(45deg) translate(6px, 6px);
         }
 
         .nav-toggle.active span:nth-child(2) {
@@ -280,7 +280,7 @@
         }
 
         .nav-toggle.active span:nth-child(3) {
-            transform: rotate(-45deg) translateY(-5.5px);
+            transform: rotate(-45deg) translate(6px, -6px);
         }
 
         .nav-overlay {
@@ -678,21 +678,85 @@
             background: var(--dark-2);
         }
 
-        .team-intro {
+        .team-slider-wrapper {
+            overflow: hidden;
+        }
+
+        .team-slider {
+            display: flex;
+            align-items: stretch;
+            transition: transform 0.5s cubic-bezier(0.25, 0.46, 0.45, 0.94);
+        }
+
+        .team-panel {
+            flex: 0 0 100%;
+            width: 100%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+        }
+
+        .team-panel > * {
+            width: 100%;
+        }
+
+        .team-panel:first-child .team-panel-inner {
+            max-width: 640px;
+            width: 100%;
+            text-align: center;
+            padding: 48px 0;
+        }
+
+        .team-panel-label-row {
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            gap: 18px;
+            margin-bottom: 24px;
+        }
+
+        .team-panel-label-row .section-label {
+            display: inline;
+            margin-bottom: 0;
+            white-space: nowrap;
+        }
+
+        .team-panel-line {
+            flex: 1;
+            max-width: 72px;
+            height: 1px;
+            background: var(--yellow);
+            opacity: 0.45;
+        }
+
+        .team-panel:first-child .section-title {
+            font-size: clamp(2rem, 4vw, 3rem);
+            margin-bottom: 20px;
+        }
+
+        .team-panel:first-child .section-text {
+            font-size: 1.05rem;
+            line-height: 1.75;
+            color: var(--gray-light);
+            max-width: 520px;
+            margin: 0 auto;
+        }
+
+        .team-panel-grid {
             display: grid;
             grid-template-columns: 1fr 1fr;
-            gap: 80px;
-            align-items: start;
-            margin-bottom: 80px;
+            gap: 60px;
+            align-items: stretch;
         }
 
         .team-benefits {
-            margin-top: 32px;
+            margin-top: 24px;
+            margin-bottom: 32px;
         }
 
         .team-benefits li {
             display: flex;
-            align-items: flex-start;
+            align-items: center;
             gap: 14px;
             padding: 12px 0;
             color: var(--gray-light);
@@ -700,36 +764,52 @@
         }
 
         .team-benefits li i {
-            color: var(--yellow);
-            margin-top: 4px;
+            width: 36px;
+            height: 36px;
             flex-shrink: 0;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            border-radius: 50%;
+            background: rgba(242, 201, 76, 0.1);
+            border: 1px solid rgba(242, 201, 76, 0.2);
+            color: var(--yellow);
+            font-size: 0.95rem;
         }
 
         .team-quote {
             background: var(--dark-3);
             border-radius: 16px;
-            padding: 40px;
+            padding: 24px 28px;
             border-left: 4px solid var(--yellow);
-            position: relative;
         }
 
         .team-quote blockquote {
             font-family: var(--font-display);
-            font-size: 1.25rem;
+            font-size: 0.92rem;
             font-style: italic;
-            line-height: 1.7;
+            line-height: 1.65;
             color: var(--gray-light);
         }
 
+        .team-quote-attr {
+            margin-top: 14px;
+            font-size: 0.85rem;
+            color: var(--yellow);
+            font-weight: 600;
+        }
+
         .team-grid {
-            display: grid;
-            grid-template-columns: repeat(2, 1fr);
-            gap: 32px;
-            max-width: 800px;
-            margin: 0 auto;
+            display: flex;
+            flex-direction: row;
+            gap: 16px;
+            height: 100%;
         }
 
         .team-card {
+            flex: 1;
+            display: flex;
+            flex-direction: column;
             background: var(--dark-3);
             border-radius: 16px;
             overflow: hidden;
@@ -743,7 +823,8 @@
         }
 
         .team-photo {
-            aspect-ratio: 3/4;
+            flex: 1;
+            min-height: 120px;
             background: linear-gradient(135deg, var(--dark-4), var(--dark-2));
             display: flex;
             align-items: center;
@@ -751,12 +832,12 @@
         }
 
         .team-photo i {
-            font-size: 4rem;
+            font-size: 2.5rem;
             color: var(--gray-dark);
         }
 
         .team-info {
-            padding: 28px;
+            padding: 20px 24px;
         }
 
         .team-role {
@@ -766,11 +847,92 @@
             text-transform: uppercase;
             color: var(--yellow);
             margin-bottom: 6px;
+            display: block;
         }
 
         .team-name {
-            font-size: 1.3rem;
+            font-size: 1.2rem;
             font-weight: 700;
+        }
+
+        .team-slider-controls {
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            gap: 24px;
+            margin-top: 40px;
+        }
+
+        .team-slider-btn {
+            height: 48px;
+            padding: 0 18px;
+            border-radius: 24px;
+            border: 2px solid rgba(242, 201, 76, 0.4);
+            background: transparent;
+            color: var(--yellow);
+            font-size: 0.95rem;
+            cursor: pointer;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            gap: 10px;
+            overflow: hidden;
+            transition: background 0.3s ease, border-color 0.3s ease,
+                        color 0.3s ease, padding 0.4s cubic-bezier(0.25,0.46,0.45,0.94),
+                        border-radius 0.4s cubic-bezier(0.25,0.46,0.45,0.94),
+                        opacity 0.3s ease;
+            white-space: nowrap;
+        }
+
+        .team-slider-btn:hover:not(:disabled) {
+            background: var(--yellow);
+            color: var(--dark);
+            border-color: var(--yellow);
+        }
+
+        .team-slider-btn:disabled {
+            opacity: 0.25;
+            cursor: not-allowed;
+            padding: 0 13px;
+            border-radius: 50%;
+        }
+
+        .team-btn-text {
+            font-size: 0.78rem;
+            font-weight: 700;
+            letter-spacing: 0.5px;
+            text-transform: uppercase;
+            max-width: 0;
+            overflow: hidden;
+            opacity: 0;
+            white-space: nowrap;
+            transition: max-width 0.4s cubic-bezier(0.25,0.46,0.45,0.94),
+                        opacity 0.25s ease;
+        }
+
+        .team-slider-btn:not(:disabled) .team-btn-text {
+            max-width: 180px;
+            opacity: 1;
+        }
+
+        .team-dots {
+            display: flex;
+            gap: 8px;
+        }
+
+        .team-dot {
+            width: 8px;
+            height: 8px;
+            border-radius: 50%;
+            background: rgba(255,255,255,0.2);
+            cursor: pointer;
+            transition: var(--transition);
+        }
+
+        .team-dot.active {
+            background: var(--yellow);
+            width: 24px;
+            border-radius: 4px;
         }
 
         /* ============================================
@@ -786,26 +948,278 @@
         .stats-grid {
             display: grid;
             grid-template-columns: repeat(4, 1fr);
-            gap: 32px;
+            gap: 24px;
         }
 
         .stats-item {
             text-align: center;
-            padding: 32px;
+            padding: 36px 24px 32px;
+            background: var(--dark-2);
+            border-radius: 20px;
+            border: 1px solid rgba(255,255,255,0.05);
+            position: relative;
+            overflow: hidden;
+            transition: transform 0.3s ease, border-color 0.3s ease;
+        }
+
+        .stats-item::after {
+            content: '';
+            position: absolute;
+            bottom: 0;
+            left: 0;
+            right: 0;
+            height: 3px;
+            background: var(--yellow);
+            transform: scaleX(0);
+            transition: transform 0.4s cubic-bezier(0.25, 0.46, 0.45, 0.94);
+        }
+
+        .stats-item:hover {
+            transform: translateY(-5px);
+            border-color: rgba(242, 201, 76, 0.12);
+        }
+
+        .stats-item:hover::after {
+            transform: scaleX(1);
+        }
+
+        .stats-icon {
+            width: 58px;
+            height: 58px;
+            border-radius: 50%;
+            background: rgba(242, 201, 76, 0.08);
+            border: 1px solid rgba(242, 201, 76, 0.18);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            margin: 0 auto 20px;
+            font-size: 1.35rem;
+            color: var(--yellow);
+            transition: background 0.3s ease, border-color 0.3s ease;
+        }
+
+        .stats-item:hover .stats-icon {
+            background: rgba(242, 201, 76, 0.16);
+            border-color: rgba(242, 201, 76, 0.35);
         }
 
         .stats-item .number {
-            font-size: clamp(2.2rem, 4vw, 3rem);
+            font-size: clamp(2rem, 3.5vw, 2.8rem);
             font-weight: 900;
             color: var(--yellow);
             display: block;
-            margin-bottom: 8px;
+            margin-bottom: 10px;
+            line-height: 1;
+            font-family: var(--font-display);
         }
 
         .stats-item .label {
-            font-size: 0.85rem;
+            font-size: 0.83rem;
             color: var(--gray);
             line-height: 1.5;
+        }
+
+        .stats-achievements {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 24px;
+            margin-top: 24px;
+        }
+
+        .stats-achievement-item {
+            display: flex;
+            align-items: center;
+            gap: 20px;
+            padding: 28px 32px;
+            background: var(--dark-2);
+            border-radius: 20px;
+            border: 1px solid rgba(255,255,255,0.05);
+            font-size: clamp(1rem, 1.8vw, 1.25rem);
+            font-weight: 700;
+            color: var(--white);
+            transition: transform 0.3s ease, border-color 0.3s ease;
+            position: relative;
+            overflow: hidden;
+        }
+
+        .stats-achievement-item::after {
+            content: '';
+            position: absolute;
+            bottom: 0;
+            left: 0;
+            right: 0;
+            height: 3px;
+            background: var(--yellow);
+            transform: scaleX(0);
+            transition: transform 0.4s cubic-bezier(0.25, 0.46, 0.45, 0.94);
+        }
+
+        .stats-achievement-item:hover {
+            transform: translateY(-4px);
+            border-color: rgba(242, 201, 76, 0.12);
+        }
+
+        .stats-achievement-item:hover::after {
+            transform: scaleX(1);
+        }
+
+        .stats-achievement-item .stats-icon {
+            flex-shrink: 0;
+            margin: 0;
+        }
+
+        /* ============================================
+           STUDIO SECTION
+           ============================================ */
+        .studio-section {
+            background: var(--dark-2);
+            padding: var(--section-padding) 0;
+        }
+
+        .studio-achievements {
+            display: flex;
+            flex-direction: column;
+            gap: 20px;
+            margin-bottom: 56px;
+            list-style: none;
+        }
+
+        .studio-achievements li {
+            display: flex;
+            align-items: center;
+            gap: 20px;
+            font-size: clamp(1.2rem, 2.5vw, 1.55rem);
+            font-weight: 700;
+            color: var(--white);
+            line-height: 1.3;
+        }
+
+        .studio-achievements li .ach-icon {
+            width: 52px;
+            height: 52px;
+            flex-shrink: 0;
+            border-radius: 50%;
+            background: rgba(242, 201, 76, 0.1);
+            border: 1px solid rgba(242, 201, 76, 0.22);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 1.2rem;
+            color: var(--yellow);
+        }
+
+        .studio-slider-wrapper {
+            overflow: hidden;
+            border-radius: 20px;
+        }
+
+        .studio-slider {
+            display: flex;
+            transition: transform 0.55s cubic-bezier(0.25, 0.46, 0.45, 0.94);
+        }
+
+        .studio-slide {
+            flex: 0 0 100%;
+            width: 100%;
+            aspect-ratio: 16/7;
+            background: linear-gradient(135deg, var(--dark-4), var(--dark-3));
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            flex-direction: column;
+            gap: 12px;
+            color: var(--gray-dark);
+            border-radius: 20px;
+        }
+
+        .studio-slide i {
+            font-size: 3rem;
+        }
+
+        .studio-slide span {
+            font-size: 0.85rem;
+            letter-spacing: 1px;
+            text-transform: uppercase;
+        }
+
+        .studio-slider-controls {
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            gap: 24px;
+            margin-top: 32px;
+        }
+
+        .studio-slider-btn {
+            height: 48px;
+            padding: 0 18px;
+            border-radius: 24px;
+            border: 2px solid rgba(242, 201, 76, 0.4);
+            background: transparent;
+            color: var(--yellow);
+            font-size: 0.95rem;
+            cursor: pointer;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            gap: 10px;
+            overflow: hidden;
+            transition: background 0.3s ease, border-color 0.3s ease,
+                        color 0.3s ease, padding 0.4s cubic-bezier(0.25,0.46,0.45,0.94),
+                        border-radius 0.4s cubic-bezier(0.25,0.46,0.45,0.94),
+                        opacity 0.3s ease;
+            white-space: nowrap;
+        }
+
+        .studio-slider-btn:hover:not(:disabled) {
+            background: var(--yellow);
+            color: var(--dark);
+            border-color: var(--yellow);
+        }
+
+        .studio-slider-btn:disabled {
+            opacity: 0.25;
+            cursor: not-allowed;
+            padding: 0 13px;
+            border-radius: 50%;
+        }
+
+        .studio-btn-text {
+            font-size: 0.78rem;
+            font-weight: 700;
+            letter-spacing: 0.5px;
+            text-transform: uppercase;
+            max-width: 0;
+            overflow: hidden;
+            opacity: 0;
+            white-space: nowrap;
+            transition: max-width 0.4s cubic-bezier(0.25,0.46,0.45,0.94),
+                        opacity 0.25s ease;
+        }
+
+        .studio-slider-btn:not(:disabled) .studio-btn-text {
+            max-width: 200px;
+            opacity: 1;
+        }
+
+        .studio-dots {
+            display: flex;
+            gap: 8px;
+        }
+
+        .studio-dot {
+            width: 8px;
+            height: 8px;
+            border-radius: 50%;
+            background: rgba(255,255,255,0.2);
+            cursor: pointer;
+            transition: var(--transition);
+        }
+
+        .studio-dot.active {
+            background: var(--yellow);
+            width: 24px;
+            border-radius: 4px;
         }
 
         /* ============================================
@@ -1102,36 +1516,59 @@
         .calendar-embed {
             background: var(--dark-2);
             border-radius: 16px;
-            padding: 40px;
+            padding: 28px;
             border: 1px solid rgba(255,255,255,0.05);
-            text-align: center;
         }
 
-        .calendar-placeholder {
-            padding: 60px 24px;
-            border: 2px dashed rgba(242, 201, 76, 0.2);
-            border-radius: 12px;
-            color: var(--gray);
+        .trainer-selector {
+            display: flex;
+            gap: 12px;
+            margin-bottom: 20px;
         }
 
-        .calendar-placeholder i {
-            font-size: 3rem;
-            color: var(--yellow);
-            margin-bottom: 16px;
-            opacity: 0.6;
-        }
-
-        .calendar-placeholder h3 {
-            color: var(--white);
-            margin-bottom: 8px;
-            font-size: 1.1rem;
-        }
-
-        .calendar-placeholder p {
+        .trainer-btn {
+            flex: 1;
+            padding: 12px 16px;
+            border-radius: 10px;
+            border: 2px solid rgba(255,255,255,0.08);
+            background: transparent;
+            color: var(--gray-light);
             font-size: 0.85rem;
-            line-height: 1.6;
-            max-width: 300px;
-            margin: 0 auto;
+            font-weight: 600;
+            cursor: pointer;
+            transition: var(--transition);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            gap: 8px;
+        }
+
+        .trainer-btn i {
+            font-size: 0.9rem;
+            color: var(--yellow);
+        }
+
+        .trainer-btn.active,
+        .trainer-btn:hover {
+            border-color: var(--yellow);
+            color: var(--white);
+            background: rgba(242, 201, 76, 0.07);
+        }
+
+        .calendar-frame-wrapper {
+            border-radius: 12px;
+            overflow: hidden;
+            border: 1px solid rgba(255,255,255,0.08);
+            background: #ffffff;
+        }
+
+        .calendar-frame-wrapper iframe {
+            display: block;
+            width: 100%;
+            height: 600px;
+            border: none;
+            background: #ffffff;
+            color-scheme: light;
         }
 
         /* ============================================
@@ -1466,7 +1903,7 @@
                 gap: 48px;
             }
 
-            .team-intro {
+            .team-panel-grid {
                 grid-template-columns: 1fr;
                 gap: 40px;
             }
@@ -1522,8 +1959,7 @@
             }
 
             .team-grid {
-                grid-template-columns: 1fr;
-                max-width: 400px;
+                gap: 12px;
             }
 
             .stats-grid {
@@ -1630,7 +2066,7 @@
                     Twoje miejsce<br><span class="highlight">treningu.</span>
                 </h1>
                 <p class="hero-subtitle">
-                    Profesjonalne studio treningowe, w&nbsp;którym panuje spokój i&nbsp;komfort. Pomagamy ludziom stać się ich najlepszą wersją siebie.
+                    Jesteśmy profesjonalnym studiem treningowym , w którym panuje spokój i komfort treningu, na którym nie musisz bić się o sprzęt i miejsce do trenowania. Pomagamy ludziom stać się ich najlepszą wersją siebie i osiągać najwyższe cele !
                 </p>
                 <div class="hero-cta">
                     <a href="#contact" class="btn btn-primary">
@@ -1649,54 +2085,6 @@
         <div class="hero-scroll">
             <span>Scroll</span>
             <div class="line"></div>
-        </div>
-    </section>
-
-    <!-- ========================================
-         ABOUT SECTION
-         ======================================== -->
-    <section id="about">
-        <div class="container">
-            <div class="about-grid">
-                <div class="about-image reveal">
-                    <div class="about-image-placeholder">
-                        <div>
-                            <i class="fas fa-dumbbell"></i>
-                            <p>Zdjęcie studia<br><small style="color:var(--gray)">(dodaj po remoncie)</small></p>
-                        </div>
-                    </div>
-                </div>
-                <div class="reveal reveal-delay-1">
-                    <span class="section-label">O nas</span>
-                    <h2 class="section-title">
-                        Studio treningu<br><span style="color:var(--yellow)">Body Creator</span>
-                    </h2>
-                    <p class="section-text">
-                        Co nas odróżnia od siłowni komercyjnej? Jesteśmy profesjonalnym studiem treningowym, w&nbsp;którym panuje spokój i&nbsp;komfort treningu — nie musisz bić się o&nbsp;sprzęt i&nbsp;miejsce do trenowania. Pomagamy ludziom stać się ich najlepszą wersją siebie i&nbsp;osiągać najwyższe cele!
-                    </p>
-                    <p class="section-text" style="margin-top: 16px;">
-                        Znajdziesz nas na Wrocławskich Sołtysowicach przy ulicy Rafała Wojaczka 3g.
-                    </p>
-                    <div class="about-stats">
-                        <div class="stat-item reveal reveal-delay-2">
-                            <span class="stat-number">100%</span>
-                            <span class="stat-label">Zadowolonych klientów</span>
-                        </div>
-                        <div class="stat-item reveal reveal-delay-3">
-                            <span class="stat-number">5.0</span>
-                            <span class="stat-label">Średnia Google</span>
-                        </div>
-                        <div class="stat-item reveal reveal-delay-2">
-                            <span class="stat-number">10 000+</span>
-                            <span class="stat-label">Treningów personalnych</span>
-                        </div>
-                        <div class="stat-item reveal reveal-delay-3">
-                            <span class="stat-number">100+</span>
-                            <span class="stat-label">Pozytywnych opinii</span>
-                        </div>
-                    </div>
-                </div>
-            </div>
         </div>
     </section>
 
@@ -1750,6 +2138,92 @@
             <div class="slider-controls">
                 <button class="slider-btn" id="servicesPrev" aria-label="Poprzedni"><i class="fas fa-chevron-left"></i></button>
                 <button class="slider-btn" id="servicesNext" aria-label="Następny"><i class="fas fa-chevron-right"></i></button>
+            </div>
+        </div>
+    </section>
+
+    
+    <!-- ========================================
+         TEAM SECTION
+         ======================================== -->
+    <section id="team">
+        <div class="container">
+            <div class="team-slider-wrapper">
+                <div class="team-slider" id="teamPanelSlider">
+
+                    <!-- Panel 1: Intro -->
+                    <div class="team-panel">
+                        <div class="team-panel-inner reveal">
+                            <div class="team-panel-label-row">
+                                <span class="team-panel-line"></span>
+                                <span class="section-label">Nasz zespół</span>
+                                <span class="team-panel-line"></span>
+                            </div>
+                            <h2 class="section-title">Profesjonaliści z&nbsp;pasją<br>do&nbsp;treningu</h2>
+                            <p class="section-text">
+                                W Body Creator mamy profesjonalistów z&nbsp;ogromnym bagażem doświadczeń oraz wiedzy, która pozwala pomagać ludziom zarówno z&nbsp;problemami zdrowotnymi jak i&nbsp;dążyć do&nbsp;sylwetki swoich marzeń.
+                            </p>
+                        </div>
+                    </div>
+
+                    <!-- Panel 2: Benefits + Trainers -->
+                    <div class="team-panel">
+                        <div class="team-panel-grid">
+                            <div class="reveal">
+                                <p class="section-text"><strong>Pomożemy Ci:</strong></p>
+                                <ul class="team-benefits">
+                                    <li><i class="fas fa-person-walking-arrow-right"></i> Poprawić Twoje wady postawy</li>
+                                    <li><i class="fas fa-fire-flame-curved"></i> Zredukować tkankę tłuszczową</li>
+                                    <li><i class="fas fa-dumbbell"></i> Zbudować masę mięśniową</li>
+                                    <li><i class="fas fa-heart-pulse"></i> Uporać się z&nbsp;kontuzjami</li>
+                                </ul>
+                                <div class="team-quote">
+                                    <blockquote>
+                                        „Każdy z&nbsp;nas to inna historia, różne potrzeby, problemy zdrowotne, czy wymagania sylwetkowe, a&nbsp;naszym celem jest, by każda z&nbsp;tych historii miała szczęśliwe zakończenie. Zajmiemy się Tobą zarówno od strony sylwetkowej jak i&nbsp;zdrowotnej."
+                                    </blockquote>
+                                    <p class="team-quote-attr">— Jakub Cyndecki</p>
+                                </div>
+                            </div>
+                            <div class="team-grid reveal reveal-delay-1">
+                                <div class="team-card">
+                                    <div class="team-photo">
+                                        <i class="fas fa-user"></i>
+                                    </div>
+                                    <div class="team-info">
+                                        <span class="team-role">Trener Personalny | Właściciel</span>
+                                        <h3 class="team-name">Jakub Cyndecki</h3>
+                                    </div>
+                                </div>
+                                <div class="team-card">
+                                    <div class="team-photo">
+                                        <i class="fas fa-user"></i>
+                                    </div>
+                                    <div class="team-info">
+                                        <span class="team-role">Trener Personalny | Właścicielka</span>
+                                        <h3 class="team-name">Aleksandra Dunajewska</h3>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+                </div>
+            </div>
+
+            <!-- Slider controls -->
+            <div class="team-slider-controls">
+                <button class="team-slider-btn" id="teamPrev" aria-label="Poprzedni panel" disabled>
+                    <i class="fas fa-arrow-left"></i>
+                    <span class="team-btn-text">Jednak zobacz mniej</span>
+                </button>
+                <div class="team-dots">
+                    <span class="team-dot active" data-index="0"></span>
+                    <span class="team-dot" data-index="1"></span>
+                </div>
+                <button class="team-slider-btn" id="teamNext" aria-label="Następny panel">
+                    <span class="team-btn-text">Zobacz więcej</span>
+                    <i class="fas fa-arrow-right"></i>
+                </button>
             </div>
         </div>
     </section>
@@ -1821,77 +2295,81 @@
     </div>
 
     <!-- ========================================
-         TEAM SECTION
-         ======================================== -->
-    <section id="team">
-        <div class="container">
-            <div class="team-intro">
-                <div class="reveal">
-                    <span class="section-label">Nasz zespół</span>
-                    <h2 class="section-title">Profesjonaliści z&nbsp;pasją do&nbsp;treningu</h2>
-                    <p class="section-text">
-                        W Body Creator mamy profesjonalistów z&nbsp;ogromnym bagażem doświadczeń oraz wiedzy, która pozwala pomagać ludziom zarówno z&nbsp;problemami zdrowotnymi jak i&nbsp;dążyć do sylwetki swoich marzeń.
-                    </p>
-                    <p class="section-text" style="margin-top:16px;"><strong>Pomożemy Ci:</strong></p>
-                    <ul class="team-benefits">
-                        <li><i class="fas fa-arrow-right"></i> Poprawić Twoje wady postawy</li>
-                        <li><i class="fas fa-arrow-right"></i> Zredukować tkankę tłuszczową</li>
-                        <li><i class="fas fa-arrow-right"></i> Zbudować masę mięśniową</li>
-                        <li><i class="fas fa-arrow-right"></i> Uporać się z&nbsp;kontuzjami</li>
-                    </ul>
-                </div>
-                <div class="team-quote reveal reveal-delay-2">
-                    <blockquote>
-                        „Każdy z&nbsp;nas to inna historia, różne potrzeby, problemy zdrowotne, czy wymagania sylwetkowe, a&nbsp;naszym celem jest, by każda z&nbsp;tych historii miała szczęśliwe zakończenie. Zajmiemy się Tobą zarówno od strony sylwetkowej jak i&nbsp;zdrowotnej."
-                    </blockquote>
-                </div>
-            </div>
-
-            <div class="team-grid">
-                <div class="team-card reveal">
-                    <div class="team-photo">
-                        <i class="fas fa-user"></i>
-                    </div>
-                    <div class="team-info">
-                        <span class="team-role">Trener Personalny | Właściciel</span>
-                        <h3 class="team-name">Jakub Cyndecki</h3>
-                    </div>
-                </div>
-                <div class="team-card reveal reveal-delay-1">
-                    <div class="team-photo">
-                        <i class="fas fa-user"></i>
-                    </div>
-                    <div class="team-info">
-                        <span class="team-role">Trener Personalny | Właścicielka</span>
-                        <h3 class="team-name">Aleksandra Dunajewska</h3>
-                    </div>
-                </div>
-            </div>
-        </div>
-    </section>
-
-    <!-- ========================================
          STATS SECTION
          ======================================== -->
     <section class="stats-section">
         <div class="container">
             <div class="stats-grid">
                 <div class="stats-item reveal">
-                    <span class="number">100%</span>
+                    <div class="stats-icon"><i class="fas fa-face-smile"></i></div>
+                    <span class="number" data-count="100" data-suffix="%">100%</span>
                     <span class="label">Zadowolonych klientów</span>
                 </div>
                 <div class="stats-item reveal reveal-delay-1">
-                    <span class="number">10 000+</span>
+                    <div class="stats-icon"><i class="fas fa-person-running"></i></div>
+                    <span class="number" data-count="10000" data-suffix="+" data-format="space">10 000+</span>
                     <span class="label">Przeprowadzonych treningów</span>
                 </div>
                 <div class="stats-item reveal reveal-delay-2">
-                    <span class="number">5.0 <i class="fas fa-star" style="font-size:0.6em;"></i></span>
+                    <div class="stats-icon"><i class="fas fa-star"></i></div>
+                    <span class="number" data-count="5" data-suffix="" data-decimals="1">5.0</span>
                     <span class="label">Średnia opinii Google</span>
                 </div>
                 <div class="stats-item reveal reveal-delay-3">
-                    <span class="number">100+</span>
+                    <div class="stats-icon"><i class="fas fa-comment-dots"></i></div>
+                    <span class="number" data-count="100" data-suffix="+">100+</span>
                     <span class="label">Pozytywnych opinii</span>
                 </div>
+            </div>
+            <div class="stats-achievements reveal">
+                <div class="stats-achievement-item">
+                    <div class="stats-icon"><i class="fas fa-weight-scale"></i></div>
+                    <span>Setki zrzuconych kilogramów</span>
+                </div>
+                <div class="stats-achievement-item">
+                    <div class="stats-icon"><i class="fas fa-bone"></i></div>
+                    <span>Dziesiątki wyleczonych kręgosłupów, kolan czy barków</span>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- ========================================
+         STUDIO SECTION
+         ======================================== -->
+    <section class="studio-section">
+        <div class="container">
+            <div class="studio-slider-wrapper reveal">
+                <div class="studio-slider" id="studioSlider">
+                    <div class="studio-slide">
+                        <i class="fas fa-image"></i>
+                        <span>Studio — widok z zewnątrz</span>
+                    </div>
+                    <div class="studio-slide">
+                        <i class="fas fa-image"></i>
+                        <span>Studio — środek</span>
+                    </div>
+                    <div class="studio-slide">
+                        <i class="fas fa-image"></i>
+                        <span>Studio — sprzęt</span>
+                    </div>
+                </div>
+            </div>
+
+            <div class="studio-slider-controls">
+                <button class="studio-slider-btn" id="studioPrev" disabled>
+                    <i class="fas fa-arrow-left"></i>
+                    <span class="studio-btn-text" id="studioPrevText"></span>
+                </button>
+                <div class="studio-dots">
+                    <span class="studio-dot active" data-index="0"></span>
+                    <span class="studio-dot" data-index="1"></span>
+                    <span class="studio-dot" data-index="2"></span>
+                </div>
+                <button class="studio-slider-btn" id="studioNext">
+                    <span class="studio-btn-text" id="studioNextText">Pokaż mi środek</span>
+                    <i class="fas fa-arrow-right"></i>
+                </button>
             </div>
         </div>
     </section>
@@ -2126,29 +2604,22 @@
                     </a>
                 </div>
                 <div class="calendar-embed reveal reveal-delay-1">
-                    <div class="calendar-placeholder">
-                        <i class="fas fa-calendar-alt"></i>
-                        <h3>Kalendarz Google</h3>
-                        <p>Tutaj zostanie osadzony kalendarz Google z&nbsp;dostępnymi terminami trenerów.
-                        <br><br>
-                        <small style="color:var(--gray-dark)">Integracja z Google Calendar — klient wybiera trenera i&nbsp;wolny slot czasowy. Trenerzy aktualizują dostępność przed każdym tygodniem.</small>
-                        </p>
+                    <div class="trainer-selector">
+                        <button class="trainer-btn active" data-cal="https://calendar.app.google/faobi7TxyDb5LZQYA">
+                            <i class="fas fa-user"></i> Jakub Cyndecki
+                        </button>
+                        <button class="trainer-btn" data-cal="https://calendar.app.google/faobi7TxyDb5LZQYA">
+                            <i class="fas fa-user"></i> Aleksandra Dunajewska
+                        </button>
                     </div>
-                    <!--
-                        INSTRUKCJA INTEGRACJI GOOGLE CALENDAR:
-
-                        Opcja 1 - Google Calendar Embed:
-                        Zamień powyższy div.calendar-placeholder na:
-                        <iframe src="https://calendar.google.com/calendar/appointments/schedules/TWÓJ_ID?gv=true"
-                                style="border:0; width:100%; height:600px; border-radius:12px;"
-                                frameborder="0"></iframe>
-
-                        Opcja 2 - Calendly / Cal.com:
-                        Użyj widgetu Calendly/Cal.com, który sync'uje się z Google Calendar.
-
-                        Opcja 3 - Własna integracja Google Calendar API:
-                        Wymaga backend'u (Node.js/Python) + Google Calendar API.
-                    -->
+                    <div class="calendar-frame-wrapper">
+                        <iframe id="calendarFrame"
+                                src="https://calendar.app.google/faobi7TxyDb5LZQYA"
+                                title="Kalendarz rezerwacji"
+                                loading="lazy"
+                                style="color-scheme: light;"
+                                allowfullscreen></iframe>
+                    </div>
                 </div>
             </div>
         </div>
@@ -2291,14 +2762,12 @@
         navToggle.addEventListener('click', () => {
             navToggle.classList.toggle('active');
             navOverlay.classList.toggle('active');
-            document.body.style.overflow = navOverlay.classList.contains('active') ? 'hidden' : '';
         });
 
         document.querySelectorAll('[data-nav]').forEach(link => {
             link.addEventListener('click', () => {
                 navToggle.classList.remove('active');
                 navOverlay.classList.remove('active');
-                document.body.style.overflow = '';
             });
         });
 
@@ -2433,6 +2902,123 @@
         createSlider('reviewsSlider', 'reviewsPrev', 'reviewsNext');
 
         // ========================================
+        // Team Panel Slider
+        // ========================================
+        (function() {
+            const slider = document.getElementById('teamPanelSlider');
+            const prevBtn = document.getElementById('teamPrev');
+            const nextBtn = document.getElementById('teamNext');
+            const dots = document.querySelectorAll('.team-dot');
+            if (!slider) return;
+            let current = 0;
+            const total = slider.children.length;
+
+            function goTo(index) {
+                current = Math.max(0, Math.min(index, total - 1));
+                slider.style.transform = `translateX(-${current * 100}%)`;
+                dots.forEach((d, i) => d.classList.toggle('active', i === current));
+                prevBtn.disabled = current === 0;
+                nextBtn.disabled = current === total - 1;
+            }
+
+            nextBtn.addEventListener('click', () => goTo(current + 1));
+            prevBtn.addEventListener('click', () => goTo(current - 1));
+            dots.forEach((dot, i) => dot.addEventListener('click', () => goTo(i)));
+
+            let startX = 0;
+            slider.addEventListener('touchstart', e => { startX = e.touches[0].clientX; }, { passive: true });
+            slider.addEventListener('touchend', e => {
+                const diff = startX - e.changedTouches[0].clientX;
+                if (diff > 50) goTo(current + 1);
+                else if (diff < -50) goTo(current - 1);
+            }, { passive: true });
+
+            goTo(0);
+        })();
+
+        // ========================================
+        // Studio Slider
+        // ========================================
+        (function() {
+            const slider = document.getElementById('studioSlider');
+            const prevBtn = document.getElementById('studioPrev');
+            const nextBtn = document.getElementById('studioNext');
+            const prevText = document.getElementById('studioPrevText');
+            const nextText = document.getElementById('studioNextText');
+            const dots = document.querySelectorAll('.studio-dot');
+            if (!slider) return;
+            let current = 0;
+            const total = slider.children.length;
+
+            const nextLabels = ['Pokaż mi środek', 'Pokaż mi więcej', ''];
+            const prevLabels = ['', 'Jednak pokaż z zewnątrz', 'Jednak daj do środka'];
+
+            function goTo(index) {
+                current = Math.max(0, Math.min(index, total - 1));
+                slider.style.transform = `translateX(-${current * 100}%)`;
+                dots.forEach((d, i) => d.classList.toggle('active', i === current));
+
+                // Tekst ustawiamy tylko gdy przycisk staje się aktywny —
+                // gdy staje się nieaktywny, stary tekst zostaje i wygasa przez CSS transition
+                if (current < total - 1) nextText.textContent = nextLabels[current];
+                if (current > 0)         prevText.textContent = prevLabels[current];
+
+                prevBtn.disabled = current === 0;
+                nextBtn.disabled = current === total - 1;
+            }
+
+            nextBtn.addEventListener('click', () => goTo(current + 1));
+            prevBtn.addEventListener('click', () => goTo(current - 1));
+            dots.forEach((dot, i) => dot.addEventListener('click', () => goTo(i)));
+
+            let startX = 0;
+            slider.addEventListener('touchstart', e => { startX = e.touches[0].clientX; }, { passive: true });
+            slider.addEventListener('touchend', e => {
+                const diff = startX - e.changedTouches[0].clientX;
+                if (diff > 50) goTo(current + 1);
+                else if (diff < -50) goTo(current - 1);
+            }, { passive: true });
+
+            goTo(0);
+        })();
+
+        // ========================================
+        // Stats counter animation
+        // ========================================
+        (function() {
+            function formatNumber(val, decimals, format) {
+                let str = parseFloat(val).toFixed(decimals || 0);
+                if (format === 'space') {
+                    str = str.replace(/\B(?=(\d{3})+(?!\d))/g, '\u00a0');
+                }
+                return str;
+            }
+
+            const counters = document.querySelectorAll('.stats-item .number[data-count]');
+            const observer = new IntersectionObserver(entries => {
+                entries.forEach(entry => {
+                    if (!entry.isIntersecting || entry.target.dataset.counted) return;
+                    entry.target.dataset.counted = '1';
+                    const target = parseFloat(entry.target.dataset.count);
+                    const suffix = entry.target.dataset.suffix || '';
+                    const decimals = parseInt(entry.target.dataset.decimals || '0');
+                    const format = entry.target.dataset.format || '';
+                    const duration = 1600;
+                    const start = performance.now();
+                    function tick(now) {
+                        const p = Math.min((now - start) / duration, 1);
+                        const eased = 1 - Math.pow(1 - p, 3);
+                        entry.target.textContent = formatNumber(target * eased, decimals, format) + suffix;
+                        if (p < 1) requestAnimationFrame(tick);
+                    }
+                    requestAnimationFrame(tick);
+                });
+            }, { threshold: 0.6 });
+
+            counters.forEach(c => observer.observe(c));
+        })();
+
+        // ========================================
         // Accordion
         // ========================================
         document.querySelectorAll('.accordion-header').forEach(header => {
@@ -2453,6 +3039,19 @@
                     item.classList.add('active');
                     body.style.maxHeight = inner.scrollHeight + 28 + 'px';
                 }
+            });
+        });
+
+        // ========================================
+        // Trainer calendar selector
+        // ========================================
+        document.querySelectorAll('.trainer-btn').forEach(btn => {
+            btn.addEventListener('click', () => {
+                document.querySelectorAll('.trainer-btn').forEach(b => b.classList.remove('active'));
+                btn.classList.add('active');
+                const frame = document.getElementById('calendarFrame');
+                frame.src = btn.dataset.cal;
+                frame.style.colorScheme = 'light';
             });
         });
 
