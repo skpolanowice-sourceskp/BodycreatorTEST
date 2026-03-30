@@ -1,0 +1,827 @@
+<!DOCTYPE html>
+<html lang="pl">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Kalkulator TDEE / BMI — Body Creator</title>
+    <meta name="description" content="Oblicz swoje zapotrzebowanie kaloryczne (TDEE) i wskaźnik masy ciała (BMI). Darmowy kalkulator od Body Creator Wrocław.">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800;900&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <style>
+        *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+
+        :root {
+            --yellow: #FED525;
+            --yellow-hover: #E5C000;
+            --dark: #0A0A0A;
+            --dark-2: #111111;
+            --dark-3: #1A1A1A;
+            --dark-4: #222222;
+            --white: #FFFFFF;
+            --gray: #999999;
+            --font-primary: 'Inter', sans-serif;
+        }
+
+        html { scroll-behavior: smooth; }
+
+        body {
+            font-family: var(--font-primary);
+            background: var(--dark);
+            color: var(--white);
+            min-height: 100vh;
+        }
+
+        a { text-decoration: none; color: inherit; }
+
+        /* ── NAV ── */
+        .navbar {
+            position: fixed;
+            top: 0; left: 0; right: 0;
+            height: 72px;
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            padding: 0 40px;
+            background: rgba(10,10,10,0.92);
+            backdrop-filter: blur(12px);
+            border-bottom: 1px solid rgba(255,255,255,0.05);
+            z-index: 100;
+        }
+
+        .logo img { height: 44px; width: auto; }
+
+        .back-link {
+            display: inline-flex;
+            align-items: center;
+            gap: 8px;
+            font-size: 0.85rem;
+            font-weight: 600;
+            letter-spacing: 1px;
+            text-transform: uppercase;
+            color: var(--gray);
+            transition: color 0.2s;
+        }
+        .back-link:hover { color: var(--yellow); }
+
+        /* ── HERO ── */
+        .page-hero {
+            padding: 140px 0 60px;
+            text-align: center;
+        }
+
+        .section-label {
+            display: inline-block;
+            font-size: 0.72rem;
+            font-weight: 700;
+            letter-spacing: 3px;
+            text-transform: uppercase;
+            color: var(--yellow);
+            margin-bottom: 16px;
+        }
+
+        .page-title {
+            font-size: clamp(2rem, 5vw, 3.2rem);
+            font-weight: 900;
+            letter-spacing: 2px;
+            text-transform: uppercase;
+            line-height: 1.1;
+            margin-bottom: 16px;
+        }
+
+        .page-subtitle {
+            font-size: 1rem;
+            color: var(--gray);
+            max-width: 520px;
+            margin: 0 auto;
+            line-height: 1.7;
+        }
+
+        /* ── CONTAINER ── */
+        .container {
+            max-width: 900px;
+            margin: 0 auto;
+            padding: 0 24px;
+        }
+
+        /* ── CALCULATOR CARD ── */
+        .calc-card {
+            background: var(--dark-2);
+            border: 1px solid rgba(255,255,255,0.06);
+            border-radius: 24px;
+            padding: 48px;
+            margin-bottom: 24px;
+        }
+
+        .calc-card h2 {
+            font-size: 1.1rem;
+            font-weight: 700;
+            letter-spacing: 2px;
+            text-transform: uppercase;
+            color: var(--yellow);
+            margin-bottom: 32px;
+            display: flex;
+            align-items: center;
+            gap: 10px;
+        }
+
+        /* ── GENDER TOGGLE ── */
+        .gender-toggle {
+            display: flex;
+            gap: 12px;
+            margin-bottom: 32px;
+        }
+
+        .gender-btn {
+            flex: 1;
+            padding: 14px;
+            border-radius: 14px;
+            border: 2px solid rgba(255,255,255,0.08);
+            background: var(--dark-3);
+            color: var(--gray);
+            font-family: var(--font-primary);
+            font-size: 0.9rem;
+            font-weight: 600;
+            letter-spacing: 1px;
+            text-transform: uppercase;
+            cursor: pointer;
+            transition: all 0.2s;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            gap: 8px;
+        }
+
+        .gender-btn.active {
+            border-color: var(--yellow);
+            background: rgba(254, 213, 37, 0.08);
+            color: var(--yellow);
+        }
+
+        /* ── FORM GRID ── */
+        .form-grid {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 20px;
+            margin-bottom: 20px;
+        }
+
+        .form-group {
+            display: flex;
+            flex-direction: column;
+            gap: 8px;
+        }
+
+        .form-group label {
+            font-size: 0.72rem;
+            font-weight: 700;
+            letter-spacing: 2px;
+            text-transform: uppercase;
+            color: var(--gray);
+        }
+
+        .form-group input,
+        .form-group select {
+            padding: 14px 18px;
+            background: var(--dark-3);
+            border: 1px solid rgba(255,255,255,0.08);
+            border-radius: 12px;
+            color: var(--white);
+            font-family: var(--font-primary);
+            font-size: 1rem;
+            font-weight: 500;
+            transition: border-color 0.2s;
+            appearance: none;
+        }
+
+        .form-group input:focus,
+        .form-group select:focus {
+            outline: none;
+            border-color: rgba(254, 213, 37, 0.4);
+        }
+
+        .form-group select option {
+            background: var(--dark-3);
+        }
+
+        /* ── ACTIVITY GRID ── */
+        .activity-grid {
+            display: grid;
+            grid-template-columns: repeat(3, 1fr);
+            gap: 10px;
+            margin-bottom: 32px;
+        }
+
+        .activity-btn {
+            padding: 14px 10px;
+            border-radius: 14px;
+            border: 2px solid rgba(255,255,255,0.08);
+            background: var(--dark-3);
+            color: var(--gray);
+            font-family: var(--font-primary);
+            font-size: 0.75rem;
+            font-weight: 600;
+            text-transform: uppercase;
+            letter-spacing: 0.5px;
+            cursor: pointer;
+            transition: all 0.2s;
+            text-align: center;
+            line-height: 1.4;
+        }
+
+        .activity-btn i {
+            display: block;
+            font-size: 1.2rem;
+            margin-bottom: 6px;
+            color: var(--yellow);
+        }
+
+        .activity-btn.active {
+            border-color: var(--yellow);
+            background: rgba(254, 213, 37, 0.08);
+            color: var(--white);
+        }
+
+        /* ── GOAL ── */
+        .goal-grid {
+            display: grid;
+            grid-template-columns: repeat(3, 1fr);
+            gap: 10px;
+            margin-bottom: 32px;
+        }
+
+        .goal-btn {
+            padding: 14px 10px;
+            border-radius: 14px;
+            border: 2px solid rgba(255,255,255,0.08);
+            background: var(--dark-3);
+            color: var(--gray);
+            font-family: var(--font-primary);
+            font-size: 0.78rem;
+            font-weight: 600;
+            text-transform: uppercase;
+            letter-spacing: 0.5px;
+            cursor: pointer;
+            transition: all 0.2s;
+            text-align: center;
+            line-height: 1.4;
+        }
+
+        .goal-btn i {
+            display: block;
+            font-size: 1.2rem;
+            margin-bottom: 6px;
+            color: var(--yellow);
+        }
+
+        .goal-btn.active {
+            border-color: var(--yellow);
+            background: rgba(254, 213, 37, 0.08);
+            color: var(--white);
+        }
+
+        .section-sublabel {
+            font-size: 0.72rem;
+            font-weight: 700;
+            letter-spacing: 2px;
+            text-transform: uppercase;
+            color: var(--gray);
+            margin-bottom: 12px;
+        }
+
+        /* ── CALC BUTTON ── */
+        .calc-btn {
+            width: 100%;
+            padding: 18px;
+            background: var(--yellow);
+            color: var(--dark);
+            border: none;
+            border-radius: 50px;
+            font-family: var(--font-primary);
+            font-size: 0.9rem;
+            font-weight: 800;
+            letter-spacing: 2px;
+            text-transform: uppercase;
+            cursor: pointer;
+            transition: all 0.2s;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            gap: 10px;
+        }
+
+        .calc-btn:hover {
+            background: var(--yellow-hover);
+            transform: translateY(-2px);
+            box-shadow: 0 10px 30px rgba(254, 213, 37, 0.25);
+        }
+
+        /* ── RESULTS ── */
+        .results {
+            display: none;
+            margin-top: 32px;
+            border-top: 1px solid rgba(255,255,255,0.06);
+            padding-top: 32px;
+        }
+
+        .results.visible { display: block; }
+
+        .results-title {
+            font-size: 0.72rem;
+            font-weight: 700;
+            letter-spacing: 2px;
+            text-transform: uppercase;
+            color: var(--gray);
+            margin-bottom: 20px;
+        }
+
+        .results-grid {
+            display: grid;
+            grid-template-columns: repeat(3, 1fr);
+            gap: 16px;
+            margin-bottom: 24px;
+        }
+
+        .result-item {
+            background: var(--dark-3);
+            border: 1px solid rgba(255,255,255,0.06);
+            border-radius: 16px;
+            padding: 20px 16px;
+            text-align: center;
+            position: relative;
+            overflow: hidden;
+            transition: border-color 0.2s;
+        }
+
+        .result-item.highlight {
+            border-color: var(--yellow);
+            background: rgba(254, 213, 37, 0.05);
+        }
+
+        .result-item::after {
+            content: '';
+            position: absolute;
+            bottom: 0; left: 0; right: 0;
+            height: 3px;
+            background: var(--yellow);
+            transform: scaleX(0);
+            transition: transform 0.4s cubic-bezier(0.25, 0.46, 0.45, 0.94);
+        }
+
+        .result-item.highlight::after { transform: scaleX(1); }
+
+        .result-label {
+            font-size: 0.65rem;
+            font-weight: 700;
+            letter-spacing: 1.5px;
+            text-transform: uppercase;
+            color: var(--gray);
+            margin-bottom: 8px;
+        }
+
+        .result-value {
+            font-size: 1.8rem;
+            font-weight: 900;
+            color: var(--yellow);
+            line-height: 1;
+            margin-bottom: 4px;
+        }
+
+        .result-unit {
+            font-size: 0.72rem;
+            color: var(--gray);
+        }
+
+        /* ── BMI BAR ── */
+        .bmi-bar-wrap {
+            margin-top: 24px;
+        }
+
+        .bmi-bar-label {
+            font-size: 0.72rem;
+            font-weight: 700;
+            letter-spacing: 2px;
+            text-transform: uppercase;
+            color: var(--gray);
+            margin-bottom: 12px;
+        }
+
+        .bmi-bar {
+            position: relative;
+            height: 10px;
+            border-radius: 10px;
+            background: linear-gradient(to right,
+                #4A90D9 0%, #4A90D9 18.5%,
+                #5BBF6A 18.5%, #5BBF6A 43%,
+                #F5A623 43%, #F5A623 68%,
+                #E74C3C 68%, #E74C3C 100%
+            );
+            margin-bottom: 10px;
+        }
+
+        .bmi-marker {
+            position: absolute;
+            top: 50%;
+            transform: translate(-50%, -50%);
+            width: 20px;
+            height: 20px;
+            background: var(--white);
+            border-radius: 50%;
+            border: 3px solid var(--dark);
+            box-shadow: 0 0 0 2px var(--yellow);
+            transition: left 0.6s cubic-bezier(0.25, 0.46, 0.45, 0.94);
+        }
+
+        .bmi-scale {
+            display: flex;
+            justify-content: space-between;
+            font-size: 0.65rem;
+            color: var(--gray);
+            margin-top: 6px;
+        }
+
+        .bmi-status {
+            text-align: center;
+            margin-top: 16px;
+            font-size: 0.9rem;
+            font-weight: 700;
+        }
+
+        /* ── MACROS ── */
+        .macros-grid {
+            display: grid;
+            grid-template-columns: repeat(3, 1fr);
+            gap: 12px;
+            margin-top: 24px;
+        }
+
+        .macro-item {
+            background: var(--dark-3);
+            border: 1px solid rgba(255,255,255,0.06);
+            border-radius: 14px;
+            padding: 16px;
+            text-align: center;
+        }
+
+        .macro-label {
+            font-size: 0.65rem;
+            font-weight: 700;
+            letter-spacing: 1.5px;
+            text-transform: uppercase;
+            color: var(--gray);
+            margin-bottom: 6px;
+        }
+
+        .macro-value {
+            font-size: 1.3rem;
+            font-weight: 900;
+            color: var(--white);
+        }
+
+        .macro-kcal {
+            font-size: 0.7rem;
+            color: var(--gray);
+            margin-top: 2px;
+        }
+
+        /* ── CTA ── */
+        .cta-section {
+            text-align: center;
+            padding: 64px 0 80px;
+        }
+
+        .cta-section h2 {
+            font-size: clamp(1.5rem, 3vw, 2rem);
+            font-weight: 900;
+            letter-spacing: 2px;
+            text-transform: uppercase;
+            margin-bottom: 12px;
+        }
+
+        .cta-section p {
+            color: var(--gray);
+            margin-bottom: 32px;
+            font-size: 0.95rem;
+        }
+
+        .btn {
+            display: inline-flex;
+            align-items: center;
+            gap: 10px;
+            padding: 16px 36px;
+            font-family: var(--font-primary);
+            font-size: 0.9rem;
+            font-weight: 700;
+            letter-spacing: 1px;
+            text-transform: uppercase;
+            border: none;
+            border-radius: 50px;
+            cursor: pointer;
+            transition: all 0.2s;
+        }
+
+        .btn-primary {
+            background: var(--yellow);
+            color: var(--dark);
+        }
+
+        .btn-primary:hover {
+            background: var(--yellow-hover);
+            transform: translateY(-2px);
+            box-shadow: 0 10px 30px rgba(254, 213, 37, 0.3);
+        }
+
+        /* ── FOOTER ── */
+        footer {
+            background: var(--dark-2);
+            border-top: 1px solid rgba(255,255,255,0.05);
+            padding: 24px 0;
+            text-align: center;
+            font-size: 0.8rem;
+            color: var(--gray);
+        }
+
+        /* ── RESPONSIVE ── */
+        @media (max-width: 640px) {
+            .calc-card { padding: 28px 20px; }
+            .form-grid { grid-template-columns: 1fr; }
+            .activity-grid { grid-template-columns: repeat(2, 1fr); }
+            .goal-grid { grid-template-columns: repeat(2, 1fr); }
+            .results-grid { grid-template-columns: 1fr 1fr; }
+            .macros-grid { grid-template-columns: 1fr; }
+            .navbar { padding: 0 20px; }
+        }
+    </style>
+</head>
+<body>
+
+    <!-- NAV -->
+    <nav class="navbar">
+        <a href="index.html" class="logo">
+            <img src="logo.png" alt="Body Creator">
+        </a>
+        <a href="index.html" class="back-link">
+            <i class="fas fa-arrow-left"></i> Wróć na stronę
+        </a>
+    </nav>
+
+    <!-- HERO -->
+    <div class="page-hero">
+        <div class="container">
+            <span class="section-label">Narzędzia</span>
+            <h1 class="page-title">Kalkulator TDEE / BMI</h1>
+            <p class="page-subtitle">Oblicz swoje dzienne zapotrzebowanie kaloryczne i&nbsp;dowiedz się ile powinieneś jeść, żeby osiągnąć swój cel.</p>
+        </div>
+    </div>
+
+    <!-- CALCULATOR -->
+    <div class="container">
+        <div class="calc-card">
+            <h2><i class="fas fa-sliders"></i> Twoje dane</h2>
+
+            <!-- GENDER -->
+            <div class="gender-toggle">
+                <button class="gender-btn active" data-gender="male">
+                    <i class="fas fa-mars"></i> Mężczyzna
+                </button>
+                <button class="gender-btn" data-gender="female">
+                    <i class="fas fa-venus"></i> Kobieta
+                </button>
+            </div>
+
+            <!-- INPUTS -->
+            <div class="form-grid">
+                <div class="form-group">
+                    <label>Wiek (lata)</label>
+                    <input type="number" id="age" placeholder="25" min="10" max="100">
+                </div>
+                <div class="form-group">
+                    <label>Wzrost (cm)</label>
+                    <input type="number" id="height" placeholder="175" min="100" max="250">
+                </div>
+                <div class="form-group">
+                    <label>Waga (kg)</label>
+                    <input type="number" id="weight" placeholder="75" min="30" max="300">
+                </div>
+            </div>
+
+            <!-- ACTIVITY -->
+            <p class="section-sublabel">Poziom aktywności</p>
+            <div class="activity-grid">
+                <button class="activity-btn" data-multiplier="1.2">
+                    <i class="fas fa-couch"></i>Siedzący tryb życia
+                </button>
+                <button class="activity-btn" data-multiplier="1.375">
+                    <i class="fas fa-person-walking"></i>Lekka aktywność<br><small style="opacity:0.6">(1–2× tydz.)</small>
+                </button>
+                <button class="activity-btn active" data-multiplier="1.55">
+                    <i class="fas fa-person-running"></i>Umiarkowana<br><small style="opacity:0.6">(3–5× tydz.)</small>
+                </button>
+                <button class="activity-btn" data-multiplier="1.725">
+                    <i class="fas fa-dumbbell"></i>Intensywna<br><small style="opacity:0.6">(6–7× tydz.)</small>
+                </button>
+                <button class="activity-btn" data-multiplier="1.9">
+                    <i class="fas fa-fire-flame-curved"></i>Bardzo intensywna<br><small style="opacity:0.6">(2× dziennie)</small>
+                </button>
+            </div>
+
+            <!-- GOAL -->
+            <p class="section-sublabel">Twój cel</p>
+            <div class="goal-grid">
+                <button class="goal-btn" data-modifier="-500">
+                    <i class="fas fa-arrow-trend-down"></i>Redukcja<br><small style="opacity:0.6">−500 kcal</small>
+                </button>
+                <button class="goal-btn active" data-modifier="0">
+                    <i class="fas fa-scale-balanced"></i>Utrzymanie wagi
+                </button>
+                <button class="goal-btn" data-modifier="300">
+                    <i class="fas fa-arrow-trend-up"></i>Masa mięśniowa<br><small style="opacity:0.6">+300 kcal</small>
+                </button>
+            </div>
+
+            <!-- BUTTON -->
+            <button class="calc-btn" id="calcBtn">
+                <i class="fas fa-calculator"></i> Oblicz
+            </button>
+
+            <!-- RESULTS -->
+            <div class="results" id="results">
+                <p class="results-title">Twoje wyniki</p>
+                <div class="results-grid">
+                    <div class="result-item">
+                        <div class="result-label">BMR (spoczynek)</div>
+                        <div class="result-value" id="resBMR">—</div>
+                        <div class="result-unit">kcal / dzień</div>
+                    </div>
+                    <div class="result-item highlight">
+                        <div class="result-label">TDEE (cel)</div>
+                        <div class="result-value" id="resTDEE">—</div>
+                        <div class="result-unit">kcal / dzień</div>
+                    </div>
+                    <div class="result-item">
+                        <div class="result-label">BMI</div>
+                        <div class="result-value" id="resBMI">—</div>
+                        <div class="result-unit">kg/m²</div>
+                    </div>
+                </div>
+
+                <!-- BMI BAR -->
+                <div class="bmi-bar-wrap">
+                    <p class="bmi-bar-label">Skala BMI</p>
+                    <div class="bmi-bar">
+                        <div class="bmi-marker" id="bmiMarker" style="left:0%"></div>
+                    </div>
+                    <div class="bmi-scale">
+                        <span>16</span>
+                        <span>18.5</span>
+                        <span>25</span>
+                        <span>30</span>
+                        <span>40</span>
+                    </div>
+                    <p class="bmi-status" id="bmiStatus"></p>
+                </div>
+
+                <!-- MACROS -->
+                <p class="results-title" style="margin-top:28px">Sugerowane makroskładniki</p>
+                <div class="macros-grid">
+                    <div class="macro-item">
+                        <div class="macro-label">Białko</div>
+                        <div class="macro-value" id="macroProtein">—</div>
+                        <div class="macro-kcal" id="macroProteinKcal"></div>
+                    </div>
+                    <div class="macro-item">
+                        <div class="macro-label">Węglowodany</div>
+                        <div class="macro-value" id="macroCarbs">—</div>
+                        <div class="macro-kcal" id="macroCarbsKcal"></div>
+                    </div>
+                    <div class="macro-item">
+                        <div class="macro-label">Tłuszcze</div>
+                        <div class="macro-value" id="macroFat">—</div>
+                        <div class="macro-kcal" id="macroFatKcal"></div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- CTA -->
+    <div class="cta-section">
+        <div class="container">
+            <h2>Chcesz osiągnąć cel szybciej?</h2>
+            <p>Nasi trenerzy ułożą dla Ciebie spersonalizowany plan treningowy i&nbsp;żywieniowy.</p>
+            <a href="index.html#booking" class="btn btn-primary">
+                Umów darmową konsultację <i class="fas fa-arrow-right"></i>
+            </a>
+        </div>
+    </div>
+
+    <!-- FOOTER -->
+    <footer>
+        <p>© 2025 Body Creator — ul. Rafała Wojaczka 3g, Wrocław</p>
+    </footer>
+
+    <script>
+        // Gender toggle
+        let gender = 'male';
+        document.querySelectorAll('.gender-btn').forEach(btn => {
+            btn.addEventListener('click', () => {
+                document.querySelectorAll('.gender-btn').forEach(b => b.classList.remove('active'));
+                btn.classList.add('active');
+                gender = btn.dataset.gender;
+            });
+        });
+
+        // Activity toggle
+        let activityMultiplier = 1.55;
+        document.querySelectorAll('.activity-btn').forEach(btn => {
+            btn.addEventListener('click', () => {
+                document.querySelectorAll('.activity-btn').forEach(b => b.classList.remove('active'));
+                btn.classList.add('active');
+                activityMultiplier = parseFloat(btn.dataset.multiplier);
+            });
+        });
+
+        // Goal toggle
+        let goalModifier = 0;
+        document.querySelectorAll('.goal-btn').forEach(btn => {
+            btn.addEventListener('click', () => {
+                document.querySelectorAll('.goal-btn').forEach(b => b.classList.remove('active'));
+                btn.classList.add('active');
+                goalModifier = parseInt(btn.dataset.modifier);
+            });
+        });
+
+        // Calculate
+        document.getElementById('calcBtn').addEventListener('click', () => {
+            const age    = parseFloat(document.getElementById('age').value);
+            const height = parseFloat(document.getElementById('height').value);
+            const weight = parseFloat(document.getElementById('weight').value);
+
+            if (!age || !height || !weight) {
+                document.getElementById('age').style.borderColor    = !age    ? 'rgba(231,76,60,0.6)' : '';
+                document.getElementById('height').style.borderColor = !height ? 'rgba(231,76,60,0.6)' : '';
+                document.getElementById('weight').style.borderColor = !weight ? 'rgba(231,76,60,0.6)' : '';
+                return;
+            }
+
+            // Reset border colors
+            ['age','height','weight'].forEach(id => document.getElementById(id).style.borderColor = '');
+
+            // BMR — Mifflin-St Jeor
+            let bmr;
+            if (gender === 'male') {
+                bmr = 10 * weight + 6.25 * height - 5 * age + 5;
+            } else {
+                bmr = 10 * weight + 6.25 * height - 5 * age - 161;
+            }
+
+            const tdee = Math.round(bmr * activityMultiplier + goalModifier);
+            const bmrRounded = Math.round(bmr);
+
+            // BMI
+            const bmi = weight / Math.pow(height / 100, 2);
+            const bmiRounded = Math.round(bmi * 10) / 10;
+
+            // BMI status
+            let bmiStatus = '';
+            let bmiColor  = '';
+            if (bmi < 16)       { bmiStatus = 'Wygłodzenie';          bmiColor = '#4A90D9'; }
+            else if (bmi < 18.5){ bmiStatus = 'Niedowaga';            bmiColor = '#4A90D9'; }
+            else if (bmi < 25)  { bmiStatus = 'Prawidłowa masa ciała';bmiColor = '#5BBF6A'; }
+            else if (bmi < 30)  { bmiStatus = 'Nadwaga';              bmiColor = '#F5A623'; }
+            else                { bmiStatus = 'Otyłość';              bmiColor = '#E74C3C'; }
+
+            // BMI marker position (scale 16–40)
+            const bmiMin = 16, bmiMax = 40;
+            const markerPct = Math.min(Math.max((bmi - bmiMin) / (bmiMax - bmiMin) * 100, 2), 98);
+
+            // Macros (protein 30%, carbs 45%, fat 25%)
+            const proteinG = Math.round(tdee * 0.30 / 4);
+            const carbsG   = Math.round(tdee * 0.45 / 4);
+            const fatG     = Math.round(tdee * 0.25 / 9);
+
+            // Render
+            document.getElementById('resBMR').textContent  = bmrRounded;
+            document.getElementById('resTDEE').textContent = tdee;
+            document.getElementById('resBMI').textContent  = bmiRounded;
+
+            document.getElementById('bmiMarker').style.left = markerPct + '%';
+            const statusEl = document.getElementById('bmiStatus');
+            statusEl.textContent  = bmiStatus;
+            statusEl.style.color  = bmiColor;
+
+            document.getElementById('macroProtein').textContent     = proteinG + 'g';
+            document.getElementById('macroProteinKcal').textContent  = Math.round(proteinG * 4) + ' kcal';
+            document.getElementById('macroCarbs').textContent        = carbsG + 'g';
+            document.getElementById('macroCarbsKcal').textContent    = Math.round(carbsG * 4) + ' kcal';
+            document.getElementById('macroFat').textContent          = fatG + 'g';
+            document.getElementById('macroFatKcal').textContent      = Math.round(fatG * 9) + ' kcal';
+
+            const results = document.getElementById('results');
+            results.classList.add('visible');
+            results.scrollIntoView({ behavior: 'smooth', block: 'nearest' });
+        });
+    </script>
+</body>
+</html>
