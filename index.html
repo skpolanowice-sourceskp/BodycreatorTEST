@@ -846,6 +846,31 @@
            ============================================ */
         #team {
             background: var(--dark-2);
+            position: relative;
+            overflow: hidden;
+        }
+
+        .team-video {
+            position: absolute;
+            inset: 0;
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+            filter: grayscale(100%) blur(3px);
+            transform: scale(1.05);
+            z-index: 0;
+        }
+
+        .team-video-overlay {
+            position: absolute;
+            inset: 0;
+            background: rgba(0, 0, 0, 0.82);
+            z-index: 1;
+        }
+
+        #team .container {
+            position: relative;
+            z-index: 2;
         }
 
         .team-slider-wrapper {
@@ -2843,6 +2868,10 @@
          TEAM SECTION
          ======================================== -->
     <section id="team">
+        <video class="team-video" autoplay muted loop playsinline oncanplay="this.playbackRate=0.3">
+            <source src="team-bg.mp4" type="video/mp4">
+        </video>
+        <div class="team-video-overlay"></div>
         <div class="container">
             <div class="team-slider-wrapper">
                 <div class="team-slider" id="teamPanelSlider">
@@ -3934,6 +3963,7 @@
                 }
             });
         });
+
 
     </script>
 
