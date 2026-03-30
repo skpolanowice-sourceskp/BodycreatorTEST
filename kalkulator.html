@@ -126,7 +126,7 @@
             --font-primary: 'Inter', sans-serif;
         }
 
-        html { scroll-behavior: smooth; }
+        html { scroll-behavior: auto; }
 
         body {
             font-family: var(--font-primary);
@@ -1046,5 +1046,23 @@
         document.getElementById('bgVideo').playbackRate = 0.5;
 
     </script>
+
+    <!-- Lenis smooth scroll -->
+    <script src="https://cdn.jsdelivr.net/npm/@studio-freight/lenis@1.0.42/dist/lenis.min.js"></script>
+    <script>
+        const lenis = new Lenis({
+            duration: 1.4,
+            easing: t => Math.min(1, 1.001 - Math.pow(2, -10 * t)),
+            smoothWheel: true,
+            touchMultiplier: 1.5,
+        });
+
+        function raf(time) {
+            lenis.raf(time);
+            requestAnimationFrame(raf);
+        }
+        requestAnimationFrame(raf);
+    </script>
+
 </body>
 </html>
