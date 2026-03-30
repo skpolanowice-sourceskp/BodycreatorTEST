@@ -5,6 +5,7 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Kalkulator TDEE / BMI — Body Creator</title>
     <meta name="description" content="Oblicz swoje zapotrzebowanie kaloryczne (TDEE) i wskaźnik masy ciała (BMI). Darmowy kalkulator od Body Creator Wrocław.">
+    <link rel="icon" type="image/png" href="favicon.png">
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
     <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800;900&display=swap" rel="stylesheet">
@@ -412,10 +413,10 @@
             height: 10px;
             border-radius: 10px;
             background: linear-gradient(to right,
-                #4A90D9 0%, #4A90D9 18.5%,
-                #5BBF6A 18.5%, #5BBF6A 43%,
-                #F5A623 43%, #F5A623 68%,
-                #E74C3C 68%, #E74C3C 100%
+                #4A90D9 0%, #4A90D9 10.42%,
+                #5BBF6A 10.42%, #5BBF6A 37.5%,
+                #F5A623 37.5%, #F5A623 58.33%,
+                #E74C3C 58.33%, #E74C3C 100%
             );
             margin-bottom: 10px;
         }
@@ -540,6 +541,32 @@
             text-align: center;
             font-size: 0.8rem;
             color: var(--gray);
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            gap: 14px;
+        }
+
+        .footer-portfolio-btn {
+            display: inline-flex;
+            align-items: center;
+            gap: 8px;
+            padding: 10px 22px;
+            border: 2px solid var(--yellow);
+            border-radius: 50px;
+            color: var(--yellow);
+            font-size: 0.78rem;
+            font-weight: 700;
+            letter-spacing: 1px;
+            text-transform: uppercase;
+            white-space: nowrap;
+            transition: background 0.2s, color 0.2s;
+            text-decoration: none;
+        }
+
+        .footer-portfolio-btn:hover {
+            background: var(--yellow);
+            color: var(--dark);
         }
 
         /* ── RESPONSIVE ── */
@@ -718,7 +745,10 @@
 
     <!-- FOOTER -->
     <footer>
-        <p>© 2025 Body Creator — ul. Rafała Wojaczka 3g, Wrocław</p>
+        <p>Potrzebujesz takiej strony internetowej stworzonej od podstaw pod Ciebie?</p>
+        <a href="https://michal20000505-sudo.github.io/portfolio-site/index.html" target="_blank" rel="noopener" class="footer-portfolio-btn">
+            Skontaktuj się
+        </a>
     </footer>
 
     <script>
