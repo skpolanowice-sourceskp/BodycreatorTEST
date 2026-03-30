@@ -1841,15 +1841,18 @@
             overflow: hidden;
             border: 1px solid rgba(255,255,255,0.08);
             background: #ffffff;
+            height: 600px;
         }
 
         .calendar-frame-wrapper iframe {
             display: block;
-            width: 100%;
-            height: 600px;
+            width: calc(100% / 0.75);
+            height: calc(600px / 0.75);
             border: none;
             background: #ffffff;
             color-scheme: light;
+            transform: scale(0.75);
+            transform-origin: top left;
         }
 
         /* ============================================
@@ -2369,8 +2372,12 @@
                 aspect-ratio: 16/10;
             }
 
+            .calendar-frame-wrapper {
+                height: 820px;
+            }
+
             .calendar-frame-wrapper iframe {
-                height: 450px;
+                height: calc(820px / 0.75);
             }
 
             .trainer-btn {
@@ -2454,8 +2461,12 @@
                 letter-spacing: 2px;
             }
 
+            .calendar-frame-wrapper {
+                height: 760px;
+            }
+
             .calendar-frame-wrapper iframe {
-                height: 350px;
+                height: calc(760px / 0.75);
             }
 
             .trainer-btn {
