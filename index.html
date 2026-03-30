@@ -1720,9 +1720,10 @@
 
         .contact-grid {
             display: grid;
-            grid-template-columns: 1fr 1fr;
+            grid-template-columns: 1fr;
             gap: 80px;
             align-items: start;
+            max-width: 640px;
         }
 
         .contact-info h2 {
@@ -2911,48 +2912,6 @@
                     </div>
                 </div>
 
-                <div class="contact-form reveal reveal-delay-1" id="contactFormWrapper">
-                    <h3>Zapisz się na darmową konsultację</h3>
-                    <p>Wypełnij formularz, a&nbsp;skontaktujemy się z&nbsp;Tobą w&nbsp;ciągu 24h</p>
-
-                    <form id="contactForm">
-                        <div class="form-group">
-                            <label for="name">Imię i&nbsp;nazwisko</label>
-                            <input type="text" id="name" name="name" placeholder="Jan Kowalski" required>
-                        </div>
-                        <div class="form-group">
-                            <label for="email">E-mail</label>
-                            <input type="email" id="email" name="email" placeholder="jan@email.com" required>
-                        </div>
-                        <div class="form-group">
-                            <label for="phone">Telefon</label>
-                            <input type="tel" id="phone" name="phone" placeholder="+48 --- --- ---" required>
-                        </div>
-                        <div class="form-group">
-                            <label for="service">Rodzaj współpracy</label>
-                            <select id="service" name="service" required>
-                                <option value="" disabled selected>Wybierz rodzaj współpracy</option>
-                                <option value="personalny">Trening Personalny</option>
-                                <option value="hybrydowy">Współpraca Hybrydowa</option>
-                                <option value="grupy">Zajęcia w Mini Grupach</option>
-                                <option value="online">Współpraca Online</option>
-                            </select>
-                        </div>
-                        <div class="form-group">
-                            <label for="message">Wiadomość <span style="font-weight:400;color:var(--gray)">(opcjonalnie)</span></label>
-                            <textarea id="message" name="message" placeholder="Napisz kilka słów o swoich celach treningowych..."></textarea>
-                        </div>
-                        <button type="submit" class="btn btn-primary">
-                            Wyślij zgłoszenie <i class="fas fa-paper-plane"></i>
-                        </button>
-                    </form>
-
-                    <div class="form-success" id="formSuccess">
-                        <i class="fas fa-check-circle"></i>
-                        <h3>Dziękujemy!</h3>
-                        <p>Twoje zgłoszenie zostało wysłane. Odezwiemy się w&nbsp;ciągu 24h.</p>
-                    </div>
-                </div>
             </div>
         </div>
     </section>
