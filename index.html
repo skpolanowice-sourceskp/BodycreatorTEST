@@ -6,10 +6,21 @@
     <meta name="description" content="Body Creator - Studio Treningu Personalnego we Wrocławiu. Profesjonalne treningi personalne, współpraca hybrydowa, zajęcia grupowe. Sołtysowice, ul. Rafała Wojaczka 3g.">
     <link rel="icon" type="image/png" href="favicon.png">
     <meta name="keywords" content="trener personalny wrocław, studio treningu, trening personalny, body creator, sołtysowice">
+    <meta name="theme-color" content="#FED525">
+    <meta name="author" content="Body Creator">
     <title>Body Creator — Studio Treningu | Trener Personalny Wrocław</title>
 
-    <!-- Favicon -->
-    <link rel="icon" type="image/png" href="favicon.png">
+    <!-- Open Graph -->
+    <meta property="og:type" content="website">
+    <meta property="og:title" content="Body Creator — Studio Treningu Personalnego Wrocław">
+    <meta property="og:description" content="Profesjonalne treningi personalne, współpraca hybrydowa, zajęcia grupowe. Sołtysowice, ul. Rafała Wojaczka 3g.">
+    <meta property="og:image" content="favicon.png">
+
+    <!-- Twitter Card -->
+    <meta name="twitter:card" content="summary">
+    <meta name="twitter:title" content="Body Creator — Studio Treningu Personalnego Wrocław">
+    <meta name="twitter:description" content="Profesjonalne treningi personalne, współpraca hybrydowa, zajęcia grupowe.">
+    <meta name="twitter:image" content="favicon.png">
 
     <!-- Google Fonts -->
     <link rel="preconnect" href="https://fonts.googleapis.com">
@@ -2245,7 +2256,7 @@
 
         @media (max-width: 768px) {
             :root {
-                --section-padding: 64px;
+                --section-padding: 56px;
             }
 
             .service-card,
@@ -2267,7 +2278,19 @@
             }
 
             .hero-title {
-                font-size: clamp(2.2rem, 8vw, 3.5rem);
+                font-size: clamp(1.8rem, 7vw, 3rem);
+            }
+
+            .hero-subtitle {
+                font-size: 0.95rem;
+            }
+
+            .section-title {
+                font-size: clamp(1.4rem, 5vw, 2rem);
+            }
+
+            .section-text {
+                font-size: 0.95rem;
             }
 
             .footer-content {
@@ -2279,6 +2302,15 @@
                 padding: 36px 24px;
             }
 
+            .service-modal-overlay {
+                padding: 40px 16px;
+            }
+
+            .service-modal-close {
+                width: 44px;
+                height: 44px;
+            }
+
             .contact-form {
                 padding: 28px;
             }
@@ -2286,9 +2318,57 @@
             .about-image {
                 aspect-ratio: 16/10;
             }
+
+            .calendar-frame-wrapper iframe {
+                height: 450px;
+            }
+
+            .trainer-btn {
+                padding: 14px 12px;
+                font-size: 0.78rem;
+            }
+
+            .step-number {
+                width: 64px;
+                height: 64px;
+                font-size: 1.4rem;
+            }
+
+            .nav-menu a {
+                font-size: clamp(1.3rem, 5vw, 2rem);
+            }
+
+            .team-slider-controls {
+                gap: 8px;
+            }
+
+            .team-btn-text {
+                font-size: 0.75rem;
+            }
+
+            .btn {
+                padding: 14px 28px;
+                font-size: 0.85rem;
+            }
+
+            .container {
+                padding: 0 16px;
+            }
+
+            .service-card {
+                padding: 28px 20px;
+            }
+
+            .stat-number {
+                font-size: 1.6rem;
+            }
         }
 
         @media (max-width: 480px) {
+            :root {
+                --section-padding: 40px;
+            }
+
             .about-stats {
                 grid-template-columns: 1fr;
             }
@@ -2309,8 +2389,124 @@
             .hero-scroll {
                 display: none;
             }
+
+            .hero-title {
+                font-size: clamp(1.5rem, 7vw, 2.2rem);
+            }
+
+            .section-title {
+                font-size: clamp(1.2rem, 5vw, 1.6rem);
+            }
+
+            .section-label {
+                font-size: 0.65rem;
+                letter-spacing: 2px;
+            }
+
+            .calendar-frame-wrapper iframe {
+                height: 350px;
+            }
+
+            .trainer-btn {
+                padding: 12px 8px;
+                font-size: 0.72rem;
+            }
+
+            .step-number {
+                width: 52px;
+                height: 52px;
+                font-size: 1.2rem;
+            }
+
+            .step-card h3 {
+                font-size: 0.9rem;
+            }
+
+            .step-card p {
+                font-size: 0.82rem;
+            }
+
+            .team-slider-btn {
+                padding: 0 10px;
+            }
+
+            .team-btn-text {
+                font-size: 0.7rem;
+                max-width: 120px;
+            }
+
+            .service-modal {
+                padding: 28px 18px;
+            }
+
+            .service-modal-overlay {
+                padding: 24px 10px;
+            }
+
+            .service-modal h2 {
+                font-size: 1.4rem;
+            }
+
+            .contact-form {
+                padding: 20px 16px;
+            }
+
+            .stat-number {
+                font-size: 1.4rem;
+            }
+
+            .stat-label {
+                font-size: 0.72rem;
+            }
+
+            .navbar {
+                padding: 14px 0;
+            }
+
+            .logo img {
+                height: 38px;
+            }
+
+            .footer-links {
+                gap: 16px;
+                flex-wrap: wrap;
+                justify-content: center;
+            }
+
+            .instagram-section i.fa-instagram {
+                font-size: 1.8rem;
+            }
+
+            .review-card {
+                padding: 24px 20px;
+            }
         }
     </style>
+
+    <!-- Structured Data -->
+    <script type="application/ld+json">
+    {
+        "@context": "https://schema.org",
+        "@type": "LocalBusiness",
+        "name": "Body Creator",
+        "description": "Studio Treningu Personalnego we Wrocławiu. Profesjonalne treningi personalne, współpraca hybrydowa, zajęcia grupowe.",
+        "address": {
+            "@type": "PostalAddress",
+            "streetAddress": "ul. Rafała Wojaczka 3g",
+            "addressLocality": "Wrocław",
+            "addressRegion": "dolnośląskie",
+            "addressCountry": "PL"
+        },
+        "image": "favicon.png",
+        "priceRange": "$$",
+        "openingHoursSpecification": {
+            "@type": "OpeningHoursSpecification",
+            "dayOfWeek": ["Monday","Tuesday","Wednesday","Thursday","Friday","Saturday"],
+            "opens": "07:00",
+            "closes": "21:00"
+        }
+    }
+    </script>
 </head>
 <body>
 
@@ -2319,7 +2515,7 @@
         <div class="loader-rig">
             <div class="loader-ring"></div>
             <div class="loader-ring-inner"></div>
-            <img class="loader-logo" src="favicon.png" alt="">
+            <img class="loader-logo" src="favicon.png" alt="Ładowanie strony">
         </div>
         <div class="loader-text">
             <span>L</span><span>O</span><span>A</span><span>D</span><span>I</span><span>N</span><span>G</span>
@@ -2373,6 +2569,7 @@
         </nav>
     </div>
 
+    <main>
     <!-- ========================================
          HERO SECTION
          ======================================== -->
@@ -3128,6 +3325,7 @@
             </div>
         </div>
     </footer>
+    </main>
 
     <!-- ========================================
          JAVASCRIPT

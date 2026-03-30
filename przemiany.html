@@ -3,9 +3,22 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <meta name="description" content="Przemiany naszych podopiecznych — Body Creator Studio Treningu Personalnego Wrocław">
+    <meta name="description" content="Przemiany naszych podopiecznych — Body Creator Studio Treningu Personalnego Wrocław. Zobacz efekty współpracy z naszymi trenerami.">
+    <meta name="theme-color" content="#FED525">
     <link rel="icon" type="image/png" href="favicon.png">
     <title>Przemiany — Body Creator</title>
+
+    <!-- Open Graph -->
+    <meta property="og:type" content="website">
+    <meta property="og:title" content="Przemiany podopiecznych — Body Creator">
+    <meta property="og:description" content="Zobacz efekty współpracy z naszymi trenerami. Przed i po treningach personalnych.">
+    <meta property="og:image" content="favicon.png">
+
+    <!-- Twitter Card -->
+    <meta name="twitter:card" content="summary">
+    <meta name="twitter:title" content="Przemiany podopiecznych — Body Creator">
+    <meta name="twitter:description" content="Przed i po. Zobacz efekty treningów personalnych we Wrocławiu.">
+    <meta name="twitter:image" content="favicon.png">
 
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
@@ -509,7 +522,32 @@
             }
 
             .page-header {
-                padding: 140px 0 56px;
+                padding: 120px 0 48px;
+            }
+
+            .page-header h1 {
+                font-size: clamp(1.6rem, 5vw, 2.4rem);
+            }
+
+            .page-header p {
+                font-size: 0.9rem;
+            }
+
+            .container {
+                padding: 0 16px;
+            }
+
+            .transformation-info {
+                padding: 22px 22px 26px;
+            }
+
+            .cta-section h2 {
+                font-size: clamp(1.3rem, 4vw, 1.8rem);
+            }
+
+            .btn {
+                padding: 14px 28px;
+                font-size: 0.85rem;
             }
 
             .footer-content {
@@ -520,8 +558,79 @@
         }
 
         @media (max-width: 480px) {
+            .page-header {
+                padding: 100px 0 36px;
+            }
+
+            .page-header h1 {
+                font-size: clamp(1.3rem, 6vw, 1.8rem);
+            }
+
+            .section-label {
+                font-size: 0.65rem;
+                letter-spacing: 2px;
+            }
+
+            .transformations-grid {
+                gap: 24px;
+            }
+
+            .ba-slider {
+                aspect-ratio: 3 / 4;
+            }
+
+            .ba-handle::before {
+                width: 36px;
+                height: 36px;
+            }
+
+            .ba-label {
+                font-size: 0.6rem;
+                padding: 5px 10px;
+            }
+
+            .transformation-info {
+                padding: 18px 16px 22px;
+            }
+
             .transformation-stats {
                 flex-direction: column;
+                gap: 8px;
+            }
+
+            .stat-badge {
+                font-size: 0.75rem;
+                padding: 6px 10px;
+            }
+
+            .transformation-quote {
+                font-size: 0.82rem;
+            }
+
+            .cta-section {
+                padding: 48px 0 64px;
+            }
+
+            .btn {
+                padding: 14px 24px;
+                font-size: 0.82rem;
+            }
+
+            .navbar {
+                padding: 14px 0;
+            }
+
+            .logo img {
+                height: 38px;
+            }
+
+            .nav-back {
+                font-size: 0.8rem;
+            }
+
+            .footer-portfolio-btn {
+                padding: 12px 20px;
+                font-size: 0.72rem;
             }
         }
     </style>
@@ -533,7 +642,7 @@
         <div class="loader-rig">
             <div class="loader-ring"></div>
             <div class="loader-ring-inner"></div>
-            <img class="loader-logo" src="favicon.png" alt="">
+            <img class="loader-logo" src="favicon.png" alt="Ładowanie strony">
         </div>
         <div class="loader-text">
             <span>L</span><span>O</span><span>A</span><span>D</span><span>I</span><span>N</span><span>G</span>
@@ -562,6 +671,7 @@
         </div>
     </nav>
 
+    <main>
     <section class="page-header">
         <div class="container">
             <span class="section-label">Efekty mówią same za siebie</span>
@@ -577,8 +687,8 @@
                 <!-- Transformation 1 -->
                 <div class="transformation-card">
                     <div class="ba-slider">
-                        <img class="ba-before" src="przemiany/1-before.jpg" alt="Przed">
-                        <img class="ba-after" src="przemiany/1-after.jpg" alt="Po">
+                        <img class="ba-before" src="przemiany/1-before.jpg" alt="Michał przed treningiem – 92 kg" loading="lazy">
+                        <img class="ba-after" src="przemiany/1-after.jpg" alt="Michał po treningach – 78 kg" loading="lazy">
                         <div class="ba-handle"></div>
                         <span class="ba-label ba-label-before">Przed</span>
                         <span class="ba-label ba-label-after">Po</span>
@@ -599,8 +709,8 @@
                 <!-- Transformation 2 -->
                 <div class="transformation-card">
                     <div class="ba-slider">
-                        <img class="ba-before" src="przemiany/2-before.jpg" alt="Przed">
-                        <img class="ba-after" src="przemiany/2-after.jpg" alt="Po">
+                        <img class="ba-before" src="przemiany/2-before.jpg" alt="Karolina przed treningiem – 75 kg" loading="lazy">
+                        <img class="ba-after" src="przemiany/2-after.jpg" alt="Karolina po treningach – 64 kg" loading="lazy">
                         <div class="ba-handle"></div>
                         <span class="ba-label ba-label-before">Przed</span>
                         <span class="ba-label ba-label-after">Po</span>
@@ -621,8 +731,8 @@
                 <!-- Transformation 3 -->
                 <div class="transformation-card">
                     <div class="ba-slider">
-                        <img class="ba-before" src="przemiany/3-before.jpg" alt="Przed">
-                        <img class="ba-after" src="przemiany/3-after.jpg" alt="Po">
+                        <img class="ba-before" src="przemiany/3-before.jpg" alt="Tomasz przed treningiem – 105 kg" loading="lazy">
+                        <img class="ba-after" src="przemiany/3-after.jpg" alt="Tomasz po treningach – 84 kg" loading="lazy">
                         <div class="ba-handle"></div>
                         <span class="ba-label ba-label-before">Przed</span>
                         <span class="ba-label ba-label-after">Po</span>
@@ -643,8 +753,8 @@
                 <!-- Transformation 4 -->
                 <div class="transformation-card">
                     <div class="ba-slider">
-                        <img class="ba-before" src="przemiany/4-before.jpg" alt="Przed">
-                        <img class="ba-after" src="przemiany/4-after.jpg" alt="Po">
+                        <img class="ba-before" src="przemiany/4-before.jpg" alt="Kuba przed treningiem – 68 kg" loading="lazy">
+                        <img class="ba-after" src="przemiany/4-after.jpg" alt="Kuba po treningach – 72 kg" loading="lazy">
                         <div class="ba-handle"></div>
                         <span class="ba-label ba-label-before">Przed</span>
                         <span class="ba-label ba-label-after">Po</span>
@@ -686,6 +796,7 @@
             </div>
         </div>
     </footer>
+    </main>
 
     <script>
         document.querySelectorAll('.ba-slider').forEach(slider => {
