@@ -1,0 +1,18 @@
+{
+  "permissions": {
+    "allow": [
+      "Bash(where ffmpeg:*)",
+      "Bash(where HandBrakeCLI)",
+      "Bash(where ffprobe:*)",
+      "Bash(where vlc:*)",
+      "Bash(node -e \"console.log\\(''node ok''\\)\")",
+      "Read(//c/ffmpeg/bin/**)",
+      "Read(//c/Program Files/ffmpeg/bin/**)",
+      "Read(//c/tools/ffmpeg/bin/**)",
+      "Bash(npm list:*)",
+      "Read(//c/Users/HARDPC/Documents/GitHub/BodycreatorTEST/$\\(npm root -g\\)/ffmpeg-static/**)",
+      "Bash(npm install:*)",
+      "Bash(node -e \"const p = require\\(''ffmpeg-static''\\); console.log\\(p\\);\")"
+    ]
+  }
+}
