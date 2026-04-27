@@ -8,17 +8,17 @@
     <meta name="keywords" content="trener personalny wrocław, studio treningu, trening personalny, body creator, sołtysowice">
     <meta name="theme-color" content="#FED525">
     <meta name="author" content="Body Creator">
-    <title>Body Creator — Studio Treningu | Trener Personalny Wrocław</title>
+    <title>O Nas — Body Creator | Studio Treningu Wrocław</title>
 
     <!-- Open Graph -->
     <meta property="og:type" content="website">
-    <meta property="og:title" content="Body Creator — Studio Treningu Personalnego Wrocław">
-    <meta property="og:description" content="Profesjonalne treningi personalne, współpraca hybrydowa, zajęcia grupowe. Sołtysowice, ul. Rafała Wojaczka 3g.">
+    <meta property="og:title" content="O Nas — Body Creator">
+    <meta property="og:description" content="Poznaj zespół Body Creator — profesjonalni trenerzy personalni z pasją do treningu w Wrocławiu.">
     <meta property="og:image" content="favicon.png">
 
     <!-- Twitter Card -->
     <meta name="twitter:card" content="summary">
-    <meta name="twitter:title" content="Body Creator — Studio Treningu Personalnego Wrocław">
+    <meta name="twitter:title" content="O Nas — Body Creator">
     <meta name="twitter:description" content="Profesjonalne treningi personalne, współpraca hybrydowa, zajęcia grupowe.">
     <meta name="twitter:image" content="favicon.png">
 
@@ -2808,52 +2808,24 @@
 </head>
 <body>
 
-    <!-- PAGE LOADER -->
     <div id="page-loader">
-        <div class="loader-rig">
-            <div class="loader-ring"></div>
-            <div class="loader-ring-inner"></div>
+        <div class="loader-rig"><div class="loader-ring"></div><div class="loader-ring-inner"></div>
             <img class="loader-logo" src="favicon.png" alt="Ładowanie strony">
         </div>
-        <div class="loader-text">
-            <span>L</span><span>O</span><span>A</span><span>D</span><span>I</span><span>N</span><span>G</span>
-        </div>
+        <div class="loader-text"><span>L</span><span>O</span><span>A</span><span>D</span><span>I</span><span>N</span><span>G</span></div>
     </div>
-    <script>
-        (function() {
-            var loader = document.getElementById('page-loader');
-            if (!loader) return;
-            setTimeout(function() {
-                loader.style.opacity = '0';
-                loader.style.visibility = 'hidden';
-                setTimeout(function() { if (loader.parentNode) loader.parentNode.removeChild(loader); }, 700);
-            }, 1000);
-        })();
-    </script>
+    <script>(function(){var l=document.getElementById('page-loader');if(!l)return;setTimeout(function(){l.style.opacity='0';l.style.visibility='hidden';setTimeout(function(){if(l.parentNode)l.parentNode.removeChild(l);},700);},1000);})();</script>
 
-    <!-- ========================================
-         NAVIGATION
-         ======================================== -->
     <nav class="navbar" id="navbar">
         <div class="container">
-            <a href="index.html" class="logo">
-                <img src="logo.png" alt="Body Creator">
-            </a>
+            <a href="index.html" class="logo"><img src="logo.png" alt="Body Creator"></a>
             <div class="nav-cta">
-                <a href="rezerwacja.html" class="btn btn-primary btn-sm">
-                    Zapisz się na konsultację <i class="fas fa-arrow-right"></i>
-                </a>
+                <a href="rezerwacja.html" class="btn btn-primary btn-sm">Zapisz się na konsultację <i class="fas fa-arrow-right"></i></a>
                 <span class="nav-phone"><i class="fas fa-phone"></i> +48 --- --- ---</span>
             </div>
-            <div class="nav-toggle" id="navToggle" aria-label="Menu">
-                <span></span>
-                <span></span>
-                <span></span>
-            </div>
+            <div class="nav-toggle" id="navToggle" aria-label="Menu"><span></span><span></span><span></span></div>
         </div>
     </nav>
-
-    <!-- Mobile / Overlay Navigation -->
     <div class="nav-overlay" id="navOverlay">
         <nav class="nav-menu">
             <ul>
@@ -2874,514 +2846,345 @@
     </div>
 
     <main>
-    <!-- ========================================
-         HERO SECTION
-         ======================================== -->
-    <section class="hero" id="home">
-        <video class="hero-video" autoplay muted loop playsinline>
-            <source src="hero-bg.mp4" type="video/mp4">
+    <!-- TEAM SECTION -->
+    <section id="team" style="padding-top: 140px;">
+        <video class="team-video" autoplay muted loop playsinline oncanplay="this.playbackRate=0.3">
+            <source src="team-bg.mp4" type="video/mp4">
         </video>
-        <div class="hero-video-overlay"></div>
+        <div class="team-video-overlay"></div>
         <div class="container">
-            <div class="hero-content">
-                <h1 class="hero-title">
-                    Twoje miejsce<br><span class="highlight">treningu.</span>
-                </h1>
-                <p class="hero-subtitle">
-                    Jesteśmy profesjonalnym studiem treningowym, w którym panuje spokój i komfort treningu, na którym nie musisz bić się o sprzęt i miejsce do trenowania. Pomagamy ludziom stać się ich najlepszą wersją siebie i osiągać najwyższe cele!
-                </p>
-                <div class="hero-cta">
-                    <a href="rezerwacja.html" class="btn btn-primary">
-                        Zapisz się na trening <i class="fas fa-arrow-right"></i>
-                    </a>
-                    <a href="kalkulator.html" class="btn btn-outline">
-                        Kalkulator TDEE / BMI <i class="fas fa-calculator"></i>
-                    </a>
-                </div>
-                <div class="hero-location">
-                    <i class="fas fa-map-marker-alt"></i>
-                    <span>ul. Rafała Wojaczka 3g, Wrocław — Sołtysowice</span>
-                </div>
-            </div>
-        </div>
-        <div class="hero-scroll">
-            <span>Scroll</span>
-            <div class="line"></div>
-        </div>
-    </section>
-    <!-- ========================================
-         REVIEWS SECTION
-         ======================================== -->
-    <section id="reviews">
-        <div class="container">
-            <div class="reviews-header reveal">
-                <span class="section-label">Opinie klientów</span>
-                <h2 class="section-title">Sprawdź, co o&nbsp;nas mówią</h2>
-                <p class="section-text" style="margin:0 auto">Łącznie ponad setki pozytywnych opinii Google ze średnią 5.0</p>
-            </div>
-
-            <div class="reviews-tabs reveal reveal-delay-1">
-                <button class="reviews-tab active" data-target="reviews-kuba">Opinie o Kubie</button>
-                <button class="reviews-tab" data-target="reviews-ola">Opinie o Oli</button>
-            </div>
-
-            <!-- Opinie o Kubie -->
-            <div class="reviews-group active" id="reviews-kuba">
-                <div class="reviews-slider-wrapper">
-                    <div class="reviews-slider" id="reviewsSliderKuba">
-                        <div class="review-card">
-                            <div class="review-stars">
-                                <i class="fas fa-star"></i><i class="fas fa-star"></i><i class="fas fa-star"></i><i class="fas fa-star"></i><i class="fas fa-star"></i>
+            <div class="team-slider-wrapper">
+                <div class="team-slider" id="teamPanelSlider">
+                    <div class="team-panel">
+                        <div class="team-panel-inner reveal">
+                            <div class="team-panel-label-row">
+                                <span class="team-panel-line"></span>
+                                <span class="section-label">Nasz zespół</span>
+                                <span class="team-panel-line"></span>
                             </div>
-                            <p class="review-text">„Trening z Kubą to czysta przyjemność! Profesjonalne podejście, świetna atmosfera i widoczne efekty. Po pół roku nie poznaję się w lustrze!"</p>
-                            <div class="review-author">
-                                <div class="review-avatar">MK</div>
-                                <div>
-                                    <div class="review-author-name">Marta K.</div>
-                                    <div class="review-author-info">Opinia Google</div>
+                            <h2 class="section-title">Profesjonaliści z&nbsp;pasją<br>do&nbsp;treningu</h2>
+                            <p class="section-text">W Body Creator mamy profesjonalistów z&nbsp;ogromnym bagażem doświadczeń oraz wiedzy, która pozwala pomagać ludziom zarówno z&nbsp;problemami zdrowotnymi jak i&nbsp;dążyć do&nbsp;sylwetki swoich marzeń.</p>
+                            <div class="team-stats">
+                                <div class="team-stats-grid">
+                                    <div class="team-stats-item reveal">
+                                        <i class="fas fa-face-smile"></i>
+                                        <span class="number" data-count="100" data-suffix="%">100%</span>
+                                        <span class="label">Zadowolonych klientów</span>
+                                    </div>
+                                    <div class="team-stats-item reveal reveal-delay-1">
+                                        <i class="fas fa-person-running"></i>
+                                        <span class="number" data-count="10000" data-suffix="+" data-format="space">10 000+</span>
+                                        <span class="label">Przeprowadzonych treningów</span>
+                                    </div>
+                                    <div class="team-stats-item reveal reveal-delay-2">
+                                        <i class="fas fa-star"></i>
+                                        <span class="number" data-count="5" data-suffix="" data-decimals="1">5.0</span>
+                                        <span class="label">Średnia opinii Google</span>
+                                    </div>
+                                    <div class="team-stats-item reveal reveal-delay-3">
+                                        <i class="fas fa-comment-dots"></i>
+                                        <span class="number" data-count="100" data-suffix="+">100+</span>
+                                        <span class="label">Pozytywnych opinii</span>
+                                    </div>
+                                </div>
+                                <div class="team-stats-achievements">
+                                    <div class="team-stats-achievement reveal reveal-delay-4">
+                                        <i class="fas fa-weight-scale"></i>
+                                        <span>Setki zrzuconych kilogramów</span>
+                                    </div>
+                                    <div class="team-stats-achievement reveal reveal-delay-4">
+                                        <i class="fas fa-bone"></i>
+                                        <span>Dziesiątki wyleczonych kręgosłupów, kolan czy barków</span>
+                                    </div>
                                 </div>
                             </div>
                         </div>
-
-                        <div class="review-card">
-                            <div class="review-stars">
-                                <i class="fas fa-star"></i><i class="fas fa-star"></i><i class="fas fa-star"></i><i class="fas fa-star"></i><i class="fas fa-star"></i>
-                            </div>
-                            <p class="review-text">„Najlepsze studio we Wrocławiu! Wreszcie nie muszę czekać na sprzęt i mogę trenować w spokoju. Kameralna atmosfera i pełen profesjonalizm."</p>
-                            <div class="review-author">
-                                <div class="review-avatar">PT</div>
-                                <div>
-                                    <div class="review-author-name">Piotr T.</div>
-                                    <div class="review-author-info">Opinia Google</div>
+                    </div>
+                    <div class="team-panel">
+                        <div class="team-panel-grid">
+                            <div class="reveal">
+                                <p class="section-text"><strong>Pomożemy Ci:</strong></p>
+                                <ul class="team-benefits">
+                                    <li><i class="fas fa-person-walking-arrow-right"></i> Poprawić Twoje wady postawy</li>
+                                    <li><i class="fas fa-fire-flame-curved"></i> Zredukować tkankę tłuszczową</li>
+                                    <li><i class="fas fa-dumbbell"></i> Zbudować masę mięśniową</li>
+                                    <li><i class="fas fa-heart-pulse"></i> Uporać się z&nbsp;kontuzjami</li>
+                                </ul>
+                                <div class="team-quote">
+                                    <blockquote>„Każdy z&nbsp;nas to inna historia, różne potrzeby, problemy zdrowotne, czy wymagania sylwetkowe, a&nbsp;naszym celem jest, by każda z&nbsp;tych historii miała szczęśliwe zakończenie."</blockquote>
+                                    <p class="team-quote-attr">— Jakub Cyndecki</p>
                                 </div>
                             </div>
-                        </div>
-
-                        <div class="review-card">
-                            <div class="review-stars">
-                                <i class="fas fa-star"></i><i class="fas fa-star"></i><i class="fas fa-star"></i><i class="fas fa-star"></i><i class="fas fa-star"></i>
-                            </div>
-                            <p class="review-text">„Miałam problemy z kręgosłupem przez lata. Po kilku miesiącach treningów ból ustąpił. Dziękuję za profesjonalną diagnozę i podejście!"</p>
-                            <div class="review-author">
-                                <div class="review-avatar">AN</div>
-                                <div>
-                                    <div class="review-author-name">Anna N.</div>
-                                    <div class="review-author-info">Opinia Google</div>
+                            <div class="team-grid reveal reveal-delay-1">
+                                <div class="team-card">
+                                    <div class="team-photo"><i class="fas fa-user"></i></div>
+                                    <div class="team-info">
+                                        <span class="team-role">Trener Personalny | Właściciel</span>
+                                        <h3 class="team-name">Jakub Cyndecki</h3>
+                                    </div>
                                 </div>
-                            </div>
-                        </div>
-
-                        <div class="review-card">
-                            <div class="review-stars">
-                                <i class="fas fa-star"></i><i class="fas fa-star"></i><i class="fas fa-star"></i><i class="fas fa-star"></i><i class="fas fa-star"></i>
-                            </div>
-                            <p class="review-text">„Córka chodzi na zajęcia w mini grupach i jest zachwycona! Widać postępy w kondycji i koordynacji. Super trenerzy, którzy potrafią zaangażować dzieci."</p>
-                            <div class="review-author">
-                                <div class="review-avatar">KW</div>
-                                <div>
-                                    <div class="review-author-name">Karolina W.</div>
-                                    <div class="review-author-info">Opinia Google</div>
-                                </div>
-                            </div>
-                        </div>
-
-                        <div class="review-card">
-                            <div class="review-stars">
-                                <i class="fas fa-star"></i><i class="fas fa-star"></i><i class="fas fa-star"></i><i class="fas fa-star"></i><i class="fas fa-star"></i>
-                            </div>
-                            <p class="review-text">„Współpraca hybrydowa to strzał w dziesiątkę. Plan treningowy idealnie dopasowany, a kontakt z trenerem na najwyższym poziomie. Polecam serdecznie!"</p>
-                            <div class="review-author">
-                                <div class="review-avatar">DM</div>
-                                <div>
-                                    <div class="review-author-name">Dawid M.</div>
-                                    <div class="review-author-info">Opinia Google</div>
+                                <div class="team-card">
+                                    <div class="team-photo"><i class="fas fa-user"></i></div>
+                                    <div class="team-info">
+                                        <span class="team-role">Trener Personalny | Właścicielka</span>
+                                        <h3 class="team-name">Aleksandra Dunajewska</h3>
+                                    </div>
                                 </div>
                             </div>
                         </div>
                     </div>
                 </div>
-                <div class="slider-controls">
-                    <button class="slider-btn" id="reviewsKubaPrev" aria-label="Poprzednia opinia"><i class="fas fa-chevron-left"></i></button>
-                    <button class="slider-btn" id="reviewsKubaNext" aria-label="Następna opinia"><i class="fas fa-chevron-right"></i></button>
+            </div>
+            <div class="team-slider-controls">
+                <button class="team-slider-btn" id="teamPrev" aria-label="Poprzedni panel" disabled>
+                    <i class="fas fa-arrow-left"></i>
+                    <span class="team-btn-text">Jednak zobacz mniej</span>
+                </button>
+                <div class="team-dots">
+                    <span class="team-dot active" data-index="0"></span>
+                    <span class="team-dot" data-index="1"></span>
+                </div>
+                <button class="team-slider-btn" id="teamNext" aria-label="Następny panel">
+                    <span class="team-btn-text">Zobacz więcej</span>
+                    <i class="fas fa-arrow-right"></i>
+                </button>
+            </div>
+        </div>
+    </section>
+
+    <!-- STUDIO SECTION -->
+    <section class="studio-section">
+        <div class="container">
+            <div class="studio-slider-wrapper reveal">
+                <div class="studio-slider" id="studioSlider">
+                    <div class="studio-slide"><i class="fas fa-image"></i><span>Studio — widok z zewnątrz</span></div>
+                    <div class="studio-slide"><i class="fas fa-image"></i><span>Studio — środek</span></div>
+                    <div class="studio-slide"><i class="fas fa-image"></i><span>Studio — sprzęt</span></div>
                 </div>
             </div>
+            <div class="studio-slider-controls">
+                <button class="studio-slider-btn" id="studioPrev" disabled>
+                    <i class="fas fa-arrow-left"></i>
+                    <span class="studio-btn-text" id="studioPrevText"></span>
+                </button>
+                <div class="studio-dots">
+                    <span class="studio-dot active" data-index="0"></span>
+                    <span class="studio-dot" data-index="1"></span>
+                    <span class="studio-dot" data-index="2"></span>
+                </div>
+                <button class="studio-slider-btn" id="studioNext">
+                    <span class="studio-btn-text" id="studioNextText">Pokaż mi środek</span>
+                    <i class="fas fa-arrow-right"></i>
+                </button>
+            </div>
+        </div>
+    </section>
 
-            <!-- Opinie o Oli -->
-            <div class="reviews-group" id="reviews-ola">
-                <div class="reviews-slider-wrapper">
-                    <div class="reviews-slider" id="reviewsSliderOla">
-                        <div class="review-card">
-                            <div class="review-stars">
-                                <i class="fas fa-star"></i><i class="fas fa-star"></i><i class="fas fa-star"></i><i class="fas fa-star"></i><i class="fas fa-star"></i>
-                            </div>
-                            <p class="review-text">„Ola to trenerka z ogromną wiedzą i empatią. Czuję się bezpiecznie podczas każdego treningu. Widać, że naprawdę zależy jej na moich postępach."</p>
-                            <div class="review-author">
-                                <div class="review-avatar">JB</div>
-                                <div>
-                                    <div class="review-author-name">Joanna B.</div>
-                                    <div class="review-author-info">Opinia Google</div>
-                                </div>
-                            </div>
-                        </div>
-
-                        <div class="review-card">
-                            <div class="review-stars">
-                                <i class="fas fa-star"></i><i class="fas fa-star"></i><i class="fas fa-star"></i><i class="fas fa-star"></i><i class="fas fa-star"></i>
-                            </div>
-                            <p class="review-text">„Treningi z Olą to mój ulubiony czas w tygodniu. Potrafi zmotywować i jednocześnie pilnuje techniki. Po 3 miesiącach czuję się jak nowa osoba!"</p>
-                            <div class="review-author">
-                                <div class="review-avatar">MZ</div>
-                                <div>
-                                    <div class="review-author-name">Magdalena Z.</div>
-                                    <div class="review-author-info">Opinia Google</div>
-                                </div>
-                            </div>
-                        </div>
-
-                        <div class="review-card">
-                            <div class="review-stars">
-                                <i class="fas fa-star"></i><i class="fas fa-star"></i><i class="fas fa-star"></i><i class="fas fa-star"></i><i class="fas fa-star"></i>
-                            </div>
-                            <p class="review-text">„Ola pomogła mi wrócić do formy po ciąży. Cierpliwość, profesjonalizm i indywidualne podejście — tego szukałam i to znalazłam w Body Creator."</p>
-                            <div class="review-author">
-                                <div class="review-avatar">AS</div>
-                                <div>
-                                    <div class="review-author-name">Agnieszka S.</div>
-                                    <div class="review-author-info">Opinia Google</div>
-                                </div>
-                            </div>
-                        </div>
-
-                        <div class="review-card">
-                            <div class="review-stars">
-                                <i class="fas fa-star"></i><i class="fas fa-star"></i><i class="fas fa-star"></i><i class="fas fa-star"></i><i class="fas fa-star"></i>
-                            </div>
-                            <p class="review-text">„Nigdy nie lubiłam siłowni, ale treningi z Olą zmieniły moje podejście. Atmosfera bez presji, a efekty przychodzą same. Gorąco polecam!"</p>
-                            <div class="review-author">
-                                <div class="review-avatar">EK</div>
-                                <div>
-                                    <div class="review-author-name">Ewelina K.</div>
-                                    <div class="review-author-info">Opinia Google</div>
-                                </div>
-                            </div>
-                        </div>
-
-                        <div class="review-card">
-                            <div class="review-stars">
-                                <i class="fas fa-star"></i><i class="fas fa-star"></i><i class="fas fa-star"></i><i class="fas fa-star"></i><i class="fas fa-star"></i>
-                            </div>
-                            <p class="review-text">„Profesjonalizm na najwyższym poziomie. Ola dokładnie wyjaśnia każde ćwiczenie i dba o to, żeby trening był bezpieczny i efektywny."</p>
-                            <div class="review-author">
-                                <div class="review-avatar">RW</div>
-                                <div>
-                                    <div class="review-author-name">Robert W.</div>
-                                    <div class="review-author-info">Opinia Google</div>
-                                </div>
-                            </div>
-                        </div>
+    <!-- WHY US SECTION -->
+    <section id="why-us">
+        <div class="container">
+            <div class="why-us-header reveal">
+                <span class="section-label">Dlaczego my</span>
+                <h2 class="section-title">Dlaczego to nas powinieneś wybrać?</h2>
+            </div>
+            <div class="accordion-grid">
+                <div class="accordion-item reveal">
+                    <div class="accordion-header">
+                        <h3><i class="fas fa-home"></i> Kameralna przestrzeń</h3>
+                        <span class="accordion-toggle">+</span>
+                    </div>
+                    <div class="accordion-body">
+                        <div class="accordion-body-inner">U&nbsp;nas poczujesz się jak w&nbsp;domu — nasze studio to rodzinna atmosfera, spokój oraz brak tłumów ludzi jak na publicznej siłowni.</div>
                     </div>
                 </div>
-                <div class="slider-controls">
-                    <button class="slider-btn" id="reviewsOlaPrev" aria-label="Poprzednia opinia"><i class="fas fa-chevron-left"></i></button>
-                    <button class="slider-btn" id="reviewsOlaNext" aria-label="Następna opinia"><i class="fas fa-chevron-right"></i></button>
+                <div class="accordion-item reveal reveal-delay-1">
+                    <div class="accordion-header">
+                        <h3><i class="fas fa-hand-holding-heart"></i> Indywidualne podejście</h3>
+                        <span class="accordion-toggle">+</span>
+                    </div>
+                    <div class="accordion-body">
+                        <div class="accordion-body-inner">Jesteś zaopiekowany z&nbsp;każdej strony — nie musisz o&nbsp;niczym myśleć, tylko przynieść ze sobą pozytywne nastawienie, wodę oraz ręcznik.</div>
+                    </div>
+                </div>
+                <div class="accordion-item reveal reveal-delay-2">
+                    <div class="accordion-header">
+                        <h3><i class="fas fa-apple-alt"></i> Dieta i&nbsp;suplementacja</h3>
+                        <span class="accordion-toggle">+</span>
+                    </div>
+                    <div class="accordion-body">
+                        <div class="accordion-body-inner">Zadbamy o&nbsp;Twoje żywienie oraz suplementację, kontrolujemy Twój progres, postępy oraz wszystkie parametry treningowe.</div>
+                    </div>
+                </div>
+                <div class="accordion-item reveal reveal-delay-3">
+                    <div class="accordion-header">
+                        <h3><i class="fas fa-dumbbell"></i> Profesjonalny sprzęt bez tłumów</h3>
+                        <span class="accordion-toggle">+</span>
+                    </div>
+                    <div class="accordion-body">
+                        <div class="accordion-body-inner">Masz dość głośnej muzyki, śmierdzących siłowni i&nbsp;bicia się o&nbsp;sprzęt? To właśnie u&nbsp;nas znajdziesz najwyższej jakości sprzęt.</div>
+                    </div>
                 </div>
             </div>
-
-            <div style="text-align:center; margin-top:40px;" class="reveal">
-                <a href="przemiany.html" class="btn btn-primary">
-                    Zobacz przemiany <i class="fas fa-arrow-right"></i>
-                </a>
-            </div>
         </div>
     </section>
 
-    <!-- ========================================
-         SUBPAGES NAVIGATION
-         ======================================== -->
-    <section class="pages-nav-section">
+    <!-- STEPS SECTION -->
+    <section id="steps">
         <div class="container">
-            <div class="pages-nav-header reveal">
-                <span class="section-label">Odkryj więcej</span>
-                <h2 class="section-title">Co chciałbyś zobaczyć?</h2>
+            <div class="steps-header reveal">
+                <span class="section-label">Jak zacząć</span>
+                <h2 class="section-title">Dołącz do nas i&nbsp;postaw mały krok<br>do wielkiej zmiany!</h2>
             </div>
-            <div class="pages-nav-grid">
-                <a href="oferta.html" class="pages-nav-card reveal">
-                    <i class="fas fa-dumbbell"></i>
-                    <span>Oferta</span>
-                    <p>Treningi personalne, hybrydowe, grupowe i online</p>
-                </a>
-                <a href="o-nas.html" class="pages-nav-card reveal reveal-delay-1">
-                    <i class="fas fa-users"></i>
-                    <span>O Nas</span>
-                    <p>Poznaj nasz zespół i nasze studio</p>
-                </a>
-                <a href="rezerwacja.html" class="pages-nav-card reveal reveal-delay-2">
-                    <i class="fas fa-calendar-alt"></i>
-                    <span>Rezerwacja</span>
-                    <p>Umów się na darmową konsultację</p>
-                </a>
-                <a href="kontakt.html" class="pages-nav-card reveal reveal-delay-3">
-                    <i class="fas fa-map-marker-alt"></i>
-                    <span>Kontakt</span>
-                    <p>Znajdź nas i skontaktuj się z nami</p>
-                </a>
-                <a href="przemiany.html" class="pages-nav-card reveal reveal-delay-1">
-                    <i class="fas fa-chart-line"></i>
-                    <span>Przemiany</span>
-                    <p>Zobacz efekty naszych klientów</p>
-                </a>
-                <a href="kalkulator.html" class="pages-nav-card reveal reveal-delay-2">
-                    <i class="fas fa-calculator"></i>
-                    <span>Kalkulator</span>
-                    <p>Oblicz swoje TDEE i BMI</p>
-                </a>
+            <div class="steps-grid">
+                <div class="step-card reveal">
+                    <div class="step-number">1</div>
+                    <h3>Wypełnij formularz</h3>
+                    <p>Wypełnij formularz zgłoszeniowy, a&nbsp;my odezwiemy się do Ciebie</p>
+                </div>
+                <div class="step-card reveal reveal-delay-1">
+                    <div class="step-number">2</div>
+                    <h3>Wywiad</h3>
+                    <p>Przeprowadzimy z&nbsp;Tobą szczegółowy wywiad przed treningiem</p>
+                </div>
+                <div class="step-card reveal reveal-delay-2">
+                    <div class="step-number">3</div>
+                    <h3>Diagnostyka</h3>
+                    <p>Profesjonalna diagnostyka Twojej sylwetki oraz stanu zdrowia</p>
+                </div>
+                <div class="step-card reveal reveal-delay-3">
+                    <div class="step-number">4</div>
+                    <h3>Start!</h3>
+                    <p>Gotowy? Zaczynamy Twoją drogę do lepszej wersji siebie</p>
+                </div>
             </div>
         </div>
     </section>
+    </main>
 
-    <!-- ========================================
-         FOOTER
-         ======================================== -->
     <footer class="footer">
         <div class="container">
             <div class="footer-content">
                 <p class="footer-copy">Potrzebujesz takiej strony internetowej stworzonej od podstaw pod Ciebie?</p>
-                <a href="https://michal20000505-sudo.github.io/portfolio-site/index.html" target="_blank" rel="noopener" class="footer-portfolio-btn">
-                    Skontaktuj się
-                </a>
+                <a href="https://michal20000505-sudo.github.io/portfolio-site/index.html" target="_blank" rel="noopener" class="footer-portfolio-btn">Skontaktuj się</a>
             </div>
         </div>
     </footer>
-    </main>
 
-    <!-- ========================================
-         JAVASCRIPT
-         ======================================== -->
     <script>
-        // ========================================
-        // Navigation Toggle
-        // ========================================
         const navToggle = document.getElementById('navToggle');
         const navOverlay = document.getElementById('navOverlay');
+        navToggle.addEventListener('click', () => { navToggle.classList.toggle('active'); navOverlay.classList.toggle('active'); });
+        document.querySelectorAll('[data-nav]').forEach(link => link.addEventListener('click', () => { navToggle.classList.remove('active'); navOverlay.classList.remove('active'); }));
+        window.addEventListener('scroll', () => { document.getElementById('navbar').classList.toggle('scrolled', window.scrollY > 50); });
 
-        navToggle.addEventListener('click', () => {
-            navToggle.classList.toggle('active');
-            navOverlay.classList.toggle('active');
-        });
-
-        document.querySelectorAll('[data-nav]').forEach(link => {
-            link.addEventListener('click', () => {
-                navToggle.classList.remove('active');
-                navOverlay.classList.remove('active');
-            });
-        });
-
-        // ========================================
-        // Navbar Scroll Effect
-        // ========================================
-        window.addEventListener('scroll', () => {
-            const navbar = document.getElementById('navbar');
-            navbar.classList.toggle('scrolled', window.scrollY > 50);
-        });
-
-        // ========================================
-        // Scroll Reveal Animation
-        // ========================================
         const revealElements = document.querySelectorAll('.reveal');
         const revealObserver = new IntersectionObserver((entries) => {
-            entries.forEach(entry => {
-                if (entry.isIntersecting) {
-                    entry.target.classList.add('visible');
-                    revealObserver.unobserve(entry.target);
-                }
-            });
+            entries.forEach(entry => { if (entry.isIntersecting) { entry.target.classList.add('visible'); revealObserver.unobserve(entry.target); } });
         }, { threshold: 0.15, rootMargin: '0px 0px -40px 0px' });
-
         revealElements.forEach(el => revealObserver.observe(el));
 
-        // ========================================
-        // Slider Functionality
-        // ========================================
-        function createSlider(sliderId, prevId, nextId, options) {
-            const slider = document.getElementById(sliderId);
-            const prevBtn = document.getElementById(prevId);
-            const nextBtn = document.getElementById(nextId);
-            if (!slider || !prevBtn || !nextBtn) return;
-
-            const alwaysSlider = options && options.alwaysSlider;
-            let currentIndex = 0;
-            const gap = 24;
-
-            function isSliderMode() {
-                if (alwaysSlider) return true;
-                return window.innerWidth <= 1024;
+        (function() {
+            const slider = document.getElementById('teamPanelSlider');
+            const prevBtn = document.getElementById('teamPrev');
+            const nextBtn = document.getElementById('teamNext');
+            const dots = document.querySelectorAll('.team-dot');
+            if (!slider) return;
+            let current = 0;
+            const total = slider.children.length;
+            function goTo(index) {
+                current = Math.max(0, Math.min(index, total - 1));
+                slider.style.transform = `translateX(-${current * 100}%)`;
+                dots.forEach((d, i) => d.classList.toggle('active', i === current));
+                prevBtn.disabled = current === 0;
+                nextBtn.disabled = current === total - 1;
             }
-
-            function getVisibleCards() {
-                const width = window.innerWidth;
-                if (width <= 768) return 1;
-                if (width <= 1024) return 2;
-                return alwaysSlider ? 3 : 2;
-            }
-
-            function setCardWidths() {
-                const wrapper = slider.parentElement;
-                if (!isSliderMode()) {
-                    Array.from(slider.children).forEach(card => {
-                        card.style.minWidth = '';
-                        card.style.maxWidth = '';
-                    });
-                    return;
-                }
-                const visible = getVisibleCards();
-                const cardWidth = (wrapper.offsetWidth - gap * (visible - 1)) / visible;
-                Array.from(slider.children).forEach(card => {
-                    card.style.minWidth = cardWidth + 'px';
-                    card.style.maxWidth = cardWidth + 'px';
-                });
-            }
-
-            function getCardWidth() {
-                const card = slider.children[0];
-                if (!card) return 0;
-                return card.offsetWidth + gap;
-            }
-
-            function updateSlider() {
-                setCardWidths();
-                if (!isSliderMode()) {
-                    slider.style.transform = '';
-                    currentIndex = 0;
-                    return;
-                }
-                const maxIndex = Math.max(0, slider.children.length - getVisibleCards());
-                currentIndex = Math.min(currentIndex, maxIndex);
-                currentIndex = Math.max(currentIndex, 0);
-                slider.style.transform = `translateX(-${currentIndex * getCardWidth()}px)`;
-            }
-
-            nextBtn.addEventListener('click', () => {
-                if (!isSliderMode()) return;
-                const maxIndex = slider.children.length - getVisibleCards();
-                if (currentIndex < maxIndex) {
-                    currentIndex++;
-                    updateSlider();
-                }
-            });
-
-            prevBtn.addEventListener('click', () => {
-                if (!isSliderMode()) return;
-                if (currentIndex > 0) {
-                    currentIndex--;
-                    updateSlider();
-                }
-            });
-
-            // Touch/swipe support
+            nextBtn.addEventListener('click', () => goTo(current + 1));
+            prevBtn.addEventListener('click', () => goTo(current - 1));
+            dots.forEach((dot, i) => dot.addEventListener('click', () => goTo(i)));
             let startX = 0;
-            let isDragging = false;
+            slider.addEventListener('touchstart', e => { startX = e.touches[0].clientX; }, { passive: true });
+            slider.addEventListener('touchend', e => { const diff = startX - e.changedTouches[0].clientX; if (diff > 50) goTo(current + 1); else if (diff < -50) goTo(current - 1); }, { passive: true });
+            goTo(0);
+        })();
 
-            slider.addEventListener('touchstart', (e) => {
-                if (!isSliderMode()) return;
-                startX = e.touches[0].clientX;
-                isDragging = true;
-            }, { passive: true });
+        (function() {
+            const slider = document.getElementById('studioSlider');
+            const prevBtn = document.getElementById('studioPrev');
+            const nextBtn = document.getElementById('studioNext');
+            const prevText = document.getElementById('studioPrevText');
+            const nextText = document.getElementById('studioNextText');
+            const dots = document.querySelectorAll('.studio-dot');
+            if (!slider) return;
+            let current = 0;
+            const total = slider.children.length;
+            const nextLabels = ['Pokaż mi środek', 'Pokaż mi więcej', ''];
+            const prevLabels = ['', 'Jednak pokaż z zewnątrz', 'Jednak daj do środka'];
+            function goTo(index) {
+                current = Math.max(0, Math.min(index, total - 1));
+                slider.style.transform = `translateX(-${current * 100}%)`;
+                dots.forEach((d, i) => d.classList.toggle('active', i === current));
+                if (current < total - 1) nextText.textContent = nextLabels[current];
+                if (current > 0) prevText.textContent = prevLabels[current];
+                prevBtn.disabled = current === 0;
+                nextBtn.disabled = current === total - 1;
+            }
+            nextBtn.addEventListener('click', () => goTo(current + 1));
+            prevBtn.addEventListener('click', () => goTo(current - 1));
+            dots.forEach((dot, i) => dot.addEventListener('click', () => goTo(i)));
+            let startX = 0;
+            slider.addEventListener('touchstart', e => { startX = e.touches[0].clientX; }, { passive: true });
+            slider.addEventListener('touchend', e => { const diff = startX - e.changedTouches[0].clientX; if (diff > 50) goTo(current + 1); else if (diff < -50) goTo(current - 1); }, { passive: true });
+            goTo(0);
+        })();
 
-            slider.addEventListener('touchmove', (e) => {
-                if (!isDragging) return;
-            }, { passive: true });
+        (function() {
+            function formatNumber(val, decimals, format) {
+                let str = parseFloat(val).toFixed(decimals || 0);
+                if (format === 'space') str = str.replace(/\B(?=(\d{3})+(?!\d))/g, ' ');
+                return str;
+            }
+            const counters = document.querySelectorAll('.team-stats-item .number[data-count]');
+            const observer = new IntersectionObserver(entries => {
+                entries.forEach(entry => {
+                    if (!entry.isIntersecting || entry.target.dataset.counted) return;
+                    entry.target.dataset.counted = '1';
+                    const target = parseFloat(entry.target.dataset.count);
+                    const suffix = entry.target.dataset.suffix || '';
+                    const decimals = parseInt(entry.target.dataset.decimals || '0');
+                    const format = entry.target.dataset.format || '';
+                    const duration = 1600;
+                    const start = performance.now();
+                    function tick(now) {
+                        const p = Math.min((now - start) / duration, 1);
+                        const eased = 1 - Math.pow(1 - p, 3);
+                        entry.target.textContent = formatNumber(target * eased, decimals, format) + suffix;
+                        if (p < 1) requestAnimationFrame(tick);
+                    }
+                    requestAnimationFrame(tick);
+                });
+            }, { threshold: 0.6 });
+            counters.forEach(c => observer.observe(c));
+        })();
 
-            slider.addEventListener('touchend', (e) => {
-                if (!isDragging) return;
-                const diff = startX - e.changedTouches[0].clientX;
-                const maxIndex = slider.children.length - getVisibleCards();
-                if (diff > 50 && currentIndex < maxIndex) {
-                    currentIndex++;
-                } else if (diff < -50 && currentIndex > 0) {
-                    currentIndex--;
-                }
-                updateSlider();
-                isDragging = false;
-            });
-
-            window.addEventListener('resize', updateSlider);
-
-            setCardWidths();
-        }
-
-        createSlider('reviewsSliderKuba', 'reviewsKubaPrev', 'reviewsKubaNext', { alwaysSlider: true });
-        createSlider('reviewsSliderOla', 'reviewsOlaPrev', 'reviewsOlaNext', { alwaysSlider: true });
-
-        // ========================================
-        // Reviews Tabs
-        // ========================================
-        document.querySelectorAll('.reviews-tab').forEach(tab => {
-            tab.addEventListener('click', () => {
-                document.querySelectorAll('.reviews-tab').forEach(t => t.classList.remove('active'));
-                document.querySelectorAll('.reviews-group').forEach(g => g.classList.remove('active'));
-                tab.classList.add('active');
-                document.getElementById(tab.dataset.target).classList.add('active');
-                // Recalculate slider widths after tab switch (hidden elements have 0 width)
-                window.dispatchEvent(new Event('resize'));
+        document.querySelectorAll('.accordion-header').forEach(header => {
+            header.addEventListener('click', () => {
+                const item = header.parentElement;
+                const body = item.querySelector('.accordion-body');
+                const inner = body.querySelector('.accordion-body-inner');
+                const isActive = item.classList.contains('active');
+                document.querySelectorAll('.accordion-item').forEach(i => {
+                    i.classList.remove('active');
+                    i.querySelector('.accordion-body').style.maxHeight = '0';
+                });
+                if (!isActive) { item.classList.add('active'); body.style.maxHeight = inner.scrollHeight + 28 + 'px'; }
             });
         });
-
-        // ========================================
-        // Custom smooth scroll
-        // ========================================
-        function smoothScrollTo(targetPos, duration) {
-            const startPos = window.scrollY;
-            const distance = targetPos - startPos;
-            let startTime = null;
-
-            function easeInOutQuart(t) {
-                return t < 0.5 ? 8 * t * t * t * t : 1 - 8 * (--t) * t * t * t;
-            }
-
-            function step(timestamp) {
-                if (!startTime) startTime = timestamp;
-                const elapsed = timestamp - startTime;
-                const progress = Math.min(elapsed / duration, 1);
-                window.scrollTo(0, startPos + distance * easeInOutQuart(progress));
-                if (progress < 1) requestAnimationFrame(step);
-            }
-
-            requestAnimationFrame(step);
-        }
-
-        document.querySelectorAll('a[href^="#"]:not([data-nav])').forEach(anchor => {
-            anchor.addEventListener('click', function(e) {
-                const targetId = this.getAttribute('href');
-                if (targetId === '#') return;
-                e.preventDefault();
-                const target = document.querySelector(targetId);
-                if (target) {
-                    const navHeight = document.getElementById('navbar').offsetHeight;
-                    const targetPos = target.getBoundingClientRect().top + window.scrollY - navHeight;
-                    smoothScrollTo(targetPos, 900);
-                }
-            });
-        });
-
-
     </script>
-
-    <!-- Lenis smooth scroll -->
     <script src="https://cdn.jsdelivr.net/npm/@studio-freight/lenis@1.0.42/dist/lenis.min.js"></script>
     <script>
-        const lenis = new Lenis({
-            duration: 1.4,
-            easing: t => Math.min(1, 1.001 - Math.pow(2, -10 * t)),
-            smoothWheel: true,
-            touchMultiplier: 1.5,
-        });
-
-        function raf(time) {
-            lenis.raf(time);
-            requestAnimationFrame(raf);
-        }
+        const lenis = new Lenis({ duration: 1.4, easing: t => Math.min(1, 1.001 - Math.pow(2, -10 * t)), smoothWheel: true, touchMultiplier: 1.5 });
+        function raf(time) { lenis.raf(time); requestAnimationFrame(raf); }
         requestAnimationFrame(raf);
     </script>
-
 </body>
 </html>
