@@ -2115,13 +2115,12 @@
             background: rgba(10, 10, 10, 0.95);
             z-index: 2000;
             display: flex;
-            align-items: flex-start;
+            align-items: center;
             justify-content: center;
             opacity: 0;
             visibility: hidden;
             transition: var(--transition-slow);
-            overflow-y: auto;
-            padding: 80px 24px;
+            padding: 24px;
         }
 
         .service-modal-overlay.active {
@@ -2137,6 +2136,9 @@
             padding: 56px;
             position: relative;
             border: 1px solid rgba(255,255,255,0.06);
+            max-height: calc(100vh - 48px);
+            overflow-y: auto;
+            overscroll-behavior: contain;
         }
 
         .service-modal-close {
@@ -2900,7 +2902,206 @@
             </div>
         </div>
     </section>
+    <!-- CONSULTATION INFO MODAL -->
+    <div class="service-modal-overlay" id="consultModal">
+        <div class="service-modal" style="max-width: 600px;">
+            <button class="service-modal-close" id="consultModalClose" aria-label="Zamknij">
+                <i class="fas fa-times"></i>
+            </button>
+            <div style="display:flex; align-items:center; gap:14px; margin-bottom:28px;">
+                <div style="width:48px;height:48px;border-radius:50%;background:rgba(254,213,37,0.12);border:2px solid rgba(254,213,37,0.35);display:flex;align-items:center;justify-content:center;flex-shrink:0;">
+                    <i class="fas fa-info" style="color:var(--yellow);font-size:1rem;"></i>
+                </div>
+                <div>
+                    <h2 style="font-size:1.5rem;margin:0;">Na czym polega konsultacja?</h2>
+                </div>
+            </div>
+            <p style="color:var(--gray-light);font-size:0.95rem;line-height:1.75;margin-bottom:28px;">
+                Zapisz się na darmową konsultację — to pierwsze spotkanie bez żadnych zobowiązań, podczas którego poznajemy Ciebie i Twoje cele, aby zaproponować najlepszą drogę do wyników.
+            </p>
+            <ul style="list-style:none;display:flex;flex-direction:column;gap:0;">
+                <li style="display:flex;align-items:flex-start;gap:16px;padding:18px 0;border-bottom:1px solid rgba(255,255,255,0.06);">
+                    <div style="width:36px;height:36px;border-radius:10px;background:rgba(254,213,37,0.1);border:1px solid rgba(254,213,37,0.2);display:flex;align-items:center;justify-content:center;flex-shrink:0;margin-top:2px;">
+                        <i class="fas fa-flask" style="color:var(--yellow);font-size:0.85rem;"></i>
+                    </div>
+                    <div>
+                        <strong style="display:block;font-size:0.95rem;margin-bottom:5px;">Profesjonalne testy diagnostyczne</strong>
+                        <span style="color:var(--gray-light);font-size:0.875rem;line-height:1.65;">Przeprowadzamy kompleksowe testy sprawności fizycznej — oceniamy siłę, wytrzymałość i&nbsp;wydolność. Dzięki temu plan treningowy jest dopasowany do Twoich aktualnych możliwości, a&nbsp;nie do ogólnego szablonu.</span>
+                    </div>
+                </li>
+                <li style="display:flex;align-items:flex-start;gap:16px;padding:18px 0;border-bottom:1px solid rgba(255,255,255,0.06);">
+                    <div style="width:36px;height:36px;border-radius:10px;background:rgba(254,213,37,0.1);border:1px solid rgba(254,213,37,0.2);display:flex;align-items:center;justify-content:center;flex-shrink:0;margin-top:2px;">
+                        <i class="fas fa-heartbeat" style="color:var(--yellow);font-size:0.85rem;"></i>
+                    </div>
+                    <div>
+                        <strong style="display:block;font-size:0.95rem;margin-bottom:5px;">Analiza stanu zdrowia i&nbsp;składu ciała</strong>
+                        <span style="color:var(--gray-light);font-size:0.875rem;line-height:1.65;">Mierzymy skład ciała — tkankę tłuszczową, masę mięśniową i&nbsp;nawodnienie. Pytamy też o&nbsp;historię zdrowotną i&nbsp;ewentualne kontuzje, żeby Twój trening był w&nbsp;100% bezpieczny i&nbsp;efektywny od pierwszego dnia.</span>
+                    </div>
+                </li>
+                <li style="display:flex;align-items:flex-start;gap:16px;padding:18px 0;border-bottom:1px solid rgba(255,255,255,0.06);">
+                    <div style="width:36px;height:36px;border-radius:10px;background:rgba(254,213,37,0.1);border:1px solid rgba(254,213,37,0.2);display:flex;align-items:center;justify-content:center;flex-shrink:0;margin-top:2px;">
+                        <i class="fas fa-person-running" style="color:var(--yellow);font-size:0.85rem;"></i>
+                    </div>
+                    <div>
+                        <strong style="display:block;font-size:0.95rem;margin-bottom:5px;">Ocena mobilności, stabilności i&nbsp;wzorców ruchowych</strong>
+                        <span style="color:var(--gray-light);font-size:0.875rem;line-height:1.65;">Analizujemy zakres ruchu w&nbsp;stawach, stabilizację posturalną oraz predyspozycje ruchowe. Pozwala nam to wychwycić ewentualne dysfunkcje, zapobiec kontuzjom i&nbsp;zbudować trening na solidnym fundamencie od samego początku.</span>
+                    </div>
+                </li>
+                <li style="display:flex;align-items:flex-start;gap:16px;padding:18px 0;">
+                    <div style="width:36px;height:36px;border-radius:10px;background:rgba(254,213,37,0.1);border:1px solid rgba(254,213,37,0.2);display:flex;align-items:center;justify-content:center;flex-shrink:0;margin-top:2px;">
+                        <i class="fas fa-comments" style="color:var(--yellow);font-size:0.85rem;"></i>
+                    </div>
+                    <div>
+                        <strong style="display:block;font-size:0.95rem;margin-bottom:5px;">Omówienie celów, treningu i&nbsp;żywienia</strong>
+                        <span style="color:var(--gray-light);font-size:0.875rem;line-height:1.65;">Rozmawiamy szczegółowo o&nbsp;Twoim celu, stylu życia, preferencjach żywieniowych i&nbsp;dostępnym czasie. Na tej podstawie przedstawiamy wstępny plan działania — konkretny, realny i&nbsp;bez żadnych zobowiązań z&nbsp;Twojej strony.</span>
+                    </div>
+                </li>
+            </ul>
+            <div style="margin-top:28px;padding:16px 20px;background:rgba(254,213,37,0.06);border:1px solid rgba(254,213,37,0.15);border-radius:12px;display:flex;align-items:center;gap:12px;">
+                <i class="fas fa-clock" style="color:var(--yellow);font-size:1rem;flex-shrink:0;"></i>
+                <p style="margin:0;font-size:0.875rem;color:var(--gray-light);line-height:1.5;">Konsultacja trwa około <strong style="color:var(--white);">45–60 minut</strong> i jest w&nbsp;całości <strong style="color:var(--yellow);">bezpłatna</strong>. Po spotkaniu decyzja należy wyłącznie do Ciebie.</p>
+            </div>
+        </div>
+    </div>
+
+    <!-- CONTACT FORM SECTION -->
+    <section id="contact" style="background: var(--dark-2);">
+        <div class="container">
+            <div style="max-width: 560px; margin: 0 auto;">
+
+                <!-- Nagłówek z przyciskiem "i" -->
+                <div class="reveal" style="text-align: center; margin-bottom: 48px;">
+                    <span class="section-label">Darmowa konsultacja</span>
+                    <div style="display:inline-flex;align-items:center;gap:14px;justify-content:center;flex-wrap:wrap;">
+                        <h2 class="section-title" style="margin-bottom:0;">Zapisz się na<br>bezpłatną konsultację</h2>
+                        <button id="consultInfoBtn" aria-label="Co to jest bezpłatna konsultacja?" style="width:36px;height:36px;border-radius:50%;background:rgba(254,213,37,0.12);border:2px solid rgba(254,213,37,0.4);color:var(--yellow);font-size:0.85rem;font-weight:800;cursor:pointer;flex-shrink:0;transition:var(--transition);display:flex;align-items:center;justify-content:center;font-family:Georgia,serif;font-style:italic;margin-top:4px;" title="Na czym polega bezpłatna konsultacja?">
+                            i
+                        </button>
+                    </div>
+                    <p style="font-size:0.78rem;color:var(--gray);margin-top:12px;letter-spacing:0.3px;">
+                        Kliknij <em style="color:var(--yellow);">i</em> aby dowiedzieć się więcej o konsultacji
+                    </p>
+                </div>
+
+                <div class="contact-form reveal reveal-delay-1">
+                    <form id="reservationForm" novalidate>
+                        <!-- Honeypot — ukryte pole anty-spamowe -->
+                        <input type="text" name="website" style="display:none;" tabindex="-1" autocomplete="off">
+
+                        <div class="form-group">
+                            <label for="imie">Imię i nazwisko *</label>
+                            <input type="text" id="imie" name="imie" placeholder="Jan Kowalski" required autocomplete="name">
+                        </div>
+
+                        <div style="display: grid; grid-template-columns: 1fr 1fr; gap: 16px;">
+                            <div class="form-group">
+                                <label for="wiek">Wiek *</label>
+                                <input type="number" id="wiek" name="wiek" placeholder="np. 28" min="10" max="99" required>
+                            </div>
+                            <div class="form-group">
+                                <label for="waga">Waga (kg) *</label>
+                                <input type="number" id="waga" name="waga" placeholder="np. 75" min="30" max="300" required>
+                            </div>
+                        </div>
+
+                        <div class="form-group">
+                            <label for="cel">Cel kontaktu *</label>
+                            <select id="cel" name="cel" required>
+                                <option value="">Wybierz cel</option>
+                                <option value="Redukcja tkanki tłuszczowej">Redukcja tkanki tłuszczowej</option>
+                                <option value="Budowa masy mięśniowej">Budowa masy mięśniowej</option>
+                                <option value="Poprawa kondycji i wydolności">Poprawa kondycji i wydolności</option>
+                                <option value="Rehabilitacja i powrót do sprawności">Rehabilitacja i powrót do sprawności</option>
+                                <option value="Zdrowy styl życia i ogólna forma">Zdrowy styl życia i ogólna forma</option>
+                                <option value="Przygotowanie do zawodów sportowych">Przygotowanie do zawodów sportowych</option>
+                                <option value="Chcę dowiedzieć się więcej o ofercie">Chcę dowiedzieć się więcej o ofercie</option>
+                            </select>
+                        </div>
+
+                        <button type="submit" class="btn btn-primary" id="submitBtn" style="width:100%;justify-content:center;padding:18px;font-size:0.95rem;margin-top:8px;">
+                            <span id="submitText">Zapisuję się na konsultację</span>
+                            <i class="fas fa-arrow-right" id="submitIcon"></i>
+                        </button>
+                    </form>
+
+                    <div class="form-success" id="formSuccess">
+                        <i class="fas fa-check-circle"></i>
+                        <h3>Gotowe! Do zobaczenia w studio.</h3>
+                        <p>Skontaktujemy się z Tobą wkrótce, aby potwierdzić termin konsultacji.</p>
+                    </div>
+
+                    <div id="formError" style="display:none; margin-top:16px; padding:14px 18px; background:rgba(220,53,69,0.1); border:1px solid rgba(220,53,69,0.3); border-radius:10px; color:#ff6b6b; font-size:0.9rem;">
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
     </main>
+
+    <script>
+    (function() {
+        // ── Modal "i" ──────────────────────────────────────────────
+        const consultModal = document.getElementById('consultModal');
+        const consultInfoBtn = document.getElementById('consultInfoBtn');
+        const consultModalClose = document.getElementById('consultModalClose');
+
+        consultInfoBtn.addEventListener('click', () => consultModal.classList.add('active'));
+        consultModalClose.addEventListener('click', () => consultModal.classList.remove('active'));
+        consultModal.addEventListener('click', (e) => { if (e.target === consultModal) consultModal.classList.remove('active'); });
+        document.addEventListener('keydown', (e) => { if (e.key === 'Escape') consultModal.classList.remove('active'); });
+
+        consultInfoBtn.addEventListener('mouseenter', function() {
+            this.style.background = 'rgba(254,213,37,0.22)';
+            this.style.borderColor = 'var(--yellow)';
+        });
+        consultInfoBtn.addEventListener('mouseleave', function() {
+            this.style.background = 'rgba(254,213,37,0.12)';
+            this.style.borderColor = 'rgba(254,213,37,0.4)';
+        });
+
+        // ── Formularz ──────────────────────────────────────────────
+        const form = document.getElementById('reservationForm');
+        const btn  = document.getElementById('submitBtn');
+        const btnText = document.getElementById('submitText');
+        const btnIcon = document.getElementById('submitIcon');
+        const success = document.getElementById('formSuccess');
+        const errorBox = document.getElementById('formError');
+
+        form.addEventListener('submit', async function(e) {
+            e.preventDefault();
+            errorBox.style.display = 'none';
+
+            btn.disabled = true;
+            btnText.textContent = 'Wysyłanie...';
+            btnIcon.className = 'fas fa-spinner fa-spin';
+
+            try {
+                const res = await fetch('send-mail.php', {
+                    method: 'POST',
+                    body: new FormData(form)
+                });
+                const data = await res.json();
+
+                if (data.ok) {
+                    form.style.display = 'none';
+                    success.classList.add('show');
+                } else {
+                    errorBox.textContent = data.message || 'Wystąpił błąd. Spróbuj ponownie.';
+                    errorBox.style.display = 'block';
+                    btn.disabled = false;
+                    btnText.textContent = 'Wyślij zapytanie';
+                    btnIcon.className = 'fas fa-arrow-right';
+                }
+            } catch {
+                errorBox.textContent = 'Błąd połączenia. Sprawdź internet i spróbuj ponownie.';
+                errorBox.style.display = 'block';
+                btn.disabled = false;
+                btnText.textContent = 'Wyślij zapytanie';
+                btnIcon.className = 'fas fa-arrow-right';
+            }
+        });
+    })();
+    </script>
 
     <footer class="footer">
         <div class="container">

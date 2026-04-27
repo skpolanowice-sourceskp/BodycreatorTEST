@@ -1,0 +1,160 @@
+=========================================================
+  INSTRUKCJA — FORMULARZ KONTAKTOWY (PHP + PHPMailer)
+  Strona: Body Creator | rezerwacja.html
+=========================================================
+
+Co już zostało zrobione w kodzie:
+  - Formularz HTML dodany do rezerwacja.html (sekcja pod kalendarzem)
+  - Plik send-mail.php gotowy (obsługuje wysyłkę przez SMTP)
+  - Anty-spam (honeypot) wbudowany
+  - Walidacja po stronie PHP i komunikaty błędów
+
+=========================================================
+  KROK 1 — KUP HOSTING
+=========================================================
+
+Polecane opcje (PHP + email w cenie):
+  - home.pl      → home.pl/hosting
+  - cyber-folks  → cyber-folks.pl
+
+Co kupić:
+  - Hosting SSD (najtańszy plan wystarczy)
+  - Domena: bodycreator.pl (lub inna)
+  Koszt łącznie: ok. 150-200 zł/rok
+
+=========================================================
+  KROK 2 — UTWÓRZ SKRZYNKĘ EMAIL W PANELU HOSTINGOWYM
+=========================================================
+
+1. Zaloguj się do panelu hostingowego (DirectAdmin / cPanel)
+2. Znajdź sekcję "Konta email" lub "Email Accounts"
+3. Utwórz skrzynkę np.:
+     kontakt@bodycreator.pl
+4. Zanotuj sobie:
+     - Adres SMTP:  mail.bodycreator.pl  (zazwyczaj "mail." + domena)
+     - Login:       kontakt@bodycreator.pl
+     - Haslo:       [haslo ktore ustawiles]
+     - Port SMTP:   465 (SSL) — sprawdz w panelu, moze byc tez 587
+
+=========================================================
+  KROK 3 — UZUPELNIJ DANE W send-mail.php
+=========================================================
+
+Otworz plik:  send-mail.php
+
+Znajdz te 4 linie i podmien na swoje dane:
+
+  define('SMTP_HOST', 'mail.twojadomena.pl');    <- wpisz adres SMTP
+  define('SMTP_USER', 'kontakt@twojadomena.pl'); <- wpisz email
+  define('SMTP_PASS', 'TWOJE_HASLO');            <- wpisz haslo
+  define('MAIL_TO',   'kontakt@twojadomena.pl'); <- wpisz email (ten sam)
+
+Przyklad po wypelnieniu:
+  define('SMTP_HOST', 'mail.bodycreator.pl');
+  define('SMTP_USER', 'kontakt@bodycreator.pl');
+  define('SMTP_PASS', 'MojeHaslo123!');
+  define('MAIL_TO',   'kontakt@bodycreator.pl');
+
+WAZNE: Nie udostepniaj tego pliku publicznie ani nie wgrywaj
+       go na GitHuba — zawiera haslo do skrzynki!
+
+=========================================================
+  KROK 4 — POBIERZ PHPMAILER (3 pliki)
+=========================================================
+
+1. Wejdz na: https://github.com/PHPMailer/PHPMailer/releases
+2. Pobierz najnowszy ZIP (np. PHPMailer-6.x.x.zip)
+3. Rozpakuj i skopiuj TYLKO te 3 pliki z folderu "src/":
+     - Exception.php
+     - PHPMailer.php
+     - SMTP.php
+4. W projekcie utworz folder:  phpmailer/
+5. Wrzuc te 3 pliki do folderu phpmailer/
+
+=========================================================
+  KROK 5 — STRUKTURA PLIKOW NA SERWERZE
+=========================================================
+
+Na serwerze (w public_html/) powinno wygladac tak:
+
+  public_html/
+  ├── index.html
+  ├── rezerwacja.html
+  ├── oferta.html
+  ├── o-nas.html
+  ├── kontakt.html
+  ├── kalkulator.html
+  ├── przemiany.html
+  ├── send-mail.php          <-- ten plik
+  ├── phpmailer/             <-- ten folder z 3 plikami
+  │   ├── Exception.php
+  │   ├── PHPMailer.php
+  │   └── SMTP.php
+  ├── favicon.png
+  ├── logo.png
+  └── *.mp4 (filmy)
+
+=========================================================
+  KROK 6 — WGRAJ PLIKI NA SERWER (FTP)
+=========================================================
+
+Program do FTP: FileZilla (darmowy)
+Pobierz: filezilla-project.org/download.php
+
+Dane FTP znajdziesz w panelu hostingowym
+(szukaj "FTP" lub "Menedzer plikow"):
+  - Host FTP:  ftp.bodycreator.pl  lub adres IP
+  - Login:     [login z panelu]
+  - Haslo:     [haslo z panelu]
+  - Port:      21
+
+Polacz sie i wgraj wszystkie pliki do folderu public_html/
+
+=========================================================
+  KROK 7 — PRZETESTUJ FORMULARZ
+=========================================================
+
+1. Wejdz na strone: https://bodycreator.pl/rezerwacja.html
+2. Przewin na dol — pod kalendarzem jest formularz
+3. Wypelnij wszystkie pola i kliknij "Wyslij zapytanie"
+4. Sprawdz skrzynke kontakt@bodycreator.pl
+   - powinien przyjsc ladnie sformatowany email z danymi klienta
+   - w emailu jest przycisk Reply-To ustawiony na klienta,
+     wiec mozesz odpisac bezposrednio
+
+Jesli email nie dochodzi:
+  - Sprawdz folder SPAM
+  - Sprawdz czy dane SMTP w send-mail.php sa poprawne
+  - Sprawdz port (sprobuj 587 zamiast 465 albo odwrotnie)
+  - Zapytaj support hostingu o poprawne ustawienia SMTP
+
+=========================================================
+  JAK DZIALA FORMULARZ (krotko)
+=========================================================
+
+  Klient wypelnia formularz na stronie
+       |
+       v
+  Przeglądarka wysyla dane do send-mail.php (POST)
+       |
+       v
+  PHP waliduje dane (czy email poprawny, czy pola wypelnione)
+       |
+       v
+  PHPMailer laczy sie z SMTP hostingu
+       |
+       v
+  Email z danymi klienta trafia na kontakt@bodycreator.pl
+       |
+       v
+  Klient widzi komunikat "Wiadomosc wyslana!" na stronie
+
+=========================================================
+  PLIKI DO ZMIANY / ZAPAMIETANIA
+=========================================================
+
+  send-mail.php         — tu wpisz dane SMTP (krok 3)
+  phpmailer/            — tu wrzuc 3 pliki PHPMailer (krok 4)
+  rezerwacja.html       — formularz juz jest, nic nie ruszac
+
+=========================================================
