@@ -636,6 +636,148 @@
         }
 
         /* ============================================
+           ABOUT HERO (page intro)
+           ============================================ */
+        .about-hero {
+            min-height: 100vh;
+            display: flex;
+            align-items: center;
+            position: relative;
+            overflow: hidden;
+            background: var(--dark);
+            padding-top: 80px;
+        }
+
+        .about-hero::before {
+            content: '';
+            position: absolute;
+            inset: 0;
+            background: radial-gradient(ellipse at 15% 65%, rgba(247, 181, 0, 0.06) 0%, transparent 55%),
+                        radial-gradient(ellipse at 85% 20%, rgba(247, 181, 0, 0.025) 0%, transparent 45%);
+            pointer-events: none;
+        }
+
+        .about-hero .container {
+            position: relative;
+            z-index: 1;
+            padding-top: 64px;
+            padding-bottom: 64px;
+        }
+
+        .about-hero-content {
+            max-width: 700px;
+        }
+
+        .about-hero-title {
+            font-family: var(--font-display);
+            font-size: clamp(2.8rem, 7vw, 5.5rem);
+            font-weight: 900;
+            line-height: 1.05;
+            letter-spacing: 2px;
+            text-transform: uppercase;
+            color: oklch(97% 0.005 65);
+            margin-bottom: 28px;
+        }
+
+        .about-hero-title .accent {
+            color: var(--yellow);
+        }
+
+        .about-hero-lead {
+            font-size: clamp(1rem, 1.4vw, 1.1rem);
+            color: var(--gray-light);
+            line-height: 1.85;
+            max-width: 580px;
+            margin-bottom: 36px;
+        }
+
+        .about-hero-cta {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 16px;
+            margin-bottom: 52px;
+        }
+
+        .about-hero-meta {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 28px;
+            color: var(--gray);
+            font-size: 0.8rem;
+            letter-spacing: 1px;
+        }
+
+        .about-hero-meta span {
+            display: flex;
+            align-items: center;
+            gap: 8px;
+        }
+
+        .about-hero-meta i {
+            color: var(--yellow);
+            font-size: 0.7rem;
+        }
+
+        /* ============================================
+           STATS STRIP
+           ============================================ */
+        .stats-strip {
+            display: flex;
+            align-items: center;
+            margin-top: 36px;
+            padding: 28px 0;
+            border-top: 1px solid rgba(255,255,255,0.06);
+            border-bottom: 1px solid rgba(255,255,255,0.06);
+        }
+
+        .stats-strip-item {
+            flex: 1;
+            text-align: center;
+            padding: 0 16px;
+        }
+
+        .stats-num {
+            display: block;
+            font-size: clamp(1.8rem, 3vw, 2.5rem);
+            font-weight: 900;
+            color: var(--yellow);
+            font-family: var(--font-display);
+            line-height: 1;
+            margin-bottom: 7px;
+            font-feature-settings: "tnum";
+        }
+
+        .stats-lbl {
+            display: block;
+            font-size: 0.68rem;
+            font-weight: 700;
+            letter-spacing: 2px;
+            text-transform: uppercase;
+            color: var(--gray);
+            line-height: 1.4;
+        }
+
+        .stats-divider {
+            width: 1px;
+            height: 44px;
+            background: rgba(255,255,255,0.07);
+            flex-shrink: 0;
+        }
+
+        @media (max-width: 600px) {
+            .stats-strip {
+                flex-wrap: wrap;
+                gap: 20px;
+                padding: 20px 0;
+            }
+            .stats-strip-item {
+                flex: 0 0 calc(50% - 20px);
+                padding: 0;
+            }
+            .stats-divider { display: none; }
+        }
+
+        /* ============================================
            ABOUT SECTION
            ============================================ */
         #about {
@@ -748,25 +890,10 @@
             overflow: hidden;
         }
 
-        .service-card::before {
-            content: '';
-            position: absolute;
-            top: 0;
-            left: 0;
-            right: 0;
-            height: 3px;
-            background: var(--yellow);
-            transform: scaleX(0);
-            transition: transform var(--transition);
-        }
-
-        .service-card:hover::before {
-            transform: scaleX(1);
-        }
-
         .service-card:hover {
-            border-color: rgba(242, 201, 76, 0.15);
+            border-color: rgba(242, 201, 76, 0.25);
             transform: translateY(-4px);
+            background: oklch(15% 0.007 60);
         }
 
         .service-card--video {
@@ -1004,10 +1131,24 @@
         }
 
         .team-quote {
-            background: var(--dark-3);
-            border-radius: 16px;
-            padding: 24px 28px;
-            border-left: 4px solid var(--yellow);
+            background: oklch(14% 0.008 60);
+            border-radius: 12px;
+            padding: 28px 28px 22px;
+            border: 1px solid rgba(247, 181, 0, 0.18);
+            position: relative;
+        }
+
+        .team-quote::before {
+            content: '\201C';
+            position: absolute;
+            top: 4px;
+            left: 20px;
+            font-size: 2.8rem;
+            line-height: 1;
+            font-weight: 900;
+            color: rgba(247, 181, 0, 0.45);
+            font-family: var(--font-display);
+            pointer-events: none;
         }
 
         .team-quote blockquote {
@@ -1016,6 +1157,7 @@
             font-style: italic;
             line-height: 1.65;
             color: var(--gray-light);
+            padding-top: 10px;
         }
 
         .team-quote-attr {
@@ -1185,30 +1327,13 @@
             background: var(--dark-2);
             border-radius: 14px;
             border: 1px solid rgba(255,255,255,0.05);
-            position: relative;
-            overflow: hidden;
-            transition: transform 0.3s ease, border-color 0.3s ease;
-        }
-
-        .team-stats-item::after {
-            content: '';
-            position: absolute;
-            bottom: 0;
-            left: 0;
-            right: 0;
-            height: 3px;
-            background: var(--yellow);
-            transform: scaleX(0);
-            transition: transform 0.4s cubic-bezier(0.25, 0.46, 0.45, 0.94);
+            transition: transform 0.3s ease, border-color 0.3s ease, background 0.3s ease;
         }
 
         .team-stats-item:hover {
             transform: translateY(-3px);
-            border-color: rgba(247, 181, 0, 0.15);
-        }
-
-        .team-stats-item:hover::after {
-            transform: scaleX(1);
+            border-color: rgba(247, 181, 0, 0.28);
+            background: oklch(15% 0.007 60);
         }
 
         .team-stats-item i {
@@ -1252,30 +1377,13 @@
             font-size: 0.8rem;
             font-weight: 600;
             color: var(--white);
-            position: relative;
-            overflow: hidden;
-            transition: transform 0.3s ease, border-color 0.3s ease;
-        }
-
-        .team-stats-achievement::after {
-            content: '';
-            position: absolute;
-            bottom: 0;
-            left: 0;
-            right: 0;
-            height: 3px;
-            background: var(--yellow);
-            transform: scaleX(0);
-            transition: transform 0.4s cubic-bezier(0.25, 0.46, 0.45, 0.94);
+            transition: transform 0.3s ease, border-color 0.3s ease, background 0.3s ease;
         }
 
         .team-stats-achievement:hover {
             transform: translateY(-3px);
-            border-color: rgba(247, 181, 0, 0.15);
-        }
-
-        .team-stats-achievement:hover::after {
-            transform: scaleX(1);
+            border-color: rgba(247, 181, 0, 0.25);
+            background: oklch(15% 0.007 60);
         }
 
         .team-stats-achievement i {
@@ -1478,15 +1586,10 @@
 
         .accordion-header h3 i {
             color: var(--yellow);
-            font-size: 0.9rem;
-            width: 36px;
-            height: 36px;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            background: rgba(242, 201, 76, 0.1);
-            border-radius: 8px;
+            font-size: 1rem;
             flex-shrink: 0;
+            width: 20px;
+            text-align: center;
         }
 
         .accordion-toggle {
@@ -2741,21 +2844,10 @@
             overflow: hidden;
         }
 
-        .pages-nav-card::before {
-            content: '';
-            position: absolute;
-            top: 0; left: 0; right: 0;
-            height: 3px;
-            background: var(--yellow);
-            transform: scaleX(0);
-            transition: transform var(--transition);
-        }
-
-        .pages-nav-card:hover::before { transform: scaleX(1); }
-
         .pages-nav-card:hover {
-            border-color: rgba(242,201,76,0.2);
+            border-color: rgba(242,201,76,0.28);
             transform: translateY(-4px);
+            background: oklch(15% 0.007 60);
         }
 
         .pages-nav-card i {
@@ -2846,8 +2938,35 @@
     </div>
 
     <main>
+
+    <!-- PAGE INTRO -->
+    <section class="about-hero">
+        <div class="container">
+            <div class="about-hero-content">
+                <span class="section-label">O Body Creator</span>
+                <h1 class="about-hero-title">
+                    Jedno studio.<br>
+                    Dwie osoby.<br>
+                    <span class="accent">Twój cel.</span>
+                </h1>
+                <p class="about-hero-lead">
+                    Przy ul. Rafała Wojaczka 3g w Sołtysowicach prowadzimy kameralne studio treningu personalnego. Jakub i Aleksandra — dwoje trenerów z pasją do realnych wyników. Bez tłumów, bez ogólnych planów, bez marketingowych obietnic.
+                </p>
+                <div class="about-hero-cta">
+                    <a href="rezerwacja.html" class="btn btn-primary">Zarezerwuj konsultację <i class="fas fa-arrow-right"></i></a>
+                    <a href="#team" class="btn btn-outline">Poznaj zespół</a>
+                </div>
+                <div class="about-hero-meta">
+                    <span><i class="fas fa-map-marker-alt"></i> Sołtysowice, Wrocław</span>
+                    <span><i class="fas fa-clock"></i> Pon&ndash;Sob, 07:00&ndash;21:00</span>
+                    <span><i class="fas fa-phone"></i> +48 --- --- ---</span>
+                </div>
+            </div>
+        </div>
+    </section>
+
     <!-- TEAM SECTION -->
-    <section id="team" style="padding-top: 140px;">
+    <section id="team">
         <video class="team-video" autoplay muted loop playsinline oncanplay="this.playbackRate=0.3">
             <source src="team-bg.mp4" type="video/mp4">
         </video>
@@ -2864,38 +2983,35 @@
                             </div>
                             <h2 class="section-title">Profesjonaliści z&nbsp;pasją<br>do&nbsp;treningu</h2>
                             <p class="section-text">W Body Creator mamy profesjonalistów z&nbsp;ogromnym bagażem doświadczeń oraz wiedzy, która pozwala pomagać ludziom zarówno z&nbsp;problemami zdrowotnymi jak i&nbsp;dążyć do&nbsp;sylwetki swoich marzeń.</p>
-                            <div class="team-stats">
-                                <div class="team-stats-grid">
-                                    <div class="team-stats-item reveal">
-                                        <i class="fas fa-face-smile"></i>
-                                        <span class="number" data-count="100" data-suffix="%">100%</span>
-                                        <span class="label">Zadowolonych klientów</span>
-                                    </div>
-                                    <div class="team-stats-item reveal reveal-delay-1">
-                                        <i class="fas fa-person-running"></i>
-                                        <span class="number" data-count="10000" data-suffix="+" data-format="space">10 000+</span>
-                                        <span class="label">Przeprowadzonych treningów</span>
-                                    </div>
-                                    <div class="team-stats-item reveal reveal-delay-2">
-                                        <i class="fas fa-star"></i>
-                                        <span class="number" data-count="5" data-suffix="" data-decimals="1">5.0</span>
-                                        <span class="label">Średnia opinii Google</span>
-                                    </div>
-                                    <div class="team-stats-item reveal reveal-delay-3">
-                                        <i class="fas fa-comment-dots"></i>
-                                        <span class="number" data-count="100" data-suffix="+">100+</span>
-                                        <span class="label">Pozytywnych opinii</span>
-                                    </div>
+                            <div class="stats-strip reveal">
+                                <div class="stats-strip-item">
+                                    <span class="stats-num" data-count="100" data-suffix="%">100%</span>
+                                    <span class="stats-lbl">Zadowolonych<br>klientów</span>
                                 </div>
-                                <div class="team-stats-achievements">
-                                    <div class="team-stats-achievement reveal reveal-delay-4">
-                                        <i class="fas fa-weight-scale"></i>
-                                        <span>Setki zrzuconych kilogramów</span>
-                                    </div>
-                                    <div class="team-stats-achievement reveal reveal-delay-4">
-                                        <i class="fas fa-bone"></i>
-                                        <span>Dziesiątki wyleczonych kręgosłupów, kolan czy barków</span>
-                                    </div>
+                                <div class="stats-divider"></div>
+                                <div class="stats-strip-item">
+                                    <span class="stats-num" data-count="10000" data-suffix="+" data-format="space">10 000+</span>
+                                    <span class="stats-lbl">Przeprowadzonych<br>treningów</span>
+                                </div>
+                                <div class="stats-divider"></div>
+                                <div class="stats-strip-item">
+                                    <span class="stats-num" data-count="5" data-suffix="" data-decimals="1">5.0</span>
+                                    <span class="stats-lbl">Ocena<br>Google</span>
+                                </div>
+                                <div class="stats-divider"></div>
+                                <div class="stats-strip-item">
+                                    <span class="stats-num" data-count="100" data-suffix="+">100+</span>
+                                    <span class="stats-lbl">Pozytywnych<br>opinii</span>
+                                </div>
+                            </div>
+                            <div class="team-stats-achievements" style="margin-top: 20px;">
+                                <div class="team-stats-achievement reveal">
+                                    <i class="fas fa-weight-scale"></i>
+                                    <span>Setki zrzuconych kilogramów</span>
+                                </div>
+                                <div class="team-stats-achievement reveal reveal-delay-1">
+                                    <i class="fas fa-bone"></i>
+                                    <span>Dziesiątki wyleczonych kręgosłupów, kolan i barków</span>
                                 </div>
                             </div>
                         </div>
@@ -2985,7 +3101,7 @@
         <div class="container">
             <div class="why-us-header reveal">
                 <span class="section-label">Dlaczego my</span>
-                <h2 class="section-title">Dlaczego to nas powinieneś wybrać?</h2>
+                <h2 class="section-title">Czego nie znajdziesz<br>na publicznej siłowni</h2>
             </div>
             <div class="accordion-grid">
                 <div class="accordion-item reveal">
@@ -3033,7 +3149,7 @@
         <div class="container">
             <div class="steps-header reveal">
                 <span class="section-label">Jak zacząć</span>
-                <h2 class="section-title">Dołącz do nas i&nbsp;postaw mały krok<br>do wielkiej zmiany!</h2>
+                <h2 class="section-title">Cztery kroki<br>do pierwszego treningu</h2>
             </div>
             <div class="steps-grid">
                 <div class="step-card reveal">
@@ -3143,7 +3259,7 @@
                 if (format === 'space') str = str.replace(/\B(?=(\d{3})+(?!\d))/g, ' ');
                 return str;
             }
-            const counters = document.querySelectorAll('.team-stats-item .number[data-count]');
+            const counters = document.querySelectorAll('.stats-num[data-count]');
             const observer = new IntersectionObserver(entries => {
                 entries.forEach(entry => {
                     if (!entry.isIntersecting || entry.target.dataset.counted) return;
