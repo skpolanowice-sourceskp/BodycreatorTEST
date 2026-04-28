@@ -1,0 +1,125 @@
+{
+  "schemaVersion": 2,
+  "generatedAt": "2026-04-28T00:00:00Z",
+  "title": "Design System: Body Creator",
+  "extensions": {
+    "colorMeta": {
+      "forge-gold":       { "role": "primary", "displayName": "Forge Gold",       "canonical": "oklch(76% 0.165 85)",  "tonalRamp": ["#2E2200","#4A3700","#694F00","#8B6900","#AF8500","#D4A200","#F7B500","#FFCC3D","#FFE099","#FFF3D6"] },
+      "forge-gold-deep":  { "role": "primary", "displayName": "Forge Gold Deep",  "canonical": "oklch(69% 0.155 84)",  "tonalRamp": ["#281E00","#3F3000","#5A4500","#755A00","#927100","#B08900","#DEA300","#EBB933","#F5D480","#FCF0CB"] },
+      "obsidian":         { "role": "neutral",  "displayName": "Obsidian",         "canonical": "oklch(6% 0.003 85)",   "tonalRamp": ["#0A0A0A","#141414","#1F1F1F","#2E2E2E","#3D3D3D","#555555","#6E6E6E","#888888","#AAAAAA","#D0D0D0"] },
+      "anthracite":       { "role": "neutral",  "displayName": "Anthracite",       "canonical": "oklch(9% 0.003 85)",   "tonalRamp": ["#0A0A0A","#111111","#1A1A1A","#252525","#333333","#484848","#616161","#7A7A7A","#9E9E9E","#C5C5C5"] },
+      "charcoal":         { "role": "neutral",  "displayName": "Charcoal",         "canonical": "oklch(13% 0.003 85)",  "tonalRamp": ["#0D0D0D","#1A1A1A","#272727","#353535","#444444","#595959","#727272","#8C8C8C","#ABABAB","#CECECE"] },
+      "graphite":         { "role": "neutral",  "displayName": "Graphite",         "canonical": "oklch(17% 0.003 85)",  "tonalRamp": ["#111111","#1A1A1A","#222222","#303030","#404040","#555555","#6E6E6E","#888888","#A8A8A8","#CBCBCB"] },
+      "ice":              { "role": "neutral",  "displayName": "Ice",              "canonical": "oklch(100% 0 0)",      "tonalRamp": ["#1A1A1A","#333333","#4D4D4D","#666666","#808080","#999999","#B3B3B3","#CCCCCC","#E6E6E6","#FFFFFF"] },
+      "ash":              { "role": "neutral",  "displayName": "Ash",              "canonical": "oklch(83% 0 0)",       "tonalRamp": ["#1A1A1A","#303030","#484848","#616161","#7A7A7A","#939393","#ADADAD","#CCCCCC","#E0E0E0","#F5F5F5"] },
+      "slate":            { "role": "neutral",  "displayName": "Slate",            "canonical": "oklch(66% 0 0)",       "tonalRamp": ["#141414","#282828","#3C3C3C","#505050","#656565","#7A7A7A","#999999","#B3B3B3","#CCCCCC","#E5E5E5"] },
+      "iron":             { "role": "neutral",  "displayName": "Iron",             "canonical": "oklch(31% 0 0)",       "tonalRamp": ["#0A0A0A","#1A1A1A","#2A2A2A","#333333","#444444","#595959","#717171","#8C8C8C","#ABABAB","#CECECE"] }
+    },
+    "typographyMeta": {
+      "display": { "displayName": "Display",  "purpose": "Hero headings only. One per screen. Always uppercase." },
+      "headline": { "displayName": "Headline", "purpose": "Section titles (.section-title). Always preceded by a label." },
+      "title":    { "displayName": "Title",    "purpose": "Card headings, sub-section headings. Sentence case." },
+      "body":     { "displayName": "Body",     "purpose": "Paragraph content. Max 65ch width." },
+      "label":    { "displayName": "Label",    "purpose": "Section labels (.section-label). Always Forge Gold, always uppercase, always before a headline." }
+    },
+    "shadows": [
+      { "name": "cta-glow",    "value": "0 10px 30px rgba(242, 201, 76, 0.30)", "purpose": "Button primary hover. Accompanies translateY(-2px)." },
+      { "name": "focus-ring",  "value": "0 0 0 3px rgba(242, 201, 76, 0.10)",  "purpose": "Focus state on inputs and interactive elements." },
+      { "name": "pulse-glow",  "value": "0 0 22px 6px rgba(242, 201, 76, 0.28)", "purpose": "Animated ping on featured CTAs. One per screen maximum." },
+      { "name": "icon-hover",  "value": "0 4px 20px rgba(247, 181, 0, 0.45)", "purpose": "Social icon hover state." },
+      { "name": "icon-active", "value": "0 8px 32px rgba(247, 181, 0, 0.70)", "purpose": "Social icon active/pressed state." }
+    ],
+    "motion": [
+      { "name": "standard",   "value": "cubic-bezier(0.4, 0, 0.2, 1)", "purpose": "Default easing for state transitions (0.3s)." },
+      { "name": "slow",       "value": "cubic-bezier(0.4, 0, 0.2, 1)", "purpose": "Slower transitions: page entrances, section reveals (0.6s)." },
+      { "name": "card-open",  "value": "cubic-bezier(0.25, 0.46, 0.45, 0.94)", "purpose": "Accordion / card expand transitions." },
+      { "name": "lift",       "value": "translateY(-2px)",              "purpose": "Button hover lift. Always combined with cta-glow." }
+    ],
+    "breakpoints": [
+      { "name": "sm",  "value": "480px",  "purpose": "Small mobile" },
+      { "name": "md",  "value": "768px",  "purpose": "Tablet" },
+      { "name": "lg",  "value": "1024px", "purpose": "Desktop" },
+      { "name": "xl",  "value": "1200px", "purpose": "Max container width" }
+    ]
+  },
+  "components": [
+    {
+      "name": "Primary Button",
+      "kind": "button",
+      "refersTo": "button-primary",
+      "description": "Main CTA. Full-radius pill, Forge Gold fill, Obsidian text. Lifts on hover.",
+      "html": "<a class=\"ds-btn-primary\"><i class=\"ds-icon\">→</i> ZAPISZ SIĘ</a>",
+      "css": ".ds-btn-primary { display: inline-flex; align-items: center; gap: 10px; padding: 16px 36px; background: #F7B500; color: #0A0A0A; font-family: Inter, sans-serif; font-size: 0.9rem; font-weight: 600; letter-spacing: 1px; text-transform: uppercase; border: none; border-radius: 50px; cursor: pointer; text-decoration: none; transition: background 0.3s cubic-bezier(0.4,0,0.2,1), transform 0.3s cubic-bezier(0.4,0,0.2,1), box-shadow 0.3s cubic-bezier(0.4,0,0.2,1); } .ds-btn-primary:hover { background: #DEA300; transform: translateY(-2px); box-shadow: 0 10px 30px rgba(242,201,76,0.30); } .ds-btn-primary:focus-visible { outline: none; box-shadow: 0 0 0 3px rgba(242,201,76,0.40); } .ds-icon { transition: transform 0.3s cubic-bezier(0.4,0,0.2,1); } .ds-btn-primary:hover .ds-icon { transform: translateX(4px); }"
+    },
+    {
+      "name": "Outline Button",
+      "kind": "button",
+      "refersTo": "button-outline",
+      "description": "Secondary CTA. Transparent with Forge Gold border, fills on hover.",
+      "html": "<a class=\"ds-btn-outline\">DOWIEDZ SIĘ WIĘCEJ</a>",
+      "css": ".ds-btn-outline { display: inline-flex; align-items: center; gap: 10px; padding: 16px 36px; background: transparent; color: #FFFFFF; font-family: Inter, sans-serif; font-size: 0.9rem; font-weight: 600; letter-spacing: 1px; text-transform: uppercase; border: 2px solid #F7B500; border-radius: 50px; cursor: pointer; text-decoration: none; transition: background 0.3s cubic-bezier(0.4,0,0.2,1), color 0.3s cubic-bezier(0.4,0,0.2,1), transform 0.3s cubic-bezier(0.4,0,0.2,1); } .ds-btn-outline:hover { background: #F7B500; color: #0A0A0A; transform: translateY(-2px); } .ds-btn-outline:focus-visible { outline: none; box-shadow: 0 0 0 3px rgba(242,201,76,0.40); }"
+    },
+    {
+      "name": "Text Input",
+      "kind": "input",
+      "refersTo": "input-default",
+      "description": "Form field. Dark surface, subtle border, gold focus state.",
+      "html": "<div class=\"ds-form-group\"><label class=\"ds-label\">Imię i nazwisko</label><input class=\"ds-input\" type=\"text\" placeholder=\"Jan Kowalski\"></div>",
+      "css": ".ds-form-group { display: flex; flex-direction: column; gap: 8px; } .ds-label { font-family: Inter, sans-serif; font-size: 0.85rem; font-weight: 600; color: #CCCCCC; letter-spacing: 0.5px; } .ds-input { width: 100%; padding: 14px 18px; background: #111111; border: 1px solid rgba(255,255,255,0.08); border-radius: 10px; color: #FFFFFF; font-family: Inter, sans-serif; font-size: 0.9rem; outline: none; transition: border-color 0.3s cubic-bezier(0.4,0,0.2,1), box-shadow 0.3s cubic-bezier(0.4,0,0.2,1); } .ds-input::placeholder { color: #999999; } .ds-input:focus { border-color: #F7B500; box-shadow: 0 0 0 3px rgba(242,201,76,0.10); }"
+    },
+    {
+      "name": "Section Label",
+      "kind": "custom",
+      "refersTo": null,
+      "description": "Signature component. Gold uppercase label that precedes every section headline.",
+      "html": "<span class=\"ds-section-label\">TRENING PERSONALNY</span>",
+      "css": ".ds-section-label { display: block; font-family: Inter, sans-serif; font-size: 0.75rem; font-weight: 700; letter-spacing: 3px; text-transform: uppercase; color: #F7B500; margin-bottom: 16px; }"
+    },
+    {
+      "name": "Navigation",
+      "kind": "nav",
+      "refersTo": null,
+      "description": "Fixed nav: transparent at top, Anthracite + blur on scroll.",
+      "html": "<nav class=\"ds-navbar\"><div class=\"ds-nav-logo\">BODY CREATOR</div><div class=\"ds-nav-links\"><a class=\"ds-nav-link\" href=\"#\">Oferta</a><a class=\"ds-nav-link\" href=\"#\">O nas</a><a class=\"ds-nav-link\" href=\"#\">Kontakt</a></div><a class=\"ds-nav-cta\" href=\"#\">ZAPISZ SIĘ</a></nav>",
+      "css": ".ds-navbar { display: flex; justify-content: space-between; align-items: center; padding: 20px 24px; background: rgba(10,10,10,0.95); backdrop-filter: blur(20px); border-bottom: 1px solid rgba(255,255,255,0.05); } .ds-nav-logo { font-family: Inter, sans-serif; font-size: 1rem; font-weight: 800; letter-spacing: 2px; color: #FFFFFF; text-transform: uppercase; } .ds-nav-links { display: flex; gap: 32px; } .ds-nav-link { font-family: Inter, sans-serif; font-size: 0.9rem; font-weight: 600; letter-spacing: 1px; color: #CCCCCC; text-decoration: none; transition: color 0.3s cubic-bezier(0.4,0,0.2,1); } .ds-nav-link:hover { color: #F7B500; } .ds-nav-cta { display: inline-flex; padding: 14px 30px; background: #F7B500; color: #0A0A0A; font-family: Inter, sans-serif; font-size: 0.9rem; font-weight: 600; letter-spacing: 1px; text-transform: uppercase; border-radius: 50px; text-decoration: none; transition: background 0.3s, transform 0.3s; } .ds-nav-cta:hover { background: #DEA300; transform: translateY(-2px); }"
+    }
+  ],
+  "narrative": {
+    "northStar": "The Iron Sanctuary",
+    "overview": "Body Creator to studio, nie siłownia. To rozróżnienie jest fundamentem całego systemu wizualnego. Przestrzeń jest ciemna, skupiona i wyciszona — jak sala przygotowań przed zawodami. Jedynym źródłem energii jest złoto: akcent Forge Gold (#F7B500) pojawia się precyzyjnie i rzadko, przez co za każdym razem robi wrażenie. Ciemne tła nie są modą — są środowiskiem sprzyjającym koncentracji.\n\nTypografia jest agresywnie zważona (900 w display, 800 w nagłówkach sekcji) z dużymi odstępami między literami i pełnymi capsami. To nie jest dekoracja — to pewność siebie wyrażona krojem. Każde wezwanie do działania jest pigułką: pełny promień, złote tło, ciemny tekst. Kontrasty są maksymalne; nie ma półśrodków.",
+    "keyCharacteristics": [
+      "Obsidianowe tła jako środowisko, Forge Gold jako sygnał",
+      "Ultraważne display typography z pełnymi capsami",
+      "Przyciski-pigułki (50px radius) jako jedyny element z dużą krzywiną",
+      "Kontrast: zawsze maksymalny, nigdy szary na szarym",
+      "Złoty glow jako jedyna forma dekoracji (hover, focus, aktywne stany)"
+    ],
+    "rules": [
+      { "name": "The One Signal Rule",        "body": "Forge Gold jest jedynym kolorem akcentowym. Nigdy nie dodawaj drugiego koloru — to rozmyje sygnał.",                          "section": "colors" },
+      { "name": "The No Warmth Rule",          "body": "Ciemne tła muszą pozostać chłodne. Żadnych brązowych ani ciepłych odcieni w neutralach.",                                  "section": "colors" },
+      { "name": "The Label-Before-Headline Rule", "body": "Każda sekcja otwiera się złotą etykietą label nad nagłówkiem. Bez niej headline traci kontekst i złoty akcent.",       "section": "typography" },
+      { "name": "The All-Caps Doctrine",       "body": "Display i Headline są zawsze uppercase. Body i Label też są caps. Title jest jedynym poziomem sentence case.",              "section": "typography" },
+      { "name": "The Flat-By-Default Rule",    "body": "Powierzchnie nie mają cieni w spoczynku. Głębia pochodzi z koloru tła, nie z box-shadow.",                                 "section": "elevation" },
+      { "name": "The Gold-Only Glow Rule",     "body": "Jedynym kolorem dozwolonym w box-shadow jest Forge Gold. Żadnych szarych, białych ani innych kolorowych cieni.",            "section": "elevation" }
+    ],
+    "dos": [
+      "Używaj Forge Gold wyłącznie do elementów interaktywnych i etykiet sekcji.",
+      "Poprzedzaj każdy headline złotą etykietą label.",
+      "Utrzymuj tekst body w max 65ch szerokości.",
+      "Projektuj mobile-first: touch targets minimum 44px, CTA pełna szerokość na telefonach.",
+      "Używaj translateY(-2px) + CTA Glow na hover przycisków primary.",
+      "Zachowaj hierarchię powierzchni przez gradację ciemności.",
+      "Używaj liczb i faktów w copy."
+    ],
+    "donts": [
+      "Nie używaj gradient-text (background-clip: text z gradientem).",
+      "Nie dodawaj glassmorphism dekoracyjnie — tylko nawigacja po scrollu.",
+      "Nie twórz siatek identycznych kart (icon + heading + text × N).",
+      "Nie używaj border-left grubszego niż 1px jako kolorowego paska-akcentu.",
+      "Nie dodawaj drugiego koloru akcentowego.",
+      "Nie używaj ciepłych lub brązowych odcieni w neutralach.",
+      "Nie projektuj desktopowo a potem adaptujesz do mobile.",
+      "Nie wstawiaj stockowych zdjęć uśmiechniętych modeli."
+    ]
+  }
+}

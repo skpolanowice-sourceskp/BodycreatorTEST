@@ -12,7 +12,8 @@
       "Bash(npm list:*)",
       "Read(//c/Users/HARDPC/Documents/GitHub/BodycreatorTEST/$\\(npm root -g\\)/ffmpeg-static/**)",
       "Bash(npm install:*)",
-      "Bash(node -e \"const p = require\\(''ffmpeg-static''\\); console.log\\(p\\);\")"
+      "Bash(node -e \"const p = require\\(''ffmpeg-static''\\); console.log\\(p\\);\")",
+      "Bash(node .agents/skills/impeccable/scripts/load-context.mjs)"
     ]
   }
 }
