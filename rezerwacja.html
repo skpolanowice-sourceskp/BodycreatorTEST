@@ -51,6 +51,9 @@
             --font-display: 'Inter', sans-serif;
             --container: 1200px;
             --section-padding: 120px;
+            --error: #e05260;
+            --error-bg: rgba(220, 53, 69, 0.1);
+            --error-border: rgba(220, 53, 69, 0.3);
         }
 
         /* ============================================
@@ -90,6 +93,40 @@
             opacity: 0;
             visibility: hidden;
             pointer-events: none;
+        }
+
+        .skip-link {
+            position: absolute;
+            left: -9999px;
+            top: auto;
+            width: 1px;
+            height: 1px;
+            overflow: hidden;
+        }
+        .skip-link:focus {
+            position: fixed;
+            top: 16px;
+            left: 50%;
+            transform: translateX(-50%);
+            z-index: 100000;
+            padding: 12px 24px;
+            background: var(--yellow);
+            color: var(--dark);
+            font-weight: 700;
+            border-radius: 50px;
+            width: auto;
+            height: auto;
+            font-size: 0.9rem;
+            letter-spacing: 1px;
+            text-decoration: none;
+        }
+        @media (prefers-reduced-motion: reduce) {
+            *, *::before, *::after {
+                animation-duration: 0.01ms !important;
+                animation-iteration-count: 1 !important;
+                transition-duration: 0.01ms !important;
+                scroll-behavior: auto !important;
+            }
         }
 
         .loader-rig {
@@ -407,6 +444,9 @@
             cursor: pointer;
             z-index: 1001;
             padding: 8px;
+            background: none;
+            border: none;
+            color: inherit;
         }
 
         .nav-toggle span {
@@ -1007,7 +1047,7 @@
             background: var(--dark-3);
             border-radius: 16px;
             padding: 24px 28px;
-            border-left: 4px solid var(--yellow);
+            border: 1px solid rgba(247, 181, 0, 0.2);
         }
 
         .team-quote blockquote {
@@ -2106,6 +2146,26 @@
             color: var(--gray);
         }
 
+        .form-error {
+            display: none;
+            margin-top: 16px;
+            padding: 14px 18px;
+            background: var(--error-bg);
+            border: 1px solid var(--error-border);
+            border-radius: 10px;
+            color: var(--error);
+            font-size: 0.9rem;
+        }
+
+        .form-grid-2 {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 16px;
+        }
+        @media (max-width: 480px) {
+            .form-grid-2 { grid-template-columns: 1fr; }
+        }
+
         /* ============================================
            SERVICE DETAIL PAGES (subpages in modals)
            ============================================ */
@@ -2809,6 +2869,7 @@
     </script>
 </head>
 <body>
+    <a href="#main-content" class="skip-link">Przejdź do treści</a>
     <div id="page-loader">
         <div class="loader-rig"><div class="loader-ring"></div><div class="loader-ring-inner"></div>
             <img class="loader-logo" src="favicon.png" alt="Ładowanie strony">
@@ -2824,7 +2885,7 @@
                 <a href="rezerwacja.html" class="btn btn-primary btn-sm">Zapisz się na konsultację <i class="fas fa-arrow-right"></i></a>
                 <span class="nav-phone"><i class="fas fa-phone"></i> +48 --- --- ---</span>
             </div>
-            <div class="nav-toggle" id="navToggle" aria-label="Menu"><span></span><span></span><span></span></div>
+            <button class="nav-toggle" id="navToggle" type="button" aria-label="Otwórz menu nawigacji" aria-expanded="false" aria-controls="navOverlay"><span></span><span></span><span></span></button>
         </div>
     </nav>
     <div class="nav-overlay" id="navOverlay">
@@ -2846,21 +2907,9 @@
         </nav>
     </div>
 
-    <main>
-    <!-- INSTAGRAM CTA -->
-    <section class="instagram-section" style="padding-top: 160px;">
-        <div class="container reveal">
-            <i class="fab fa-instagram"></i>
-            <h2>Zaobserwuj nas na Instagramie</h2>
-            <p>Dołącz do naszej społeczności i bądź na bieżąco z&nbsp;treningami, przemianami i&nbsp;poradami</p>
-            <a href="#" class="btn btn-outline" target="_blank">
-                <i class="fab fa-instagram"></i> @bodycreator
-            </a>
-        </div>
-    </section>
-
+    <main id="main-content">
     <!-- BOOKING SECTION -->
-    <section id="booking" class="booking-video-section">
+    <section id="booking" class="booking-video-section" style="padding-top: 160px;">
         <video class="booking-video" autoplay muted loop playsinline>
             <source src="booking-bg.mp4" type="video/mp4">
         </video>
@@ -2883,10 +2932,10 @@
                 </div>
                 <div class="calendar-embed reveal reveal-delay-1">
                     <div class="trainer-selector">
-                        <button class="trainer-btn active" data-cal="https://calendar.app.google/faobi7TxyDb5LZQYA">
+                        <button class="trainer-btn active" aria-pressed="true" data-cal="https://calendar.app.google/faobi7TxyDb5LZQYA">
                             <i class="fas fa-user"></i> Jakub Cyndecki
                         </button>
-                        <button class="trainer-btn" data-cal="https://calendar.app.google/faobi7TxyDb5LZQYA">
+                        <button class="trainer-btn" aria-pressed="false" data-cal="https://calendar.app.google/faobi7TxyDb5LZQYA">
                             <i class="fas fa-user"></i> Aleksandra Dunajewska
                         </button>
                     </div>
@@ -2902,18 +2951,31 @@
             </div>
         </div>
     </section>
+
+    <!-- INSTAGRAM CTA -->
+    <section class="instagram-section">
+        <div class="container reveal">
+            <i class="fab fa-instagram"></i>
+            <h2>Zaobserwuj nas na Instagramie</h2>
+            <p>Dołącz do naszej społeczności i bądź na bieżąco z&nbsp;treningami, przemianami i&nbsp;poradami</p>
+            <a href="#" class="btn btn-outline" target="_blank">
+                <i class="fab fa-instagram"></i> @bodycreator
+            </a>
+        </div>
+    </section>
+
     <!-- CONSULTATION INFO MODAL -->
-    <div class="service-modal-overlay" id="consultModal">
+    <div class="service-modal-overlay" id="consultModal" role="dialog" aria-modal="true" aria-labelledby="consultModalTitle">
         <div class="service-modal" style="max-width: 600px;">
             <button class="service-modal-close" id="consultModalClose" aria-label="Zamknij">
                 <i class="fas fa-times"></i>
             </button>
             <div style="display:flex; align-items:center; gap:14px; margin-bottom:28px;">
-                <div style="width:48px;height:48px;border-radius:50%;background:rgba(254,213,37,0.12);border:2px solid rgba(254,213,37,0.35);display:flex;align-items:center;justify-content:center;flex-shrink:0;">
+                <div style="width:48px;height:48px;border-radius:50%;background:rgba(247,181,0,0.12);border:2px solid rgba(247,181,0,0.35);display:flex;align-items:center;justify-content:center;flex-shrink:0;">
                     <i class="fas fa-info" style="color:var(--yellow);font-size:1rem;"></i>
                 </div>
                 <div>
-                    <h2 style="font-size:1.5rem;margin:0;">Na czym polega konsultacja?</h2>
+                    <h2 id="consultModalTitle" style="font-size:1.5rem;margin:0;">Na czym polega konsultacja?</h2>
                 </div>
             </div>
             <p style="color:var(--gray-light);font-size:0.95rem;line-height:1.75;margin-bottom:28px;">
@@ -2921,7 +2983,7 @@
             </p>
             <ul style="list-style:none;display:flex;flex-direction:column;gap:0;">
                 <li style="display:flex;align-items:flex-start;gap:16px;padding:18px 0;border-bottom:1px solid rgba(255,255,255,0.06);">
-                    <div style="width:36px;height:36px;border-radius:10px;background:rgba(254,213,37,0.1);border:1px solid rgba(254,213,37,0.2);display:flex;align-items:center;justify-content:center;flex-shrink:0;margin-top:2px;">
+                    <div style="width:36px;height:36px;border-radius:10px;background:rgba(247,181,0,0.1);border:1px solid rgba(247,181,0,0.2);display:flex;align-items:center;justify-content:center;flex-shrink:0;margin-top:2px;">
                         <i class="fas fa-flask" style="color:var(--yellow);font-size:0.85rem;"></i>
                     </div>
                     <div>
@@ -2930,7 +2992,7 @@
                     </div>
                 </li>
                 <li style="display:flex;align-items:flex-start;gap:16px;padding:18px 0;border-bottom:1px solid rgba(255,255,255,0.06);">
-                    <div style="width:36px;height:36px;border-radius:10px;background:rgba(254,213,37,0.1);border:1px solid rgba(254,213,37,0.2);display:flex;align-items:center;justify-content:center;flex-shrink:0;margin-top:2px;">
+                    <div style="width:36px;height:36px;border-radius:10px;background:rgba(247,181,0,0.1);border:1px solid rgba(247,181,0,0.2);display:flex;align-items:center;justify-content:center;flex-shrink:0;margin-top:2px;">
                         <i class="fas fa-heartbeat" style="color:var(--yellow);font-size:0.85rem;"></i>
                     </div>
                     <div>
@@ -2939,7 +3001,7 @@
                     </div>
                 </li>
                 <li style="display:flex;align-items:flex-start;gap:16px;padding:18px 0;border-bottom:1px solid rgba(255,255,255,0.06);">
-                    <div style="width:36px;height:36px;border-radius:10px;background:rgba(254,213,37,0.1);border:1px solid rgba(254,213,37,0.2);display:flex;align-items:center;justify-content:center;flex-shrink:0;margin-top:2px;">
+                    <div style="width:36px;height:36px;border-radius:10px;background:rgba(247,181,0,0.1);border:1px solid rgba(247,181,0,0.2);display:flex;align-items:center;justify-content:center;flex-shrink:0;margin-top:2px;">
                         <i class="fas fa-person-running" style="color:var(--yellow);font-size:0.85rem;"></i>
                     </div>
                     <div>
@@ -2948,7 +3010,7 @@
                     </div>
                 </li>
                 <li style="display:flex;align-items:flex-start;gap:16px;padding:18px 0;">
-                    <div style="width:36px;height:36px;border-radius:10px;background:rgba(254,213,37,0.1);border:1px solid rgba(254,213,37,0.2);display:flex;align-items:center;justify-content:center;flex-shrink:0;margin-top:2px;">
+                    <div style="width:36px;height:36px;border-radius:10px;background:rgba(247,181,0,0.1);border:1px solid rgba(247,181,0,0.2);display:flex;align-items:center;justify-content:center;flex-shrink:0;margin-top:2px;">
                         <i class="fas fa-comments" style="color:var(--yellow);font-size:0.85rem;"></i>
                     </div>
                     <div>
@@ -2957,7 +3019,7 @@
                     </div>
                 </li>
             </ul>
-            <div style="margin-top:28px;padding:16px 20px;background:rgba(254,213,37,0.06);border:1px solid rgba(254,213,37,0.15);border-radius:12px;display:flex;align-items:center;gap:12px;">
+            <div style="margin-top:28px;padding:16px 20px;background:rgba(247,181,0,0.06);border:1px solid rgba(247,181,0,0.15);border-radius:12px;display:flex;align-items:center;gap:12px;">
                 <i class="fas fa-clock" style="color:var(--yellow);font-size:1rem;flex-shrink:0;"></i>
                 <p style="margin:0;font-size:0.875rem;color:var(--gray-light);line-height:1.5;">Konsultacja trwa około <strong style="color:var(--white);">45–60 minut</strong> i jest w&nbsp;całości <strong style="color:var(--yellow);">bezpłatna</strong>. Po spotkaniu decyzja należy wyłącznie do Ciebie.</p>
             </div>
@@ -2974,7 +3036,7 @@
                     <span class="section-label">Darmowa konsultacja</span>
                     <div style="display:inline-flex;align-items:center;gap:14px;justify-content:center;flex-wrap:wrap;">
                         <h2 class="section-title" style="margin-bottom:0;">Zapisz się na<br>bezpłatną konsultację</h2>
-                        <button id="consultInfoBtn" aria-label="Co to jest bezpłatna konsultacja?" style="width:36px;height:36px;border-radius:50%;background:rgba(254,213,37,0.12);border:2px solid rgba(254,213,37,0.4);color:var(--yellow);font-size:0.85rem;font-weight:800;cursor:pointer;flex-shrink:0;transition:var(--transition);display:flex;align-items:center;justify-content:center;font-family:Georgia,serif;font-style:italic;margin-top:4px;" title="Na czym polega bezpłatna konsultacja?">
+                        <button id="consultInfoBtn" aria-label="Co to jest bezpłatna konsultacja?" style="width:36px;height:36px;border-radius:50%;background:rgba(247,181,0,0.12);border:2px solid rgba(247,181,0,0.4);color:var(--yellow);font-size:0.85rem;font-weight:800;cursor:pointer;flex-shrink:0;transition:var(--transition);display:flex;align-items:center;justify-content:center;font-family:Georgia,serif;font-style:italic;margin-top:4px;" title="Na czym polega bezpłatna konsultacja?">
                             i
                         </button>
                     </div>
@@ -2993,7 +3055,7 @@
                             <input type="text" id="imie" name="imie" placeholder="Jan Kowalski" required autocomplete="name">
                         </div>
 
-                        <div style="display: grid; grid-template-columns: 1fr 1fr; gap: 16px;">
+                        <div class="form-grid-2">
                             <div class="form-group">
                                 <label for="wiek">Wiek *</label>
                                 <input type="number" id="wiek" name="wiek" placeholder="np. 28" min="10" max="99" required>
@@ -3028,14 +3090,13 @@
                         </p>
                     </form>
 
-                    <div class="form-success" id="formSuccess">
+                    <div class="form-success" id="formSuccess" aria-live="polite" role="status">
                         <i class="fas fa-check-circle"></i>
                         <h3>Gotowe! Do zobaczenia w studio.</h3>
                         <p>Skontaktujemy się z Tobą wkrótce, aby potwierdzić termin konsultacji.</p>
                     </div>
 
-                    <div id="formError" style="display:none; margin-top:16px; padding:14px 18px; background:rgba(220,53,69,0.1); border:1px solid rgba(220,53,69,0.3); border-radius:10px; color:#ff6b6b; font-size:0.9rem;">
-                    </div>
+                    <div id="formError" class="form-error" aria-live="assertive" role="alert"></div>
                 </div>
             </div>
         </div>
@@ -3049,18 +3110,41 @@
         const consultInfoBtn = document.getElementById('consultInfoBtn');
         const consultModalClose = document.getElementById('consultModalClose');
 
-        consultInfoBtn.addEventListener('click', () => consultModal.classList.add('active'));
-        consultModalClose.addEventListener('click', () => consultModal.classList.remove('active'));
-        consultModal.addEventListener('click', (e) => { if (e.target === consultModal) consultModal.classList.remove('active'); });
-        document.addEventListener('keydown', (e) => { if (e.key === 'Escape') consultModal.classList.remove('active'); });
+        function openConsultModal() {
+            consultModal.classList.add('active');
+            consultModalClose.focus();
+        }
+        function closeConsultModal() {
+            consultModal.classList.remove('active');
+            consultInfoBtn.focus();
+        }
+
+        consultInfoBtn.addEventListener('click', openConsultModal);
+        consultModalClose.addEventListener('click', closeConsultModal);
+        consultModal.addEventListener('click', (e) => { if (e.target === consultModal) closeConsultModal(); });
+        document.addEventListener('keydown', (e) => {
+            if (e.key === 'Escape' && consultModal.classList.contains('active')) closeConsultModal();
+        });
+
+        consultModal.addEventListener('keydown', (e) => {
+            if (e.key !== 'Tab') return;
+            const focusable = Array.from(consultModal.querySelectorAll('button,[href],input,select,textarea,[tabindex]:not([tabindex="-1"])'));
+            const first = focusable[0];
+            const last = focusable[focusable.length - 1];
+            if (e.shiftKey) {
+                if (document.activeElement === first) { e.preventDefault(); last.focus(); }
+            } else {
+                if (document.activeElement === last) { e.preventDefault(); first.focus(); }
+            }
+        });
 
         consultInfoBtn.addEventListener('mouseenter', function() {
-            this.style.background = 'rgba(254,213,37,0.22)';
+            this.style.background = 'rgba(247,181,0,0.22)';
             this.style.borderColor = 'var(--yellow)';
         });
         consultInfoBtn.addEventListener('mouseleave', function() {
-            this.style.background = 'rgba(254,213,37,0.12)';
-            this.style.borderColor = 'rgba(254,213,37,0.4)';
+            this.style.background = 'rgba(247,181,0,0.12)';
+            this.style.borderColor = 'rgba(247,181,0,0.4)';
         });
 
         // ── Formularz ──────────────────────────────────────────────
@@ -3119,9 +3203,27 @@
     <script>
         const navToggle = document.getElementById('navToggle');
         const navOverlay = document.getElementById('navOverlay');
-        navToggle.addEventListener('click', () => { navToggle.classList.toggle('active'); navOverlay.classList.toggle('active'); });
-        document.querySelectorAll('[data-nav]').forEach(link => link.addEventListener('click', () => { navToggle.classList.remove('active'); navOverlay.classList.remove('active'); }));
-        window.addEventListener('scroll', () => { document.getElementById('navbar').classList.toggle('scrolled', window.scrollY > 50); });
+        navToggle.addEventListener('click', () => {
+            const expanded = navToggle.getAttribute('aria-expanded') === 'true';
+            navToggle.setAttribute('aria-expanded', String(!expanded));
+            navToggle.classList.toggle('active');
+            navOverlay.classList.toggle('active');
+        });
+        document.querySelectorAll('[data-nav]').forEach(link => link.addEventListener('click', () => {
+            navToggle.setAttribute('aria-expanded', 'false');
+            navToggle.classList.remove('active');
+            navOverlay.classList.remove('active');
+        }));
+        let _scrollTicking = false;
+        window.addEventListener('scroll', () => {
+            if (!_scrollTicking) {
+                requestAnimationFrame(() => {
+                    document.getElementById('navbar').classList.toggle('scrolled', window.scrollY > 50);
+                    _scrollTicking = false;
+                });
+                _scrollTicking = true;
+            }
+        }, { passive: true });
 
         const revealElements = document.querySelectorAll('.reveal');
         const revealObserver = new IntersectionObserver((entries) => {
@@ -3131,8 +3233,12 @@
 
         document.querySelectorAll('.trainer-btn').forEach(btn => {
             btn.addEventListener('click', () => {
-                document.querySelectorAll('.trainer-btn').forEach(b => b.classList.remove('active'));
+                document.querySelectorAll('.trainer-btn').forEach(b => {
+                    b.classList.remove('active');
+                    b.setAttribute('aria-pressed', 'false');
+                });
                 btn.classList.add('active');
+                btn.setAttribute('aria-pressed', 'true');
                 const frame = document.getElementById('calendarFrame');
                 frame.src = btn.dataset.cal;
                 frame.style.colorScheme = 'light';
@@ -3141,9 +3247,11 @@
     </script>
     <script src="https://cdn.jsdelivr.net/npm/@studio-freight/lenis@1.0.42/dist/lenis.min.js"></script>
     <script>
-        const lenis = new Lenis({ duration: 1.4, easing: t => Math.min(1, 1.001 - Math.pow(2, -10 * t)), smoothWheel: true, touchMultiplier: 1.5 });
-        function raf(time) { lenis.raf(time); requestAnimationFrame(raf); }
-        requestAnimationFrame(raf);
+        if (!window.matchMedia('(prefers-reduced-motion: reduce)').matches) {
+            const lenis = new Lenis({ duration: 1.4, easing: t => Math.min(1, 1.001 - Math.pow(2, -10 * t)), smoothWheel: true, touchMultiplier: 1.5 });
+            function raf(time) { lenis.raf(time); requestAnimationFrame(raf); }
+            requestAnimationFrame(raf);
+        }
     </script>
 
     <!-- WhatsApp Float Button -->
