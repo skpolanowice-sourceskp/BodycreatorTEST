@@ -2699,87 +2699,150 @@
 
             .nav-cta .btn-sm { padding: 10px 18px; font-size: 0.8rem; }
 
-            .pages-nav-grid { grid-template-columns: 1fr; }
+            .pages-nav-featured { padding: 24px 20px; }
+            .pages-nav-featured-arrow { width: 44px; height: 44px; }
+            .pages-nav-item { grid-template-columns: 32px 1fr auto; }
+            .pages-nav-desc-text { display: none; }
         }
 
         @media (max-width: 767px) {
             .nav-phone { display: none; }
-            .pages-nav-grid { grid-template-columns: repeat(2, 1fr); }
+            .pages-nav-featured { padding: 28px 28px; }
+            .pages-nav-item { grid-template-columns: 36px 1fr auto; }
+            .pages-nav-desc-text { display: none; }
         }
 
         /* ============================================
            PAGES NAVIGATION SECTION
            ============================================ */
         .pages-nav-section {
-            padding: 80px 0;
+            padding: 80px 0 0;
             background: var(--dark-2);
             border-top: 1px solid rgba(255,255,255,0.04);
         }
 
-        .pages-nav-header {
-            text-align: center;
-            margin-bottom: 48px;
-        }
-
-        .pages-nav-grid {
-            display: grid;
-            grid-template-columns: repeat(3, 1fr);
-            gap: 20px;
-        }
-
-        .pages-nav-card {
+        .pages-nav-featured {
             display: flex;
-            flex-direction: column;
             align-items: center;
-            text-align: center;
-            padding: 36px 24px;
-            background: var(--dark-3);
-            border: 1px solid rgba(255,255,255,0.05);
-            border-radius: 16px;
-            transition: var(--transition);
+            justify-content: space-between;
+            gap: 24px;
+            padding: 40px 48px;
+            background: var(--yellow);
             text-decoration: none;
-            color: var(--white);
-            position: relative;
-            overflow: hidden;
+            color: oklch(12% 0.015 80);
+            border-radius: 12px;
+            margin-bottom: 40px;
+            transition: background var(--transition);
         }
 
-        .pages-nav-card::before {
-            content: '';
-            position: absolute;
-            top: 0; left: 0; right: 0;
-            height: 3px;
-            background: var(--yellow);
-            transform: scaleX(0);
+        .pages-nav-featured:hover { background: var(--yellow-hover); }
+
+        .pages-nav-featured-content { flex: 1; min-width: 0; }
+
+        .pages-nav-featured-label {
+            display: block;
+            font-size: 0.7rem;
+            font-weight: 700;
+            letter-spacing: 3px;
+            text-transform: uppercase;
+            opacity: 0.5;
+            margin-bottom: 10px;
+        }
+
+        .pages-nav-featured-title {
+            font-size: clamp(1.8rem, 3.5vw, 2.8rem);
+            font-weight: 900;
+            text-transform: uppercase;
+            letter-spacing: -0.02em;
+            line-height: 1;
+            margin-bottom: 10px;
+            color: oklch(12% 0.015 80);
+        }
+
+        .pages-nav-featured-desc {
+            font-size: 0.95rem;
+            font-weight: 500;
+            opacity: 0.6;
+        }
+
+        .pages-nav-featured-arrow {
+            width: 54px;
+            height: 54px;
+            border-radius: 50%;
+            background: oklch(12% 0.015 80 / 0.1);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 1rem;
+            flex-shrink: 0;
+            color: oklch(12% 0.015 80);
             transition: transform var(--transition);
         }
 
-        .pages-nav-card:hover::before { transform: scaleX(1); }
-
-        .pages-nav-card:hover {
-            border-color: rgba(242,201,76,0.2);
-            transform: translateY(-4px);
+        .pages-nav-featured:hover .pages-nav-featured-arrow {
+            transform: translateX(6px);
         }
 
-        .pages-nav-card i {
-            font-size: 1.8rem;
-            color: var(--yellow);
-            margin-bottom: 16px;
+        .pages-nav-list {
+            display: flex;
+            flex-direction: column;
         }
 
-        .pages-nav-card span {
-            font-size: 0.95rem;
+        .pages-nav-item {
+            display: grid;
+            grid-template-columns: 40px 1fr 1fr auto;
+            align-items: center;
+            column-gap: 32px;
+            padding: 26px 0;
+            text-decoration: none;
+            color: var(--white);
+            border-top: 1px solid rgba(255,255,255,0.06);
+            transition: color var(--transition);
+        }
+
+        .pages-nav-item:last-child {
+            border-bottom: 1px solid rgba(255,255,255,0.06);
+        }
+
+        .pages-nav-item:hover { color: var(--yellow); }
+
+        .pages-nav-num {
+            font-size: 0.68rem;
             font-weight: 700;
-            text-transform: uppercase;
+            color: oklch(38% 0.006 80);
             letter-spacing: 1px;
-            margin-bottom: 8px;
-            display: block;
+            font-variant-numeric: tabular-nums;
         }
 
-        .pages-nav-card p {
-            font-size: 0.82rem;
+        .pages-nav-name {
+            font-size: clamp(1rem, 2vw, 1.4rem);
+            font-weight: 800;
+            text-transform: uppercase;
+            letter-spacing: -0.01em;
+        }
+
+        .pages-nav-desc-text {
+            font-size: 0.83rem;
             color: var(--gray);
-            line-height: 1.5;
-            margin: 0;
+            text-align: right;
+            line-height: 1.45;
+            transition: color var(--transition);
+        }
+
+        .pages-nav-item:hover .pages-nav-desc-text {
+            color: oklch(65% 0.055 80);
+        }
+
+        .pages-nav-arrow {
+            font-size: 0.8rem;
+            color: var(--gray-dark);
+            transition: transform var(--transition), color var(--transition);
+            flex-shrink: 0;
+        }
+
+        .pages-nav-item:hover .pages-nav-arrow {
+            transform: translateX(5px);
+            color: var(--yellow);
         }
     </style>
 
@@ -3038,42 +3101,48 @@
          ======================================== -->
     <section class="pages-nav-section">
         <div class="container">
-            <div class="pages-nav-header reveal">
-                <span class="section-label">Odkryj więcej</span>
-                <h2 class="section-title">Co chciałbyś zobaczyć?</h2>
-            </div>
-            <div class="pages-nav-grid">
-                <a href="oferta.html" class="pages-nav-card reveal">
-                    <i class="fas fa-dumbbell"></i>
-                    <span>Oferta</span>
-                    <p>Treningi personalne, hybrydowe, grupowe i online</p>
+            <a href="rezerwacja.html" class="pages-nav-featured reveal" aria-label="Przejdź do rezerwacji">
+                <div class="pages-nav-featured-content">
+                    <span class="pages-nav-featured-label">Darmowa konsultacja</span>
+                    <h2 class="pages-nav-featured-title">Rezerwacja</h2>
+                    <p class="pages-nav-featured-desc">Umów się na darmową konsultację</p>
+                </div>
+                <div class="pages-nav-featured-arrow" aria-hidden="true">
+                    <i class="fas fa-arrow-right"></i>
+                </div>
+            </a>
+            <nav class="pages-nav-list" aria-label="Sekcje strony">
+                <a href="oferta.html" class="pages-nav-item reveal">
+                    <span class="pages-nav-num">01</span>
+                    <span class="pages-nav-name">Oferta</span>
+                    <span class="pages-nav-desc-text">Treningi personalne, hybrydowe, grupowe i online</span>
+                    <i class="fas fa-arrow-right pages-nav-arrow" aria-hidden="true"></i>
                 </a>
-                <a href="o-nas.html" class="pages-nav-card reveal reveal-delay-1">
-                    <i class="fas fa-users"></i>
-                    <span>O Nas</span>
-                    <p>Poznaj nasz zespół i nasze studio</p>
+                <a href="o-nas.html" class="pages-nav-item reveal reveal-delay-1">
+                    <span class="pages-nav-num">02</span>
+                    <span class="pages-nav-name">O Nas</span>
+                    <span class="pages-nav-desc-text">Poznaj nasz zespół i nasze studio</span>
+                    <i class="fas fa-arrow-right pages-nav-arrow" aria-hidden="true"></i>
                 </a>
-                <a href="rezerwacja.html" class="pages-nav-card reveal reveal-delay-2">
-                    <i class="fas fa-calendar-alt"></i>
-                    <span>Rezerwacja</span>
-                    <p>Umów się na darmową konsultację</p>
+                <a href="przemiany.html" class="pages-nav-item reveal reveal-delay-2">
+                    <span class="pages-nav-num">03</span>
+                    <span class="pages-nav-name">Przemiany</span>
+                    <span class="pages-nav-desc-text">Zobacz efekty naszych klientów</span>
+                    <i class="fas fa-arrow-right pages-nav-arrow" aria-hidden="true"></i>
                 </a>
-                <a href="kontakt.html" class="pages-nav-card reveal reveal-delay-3">
-                    <i class="fas fa-map-marker-alt"></i>
-                    <span>Kontakt</span>
-                    <p>Znajdź nas i skontaktuj się z nami</p>
+                <a href="kontakt.html" class="pages-nav-item reveal reveal-delay-3">
+                    <span class="pages-nav-num">04</span>
+                    <span class="pages-nav-name">Kontakt</span>
+                    <span class="pages-nav-desc-text">Znajdź nas i skontaktuj się z nami</span>
+                    <i class="fas fa-arrow-right pages-nav-arrow" aria-hidden="true"></i>
                 </a>
-                <a href="przemiany.html" class="pages-nav-card reveal reveal-delay-1">
-                    <i class="fas fa-chart-line"></i>
-                    <span>Przemiany</span>
-                    <p>Zobacz efekty naszych klientów</p>
+                <a href="kalkulator.html" class="pages-nav-item reveal reveal-delay-1">
+                    <span class="pages-nav-num">05</span>
+                    <span class="pages-nav-name">Kalkulator</span>
+                    <span class="pages-nav-desc-text">Oblicz swoje TDEE i BMI</span>
+                    <i class="fas fa-arrow-right pages-nav-arrow" aria-hidden="true"></i>
                 </a>
-                <a href="kalkulator.html" class="pages-nav-card reveal reveal-delay-2">
-                    <i class="fas fa-calculator"></i>
-                    <span>Kalkulator</span>
-                    <p>Oblicz swoje TDEE i BMI</p>
-                </a>
-            </div>
+            </nav>
         </div>
     </section>
 
