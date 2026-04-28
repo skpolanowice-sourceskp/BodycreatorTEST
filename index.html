@@ -6,7 +6,7 @@
     <meta name="description" content="Body Creator - Studio Treningu Personalnego we Wrocławiu. Profesjonalne treningi personalne, współpraca hybrydowa, zajęcia grupowe. Sołtysowice, ul. Rafała Wojaczka 3g.">
     <link rel="icon" type="image/png" href="favicon.png">
     <meta name="keywords" content="trener personalny wrocław, studio treningu, trening personalny, body creator, sołtysowice">
-    <meta name="theme-color" content="#FED525">
+    <meta name="theme-color" content="#F7B500">
     <meta name="author" content="Body Creator">
     <title>Body Creator — Studio Treningu | Trener Personalny Wrocław</title>
 
@@ -35,8 +35,8 @@
            CSS VARIABLES & RESET
            ============================================ */
         :root {
-            --yellow: #FED525;
-            --yellow-hover: #E5C000;
+            --yellow: #F7B500;
+            --yellow-hover: #DEA300;
             --dark: #0A0A0A;
             --dark-2: #111111;
             --dark-3: #1A1A1A;
@@ -68,7 +68,7 @@
         }
         @keyframes letterWave {
             0%, 55%, 100% { transform: translateY(0);    color: rgba(255,255,255,0.35); }
-            27%            { transform: translateY(-10px); color: #FED525; }
+            27%            { transform: translateY(-10px); color: #F7B500; }
         }
         @keyframes loaderFadeOut {
             to { opacity: 0; visibility: hidden; }
@@ -107,9 +107,9 @@
             position: absolute;
             inset: 0;
             border-radius: 50%;
-            border: 2px solid rgba(254, 213, 37, 0.12);
-            border-top-color: rgba(254, 213, 37, 0.85);
-            border-right-color: rgba(254, 213, 37, 0.35);
+            border: 2px solid rgba(247, 181, 0, 0.12);
+            border-top-color: rgba(247, 181, 0, 0.85);
+            border-right-color: rgba(247, 181, 0, 0.35);
             animation: loaderRing 1.4s linear infinite;
         }
 
@@ -118,8 +118,8 @@
             position: absolute;
             inset: 10px;
             border-radius: 50%;
-            border: 1px solid rgba(254, 213, 37, 0.08);
-            border-bottom-color: rgba(254, 213, 37, 0.55);
+            border: 1px solid rgba(247, 181, 0, 0.08);
+            border-bottom-color: rgba(247, 181, 0, 0.55);
             animation: loaderSpin 2s linear infinite;
         }
 
@@ -128,7 +128,7 @@
             height: 52px;
             object-fit: contain;
             animation: loaderSpin 3s linear infinite;
-            filter: drop-shadow(0 0 10px rgba(254, 213, 37, 0.55));
+            filter: drop-shadow(0 0 10px rgba(247, 181, 0, 0.55));
         }
 
         .loader-text {
@@ -343,6 +343,7 @@
             z-index: 1000;
             padding: 20px 0;
             transition: var(--transition);
+            overflow: visible;
         }
 
         .navbar.scrolled {
@@ -371,22 +372,23 @@
         }
 
         .btn-sm {
-            padding: 10px 22px;
-            font-size: 0.78rem;
+            padding: 14px 30px;
+            font-size: 0.95rem;
             letter-spacing: 0.5px;
         }
 
         .nav-phone {
-            font-size: 0.75rem;
+            font-size: 1rem;
             color: var(--gray-light);
             display: flex;
             align-items: center;
-            gap: 5px;
+            gap: 7px;
+            font-weight: 600;
         }
 
         .nav-phone i {
             color: var(--yellow);
-            font-size: 0.65rem;
+            font-size: 0.9rem;
         }
 
         .logo {
@@ -396,7 +398,7 @@
         }
 
         .logo img {
-            height: 48px;
+            height: 70px;
             width: auto;
         }
 
@@ -523,8 +525,8 @@
             position: absolute;
             inset: 0;
             background:
-                radial-gradient(ellipse at 20% 50%, rgba(254, 213, 37, 0.07) 0%, transparent 60%),
-                radial-gradient(ellipse at 80% 20%, rgba(254, 213, 37, 0.03) 0%, transparent 50%);
+                radial-gradient(ellipse at 20% 50%, rgba(247, 181, 0, 0.07) 0%, transparent 60%),
+                radial-gradient(ellipse at 80% 20%, rgba(247, 181, 0, 0.03) 0%, transparent 50%);
             z-index: 2;
             pointer-events: none;
         }
@@ -1204,7 +1206,7 @@
 
         .team-stats-item:hover {
             transform: translateY(-3px);
-            border-color: rgba(254, 213, 37, 0.15);
+            border-color: rgba(247, 181, 0, 0.15);
         }
 
         .team-stats-item:hover::after {
@@ -1271,7 +1273,7 @@
 
         .team-stats-achievement:hover {
             transform: translateY(-3px);
-            border-color: rgba(254, 213, 37, 0.15);
+            border-color: rgba(247, 181, 0, 0.15);
         }
 
         .team-stats-achievement:hover::after {
@@ -1668,13 +1670,13 @@
         }
 
         .reviews-tab:hover {
-            border-color: rgba(254, 213, 37, 0.3);
+            border-color: rgba(247, 181, 0, 0.3);
             color: var(--white);
         }
 
         .reviews-tab.active {
             border-color: var(--yellow);
-            background: rgba(254, 213, 37, 0.1);
+            background: rgba(247, 181, 0, 0.1);
             color: var(--yellow);
         }
 
@@ -2197,7 +2199,7 @@
            FOOTER
            ============================================ */
         .footer {
-            padding: 48px 0 32px;
+            padding: 12px 0 8px;
             border-top: 1px solid rgba(255,255,255,0.04);
             background: var(--dark);
         }
@@ -2206,12 +2208,12 @@
             display: flex;
             flex-direction: column;
             align-items: center;
-            gap: 16px;
+            gap: 6px;
             text-align: center;
         }
 
         .footer-copy {
-            font-size: 0.8rem;
+            font-size: 0.62rem;
             color: var(--gray);
         }
 
@@ -2221,7 +2223,7 @@
         }
 
         .footer-links a {
-            font-size: 0.8rem;
+            font-size: 0.62rem;
             color: var(--gray);
         }
 
@@ -2232,14 +2234,14 @@
         .footer-portfolio-btn {
             display: inline-flex;
             align-items: center;
-            gap: 8px;
-            padding: 10px 22px;
-            border: 2px solid var(--yellow);
+            gap: 4px;
+            padding: 4px 10px;
+            border: 1px solid var(--yellow);
             border-radius: 50px;
             color: var(--yellow);
-            font-size: 0.78rem;
+            font-size: 0.58rem;
             font-weight: 700;
-            letter-spacing: 1px;
+            letter-spacing: 0.5px;
             text-transform: uppercase;
             white-space: nowrap;
             transition: background 0.2s, color 0.2s;
@@ -2678,7 +2680,7 @@
             }
 
             .logo img {
-                height: 38px;
+                height: 56px;
             }
 
             .footer-links {
@@ -2695,7 +2697,7 @@
                 padding: 24px 20px;
             }
 
-            .nav-cta .btn-sm { padding: 8px 14px; font-size: 0.7rem; }
+            .nav-cta .btn-sm { padding: 10px 18px; font-size: 0.8rem; }
 
             .pages-nav-grid { grid-template-columns: 1fr; }
         }
@@ -2841,7 +2843,7 @@
             </a>
             <div class="nav-cta">
                 <a href="rezerwacja.html" class="btn btn-primary btn-sm">
-                    Zapisz się na konsultację <i class="fas fa-arrow-right"></i>
+                    Zapisz się na darmową konsultację <i class="fas fa-arrow-right"></i>
                 </a>
                 <span class="nav-phone"><i class="fas fa-phone"></i> +48 --- --- ---</span>
             </div>
@@ -2894,9 +2896,6 @@
                     <a href="rezerwacja.html" class="btn btn-primary">
                         Zapisz się na trening <i class="fas fa-arrow-right"></i>
                     </a>
-                    <a href="kalkulator.html" class="btn btn-outline">
-                        Kalkulator TDEE / BMI <i class="fas fa-calculator"></i>
-                    </a>
                 </div>
                 <div class="hero-location">
                     <i class="fas fa-map-marker-alt"></i>
@@ -2920,171 +2919,110 @@
                 <p class="section-text" style="margin:0 auto">Łącznie ponad setki pozytywnych opinii Google ze średnią 5.0</p>
             </div>
 
-            <div class="reviews-tabs reveal reveal-delay-1">
-                <button class="reviews-tab active" data-target="reviews-kuba">Opinie o Kubie</button>
-                <button class="reviews-tab" data-target="reviews-ola">Opinie o Oli</button>
-            </div>
-
-            <!-- Opinie o Kubie -->
-            <div class="reviews-group active" id="reviews-kuba">
-                <div class="reviews-slider-wrapper">
-                    <div class="reviews-slider" id="reviewsSliderKuba">
-                        <div class="review-card">
-                            <div class="review-stars">
-                                <i class="fas fa-star"></i><i class="fas fa-star"></i><i class="fas fa-star"></i><i class="fas fa-star"></i><i class="fas fa-star"></i>
-                            </div>
-                            <p class="review-text">„Trening z Kubą to czysta przyjemność! Profesjonalne podejście, świetna atmosfera i widoczne efekty. Po pół roku nie poznaję się w lustrze!"</p>
-                            <div class="review-author">
-                                <div class="review-avatar">MK</div>
-                                <div>
-                                    <div class="review-author-name">Marta K.</div>
-                                    <div class="review-author-info">Opinia Google</div>
-                                </div>
+            <div class="reviews-slider-wrapper reveal reveal-delay-1">
+                <div class="reviews-slider" id="reviewsSlider">
+                    <div class="review-card">
+                        <div class="review-stars">
+                            <i class="fas fa-star"></i><i class="fas fa-star"></i><i class="fas fa-star"></i><i class="fas fa-star"></i><i class="fas fa-star"></i>
+                        </div>
+                        <p class="review-text">„Najlepsze studio we Wrocławiu! Wreszcie nie muszę czekać na sprzęt i mogę trenować w spokoju. Kameralna atmosfera i pełen profesjonalizm."</p>
+                        <div class="review-author">
+                            <div class="review-avatar">PT</div>
+                            <div>
+                                <div class="review-author-name">Piotr T.</div>
+                                <div class="review-author-info">Opinia Google</div>
                             </div>
                         </div>
+                    </div>
 
-                        <div class="review-card">
-                            <div class="review-stars">
-                                <i class="fas fa-star"></i><i class="fas fa-star"></i><i class="fas fa-star"></i><i class="fas fa-star"></i><i class="fas fa-star"></i>
-                            </div>
-                            <p class="review-text">„Najlepsze studio we Wrocławiu! Wreszcie nie muszę czekać na sprzęt i mogę trenować w spokoju. Kameralna atmosfera i pełen profesjonalizm."</p>
-                            <div class="review-author">
-                                <div class="review-avatar">PT</div>
-                                <div>
-                                    <div class="review-author-name">Piotr T.</div>
-                                    <div class="review-author-info">Opinia Google</div>
-                                </div>
+                    <div class="review-card">
+                        <div class="review-stars">
+                            <i class="fas fa-star"></i><i class="fas fa-star"></i><i class="fas fa-star"></i><i class="fas fa-star"></i><i class="fas fa-star"></i>
+                        </div>
+                        <p class="review-text">„Miałam problemy z kręgosłupem przez lata. Po kilku miesiącach treningów ból ustąpił. Dziękuję za profesjonalną diagnozę i podejście!"</p>
+                        <div class="review-author">
+                            <div class="review-avatar">AN</div>
+                            <div>
+                                <div class="review-author-name">Anna N.</div>
+                                <div class="review-author-info">Opinia Google</div>
                             </div>
                         </div>
+                    </div>
 
-                        <div class="review-card">
-                            <div class="review-stars">
-                                <i class="fas fa-star"></i><i class="fas fa-star"></i><i class="fas fa-star"></i><i class="fas fa-star"></i><i class="fas fa-star"></i>
-                            </div>
-                            <p class="review-text">„Miałam problemy z kręgosłupem przez lata. Po kilku miesiącach treningów ból ustąpił. Dziękuję za profesjonalną diagnozę i podejście!"</p>
-                            <div class="review-author">
-                                <div class="review-avatar">AN</div>
-                                <div>
-                                    <div class="review-author-name">Anna N.</div>
-                                    <div class="review-author-info">Opinia Google</div>
-                                </div>
+                    <div class="review-card">
+                        <div class="review-stars">
+                            <i class="fas fa-star"></i><i class="fas fa-star"></i><i class="fas fa-star"></i><i class="fas fa-star"></i><i class="fas fa-star"></i>
+                        </div>
+                        <p class="review-text">„Córka chodzi na zajęcia w mini grupach i jest zachwycona! Widać postępy w kondycji i koordynacji. Super trenerzy, którzy potrafią zaangażować dzieci."</p>
+                        <div class="review-author">
+                            <div class="review-avatar">KW</div>
+                            <div>
+                                <div class="review-author-name">Karolina W.</div>
+                                <div class="review-author-info">Opinia Google</div>
                             </div>
                         </div>
+                    </div>
 
-                        <div class="review-card">
-                            <div class="review-stars">
-                                <i class="fas fa-star"></i><i class="fas fa-star"></i><i class="fas fa-star"></i><i class="fas fa-star"></i><i class="fas fa-star"></i>
-                            </div>
-                            <p class="review-text">„Córka chodzi na zajęcia w mini grupach i jest zachwycona! Widać postępy w kondycji i koordynacji. Super trenerzy, którzy potrafią zaangażować dzieci."</p>
-                            <div class="review-author">
-                                <div class="review-avatar">KW</div>
-                                <div>
-                                    <div class="review-author-name">Karolina W.</div>
-                                    <div class="review-author-info">Opinia Google</div>
-                                </div>
+                    <div class="review-card">
+                        <div class="review-stars">
+                            <i class="fas fa-star"></i><i class="fas fa-star"></i><i class="fas fa-star"></i><i class="fas fa-star"></i><i class="fas fa-star"></i>
+                        </div>
+                        <p class="review-text">„Współpraca hybrydowa to strzał w dziesiątkę. Plan treningowy idealnie dopasowany, a kontakt z trenerem na najwyższym poziomie. Polecam serdecznie!"</p>
+                        <div class="review-author">
+                            <div class="review-avatar">DM</div>
+                            <div>
+                                <div class="review-author-name">Dawid M.</div>
+                                <div class="review-author-info">Opinia Google</div>
                             </div>
                         </div>
+                    </div>
 
-                        <div class="review-card">
-                            <div class="review-stars">
-                                <i class="fas fa-star"></i><i class="fas fa-star"></i><i class="fas fa-star"></i><i class="fas fa-star"></i><i class="fas fa-star"></i>
+                    <div class="review-card">
+                        <div class="review-stars">
+                            <i class="fas fa-star"></i><i class="fas fa-star"></i><i class="fas fa-star"></i><i class="fas fa-star"></i><i class="fas fa-star"></i>
+                        </div>
+                        <p class="review-text">„Cierpliwość, profesjonalizm i indywidualne podejście — tego szukałam i to znalazłam w Body Creator."</p>
+                        <div class="review-author">
+                            <div class="review-avatar">AS</div>
+                            <div>
+                                <div class="review-author-name">Agnieszka S.</div>
+                                <div class="review-author-info">Opinia Google</div>
                             </div>
-                            <p class="review-text">„Współpraca hybrydowa to strzał w dziesiątkę. Plan treningowy idealnie dopasowany, a kontakt z trenerem na najwyższym poziomie. Polecam serdecznie!"</p>
-                            <div class="review-author">
-                                <div class="review-avatar">DM</div>
-                                <div>
-                                    <div class="review-author-name">Dawid M.</div>
-                                    <div class="review-author-info">Opinia Google</div>
-                                </div>
+                        </div>
+                    </div>
+
+                    <div class="review-card">
+                        <div class="review-stars">
+                            <i class="fas fa-star"></i><i class="fas fa-star"></i><i class="fas fa-star"></i><i class="fas fa-star"></i><i class="fas fa-star"></i>
+                        </div>
+                        <p class="review-text">„Nigdy nie lubiłam siłowni, ale Body Creator zmienił moje podejście. Atmosfera bez presji, a efekty przychodzą same. Gorąco polecam!"</p>
+                        <div class="review-author">
+                            <div class="review-avatar">EK</div>
+                            <div>
+                                <div class="review-author-name">Ewelina K.</div>
+                                <div class="review-author-info">Opinia Google</div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="review-card">
+                        <div class="review-stars">
+                            <i class="fas fa-star"></i><i class="fas fa-star"></i><i class="fas fa-star"></i><i class="fas fa-star"></i><i class="fas fa-star"></i>
+                        </div>
+                        <p class="review-text">„Profesjonalizm na najwyższym poziomie. Każde ćwiczenie jest dokładnie wyjaśnione i trening jest bezpieczny i efektywny."</p>
+                        <div class="review-author">
+                            <div class="review-avatar">RW</div>
+                            <div>
+                                <div class="review-author-name">Robert W.</div>
+                                <div class="review-author-info">Opinia Google</div>
                             </div>
                         </div>
                     </div>
                 </div>
-                <div class="slider-controls">
-                    <button class="slider-btn" id="reviewsKubaPrev" aria-label="Poprzednia opinia"><i class="fas fa-chevron-left"></i></button>
-                    <button class="slider-btn" id="reviewsKubaNext" aria-label="Następna opinia"><i class="fas fa-chevron-right"></i></button>
-                </div>
             </div>
-
-            <!-- Opinie o Oli -->
-            <div class="reviews-group" id="reviews-ola">
-                <div class="reviews-slider-wrapper">
-                    <div class="reviews-slider" id="reviewsSliderOla">
-                        <div class="review-card">
-                            <div class="review-stars">
-                                <i class="fas fa-star"></i><i class="fas fa-star"></i><i class="fas fa-star"></i><i class="fas fa-star"></i><i class="fas fa-star"></i>
-                            </div>
-                            <p class="review-text">„Ola to trenerka z ogromną wiedzą i empatią. Czuję się bezpiecznie podczas każdego treningu. Widać, że naprawdę zależy jej na moich postępach."</p>
-                            <div class="review-author">
-                                <div class="review-avatar">JB</div>
-                                <div>
-                                    <div class="review-author-name">Joanna B.</div>
-                                    <div class="review-author-info">Opinia Google</div>
-                                </div>
-                            </div>
-                        </div>
-
-                        <div class="review-card">
-                            <div class="review-stars">
-                                <i class="fas fa-star"></i><i class="fas fa-star"></i><i class="fas fa-star"></i><i class="fas fa-star"></i><i class="fas fa-star"></i>
-                            </div>
-                            <p class="review-text">„Treningi z Olą to mój ulubiony czas w tygodniu. Potrafi zmotywować i jednocześnie pilnuje techniki. Po 3 miesiącach czuję się jak nowa osoba!"</p>
-                            <div class="review-author">
-                                <div class="review-avatar">MZ</div>
-                                <div>
-                                    <div class="review-author-name">Magdalena Z.</div>
-                                    <div class="review-author-info">Opinia Google</div>
-                                </div>
-                            </div>
-                        </div>
-
-                        <div class="review-card">
-                            <div class="review-stars">
-                                <i class="fas fa-star"></i><i class="fas fa-star"></i><i class="fas fa-star"></i><i class="fas fa-star"></i><i class="fas fa-star"></i>
-                            </div>
-                            <p class="review-text">„Ola pomogła mi wrócić do formy po ciąży. Cierpliwość, profesjonalizm i indywidualne podejście — tego szukałam i to znalazłam w Body Creator."</p>
-                            <div class="review-author">
-                                <div class="review-avatar">AS</div>
-                                <div>
-                                    <div class="review-author-name">Agnieszka S.</div>
-                                    <div class="review-author-info">Opinia Google</div>
-                                </div>
-                            </div>
-                        </div>
-
-                        <div class="review-card">
-                            <div class="review-stars">
-                                <i class="fas fa-star"></i><i class="fas fa-star"></i><i class="fas fa-star"></i><i class="fas fa-star"></i><i class="fas fa-star"></i>
-                            </div>
-                            <p class="review-text">„Nigdy nie lubiłam siłowni, ale treningi z Olą zmieniły moje podejście. Atmosfera bez presji, a efekty przychodzą same. Gorąco polecam!"</p>
-                            <div class="review-author">
-                                <div class="review-avatar">EK</div>
-                                <div>
-                                    <div class="review-author-name">Ewelina K.</div>
-                                    <div class="review-author-info">Opinia Google</div>
-                                </div>
-                            </div>
-                        </div>
-
-                        <div class="review-card">
-                            <div class="review-stars">
-                                <i class="fas fa-star"></i><i class="fas fa-star"></i><i class="fas fa-star"></i><i class="fas fa-star"></i><i class="fas fa-star"></i>
-                            </div>
-                            <p class="review-text">„Profesjonalizm na najwyższym poziomie. Ola dokładnie wyjaśnia każde ćwiczenie i dba o to, żeby trening był bezpieczny i efektywny."</p>
-                            <div class="review-author">
-                                <div class="review-avatar">RW</div>
-                                <div>
-                                    <div class="review-author-name">Robert W.</div>
-                                    <div class="review-author-info">Opinia Google</div>
-                                </div>
-                            </div>
-                        </div>
-                    </div>
-                </div>
-                <div class="slider-controls">
-                    <button class="slider-btn" id="reviewsOlaPrev" aria-label="Poprzednia opinia"><i class="fas fa-chevron-left"></i></button>
-                    <button class="slider-btn" id="reviewsOlaNext" aria-label="Następna opinia"><i class="fas fa-chevron-right"></i></button>
-                </div>
+            <div class="slider-controls reveal">
+                <button class="slider-btn" id="reviewsPrev" aria-label="Poprzednia opinia"><i class="fas fa-chevron-left"></i></button>
+                <button class="slider-btn" id="reviewsNext" aria-label="Następna opinia"><i class="fas fa-chevron-right"></i></button>
             </div>
 
             <div style="text-align:center; margin-top:40px;" class="reveal">
@@ -3309,22 +3247,7 @@
             setCardWidths();
         }
 
-        createSlider('reviewsSliderKuba', 'reviewsKubaPrev', 'reviewsKubaNext', { alwaysSlider: true });
-        createSlider('reviewsSliderOla', 'reviewsOlaPrev', 'reviewsOlaNext', { alwaysSlider: true });
-
-        // ========================================
-        // Reviews Tabs
-        // ========================================
-        document.querySelectorAll('.reviews-tab').forEach(tab => {
-            tab.addEventListener('click', () => {
-                document.querySelectorAll('.reviews-tab').forEach(t => t.classList.remove('active'));
-                document.querySelectorAll('.reviews-group').forEach(g => g.classList.remove('active'));
-                tab.classList.add('active');
-                document.getElementById(tab.dataset.target).classList.add('active');
-                // Recalculate slider widths after tab switch (hidden elements have 0 width)
-                window.dispatchEvent(new Event('resize'));
-            });
-        });
+        createSlider('reviewsSlider', 'reviewsPrev', 'reviewsNext', { alwaysSlider: true });
 
         // ========================================
         // Custom smooth scroll
@@ -3382,6 +3305,41 @@
         }
         requestAnimationFrame(raf);
     </script>
+
+    <!-- WhatsApp Float Button -->
+    <a href="https://wa.me/48603632392" class="whatsapp-float" target="_blank" rel="noopener noreferrer" aria-label="Napisz na WhatsApp">
+        <i class="fab fa-whatsapp"></i>
+    </a>
+    <style>
+        .whatsapp-float {
+            position: fixed;
+            bottom: 30px;
+            right: 30px;
+            width: 60px;
+            height: 60px;
+            background: #F7B500;
+            color: #0A0A0A;
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 30px;
+            text-decoration: none;
+            z-index: 9999;
+            box-shadow: 0 4px 20px rgba(247, 181, 0, 0.45);
+            animation: whatsappLevitate 3s ease-in-out infinite;
+            transition: box-shadow 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+        }
+        .whatsapp-float:hover {
+            box-shadow: 0 8px 32px rgba(247, 181, 0, 0.7);
+            animation-play-state: paused;
+            transform: translateY(-6px) scale(1.08);
+        }
+        @keyframes whatsappLevitate {
+            0%, 100% { transform: translateY(0px); }
+            50%       { transform: translateY(-9px); }
+        }
+    </style>
 
 </body>
 </html>

@@ -1,11 +1,11 @@
-<!DOCTYPE html>
+﻿<!DOCTYPE html>
 <html lang="pl">
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <meta name="description" content="Body Creator - Skontaktuj się z nami przez WhatsApp, formularz lub telefon.">
     <link rel="icon" type="image/png" href="favicon.png">
-    <meta name="theme-color" content="#FED525">
+    <meta name="theme-color" content="#F7B500">
     <title>Kontakt — Body Creator</title>
 
     <link rel="preconnect" href="https://fonts.googleapis.com">
@@ -15,8 +15,8 @@
 
     <style>
         :root {
-            --yellow: #FED525;
-            --yellow-hover: #E5C000;
+            --yellow: #F7B500;
+            --yellow-hover: #DEA300;
             --dark: #0A0A0A;
             --dark-2: #111111;
             --dark-3: #1A1A1A;
@@ -39,7 +39,7 @@
         @keyframes loaderRing { to { transform: rotate(-360deg); } }
         @keyframes letterWave {
             0%, 55%, 100% { transform: translateY(0);    color: rgba(255,255,255,0.35); }
-            27%            { transform: translateY(-10px); color: #FED525; }
+            27%            { transform: translateY(-10px); color: #F7B500; }
         }
 
         #page-loader {
@@ -444,7 +444,7 @@
 
         /* FOOTER */
         .footer {
-            padding: 48px 0 32px;
+            padding: 12px 0 8px;
             border-top: 1px solid rgba(255,255,255,0.04);
             background: var(--dark);
         }
@@ -452,21 +452,21 @@
             display: flex;
             flex-direction: column;
             align-items: center;
-            gap: 16px;
+            gap: 6px;
             text-align: center;
         }
-        .footer-copy { font-size: 0.8rem; color: var(--gray); }
+        .footer-copy { font-size: 0.62rem; color: var(--gray); }
         .footer-portfolio-btn {
             display: inline-flex;
             align-items: center;
-            gap: 8px;
-            padding: 10px 22px;
-            border: 2px solid var(--yellow);
+            gap: 4px;
+            padding: 4px 10px;
+            border: 1px solid var(--yellow);
             border-radius: 50px;
             color: var(--yellow);
-            font-size: 0.78rem;
+            font-size: 0.58rem;
             font-weight: 700;
-            letter-spacing: 1px;
+            letter-spacing: 0.5px;
             text-transform: uppercase;
             transition: background 0.2s, color 0.2s;
         }
@@ -643,5 +643,41 @@
         function raf(time) { lenis.raf(time); requestAnimationFrame(raf); }
         requestAnimationFrame(raf);
     </script>
+
+    <!-- WhatsApp Float Button -->
+    <a href="https://wa.me/48603632392" class="whatsapp-float" target="_blank" rel="noopener noreferrer" aria-label="Napisz na WhatsApp">
+        <i class="fab fa-whatsapp"></i>
+    </a>
+    <style>
+        .whatsapp-float {
+            position: fixed;
+            bottom: 30px;
+            right: 30px;
+            width: 60px;
+            height: 60px;
+            background: #F7B500;
+            color: #0A0A0A;
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 30px;
+            text-decoration: none;
+            z-index: 9999;
+            box-shadow: 0 4px 20px rgba(247, 181, 0, 0.45);
+            animation: whatsappLevitate 3s ease-in-out infinite;
+            transition: box-shadow 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+        }
+        .whatsapp-float:hover {
+            box-shadow: 0 8px 32px rgba(247, 181, 0, 0.7);
+            animation-play-state: paused;
+            transform: translateY(-6px) scale(1.08);
+        }
+        @keyframes whatsappLevitate {
+            0%, 100% { transform: translateY(0px); }
+            50%       { transform: translateY(-9px); }
+        }
+    </style>
+
 </body>
 </html>
