@@ -856,6 +856,27 @@
             display: flex;
         }
 
+        .slider-dots {
+            display: flex;
+            justify-content: center;
+            gap: 8px;
+            margin-top: 16px;
+        }
+        .slider-dot {
+            width: 8px;
+            height: 8px;
+            border-radius: 50%;
+            background: rgba(255,255,255,0.2);
+            border: none;
+            padding: 0;
+            cursor: pointer;
+            transition: background 0.3s ease, transform 0.3s ease;
+        }
+        .slider-dot.active {
+            background: var(--yellow);
+            transform: scale(1.4);
+        }
+
         .slider-btn {
             width: 48px;
             height: 48px;
@@ -2922,6 +2943,7 @@
                 <button class="slider-btn" id="servicesPrev" aria-label="Poprzedni"><i class="fas fa-chevron-left"></i></button>
                 <button class="slider-btn" id="servicesNext" aria-label="Następny"><i class="fas fa-chevron-right"></i></button>
             </div>
+            <div class="slider-dots" id="servicesDots"></div>
         </div>
     </section>
 
@@ -3053,6 +3075,7 @@
             const nextBtn = document.getElementById(nextId);
             if (!slider || !prevBtn || !nextBtn) return;
             const alwaysSlider = options && options.alwaysSlider;
+            const dotsContainer = options && options.dotsId ? document.getElementById(options.dotsId) : null;
             let currentIndex = 0;
             const gap = 24;
             function isSliderMode() {
@@ -3081,13 +3104,31 @@
                 if (!card) return 0;
                 return card.offsetWidth + gap;
             }
+            function updateDots() {
+                if (!dotsContainer) return;
+                const totalSteps = Math.max(0, slider.children.length - getVisibleCards()) + 1;
+                if (dotsContainer.children.length !== totalSteps) {
+                    dotsContainer.innerHTML = '';
+                    for (let i = 0; i < totalSteps; i++) {
+                        const dot = document.createElement('button');
+                        dot.className = 'slider-dot';
+                        dot.setAttribute('aria-label', `Przejdź do pozycji ${i + 1}`);
+                        dot.addEventListener('click', () => { currentIndex = i; updateSlider(); });
+                        dotsContainer.appendChild(dot);
+                    }
+                }
+                Array.from(dotsContainer.children).forEach((dot, i) => {
+                    dot.classList.toggle('active', i === currentIndex);
+                });
+            }
             function updateSlider() {
                 setCardWidths();
-                if (!isSliderMode()) { slider.style.transform = ''; currentIndex = 0; return; }
+                if (!isSliderMode()) { slider.style.transform = ''; currentIndex = 0; updateDots(); return; }
                 const maxIndex = Math.max(0, slider.children.length - getVisibleCards());
                 currentIndex = Math.min(currentIndex, maxIndex);
                 currentIndex = Math.max(currentIndex, 0);
                 slider.style.transform = `translateX(-${currentIndex * getCardWidth()}px)`;
+                updateDots();
             }
             nextBtn.addEventListener('click', () => {
                 if (!isSliderMode()) return;
@@ -3110,9 +3151,10 @@
             });
             window.addEventListener('resize', updateSlider);
             setCardWidths();
+            updateDots();
         }
 
-        createSlider('servicesSlider', 'servicesPrev', 'servicesNext', { alwaysSlider: true, desktopVisible: 4 });
+        createSlider('servicesSlider', 'servicesPrev', 'servicesNext', { alwaysSlider: true, desktopVisible: 4, dotsId: 'servicesDots' });
 
         function closeAllModals() {
             document.querySelectorAll('.service-modal-overlay').forEach(m => {
