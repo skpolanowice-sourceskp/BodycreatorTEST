@@ -768,16 +768,34 @@
         })();
     </script>
 
-    <nav class="navbar">
+    <nav class="navbar" id="navbar">
         <div class="container">
-            <a href="index.html" class="logo">
-                <img src="logo.png" alt="Body Creator">
-            </a>
-            <a href="index.html" class="nav-back">
-                <i class="fas fa-arrow-left"></i> Wróć na stronę
-            </a>
+            <a href="index.html" class="logo"><img src="logo.png" alt="Body Creator"></a>
+            <div class="nav-cta">
+                <a href="rezerwacja.html" class="btn btn-primary btn-sm">Zapisz się na konsultację <i class="fas fa-arrow-right"></i></a>
+                <span class="nav-phone"><i class="fas fa-phone"></i> +48 --- --- ---</span>
+            </div>
+            <div class="nav-toggle" id="navToggle" aria-label="Menu"><span></span><span></span><span></span></div>
         </div>
     </nav>
+    <div class="nav-overlay" id="navOverlay">
+        <nav class="nav-menu">
+            <ul>
+                <li><a href="index.html" data-nav>Strona Główna</a></li>
+                <li><a href="oferta.html" data-nav>Oferta</a></li>
+                <li><a href="o-nas.html" data-nav>O Nas</a></li>
+                <li><a href="przemiany.html" data-nav>Przemiany</a></li>
+                <li><a href="kalkulator.html" data-nav>Kalkulator</a></li>
+                <li><a href="rezerwacja.html" data-nav>Umów Wizytę</a></li>
+                <li><a href="kontakt.html" data-nav>Kontakt</a></li>
+            </ul>
+            <div class="nav-socials">
+                <a href="#" aria-label="Facebook"><i class="fab fa-facebook-f"></i></a>
+                <a href="#" aria-label="Instagram"><i class="fab fa-instagram"></i></a>
+                <a href="#" aria-label="TikTok"><i class="fab fa-tiktok"></i></a>
+            </div>
+        </nav>
+    </div>
 
     <main>
     <section class="page-header">
@@ -905,6 +923,14 @@
         </div>
     </footer>
     </main>
+
+    <script>
+        const navToggle = document.getElementById('navToggle');
+        const navOverlay = document.getElementById('navOverlay');
+        navToggle.addEventListener('click', () => { navToggle.classList.toggle('active'); navOverlay.classList.toggle('active'); });
+        document.querySelectorAll('[data-nav]').forEach(link => link.addEventListener('click', () => { navToggle.classList.remove('active'); navOverlay.classList.remove('active'); }));
+        window.addEventListener('scroll', () => { document.getElementById('navbar').classList.toggle('scrolled', window.scrollY > 50); });
+    </script>
 
     <script>
         document.querySelectorAll('.ba-slider').forEach(slider => {
