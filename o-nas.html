@@ -636,89 +636,6 @@
         }
 
         /* ============================================
-           ABOUT HERO (page intro)
-           ============================================ */
-        .about-hero {
-            min-height: 100vh;
-            display: flex;
-            align-items: center;
-            position: relative;
-            overflow: hidden;
-            background: var(--dark);
-            padding-top: 80px;
-        }
-
-        .about-hero::before {
-            content: '';
-            position: absolute;
-            inset: 0;
-            background: radial-gradient(ellipse at 15% 65%, rgba(247, 181, 0, 0.06) 0%, transparent 55%),
-                        radial-gradient(ellipse at 85% 20%, rgba(247, 181, 0, 0.025) 0%, transparent 45%);
-            pointer-events: none;
-        }
-
-        .about-hero .container {
-            position: relative;
-            z-index: 1;
-            padding-top: 64px;
-            padding-bottom: 64px;
-        }
-
-        .about-hero-content {
-            max-width: 700px;
-        }
-
-        .about-hero-title {
-            font-family: var(--font-display);
-            font-size: clamp(2.8rem, 7vw, 5.5rem);
-            font-weight: 900;
-            line-height: 1.05;
-            letter-spacing: 2px;
-            text-transform: uppercase;
-            color: oklch(97% 0.005 65);
-            margin-bottom: 28px;
-        }
-
-        .about-hero-title .accent {
-            color: var(--yellow);
-        }
-
-        .about-hero-lead {
-            font-size: clamp(1rem, 1.4vw, 1.1rem);
-            color: var(--gray-light);
-            line-height: 1.85;
-            max-width: 580px;
-            margin-bottom: 36px;
-        }
-
-        .about-hero-cta {
-            display: flex;
-            flex-wrap: wrap;
-            gap: 16px;
-            margin-bottom: 52px;
-        }
-
-        .about-hero-meta {
-            display: flex;
-            flex-wrap: wrap;
-            gap: 28px;
-            color: var(--gray);
-            font-size: 0.8rem;
-            letter-spacing: 1px;
-        }
-
-        .about-hero-meta span {
-            display: flex;
-            align-items: center;
-            gap: 8px;
-        }
-
-        .about-hero-meta i {
-            color: var(--yellow);
-            font-size: 0.7rem;
-        }
-
-        /* ============================================
            STATS STRIP
            ============================================ */
         .stats-strip {
@@ -2938,32 +2855,6 @@
     </div>
 
     <main>
-
-    <!-- PAGE INTRO -->
-    <section class="about-hero">
-        <div class="container">
-            <div class="about-hero-content">
-                <span class="section-label">O Body Creator</span>
-                <h1 class="about-hero-title">
-                    Jedno studio.<br>
-                    Dwie osoby.<br>
-                    <span class="accent">Twój cel.</span>
-                </h1>
-                <p class="about-hero-lead">
-                    Przy ul. Rafała Wojaczka 3g w Sołtysowicach prowadzimy kameralne studio treningu personalnego. Jakub i Aleksandra — dwoje trenerów z pasją do realnych wyników. Bez tłumów, bez ogólnych planów, bez marketingowych obietnic.
-                </p>
-                <div class="about-hero-cta">
-                    <a href="rezerwacja.html" class="btn btn-primary">Zarezerwuj konsultację <i class="fas fa-arrow-right"></i></a>
-                    <a href="#team" class="btn btn-outline">Poznaj zespół</a>
-                </div>
-                <div class="about-hero-meta">
-                    <span><i class="fas fa-map-marker-alt"></i> Sołtysowice, Wrocław</span>
-                    <span><i class="fas fa-clock"></i> Pon&ndash;Sob, 07:00&ndash;21:00</span>
-                    <span><i class="fas fa-phone"></i> +48 --- --- ---</span>
-                </div>
-            </div>
-        </div>
-    </section>
 
     <!-- TEAM SECTION -->
     <section id="team">
