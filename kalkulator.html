@@ -123,7 +123,13 @@
             --dark-4: #222222;
             --white: #FFFFFF;
             --gray: #999999;
+            --gray-light: #CCCCCC;
+            --gray-dark: #444444;
+            --transition: 0.3s cubic-bezier(0.25, 1, 0.5, 1);
+            --transition-slow: 0.6s cubic-bezier(0.16, 1, 0.3, 1);
             --font-primary: 'Inter', sans-serif;
+            --font-display: 'Inter', sans-serif;
+            --container: 1200px;
         }
 
         html { scroll-behavior: auto; }
@@ -159,32 +165,158 @@
         /* ── NAV ── */
         .navbar {
             position: fixed;
-            top: 0; left: 0; right: 0;
-            height: 72px;
+            top: 0;
+            left: 0;
+            right: 0;
+            z-index: 1000;
+            padding: 20px 0;
+            transition: var(--transition);
+            overflow: visible;
+        }
+
+        .navbar.scrolled {
+            background: rgba(10, 10, 10, 0.95);
+            backdrop-filter: blur(20px);
+            padding: 14px 0;
+            border-bottom: 1px solid rgba(255, 255, 255, 0.05);
+        }
+
+        .navbar .container {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            position: relative;
+        }
+
+        .nav-cta {
+            position: absolute;
+            left: 50%;
+            transform: translateX(-50%);
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            gap: 4px;
+            pointer-events: auto;
+        }
+
+        .btn-sm {
+            padding: 14px 30px;
+            font-size: 0.95rem;
+            letter-spacing: 0.5px;
+        }
+
+        .nav-phone {
+            font-size: 1rem;
+            color: var(--gray-light);
             display: flex;
             align-items: center;
-            justify-content: space-between;
-            padding: 0 40px;
-            background: rgba(10,10,10,0.92);
-            backdrop-filter: blur(12px);
-            border-bottom: 1px solid rgba(255,255,255,0.05);
-            z-index: 100;
-        }
-
-        .logo img { height: 44px; width: auto; }
-
-        .back-link {
-            display: inline-flex;
-            align-items: center;
-            gap: 8px;
-            font-size: 0.85rem;
+            gap: 7px;
             font-weight: 600;
-            letter-spacing: 1px;
-            text-transform: uppercase;
-            color: var(--gray);
-            transition: color 0.2s;
         }
-        .back-link:hover { color: var(--yellow); }
+
+        .nav-phone i {
+            color: var(--yellow);
+            font-size: 0.9rem;
+        }
+
+        .logo {
+            z-index: 1001;
+            display: flex;
+            align-items: center;
+        }
+
+        .logo img {
+            height: 70px;
+            width: auto;
+        }
+
+        .nav-toggle {
+            display: flex;
+            flex-direction: column;
+            gap: 6px;
+            cursor: pointer;
+            z-index: 1001;
+            padding: 8px;
+        }
+
+        .nav-toggle span {
+            display: block;
+            width: 28px;
+            height: 2px;
+            background: var(--white);
+            transition: var(--transition);
+            transform-origin: center;
+        }
+
+        .nav-toggle.active span:nth-child(1) {
+            transform: rotate(45deg) translate(6px, 6px);
+        }
+
+        .nav-toggle.active span:nth-child(2) {
+            opacity: 0;
+        }
+
+        .nav-toggle.active span:nth-child(3) {
+            transform: rotate(-45deg) translate(6px, -6px);
+        }
+
+        .nav-overlay {
+            position: fixed;
+            inset: 0;
+            background: rgba(10, 10, 10, 0.98);
+            z-index: 999;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            opacity: 0;
+            visibility: hidden;
+            transition: var(--transition-slow);
+        }
+
+        .nav-overlay.active {
+            opacity: 1;
+            visibility: visible;
+        }
+
+        .nav-menu {
+            text-align: center;
+        }
+
+        .nav-menu li {
+            margin: 12px 0;
+        }
+
+        .nav-menu a {
+            font-size: clamp(1.6rem, 4vw, 2.8rem);
+            font-family: var(--font-display);
+            font-weight: 700;
+            letter-spacing: 2px;
+            text-transform: uppercase;
+            color: var(--white);
+            position: relative;
+            transition: var(--transition);
+        }
+
+        .nav-menu a:hover {
+            color: var(--yellow);
+        }
+
+        .nav-socials {
+            display: flex;
+            gap: 24px;
+            justify-content: center;
+            margin-top: 48px;
+        }
+
+        .nav-socials a {
+            font-size: 1.2rem;
+            color: var(--gray);
+        }
+
+        .nav-socials a:hover {
+            color: var(--yellow);
+            transform: translateY(-3px);
+        }
 
         /* ── HERO ── */
         .page-hero {
@@ -698,7 +830,7 @@
             .cta-section { padding: 48px 0 60px; }
             .cta-section h2 { font-size: clamp(1.3rem, 4vw, 1.8rem); }
             .btn { padding: 14px 28px; font-size: 0.85rem; }
-            .navbar { padding: 0 20px; }
+            .navbar { padding: 14px 0; }
             .container { padding: 0 16px; }
         }
 
@@ -732,9 +864,10 @@
             .form-input, .form-select { padding: 12px 14px; font-size: 0.88rem; }
             .cta-section { padding: 36px 0 48px; }
             .btn { padding: 14px 24px; font-size: 0.82rem; }
-            .navbar { padding: 0 12px; height: auto; min-height: 56px; }
-            .logo img { height: 36px; }
-            .nav-back { font-size: 0.8rem; }
+            .navbar { padding: 14px 0; }
+            .logo img { height: 56px; }
+            .nav-cta .btn-sm { padding: 8px 14px; font-size: 0.7rem; }
+            .nav-phone { display: none; }
             .footer-content { flex-direction: column; gap: 12px; text-align: center; }
             .footer-portfolio-btn { padding: 12px 20px; font-size: 0.72rem; }
         }
@@ -772,14 +905,44 @@
     <div class="bg-video-overlay"></div>
 
     <!-- NAV -->
-    <nav class="navbar">
-        <a href="index.html" class="logo">
-            <img src="logo.png" alt="Body Creator">
-        </a>
-        <a href="index.html" class="back-link">
-            <i class="fas fa-arrow-left"></i> Wróć na stronę
-        </a>
+    <nav class="navbar" id="navbar">
+        <div class="container">
+            <a href="index.html" class="logo">
+                <img src="logobezpodpisu.png" alt="Body Creator">
+            </a>
+            <div class="nav-cta">
+                <a href="rezerwacja.html" class="btn btn-primary btn-sm">
+                    Zapisz się na darmową konsultację <i class="fas fa-arrow-right"></i>
+                </a>
+                <a href="tel:603632392" class="nav-phone"><i class="fas fa-phone"></i> 603 632 392</a>
+            </div>
+            <div class="nav-toggle" id="navToggle" aria-label="Menu">
+                <span></span>
+                <span></span>
+                <span></span>
+            </div>
+        </div>
     </nav>
+
+    <!-- Mobile / Overlay Navigation -->
+    <div class="nav-overlay" id="navOverlay">
+        <nav class="nav-menu">
+            <ul>
+                <li><a href="index.html" data-nav>Strona Główna</a></li>
+                <li><a href="oferta.html" data-nav>Oferta</a></li>
+                <li><a href="o-nas.html" data-nav>O Nas</a></li>
+                <li><a href="przemiany.html" data-nav>Przemiany</a></li>
+                <li><a href="kalkulator.html" data-nav>Kalkulator</a></li>
+                <li><a href="rezerwacja.html" data-nav>Umów Wizytę</a></li>
+                <li><a href="kontakt.html" data-nav>Kontakt</a></li>
+            </ul>
+            <div class="nav-socials">
+                <a href="#" aria-label="Facebook"><i class="fab fa-facebook-f"></i></a>
+                <a href="#" aria-label="Instagram"><i class="fab fa-instagram"></i></a>
+                <a href="#" aria-label="TikTok"><i class="fab fa-tiktok"></i></a>
+            </div>
+        </nav>
+    </div>
 
     <main>
     <!-- HERO -->
@@ -1047,6 +1210,29 @@
 
     </script>
 
+    <!-- Navigation -->
+    <script>
+        const navToggle = document.getElementById('navToggle');
+        const navOverlay = document.getElementById('navOverlay');
+
+        navToggle.addEventListener('click', () => {
+            navToggle.classList.toggle('active');
+            navOverlay.classList.toggle('active');
+        });
+
+        document.querySelectorAll('[data-nav]').forEach(link => {
+            link.addEventListener('click', () => {
+                navToggle.classList.remove('active');
+                navOverlay.classList.remove('active');
+            });
+        });
+
+        window.addEventListener('scroll', () => {
+            const navbar = document.getElementById('navbar');
+            navbar.classList.toggle('scrolled', window.scrollY > 50);
+        });
+    </script>
+
     <!-- Lenis smooth scroll -->
     <script src="https://cdn.jsdelivr.net/npm/@studio-freight/lenis@1.0.42/dist/lenis.min.js"></script>
     <script>
@@ -1075,8 +1261,8 @@
             right: 30px;
             width: 60px;
             height: 60px;
-            background: #f5ca00;
-            color: #0A0A0A;
+            background: #25D366;
+            color: #ffffff;
             border-radius: 50%;
             display: flex;
             align-items: center;
@@ -1084,12 +1270,12 @@
             font-size: 30px;
             text-decoration: none;
             z-index: 9999;
-            box-shadow: 0 4px 20px rgba(245, 202, 0, 0.45);
+            box-shadow: 0 4px 20px rgba(37, 211, 102, 0.45);
             animation: whatsappLevitate 3s ease-in-out infinite;
             transition: box-shadow 0.3s cubic-bezier(0.4, 0, 0.2, 1);
         }
         .whatsapp-float:hover {
-            box-shadow: 0 8px 32px rgba(245, 202, 0, 0.7);
+            box-shadow: 0 8px 32px rgba(37, 211, 102, 0.7);
             animation-play-state: paused;
             transform: translateY(-6px) scale(1.08);
         }
