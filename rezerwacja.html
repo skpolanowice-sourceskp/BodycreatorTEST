@@ -3018,27 +3018,18 @@
 
                         <div class="form-grid-2">
                             <div class="form-group">
-                                <label for="wiek">Wiek *</label>
-                                <input type="number" id="wiek" name="wiek" placeholder="np. 28" min="10" max="99" required>
+                                <label for="telefon">Numer telefonu *</label>
+                                <input type="tel" id="telefon" name="telefon" placeholder="600 123 456" required autocomplete="tel">
                             </div>
                             <div class="form-group">
-                                <label for="waga">Waga (kg) *</label>
-                                <input type="number" id="waga" name="waga" placeholder="np. 75" min="30" max="300" required>
+                                <label for="email">Adres e-mail *</label>
+                                <input type="email" id="email" name="email" placeholder="jan@gmail.com" required autocomplete="email">
                             </div>
                         </div>
 
                         <div class="form-group">
-                            <label for="cel">Cel kontaktu *</label>
-                            <select id="cel" name="cel" required>
-                                <option value="">Wybierz cel</option>
-                                <option value="Redukcja tkanki tłuszczowej">Redukcja tkanki tłuszczowej</option>
-                                <option value="Budowa masy mięśniowej">Budowa masy mięśniowej</option>
-                                <option value="Poprawa kondycji i wydolności">Poprawa kondycji i wydolności</option>
-                                <option value="Rehabilitacja i powrót do sprawności">Rehabilitacja i powrót do sprawności</option>
-                                <option value="Zdrowy styl życia i ogólna forma">Zdrowy styl życia i ogólna forma</option>
-                                <option value="Przygotowanie do zawodów sportowych">Przygotowanie do zawodów sportowych</option>
-                                <option value="Chcę dowiedzieć się więcej o ofercie">Chcę dowiedzieć się więcej o ofercie</option>
-                            </select>
+                            <label for="wiadomosc">Wiadomość</label>
+                            <textarea id="wiadomosc" name="wiadomosc" placeholder="Napisz, czego szukasz — cel, pytania, preferencje dotyczące treningu..." rows="4"></textarea>
                         </div>
 
                         <button type="submit" class="btn btn-primary" id="submitBtn" style="width:100%;justify-content:center;padding:18px;font-size:0.95rem;margin-top:8px;">
