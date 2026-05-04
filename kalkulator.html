@@ -890,11 +890,22 @@
         (function() {
             var loader = document.getElementById('page-loader');
             if (!loader) return;
-            setTimeout(function() {
-                loader.style.opacity = '0';
-                loader.style.visibility = 'hidden';
-                setTimeout(function() { if (loader.parentNode) loader.parentNode.removeChild(loader); }, 700);
-            }, 1000);
+            var MIN = 600;
+            var start = Date.now();
+            function hide() {
+                var elapsed = Date.now() - start;
+                var delay = Math.max(0, MIN - elapsed);
+                setTimeout(function() {
+                    loader.style.opacity = '0';
+                    loader.style.visibility = 'hidden';
+                    setTimeout(function() { if (loader.parentNode) loader.parentNode.removeChild(loader); }, 700);
+                }, delay);
+            }
+            if (document.readyState === 'complete') {
+                hide();
+            } else {
+                window.addEventListener('load', hide);
+            }
         })();
     </script>
 
