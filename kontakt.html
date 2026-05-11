@@ -2923,7 +2923,7 @@
                             <i class="fas fa-envelope"></i>
                             <div class="detail-text">
                                 <span class="detail-label">E-mail</span>
-                                <a href="mailto:kontakt@bodycreator.pl">kontakt@bodycreator.pl</a>
+                                <a href="mailto:kontakt@bodycreator.com.pl">kontakt@bodycreator.com.pl</a>
                             </div>
                         </div>
                     </div>
@@ -2933,17 +2933,63 @@
                         <a href="#" aria-label="TikTok"><i class="fab fa-tiktok"></i></a>
                     </div>
                 </div>
-                <div class="contact-map reveal reveal-delay-2">
-                    <iframe
-                        src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d2504.5!2d17.05!3d51.13!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x0%3A0x0!2zUmFmYcWCYSBXb2phY3prYSAzZywgV3JvY8WCYXc!5e0!3m2!1spl!2spl!4v1"
-                        allowfullscreen=""
-                        loading="lazy"
-                        referrerpolicy="no-referrer-when-downgrade"
-                        title="Body Creator - lokalizacja"
-                        style="filter: grayscale(80%) contrast(1.1) brightness(0.7);">
-                    </iframe>
+                <div class="contact-form reveal reveal-delay-2">
+                    <h3>Napisz do nas</h3>
+                    <p>Odpiszemy w ciągu 24 godzin.</p>
+                    <form id="contactForm" novalidate>
+                        <div class="form-group">
+                            <label for="name">Imię i nazwisko *</label>
+                            <input type="text" id="name" name="name" placeholder="Jan Kowalski" required autocomplete="name">
+                        </div>
+                        <div style="display:grid;grid-template-columns:1fr 1fr;gap:16px;">
+                            <div class="form-group">
+                                <label for="email">E-mail *</label>
+                                <input type="email" id="email" name="email" placeholder="jan@gmail.com" required autocomplete="email">
+                            </div>
+                            <div class="form-group">
+                                <label for="phone">Telefon</label>
+                                <input type="tel" id="phone" name="phone" placeholder="+48 600 000 000" autocomplete="tel">
+                            </div>
+                        </div>
+                        <div class="form-group">
+                            <label for="subject">Temat</label>
+                            <select id="subject" name="subject">
+                                <option value="Trening personalny">Trening personalny</option>
+                                <option value="Współpraca hybrydowa">Współpraca hybrydowa</option>
+                                <option value="Zajęcia grupowe">Zajęcia grupowe</option>
+                                <option value="Inne">Inne</option>
+                            </select>
+                        </div>
+                        <div class="form-group">
+                            <label for="message">Wiadomość *</label>
+                            <textarea id="message" name="message" placeholder="Opisz czego szukasz..." required></textarea>
+                        </div>
+                        <button type="submit" class="btn btn-primary" id="submitBtn">
+                            Wyślij wiadomość <i class="fas fa-paper-plane"></i>
+                        </button>
+                        <div id="formError" style="display:none;color:#ff6b6b;font-size:0.85rem;margin-top:12px;"></div>
+                    </form>
+                    <div class="form-success" id="formSuccess">
+                        <i class="fas fa-check-circle"></i>
+                        <h3>Wiadomość wysłana!</h3>
+                        <p>Odpiszemy najszybciej jak to możliwe.</p>
+                    </div>
                 </div>
             </div>
+        </div>
+    </section>
+
+    <section style="padding:0;margin:0;">
+        <div style="height:400px;overflow:hidden;">
+            <iframe
+                src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d2504.5!2d17.05!3d51.13!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x0%3A0x0!2zUmFmYcWCYSBXb2phY3prYSAzZywgV3JvY8WCYXc!5e0!3m2!1spl!2spl!4v1"
+                width="100%" height="400"
+                allowfullscreen=""
+                loading="lazy"
+                referrerpolicy="no-referrer-when-downgrade"
+                title="Body Creator - lokalizacja"
+                style="display:block;border:0;filter: grayscale(80%) contrast(1.1) brightness(0.7);">
+            </iframe>
         </div>
     </section>
     </main>
@@ -2974,6 +3020,41 @@
         const lenis = new Lenis({ duration: 1.4, easing: t => Math.min(1, 1.001 - Math.pow(2, -10 * t)), smoothWheel: true, touchMultiplier: 1.5 });
         function raf(time) { lenis.raf(time); requestAnimationFrame(raf); }
         requestAnimationFrame(raf);
+    </script>
+
+    <script>
+        (function() {
+            var form = document.getElementById('contactForm');
+            if (!form) return;
+            form.addEventListener('submit', function(e) {
+                e.preventDefault();
+                var btn = document.getElementById('submitBtn');
+                var errDiv = document.getElementById('formError');
+                errDiv.style.display = 'none';
+                btn.disabled = true;
+                btn.innerHTML = 'Wysyłanie... <i class="fas fa-spinner fa-spin"></i>';
+                var data = new FormData(form);
+                fetch('send_mail.php', { method: 'POST', body: data })
+                    .then(function(r) { return r.json(); })
+                    .then(function(res) {
+                        if (res.success) {
+                            form.style.display = 'none';
+                            document.getElementById('formSuccess').classList.add('show');
+                        } else {
+                            errDiv.textContent = res.error || 'Wystąpił błąd. Spróbuj ponownie.';
+                            errDiv.style.display = 'block';
+                            btn.disabled = false;
+                            btn.innerHTML = 'Wyślij wiadomość <i class="fas fa-paper-plane"></i>';
+                        }
+                    })
+                    .catch(function() {
+                        errDiv.textContent = 'Błąd połączenia. Spróbuj ponownie.';
+                        errDiv.style.display = 'block';
+                        btn.disabled = false;
+                        btn.innerHTML = 'Wyślij wiadomość <i class="fas fa-paper-plane"></i>';
+                    });
+            });
+        })();
     </script>
 
     <!-- WhatsApp Float Button -->

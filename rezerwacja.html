@@ -2964,14 +2964,7 @@
                     </div>
                 </div>
                 <div class="calendar-embed reveal reveal-delay-1">
-                    <div class="trainer-selector">
-                        <button class="trainer-btn active" aria-pressed="true" data-cal="https://calendar.app.google/faobi7TxyDb5LZQYA">
-                            <i class="fas fa-user"></i> Jakub Cyndecki
-                        </button>
-                        <button class="trainer-btn" aria-pressed="false" data-cal="https://calendar.app.google/faobi7TxyDb5LZQYA">
-                            <i class="fas fa-user"></i> Aleksandra Dunajewska
-                        </button>
-                    </div>
+                    <p style="text-align:center; font-size:1.25rem; font-weight:700; color:var(--white); margin-bottom:20px; letter-spacing:0.5px;">Zapisz się na dzień otwarty</p>
                     <div class="calendar-frame-wrapper">
                         <iframe id="calendarFrame"
                                 src="https://calendar.app.google/faobi7TxyDb5LZQYA"
@@ -3111,7 +3104,7 @@
             btnIcon.className = 'fas fa-spinner fa-spin';
 
             try {
-                const res = await fetch('send-mail.php', {
+                const res = await fetch('send_mail.php', {
                     method: 'POST',
                     body: new FormData(form)
                 });
@@ -3178,19 +3171,7 @@
         }, { threshold: 0.15, rootMargin: '0px 0px -40px 0px' });
         revealElements.forEach(el => revealObserver.observe(el));
 
-        document.querySelectorAll('.trainer-btn').forEach(btn => {
-            btn.addEventListener('click', () => {
-                document.querySelectorAll('.trainer-btn').forEach(b => {
-                    b.classList.remove('active');
-                    b.setAttribute('aria-pressed', 'false');
-                });
-                btn.classList.add('active');
-                btn.setAttribute('aria-pressed', 'true');
-                const frame = document.getElementById('calendarFrame');
-                frame.src = btn.dataset.cal;
-                frame.style.colorScheme = 'light';
-            });
-        });
+
     </script>
     <script src="https://cdn.jsdelivr.net/npm/@studio-freight/lenis@1.0.42/dist/lenis.min.js"></script>
     <script>
