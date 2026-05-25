@@ -1828,9 +1828,11 @@
 
         .booking-grid {
             display: grid;
-            grid-template-columns: 1fr 1fr;
+            grid-template-columns: 1fr;
             gap: 80px;
             align-items: start;
+            max-width: 720px;
+            margin: 0 auto;
         }
 
         .booking-info h2 {
@@ -1863,13 +1865,6 @@
             color: var(--yellow);
             width: 20px;
             text-align: center;
-        }
-
-        .calendar-embed {
-            background: var(--dark-2);
-            border-radius: 16px;
-            padding: 28px;
-            border: 1px solid rgba(255,255,255,0.05);
         }
 
         .trainer-selector {
@@ -1905,25 +1900,6 @@
             border-color: var(--yellow);
             color: var(--white);
             background: rgba(242, 201, 76, 0.07);
-        }
-
-        .calendar-frame-wrapper {
-            border-radius: 12px;
-            overflow: hidden;
-            border: 1px solid rgba(255,255,255,0.08);
-            background: #ffffff;
-            height: 600px;
-        }
-
-        .calendar-frame-wrapper iframe {
-            display: block;
-            width: calc(100% / 0.75);
-            height: calc(600px / 0.75);
-            border: none;
-            background: #ffffff;
-            color-scheme: light;
-            transform: scale(0.75);
-            transform-origin: top left;
         }
 
         /* ============================================
@@ -2465,14 +2441,6 @@
                 aspect-ratio: 16/10;
             }
 
-            .calendar-frame-wrapper {
-                height: 820px;
-            }
-
-            .calendar-frame-wrapper iframe {
-                height: calc(820px / 0.75);
-            }
-
             .trainer-btn {
                 padding: 14px 12px;
                 font-size: 0.78rem;
@@ -2552,14 +2520,6 @@
             .section-label {
                 font-size: 0.65rem;
                 letter-spacing: 2px;
-            }
-
-            .calendar-frame-wrapper {
-                height: 760px;
-            }
-
-            .calendar-frame-wrapper iframe {
-                height: calc(760px / 0.75);
             }
 
             .trainer-btn {
@@ -2961,17 +2921,6 @@
                         </div>
 
                         <div id="formError" class="form-error" aria-live="assertive" role="alert"></div>
-                    </div>
-                </div>
-                <div class="calendar-embed reveal reveal-delay-1">
-                    <p style="text-align:center; font-size:1.25rem; font-weight:700; color:var(--white); margin-bottom:20px; letter-spacing:0.5px;">Zapisz się na dzień otwarty</p>
-                    <div class="calendar-frame-wrapper">
-                        <iframe id="calendarFrame"
-                                src="https://calendar.app.google/faobi7TxyDb5LZQYA"
-                                title="Kalendarz rezerwacji"
-                                loading="lazy"
-                                style="color-scheme: light;"
-                                allowfullscreen></iframe>
                     </div>
                 </div>
             </div>
