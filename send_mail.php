@@ -36,7 +36,7 @@ if ($isReservation) {
     $mailSubject = '=?UTF-8?B?' . base64_encode('Nowa rezerwacja konsultacji — Body Creator') . '?=';
     $body  = "Nowa rezerwacja konsultacji ze strony bodycreator.com.pl\r\n";
     $body .= "=========================================================\r\n\r\n";
-    $body .= "Imię i nazwisko: $name\r\n";
+    $body .= "Imię: $name\r\n";
     $body .= "Telefon: $phone\r\n";
     $body .= "E-mail: $email\r\n";
 } else {
