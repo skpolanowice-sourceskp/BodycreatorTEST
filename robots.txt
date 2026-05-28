@@ -1,0 +1,32 @@
+# robots.txt for https://bodycreator.com.pl/
+
+User-agent: *
+Allow: /
+
+# Block crawl of helper / build files
+Disallow: /node_modules/
+Disallow: /*.psd$
+Disallow: /*.psb$
+Disallow: /*.rar$
+Disallow: /package.json
+Disallow: /package-lock.json
+Disallow: /skills-lock.json
+Disallow: /DESIGN.json
+Disallow: /DESIGN.md
+Disallow: /PRODUCT.md
+Disallow: /todolist.md
+Disallow: /instrukcjaodklienta.txt
+Disallow: /send_mail.php
+Disallow: /sftp.json
+
+# AI crawler bots — allow indexing but you can edit if you want to opt out
+User-agent: GPTBot
+Allow: /
+
+User-agent: ClaudeBot
+Allow: /
+
+User-agent: Google-Extended
+Allow: /
+
+Sitemap: https://bodycreator.com.pl/sitemap.xml

@@ -3,29 +3,53 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <meta name="description" content="Body Creator - Studio Treningu Personalnego we Wrocławiu. Profesjonalne treningi personalne, współpraca hybrydowa, zajęcia grupowe. Sołtysowice, ul. Rafała Wojaczka 3g.">
+
+    <!-- Primary SEO -->
+    <title>O nas — Trenerzy Personalni Body Creator Wrocław | Zespół i Studio</title>
+    <meta name="description" content="Poznaj zespół Body Creator — certyfikowanych trenerów personalnych we Wrocławiu (Sołtysowice). Doświadczenie, profesjonalizm i indywidualne podejście do każdego klienta.">
+    <meta name="keywords" content="trenerzy personalni Wrocław, zespół Body Creator, Jakub Cyndecki trener, Aleksandra Dunajewska trener, studio treningu Wrocław Sołtysowice, najlepszy trener personalny Wrocław">
+    <meta name="author" content="Body Creator">
+    <meta name="robots" content="index, follow, max-image-preview:large, max-snippet:-1, max-video-preview:-1">
+    <meta name="googlebot" content="index, follow">
+    <meta name="language" content="Polish">
+    <meta name="theme-color" content="#F5CA00">
+    <link rel="canonical" href="https://bodycreator.com.pl/o-nas.html">
+
+    <!-- Geo / Local SEO -->
+    <meta name="geo.region" content="PL-DS">
+    <meta name="geo.placename" content="Wrocław, Sołtysowice">
+    <meta name="geo.position" content="51.144900;17.079200">
+    <meta name="ICBM" content="51.144900, 17.079200">
+
+    <!-- Icons -->
     <link rel="icon" type="image/png" href="favicon.png?v=2">
     <link rel="apple-touch-icon" href="favicon.png?v=2">
-    <meta name="keywords" content="trener personalny wrocław, studio treningu, trening personalny, body creator, sołtysowice">
-    <meta name="theme-color" content="#F7B500">
-    <meta name="author" content="Body Creator">
-    <title>O Nas — Body Creator | Studio Treningu Wrocław</title>
 
     <!-- Open Graph -->
     <meta property="og:type" content="website">
-    <meta property="og:title" content="O Nas — Body Creator">
-    <meta property="og:description" content="Poznaj zespół Body Creator — profesjonalni trenerzy personalni z pasją do treningu w Wrocławiu.">
-    <meta property="og:image" content="favicon.png">
+    <meta property="og:site_name" content="Body Creator">
+    <meta property="og:locale" content="pl_PL">
+    <meta property="og:url" content="https://bodycreator.com.pl/o-nas.html">
+    <meta property="og:title" content="O nas — Trenerzy Personalni Body Creator Wrocław">
+    <meta property="og:description" content="Poznaj zespół certyfikowanych trenerów personalnych Body Creator z Wrocławia (Sołtysowice).">
+    <meta property="og:image" content="https://bodycreator.com.pl/najlepszy-trener-na-swiecie.webp">
+    <meta property="og:image:alt" content="Zespół Body Creator — trenerzy personalni Wrocław">
+    <meta property="og:image:width" content="1200">
+    <meta property="og:image:height" content="630">
 
     <!-- Twitter Card -->
-    <meta name="twitter:card" content="summary">
-    <meta name="twitter:title" content="O Nas — Body Creator">
-    <meta name="twitter:description" content="Profesjonalne treningi personalne, współpraca hybrydowa, zajęcia grupowe.">
-    <meta name="twitter:image" content="favicon.png">
+    <meta name="twitter:card" content="summary_large_image">
+    <meta name="twitter:title" content="O nas — Zespół Body Creator Wrocław">
+    <meta name="twitter:description" content="Certyfikowani trenerzy personalni we Wrocławiu (Sołtysowice).">
+    <meta name="twitter:image" content="https://bodycreator.com.pl/najlepszy-trener-na-swiecie.webp">
 
-    <!-- Google Fonts -->
+    <!-- Performance hints -->
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link rel="dns-prefetch" href="//cdnjs.cloudflare.com">
+    <link rel="dns-prefetch" href="//cdn.jsdelivr.net">
+
+    <!-- Google Fonts -->
     <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800;900&display=swap" rel="stylesheet">
 
     <!-- Font Awesome Icons -->
@@ -2798,28 +2822,78 @@
         }
     </style>
 
-    <!-- Structured Data -->
+    <!-- Structured Data: AboutPage + Persons + LocalBusiness + Breadcrumb -->
     <script type="application/ld+json">
     {
         "@context": "https://schema.org",
-        "@type": "LocalBusiness",
-        "name": "Body Creator",
-        "description": "Studio Treningu Personalnego we Wrocławiu. Profesjonalne treningi personalne, współpraca hybrydowa, zajęcia grupowe.",
-        "address": {
-            "@type": "PostalAddress",
-            "streetAddress": "ul. Rafała Wojaczka 3g",
-            "addressLocality": "Wrocław",
-            "addressRegion": "dolnośląskie",
-            "addressCountry": "PL"
-        },
-        "image": "favicon.png",
-        "priceRange": "$$",
-        "openingHoursSpecification": {
-            "@type": "OpeningHoursSpecification",
-            "dayOfWeek": ["Monday","Tuesday","Wednesday","Thursday","Friday","Saturday"],
-            "opens": "07:00",
-            "closes": "21:00"
-        }
+        "@graph": [
+            {
+                "@type": ["LocalBusiness", "HealthClub"],
+                "@id": "https://bodycreator.com.pl/#localbusiness",
+                "name": "Body Creator — Studio Treningu Personalnego",
+                "url": "https://bodycreator.com.pl/",
+                "telephone": "+48518167945",
+                "image": "https://bodycreator.com.pl/najlepszy-trener-na-swiecie.webp",
+                "priceRange": "$$",
+                "address": {
+                    "@type": "PostalAddress",
+                    "streetAddress": "ul. Rafała Wojaczka 3g",
+                    "addressLocality": "Wrocław",
+                    "addressRegion": "dolnośląskie",
+                    "postalCode": "51-168",
+                    "addressCountry": "PL"
+                },
+                "geo": { "@type": "GeoCoordinates", "latitude": 51.144900, "longitude": 17.079200 }
+            },
+            {
+                "@type": "AboutPage",
+                "@id": "https://bodycreator.com.pl/o-nas.html#aboutpage",
+                "url": "https://bodycreator.com.pl/o-nas.html",
+                "name": "O nas — Trenerzy Personalni Body Creator",
+                "inLanguage": "pl-PL",
+                "about": { "@id": "https://bodycreator.com.pl/#localbusiness" },
+                "primaryImageOfPage": "https://bodycreator.com.pl/najlepszy-trener-na-swiecie.webp"
+            },
+            {
+                "@type": "Person",
+                "name": "Jakub Cyndecki",
+                "jobTitle": "Trener Personalny",
+                "worksFor": { "@id": "https://bodycreator.com.pl/#localbusiness" },
+                "workLocation": {
+                    "@type": "Place",
+                    "name": "Body Creator Studio Treningu Personalnego",
+                    "address": {
+                        "@type": "PostalAddress",
+                        "streetAddress": "ul. Rafała Wojaczka 3g",
+                        "addressLocality": "Wrocław",
+                        "addressCountry": "PL"
+                    }
+                }
+            },
+            {
+                "@type": "Person",
+                "name": "Aleksandra Dunajewska",
+                "jobTitle": "Trener Personalny",
+                "worksFor": { "@id": "https://bodycreator.com.pl/#localbusiness" },
+                "workLocation": {
+                    "@type": "Place",
+                    "name": "Body Creator Studio Treningu Personalnego",
+                    "address": {
+                        "@type": "PostalAddress",
+                        "streetAddress": "ul. Rafała Wojaczka 3g",
+                        "addressLocality": "Wrocław",
+                        "addressCountry": "PL"
+                    }
+                }
+            },
+            {
+                "@type": "BreadcrumbList",
+                "itemListElement": [
+                    { "@type": "ListItem", "position": 1, "name": "Strona główna", "item": "https://bodycreator.com.pl/" },
+                    { "@type": "ListItem", "position": 2, "name": "O nas", "item": "https://bodycreator.com.pl/o-nas.html" }
+                ]
+            }
+        ]
     }
     </script>
 </head>
@@ -2856,7 +2930,7 @@
 
     <nav class="navbar" id="navbar">
         <div class="container">
-            <a href="index.html" class="logo"><img src="logobezpodpisu.png" alt="Body Creator"></a>
+            <a href="index.html" class="logo" aria-label="Body Creator — strona główna"><img src="logobezpodpisu.png" alt="Body Creator — Studio Treningu Personalnego Wrocław" width="140" height="70"></a>
             <div class="nav-cta">
                 <a href="rezerwacja.html" class="btn btn-primary btn-sm">Darmowa konsultacja <i class="fas fa-arrow-right"></i></a>
                 <a href="tel:518167945" class="nav-phone"><i class="fas fa-phone"></i> 518 167 945</a>
@@ -2876,9 +2950,9 @@
                 <li><a href="kontakt.html" data-nav>Kontakt</a></li>
             </ul>
             <div class="nav-socials">
-                <a href="#" aria-label="Facebook"><i class="fab fa-facebook-f"></i></a>
-                <a href="#" aria-label="Instagram"><i class="fab fa-instagram"></i></a>
-                <a href="#" aria-label="TikTok"><i class="fab fa-tiktok"></i></a>
+                <a href="https://www.facebook.com/bodycreator" target="_blank" rel="noopener noreferrer" aria-label="Body Creator na Facebooku"><i class="fab fa-facebook-f" aria-hidden="true"></i></a>
+                <a href="https://www.instagram.com/bodycreator" target="_blank" rel="noopener noreferrer" aria-label="Body Creator na Instagramie"><i class="fab fa-instagram" aria-hidden="true"></i></a>
+                <a href="https://www.tiktok.com/@bodycreator" target="_blank" rel="noopener noreferrer" aria-label="Body Creator na TikToku"><i class="fab fa-tiktok" aria-hidden="true"></i></a>
             </div>
         </nav>
     </div>
@@ -2901,7 +2975,7 @@
                                 <span class="section-label">Nasz zespół</span>
                                 <span class="team-panel-line"></span>
                             </div>
-                            <h2 class="section-title">Profesjonaliści z&nbsp;pasją<br>do&nbsp;treningu</h2>
+                            <h1 class="section-title">Profesjonaliści z&nbsp;pasją<br>do&nbsp;treningu personalnego we&nbsp;Wrocławiu</h1>
                             <p class="section-text">W Body Creator mamy profesjonalistów z&nbsp;ogromnym bagażem doświadczeń oraz wiedzy, która pozwala pomagać ludziom zarówno z&nbsp;problemami zdrowotnymi jak i&nbsp;dążyć do&nbsp;sylwetki swoich marzeń.</p>
                             <div class="stats-strip reveal">
                                 <div class="stats-strip-item">
@@ -3224,7 +3298,7 @@
     </script>
 
     <!-- WhatsApp Float Button -->
-    <a href="#" onclick="var p='48518167945';var m=/Android|iPhone|iPad|iPod/i.test(navigator.userAgent);if(m){window.location.href='whatsapp://send?phone='+p;}else{window.open('https://web.whatsapp.com/send?phone='+p,'_blank');}return false;" class="whatsapp-float" aria-label="Napisz na WhatsApp">
+    <a href="https://wa.me/48518167945" target="_blank" rel="noopener noreferrer" onclick="var p='48518167945';var m=/Android|iPhone|iPad|iPod/i.test(navigator.userAgent);if(m){window.location.href='whatsapp://send?phone='+p;return false;}" class="whatsapp-float" aria-label="Napisz do nas na WhatsApp">
         <i class="fab fa-whatsapp"></i>
     </a>
     <style>
