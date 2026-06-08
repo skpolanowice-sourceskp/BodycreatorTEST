@@ -2143,6 +2143,95 @@
         }
 
         /* ============================================
+           ZGODY (RODO + newsletter)
+           ============================================ */
+        .consent-block {
+            margin-top: 24px;
+            padding-top: 24px;
+            border-top: 1px solid rgba(255,255,255,0.07);
+            display: flex;
+            flex-direction: column;
+            gap: 16px;
+        }
+
+        .consent {
+            display: flex;
+            gap: 14px;
+            align-items: flex-start;
+            cursor: pointer;
+            user-select: none;
+            min-height: 24px;
+        }
+
+        .consent input {
+            position: absolute;
+            opacity: 0;
+            width: 0;
+            height: 0;
+        }
+
+        .consent .box {
+            flex-shrink: 0;
+            width: 22px;
+            height: 22px;
+            margin-top: 1px;
+            border-radius: 6px;
+            background: var(--dark-2);
+            border: 1.5px solid rgba(255,255,255,0.18);
+            display: grid;
+            place-items: center;
+            transition: background var(--transition), border-color var(--transition), box-shadow var(--transition);
+        }
+
+        .consent .box i {
+            color: var(--dark);
+            font-size: 0.68rem;
+            transform: scale(0);
+            transition: transform 0.28s cubic-bezier(0.165, 0.84, 0.44, 1);
+        }
+
+        .consent:hover .box { border-color: rgba(245,202,0,0.55); }
+
+        .consent input:focus-visible + .box {
+            border-color: var(--yellow);
+            box-shadow: 0 0 0 3px rgba(242,201,76,0.12);
+        }
+
+        .consent input:checked + .box {
+            background: var(--yellow);
+            border-color: var(--yellow);
+        }
+
+        .consent input:checked + .box i { transform: scale(1); }
+
+        .consent.invalid .box { border-color: var(--error); }
+
+        .consent .text {
+            font-size: 0.82rem;
+            line-height: 1.55;
+            color: var(--gray-light);
+        }
+
+        .consent .text a {
+            color: var(--yellow);
+            text-decoration: underline;
+            text-underline-offset: 2px;
+            font-weight: 500;
+        }
+
+        .consent .text a:hover { color: var(--yellow-hover); }
+        .consent .req { color: var(--yellow); font-weight: 700; }
+
+        .consent .opt {
+            font-size: 0.68rem;
+            font-weight: 700;
+            letter-spacing: 1.5px;
+            text-transform: uppercase;
+            color: var(--gray);
+            margin-left: 4px;
+        }
+
+        /* ============================================
            SERVICE DETAIL PAGES (subpages in modals)
            ============================================ */
         .service-modal-overlay {
@@ -2979,6 +3068,26 @@
                                 </div>
                             </div>
 
+                            <div class="consent-block">
+                                <label class="consent" id="consentDaneRow">
+                                    <input type="checkbox" id="zgodaDane" name="zgoda_dane" value="tak">
+                                    <span class="box"><i class="fas fa-check"></i></span>
+                                    <span class="text">
+                                        Wyrażam zgodę na przetwarzanie moich danych osobowych (imię, numer telefonu, adres e-mail) przez Body Creator w celu kontaktu i umówienia konsultacji, zgodnie z <a href="polityka-prywatnosci.html" target="_blank" rel="noopener">Polityką prywatności</a>.
+                                        <span class="req">*</span>
+                                    </span>
+                                </label>
+
+                                <label class="consent">
+                                    <input type="checkbox" id="zgodaNewsletter" name="zgoda_newsletter" value="tak">
+                                    <span class="box"><i class="fas fa-check"></i></span>
+                                    <span class="text">
+                                        Chcę otrzymywać newsletter Body Creator z poradami treningowymi, ofertami i promocjami. Zgodę mogę wycofać w każdej chwili.
+                                        <span class="opt">Opcjonalne</span>
+                                    </span>
+                                </label>
+                            </div>
+
                             <button type="submit" class="btn btn-primary" id="submitBtn" style="width:100%;justify-content:center;padding:18px;font-size:0.95rem;margin-top:8px;">
                                 <span id="submitText">Zapisuję się na konsultację</span>
                                 <i class="fas fa-arrow-right" id="submitIcon"></i>
@@ -3119,9 +3228,23 @@
         const success = document.getElementById('formSuccess');
         const errorBox = document.getElementById('formError');
 
+        const zgodaDane = document.getElementById('zgodaDane');
+        const consentDaneRow = document.getElementById('consentDaneRow');
+        zgodaDane.addEventListener('change', () => {
+            if (zgodaDane.checked) consentDaneRow.classList.remove('invalid');
+        });
+
         form.addEventListener('submit', async function(e) {
             e.preventDefault();
             errorBox.style.display = 'none';
+
+            if (!zgodaDane.checked) {
+                consentDaneRow.classList.add('invalid');
+                errorBox.textContent = 'Aby wysłać zgłoszenie, zaznacz zgodę na przetwarzanie danych.';
+                errorBox.style.display = 'block';
+                zgodaDane.focus();
+                return;
+            }
 
             btn.disabled = true;
             btnText.textContent = 'Wysyłanie...';
