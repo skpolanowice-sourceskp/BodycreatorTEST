@@ -140,8 +140,8 @@
     <!-- TOP BAR -->
     <div class="legal-bar">
         <div class="container">
-            <a href="index.html" aria-label="Body Creator — strona główna"><img src="logo.png" alt="Body Creator"></a>
-            <a href="index.html" class="legal-back"><i class="fas fa-arrow-left"></i><span>Powrót na stronę</span></a>
+            <a href="index.html" aria-label="Body Creator — strona główna"><img src="logobezpodpisu.png" alt="Body Creator"></a>
+            <a href="index.html" class="legal-back" id="legalBack"><i class="fas fa-arrow-left"></i><span>Powrót na stronę</span></a>
         </div>
     </div>
 
@@ -271,6 +271,18 @@
             </div>
         </div>
     </footer>
+
+    <script>
+        // "Powrót na stronę" wraca do poprzednio odwiedzonej strony w obrębie serwisu.
+        // Fallback (href="index.html") działa przy wejściu bezpośrednim lub z innej domeny.
+        document.getElementById('legalBack').addEventListener('click', function (e) {
+            var ref = document.referrer;
+            if (window.history.length > 1 && ref && new URL(ref).origin === location.origin) {
+                e.preventDefault();
+                history.back();
+            }
+        });
+    </script>
 
 </body>
 </html>
