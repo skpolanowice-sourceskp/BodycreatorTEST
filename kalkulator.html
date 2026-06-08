@@ -819,26 +819,19 @@
             gap: 6px;
         }
 
-        .footer-portfolio-btn {
-            display: inline-flex;
-            align-items: center;
-            gap: 4px;
-            padding: 4px 10px;
-            border: 1px solid var(--yellow);
-            border-radius: 50px;
-            color: var(--yellow);
-            font-size: 0.58rem;
-            font-weight: 700;
-            letter-spacing: 0.5px;
-            text-transform: uppercase;
-            white-space: nowrap;
-            transition: background 0.2s, color 0.2s;
+        .footer-links {
+            display: flex;
+            gap: 32px;
+        }
+
+        .footer-links a {
+            font-size: 0.62rem;
+            color: var(--gray);
             text-decoration: none;
         }
 
-        .footer-portfolio-btn:hover {
-            background: var(--yellow);
-            color: var(--dark);
+        .footer-links a:hover {
+            color: var(--yellow);
         }
 
         /* ── RESPONSIVE ── */
@@ -889,7 +882,7 @@
             .nav-cta .btn-sm { padding: 6px 10px; font-size: 0.62rem; white-space: nowrap; letter-spacing: 0; }
             .nav-phone { display: flex; font-size: 0.72rem; }
             .footer-content { flex-direction: column; gap: 12px; text-align: center; }
-            .footer-portfolio-btn { padding: 12px 20px; font-size: 0.72rem; }
+            .footer-links { flex-wrap: wrap; justify-content: center; gap: 20px; }
         }
     </style>
 
@@ -1189,10 +1182,13 @@
 
     <!-- FOOTER -->
     <footer>
-        <p>Potrzebujesz takiej strony internetowej stworzonej od podstaw pod Ciebie?</p>
-        <a href="https://michal20000505-sudo.github.io/portfolio-site/index.html" target="_blank" rel="noopener" class="footer-portfolio-btn">
-            Skontaktuj się
-        </a>
+        <div class="footer-links">
+            <a href="index.html">Strona główna</a>
+            <a href="oferta.html">Oferta</a>
+            <a href="o-nas.html">O nas</a>
+            <a href="kontakt.html">Kontakt</a>
+        </div>
+        <p>© 2026 Body Creator — Studio Treningu Personalnego Wrocław. Wszelkie prawa zastrzeżone.</p>
     </footer>
     </main>
 
