@@ -1392,33 +1392,71 @@
         .studio-slider-wrapper {
             overflow: hidden;
             border-radius: 20px;
+            max-width: 860px;
+            margin: 0 auto;
         }
 
         .studio-slider {
             display: flex;
+            align-items: flex-start;
             transition: transform 0.55s cubic-bezier(0.25, 0.46, 0.45, 0.94);
         }
 
         .studio-slide {
             flex: 0 0 100%;
             width: 100%;
-            aspect-ratio: 16/7;
-            background: linear-gradient(135deg, var(--dark-4), var(--dark-3));
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            flex-direction: column;
-            gap: 12px;
-            color: var(--gray-dark);
             border-radius: 20px;
         }
 
         .studio-slide img {
             width: 100%;
-            height: 100%;
-            object-fit: cover;
-            border-radius: 20px;
+            height: auto;
             display: block;
+            border-radius: 20px;
+            cursor: zoom-in;
+        }
+
+        /* Lightbox */
+        .studio-lightbox {
+            display: none;
+            position: fixed;
+            inset: 0;
+            background: oklch(4% 0.006 60 / 0.96);
+            z-index: 9000;
+            align-items: center;
+            justify-content: center;
+            padding: 16px;
+        }
+        .studio-lightbox.is-open {
+            display: flex;
+        }
+        .studio-lightbox > img {
+            max-width: 100%;
+            max-height: 100svh;
+            object-fit: contain;
+            border-radius: 10px;
+            cursor: default;
+        }
+        .studio-lightbox-close {
+            position: absolute;
+            top: 16px;
+            right: 16px;
+            width: 44px;
+            height: 44px;
+            background: oklch(14% 0.005 60 / 0.85);
+            border: 1px solid oklch(28% 0.005 60);
+            border-radius: 50%;
+            color: oklch(88% 0.005 60);
+            font-size: 1.4rem;
+            line-height: 1;
+            cursor: pointer;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            transition: background 0.18s ease;
+        }
+        .studio-lightbox-close:hover {
+            background: oklch(22% 0.005 60);
         }
 
         .studio-slider-controls {
@@ -2309,6 +2347,7 @@
                 gap: 10px;
             }
 
+
             .team-benefits li i {
                 width: 30px;
                 height: 30px;
@@ -2325,6 +2364,20 @@
 
             .team-card {
                 min-height: 240px;
+            }
+
+            .studio-slider-controls {
+                gap: 12px;
+            }
+            .studio-slider-btn {
+                padding: 0 12px;
+            }
+            .studio-btn-text {
+                font-size: 0.68rem;
+                letter-spacing: 0;
+            }
+            .studio-slider-btn:not(:disabled) .studio-btn-text {
+                max-width: 120px;
             }
 
             .team-stats-grid {
@@ -2562,16 +2615,20 @@
             }
 
             .team-card {
-                min-height: 200px;
+                min-height: 290px;
             }
 
             .team-role {
-                font-size: 0.6rem;
-                letter-spacing: 1.5px;
+                font-size: 0.55rem;
+                letter-spacing: 1px;
             }
 
             .team-name {
-                font-size: 1rem;
+                font-size: 0.82rem;
+            }
+
+            .team-info {
+                padding: 28px 12px 12px;
             }
 
             .team-slider-controls {
@@ -2977,6 +3034,11 @@
         </div>
     </section>
 
+    <div id="studioLightbox" class="studio-lightbox" role="dialog" aria-modal="true" aria-label="Podgląd zdjęcia studia">
+        <button class="studio-lightbox-close" id="studioLightboxClose" aria-label="Zamknij">&times;</button>
+        <img id="studioLightboxImg" src="" alt="">
+    </div>
+
     <!-- WHY US SECTION -->
     <section id="why-us">
         <div class="container">
@@ -3138,6 +3200,27 @@
             slider.addEventListener('touchstart', e => { startX = e.touches[0].clientX; }, { passive: true });
             slider.addEventListener('touchend', e => { const diff = startX - e.changedTouches[0].clientX; if (diff > 50) goTo(current + 1); else if (diff < -50) goTo(current - 1); }, { passive: true });
             goTo(0);
+
+            // Lightbox
+            const lightbox = document.getElementById('studioLightbox');
+            const lightboxImg = document.getElementById('studioLightboxImg');
+            const lightboxClose = document.getElementById('studioLightboxClose');
+            function openLightbox(img) {
+                lightboxImg.src = img.src;
+                lightboxImg.alt = img.alt;
+                lightbox.classList.add('is-open');
+                document.body.style.overflow = 'hidden';
+            }
+            function closeLightbox() {
+                lightbox.classList.remove('is-open');
+                document.body.style.overflow = '';
+            }
+            slider.querySelectorAll('img').forEach(img => {
+                img.addEventListener('click', () => openLightbox(img));
+            });
+            lightboxClose.addEventListener('click', closeLightbox);
+            lightbox.addEventListener('click', e => { if (e.target === lightbox) closeLightbox(); });
+            document.addEventListener('keydown', e => { if (e.key === 'Escape') closeLightbox(); });
         })();
 
         (function() {
