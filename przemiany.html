@@ -392,10 +392,10 @@
         /* Category filter (zakładki) */
         .ba-filters {
             display: flex;
-            width: fit-content;
-            max-width: 100%;
+            width: 100%;
+            max-width: 580px;
             margin: 0 auto 56px;
-            gap: 4px;
+            gap: 6px;
             padding: 6px;
             background: var(--dark-2);
             border: 1px solid rgba(255, 255, 255, 0.06);
@@ -403,6 +403,11 @@
         }
 
         .ba-filter {
+            flex: 1;
+            display: inline-flex;
+            align-items: center;
+            justify-content: center;
+            gap: 9px;
             appearance: none;
             border: none;
             background: transparent;
@@ -412,7 +417,7 @@
             font-weight: 700;
             letter-spacing: 2px;
             text-transform: uppercase;
-            padding: 13px 32px;
+            padding: 14px 22px;
             border-radius: 50px;
             cursor: pointer;
             white-space: nowrap;
@@ -431,6 +436,29 @@
         .ba-filter.active,
         .ba-filter.active:hover {
             background: var(--yellow);
+            color: var(--dark);
+        }
+
+        .ba-filter-count {
+            font-size: 0.72em;
+            font-weight: 800;
+            letter-spacing: 0;
+            font-variant-numeric: tabular-nums;
+            min-width: 22px;
+            padding: 3px 7px;
+            border-radius: 50px;
+            background: rgba(255, 255, 255, 0.07);
+            color: var(--gray-light);
+            line-height: 1.35;
+            transition: color var(--transition), background-color var(--transition);
+        }
+
+        .ba-filter:hover .ba-filter-count {
+            color: #fff;
+        }
+
+        .ba-filter.active .ba-filter-count {
+            background: rgba(10, 10, 10, 0.16);
             color: var(--dark);
         }
 
@@ -482,10 +510,19 @@
         }
 
         @media (max-width: 480px) {
+            .ba-filters {
+                gap: 4px;
+                padding: 5px;
+            }
             .ba-filter {
-                padding: 12px 18px;
-                font-size: 0.72rem;
-                letter-spacing: 1px;
+                gap: 6px;
+                padding: 12px 6px;
+                font-size: 0.7rem;
+                letter-spacing: 0.5px;
+            }
+            .ba-filter-count {
+                min-width: 19px;
+                padding: 2px 5px;
             }
         }
 
@@ -1161,9 +1198,9 @@
     <section class="transformations">
         <div class="container">
             <div class="ba-filters" role="tablist" aria-label="Kategorie przemian">
-                <button class="ba-filter active" role="tab" id="tab-redukcja" aria-selected="true" aria-controls="baGrid" data-filter="redukcja">Redukcja</button>
-                <button class="ba-filter" role="tab" id="tab-sila" aria-selected="false" aria-controls="baGrid" tabindex="-1" data-filter="sila">Siła</button>
-                <button class="ba-filter" role="tab" id="tab-zdrowie" aria-selected="false" aria-controls="baGrid" tabindex="-1" data-filter="zdrowie">Zdrowie</button>
+                <button class="ba-filter active" role="tab" id="tab-redukcja" aria-selected="true" aria-controls="baGrid" data-filter="redukcja"><span class="ba-filter-label">Redukcja</span><span class="ba-filter-count" data-count-for="redukcja">11</span></button>
+                <button class="ba-filter" role="tab" id="tab-sila" aria-selected="false" aria-controls="baGrid" tabindex="-1" data-filter="sila"><span class="ba-filter-label">Siła</span><span class="ba-filter-count" data-count-for="sila">0</span></button>
+                <button class="ba-filter" role="tab" id="tab-zdrowie" aria-selected="false" aria-controls="baGrid" tabindex="-1" data-filter="zdrowie"><span class="ba-filter-label">Zdrowie</span><span class="ba-filter-count" data-count-for="zdrowie">0</span></button>
             </div>
 
             <div class="transformations-grid" id="baGrid" role="region" aria-label="Przemiany" aria-live="polite">
@@ -1489,6 +1526,13 @@
             const emptyTitle = empty.querySelector('[data-empty-title]');
             const emptyText = empty.querySelector('[data-empty-text]');
 
+            function przemianaLabel(n) {
+                if (n === 1) return 'przemiana';
+                const d = n % 10, h = n % 100;
+                if (d >= 2 && d <= 4 && !(h >= 12 && h <= 14)) return 'przemiany';
+                return 'przemian';
+            }
+
             const copy = {
                 redukcja: null,
                 sila: {
@@ -1549,6 +1593,17 @@
                     next.focus();
                     next.click();
                 });
+            });
+
+            // Licznik przy każdej zakładce — liczba przemian w danej kategorii (stała)
+            filters.forEach(btn => {
+                const cat = btn.dataset.filter;
+                const n = cards.filter(c => c.dataset.category === cat).length;
+                const badge = btn.querySelector('.ba-filter-count');
+                if (badge) badge.textContent = n;
+                const labelEl = btn.querySelector('.ba-filter-label');
+                const name = labelEl ? labelEl.textContent.trim() : cat;
+                btn.setAttribute('aria-label', name + ', ' + n + ' ' + przemianaLabel(n));
             });
         })();
     </script>
