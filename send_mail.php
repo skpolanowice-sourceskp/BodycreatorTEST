@@ -38,7 +38,14 @@ if ($isReservation) {
     $body .= "=========================================================\r\n\r\n";
     $body .= "Imię: $name\r\n";
     $body .= "Telefon: $phone\r\n";
-    $body .= "E-mail: $email\r\n";
+    $body .= "E-mail: $email\r\n\r\n";
+
+    $newsletter = (($_POST['zgoda_newsletter'] ?? '') === 'tak');
+    $zgodaDane  = (($_POST['zgoda_dane'] ?? '') === 'tak');
+
+    $body .= "---------------------------------------------------------\r\n";
+    $body .= "Zgoda na przetwarzanie danych: " . ($zgodaDane ? "TAK" : "nie") . "\r\n";
+    $body .= "Zapis do newslettera: " . ($newsletter ? "TAK — klient chce otrzymywać newsletter" : "nie") . "\r\n";
 } else {
     if (!$name || !$email || !$message) {
         http_response_code(400);

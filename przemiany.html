@@ -389,10 +389,147 @@
             padding: 0 0 120px;
         }
 
+        /* Category filter (zakładki) */
+        .ba-filters {
+            display: flex;
+            width: 100%;
+            max-width: 580px;
+            margin: 0 auto 56px;
+            gap: 6px;
+            padding: 6px;
+            background: var(--dark-2);
+            border: 1px solid rgba(255, 255, 255, 0.06);
+            border-radius: 50px;
+        }
+
+        .ba-filter {
+            flex: 1;
+            display: inline-flex;
+            align-items: center;
+            justify-content: center;
+            gap: 9px;
+            appearance: none;
+            border: none;
+            background: transparent;
+            color: var(--gray-light);
+            font-family: var(--font-primary);
+            font-size: 0.8rem;
+            font-weight: 700;
+            letter-spacing: 2px;
+            text-transform: uppercase;
+            padding: 14px 22px;
+            border-radius: 50px;
+            cursor: pointer;
+            white-space: nowrap;
+            transition: color var(--transition), background-color var(--transition);
+        }
+
+        .ba-filter:hover {
+            color: #fff;
+        }
+
+        .ba-filter:focus-visible {
+            outline: none;
+            box-shadow: 0 0 0 3px rgba(245, 202, 0, 0.25);
+        }
+
+        .ba-filter.active,
+        .ba-filter.active:hover {
+            background: var(--yellow);
+            color: var(--dark);
+        }
+
+        .ba-filter-count {
+            font-size: 0.72em;
+            font-weight: 800;
+            letter-spacing: 0;
+            font-variant-numeric: tabular-nums;
+            min-width: 22px;
+            padding: 3px 7px;
+            border-radius: 50px;
+            background: rgba(255, 255, 255, 0.07);
+            color: var(--gray-light);
+            line-height: 1.35;
+            transition: color var(--transition), background-color var(--transition);
+        }
+
+        .ba-filter:hover .ba-filter-count {
+            color: #fff;
+        }
+
+        .ba-filter.active .ba-filter-count {
+            background: rgba(10, 10, 10, 0.16);
+            color: var(--dark);
+        }
+
+        /* Filtered card reveal */
+        .transformation-card.is-hidden {
+            display: none;
+        }
+
+        .transformation-card.is-revealing {
+            animation: baReveal 0.5s cubic-bezier(0.4, 0, 0.2, 1) both;
+        }
+
+        @keyframes baReveal {
+            from { opacity: 0; transform: translateY(16px); }
+            to   { opacity: 1; transform: translateY(0); }
+        }
+
+        /* Empty category state */
+        .ba-empty {
+            display: none;
+            text-align: center;
+            padding: 64px 24px 8px;
+        }
+
+        .ba-empty.visible {
+            display: block;
+        }
+
+        .ba-empty-icon {
+            font-size: 2rem;
+            color: var(--yellow);
+            margin-bottom: 20px;
+        }
+
+        .ba-empty h3 {
+            font-size: clamp(1.4rem, 3vw, 2rem);
+            font-weight: 800;
+            letter-spacing: 1px;
+            text-transform: uppercase;
+            margin-bottom: 14px;
+        }
+
+        .ba-empty p {
+            color: var(--gray-light);
+            font-size: 1rem;
+            line-height: 1.7;
+            max-width: 460px;
+            margin: 0 auto 30px;
+        }
+
+        @media (max-width: 480px) {
+            .ba-filters {
+                gap: 4px;
+                padding: 5px;
+            }
+            .ba-filter {
+                gap: 6px;
+                padding: 12px 6px;
+                font-size: 0.7rem;
+                letter-spacing: 0.5px;
+            }
+            .ba-filter-count {
+                min-width: 19px;
+                padding: 2px 5px;
+            }
+        }
+
         .transformations-grid {
             display: grid;
-            grid-template-columns: repeat(2, 1fr);
-            gap: 48px;
+            grid-template-columns: repeat(3, 1fr);
+            gap: 32px;
         }
 
         /* ============================================
@@ -414,7 +551,9 @@
         .ba-slider {
             position: relative;
             width: 100%;
-            aspect-ratio: 4 / 5;
+            max-width: 500px;
+            margin: 0 auto;
+            aspect-ratio: 5 / 8;
             overflow: hidden;
             cursor: col-resize;
             user-select: none;
@@ -428,6 +567,10 @@
             width: 100%;
             height: 100%;
             object-fit: cover;
+            pointer-events: none;
+            -webkit-user-drag: none;
+            user-select: none;
+            -webkit-user-select: none;
         }
 
         .ba-before {
@@ -653,10 +796,16 @@
         /* ============================================
            RESPONSIVE
            ============================================ */
+        @media (max-width: 1024px) {
+            .transformations-grid {
+                grid-template-columns: repeat(2, 1fr);
+            }
+        }
+
         @media (max-width: 768px) {
             .transformations-grid {
-                grid-template-columns: 1fr;
-                gap: 32px;
+                grid-template-columns: repeat(2, 1fr);
+                gap: 14px;
             }
 
             .page-header {
@@ -867,11 +1016,11 @@
             }
 
             .transformations-grid {
-                gap: 24px;
+                gap: 10px;
             }
 
             .ba-slider {
-                aspect-ratio: 3 / 4;
+                aspect-ratio: 5 / 8;
             }
 
             .ba-handle::before {
@@ -1048,96 +1197,164 @@
 
     <section class="transformations">
         <div class="container">
-            <div class="transformations-grid">
+            <div class="ba-filters" role="tablist" aria-label="Kategorie przemian">
+                <button class="ba-filter active" role="tab" id="tab-redukcja" aria-selected="true" aria-controls="baGrid" data-filter="redukcja"><span class="ba-filter-label">Redukcja</span><span class="ba-filter-count" data-count-for="redukcja">13</span></button>
+                <button class="ba-filter" role="tab" id="tab-sila" aria-selected="false" aria-controls="baGrid" tabindex="-1" data-filter="sila"><span class="ba-filter-label">Siła</span><span class="ba-filter-count" data-count-for="sila">0</span></button>
+                <button class="ba-filter" role="tab" id="tab-zdrowie" aria-selected="false" aria-controls="baGrid" tabindex="-1" data-filter="zdrowie"><span class="ba-filter-label">Zdrowie</span><span class="ba-filter-count" data-count-for="zdrowie">0</span></button>
+            </div>
 
-                <!-- Transformation 1 -->
-                <div class="transformation-card">
+            <div class="transformations-grid" id="baGrid" role="region" aria-label="Przemiany" aria-live="polite">
+
+                <!-- Przemiana 1 -->
+                <div class="transformation-card" data-category="redukcja">
                     <div class="ba-slider">
-                        <img class="ba-before" src="przemiany/1-before.jpg" alt="Michał przed treningiem – 92 kg" loading="lazy">
-                        <img class="ba-after" src="przemiany/1-after.jpg" alt="Michał po treningach – 78 kg" loading="lazy">
+                        <img class="ba-before" src="zdjecia_przed_po/1przed.webp" alt="Przemiana sylwetki nr 1 – przed treningiem personalnym Body Creator Wrocław" loading="lazy">
+                        <img class="ba-after" src="zdjecia_przed_po/1po.webp" alt="Przemiana sylwetki nr 1 – po treningu personalnym Body Creator Wrocław" loading="lazy">
                         <div class="ba-handle"></div>
                         <span class="ba-label ba-label-before">Przed</span>
                         <span class="ba-label ba-label-after">Po</span>
                     </div>
-                    <div class="transformation-info">
-                        <div class="transformation-stats">
-                            <span class="stat-badge"><i class="fas fa-user"></i> Wiek: <strong>28 lat</strong></span>
-                            <span class="stat-badge"><i class="fas fa-weight-scale"></i> <strong>92 kg</strong> → <strong>78 kg</strong></span>
-                            <span class="stat-badge"><i class="fas fa-calendar"></i> Czas: <strong>6 miesięcy</strong></span>
-                        </div>
-                        <blockquote class="transformation-quote">
-                            „Nie wierzyłem, że uda mi się wrócić do formy. Trener pokazał mi, że to kwestia planu i&nbsp;konsekwencji."
-                            <cite class="transformation-name">— Michał</cite>
-                        </blockquote>
-                    </div>
                 </div>
 
-                <!-- Transformation 2 -->
-                <div class="transformation-card">
+                <!-- Przemiana 2 -->
+                <div class="transformation-card" data-category="redukcja">
                     <div class="ba-slider">
-                        <img class="ba-before" src="przemiany/2-before.jpg" alt="Karolina przed treningiem – 75 kg" loading="lazy">
-                        <img class="ba-after" src="przemiany/2-after.jpg" alt="Karolina po treningach – 64 kg" loading="lazy">
+                        <img class="ba-before" src="zdjecia_przed_po/2przed.webp" alt="Przemiana sylwetki nr 2 – przed treningiem personalnym Body Creator Wrocław" loading="lazy">
+                        <img class="ba-after" src="zdjecia_przed_po/2po.webp" alt="Przemiana sylwetki nr 2 – po treningu personalnym Body Creator Wrocław" loading="lazy">
                         <div class="ba-handle"></div>
                         <span class="ba-label ba-label-before">Przed</span>
                         <span class="ba-label ba-label-after">Po</span>
                     </div>
-                    <div class="transformation-info">
-                        <div class="transformation-stats">
-                            <span class="stat-badge"><i class="fas fa-user"></i> Wiek: <strong>34 lata</strong></span>
-                            <span class="stat-badge"><i class="fas fa-weight-scale"></i> <strong>75 kg</strong> → <strong>64 kg</strong></span>
-                            <span class="stat-badge"><i class="fas fa-calendar"></i> Czas: <strong>5 miesięcy</strong></span>
-                        </div>
-                        <blockquote class="transformation-quote">
-                            „Po dwóch ciążach myślałam, że moje ciało już tak zostanie. Body Creator udowodniło mi, że się myliłam."
-                            <cite class="transformation-name">— Karolina</cite>
-                        </blockquote>
-                    </div>
                 </div>
 
-                <!-- Transformation 3 -->
-                <div class="transformation-card">
+                <!-- Przemiana 3 -->
+                <div class="transformation-card" data-category="redukcja">
                     <div class="ba-slider">
-                        <img class="ba-before" src="przemiany/3-before.jpg" alt="Tomasz przed treningiem – 105 kg" loading="lazy">
-                        <img class="ba-after" src="przemiany/3-after.jpg" alt="Tomasz po treningach – 84 kg" loading="lazy">
+                        <img class="ba-before" src="zdjecia_przed_po/3przed.webp" alt="Przemiana sylwetki nr 3 – przed treningiem personalnym Body Creator Wrocław" loading="lazy">
+                        <img class="ba-after" src="zdjecia_przed_po/3po.webp" alt="Przemiana sylwetki nr 3 – po treningu personalnym Body Creator Wrocław" loading="lazy">
                         <div class="ba-handle"></div>
                         <span class="ba-label ba-label-before">Przed</span>
                         <span class="ba-label ba-label-after">Po</span>
                     </div>
-                    <div class="transformation-info">
-                        <div class="transformation-stats">
-                            <span class="stat-badge"><i class="fas fa-user"></i> Wiek: <strong>42 lata</strong></span>
-                            <span class="stat-badge"><i class="fas fa-weight-scale"></i> <strong>105 kg</strong> → <strong>84 kg</strong></span>
-                            <span class="stat-badge"><i class="fas fa-calendar"></i> Czas: <strong>10 miesięcy</strong></span>
-                        </div>
-                        <blockquote class="transformation-quote">
-                            „Lekarz powiedział, że muszę schudnąć. Trafiłem na profesjonalistów, którzy naprawdę wiedzą co robią."
-                            <cite class="transformation-name">— Tomasz</cite>
-                        </blockquote>
-                    </div>
                 </div>
 
-                <!-- Transformation 4 -->
-                <div class="transformation-card">
+                <!-- Przemiana 4 -->
+                <div class="transformation-card" data-category="redukcja">
                     <div class="ba-slider">
-                        <img class="ba-before" src="przemiany/4-before.jpg" alt="Kuba przed treningiem – 68 kg" loading="lazy">
-                        <img class="ba-after" src="przemiany/4-after.jpg" alt="Kuba po treningach – 72 kg" loading="lazy">
+                        <img class="ba-before" src="zdjecia_przed_po/4przed.webp" alt="Przemiana sylwetki nr 4 – przed treningiem personalnym Body Creator Wrocław" loading="lazy">
+                        <img class="ba-after" src="zdjecia_przed_po/4po.webp" alt="Przemiana sylwetki nr 4 – po treningu personalnym Body Creator Wrocław" loading="lazy">
                         <div class="ba-handle"></div>
                         <span class="ba-label ba-label-before">Przed</span>
                         <span class="ba-label ba-label-after">Po</span>
                     </div>
-                    <div class="transformation-info">
-                        <div class="transformation-stats">
-                            <span class="stat-badge"><i class="fas fa-user"></i> Wiek: <strong>25 lat</strong></span>
-                            <span class="stat-badge"><i class="fas fa-weight-scale"></i> <strong>68 kg</strong> → <strong>72 kg</strong></span>
-                            <span class="stat-badge"><i class="fas fa-calendar"></i> Czas: <strong>8 miesięcy</strong></span>
-                        </div>
-                        <blockquote class="transformation-quote">
-                            „Chciałem zbudować masę mięśniową. Dzięki indywidualnemu planowi treningowemu i&nbsp;diecie udało się osiągnąć cel."
-                            <cite class="transformation-name">— Kuba</cite>
-                        </blockquote>
+                </div>
+
+                <!-- Przemiana 5 -->
+                <div class="transformation-card" data-category="redukcja">
+                    <div class="ba-slider">
+                        <img class="ba-before" src="zdjecia_przed_po/5przed.webp" alt="Przemiana sylwetki nr 5 – przed treningiem personalnym Body Creator Wrocław" loading="lazy">
+                        <img class="ba-after" src="zdjecia_przed_po/5po.webp" alt="Przemiana sylwetki nr 5 – po treningu personalnym Body Creator Wrocław" loading="lazy">
+                        <div class="ba-handle"></div>
+                        <span class="ba-label ba-label-before">Przed</span>
+                        <span class="ba-label ba-label-after">Po</span>
                     </div>
                 </div>
 
+                <!-- Przemiana 7 -->
+                <div class="transformation-card" data-category="redukcja">
+                    <div class="ba-slider">
+                        <img class="ba-before" src="zdjecia_przed_po/7przed.webp" alt="Przemiana sylwetki nr 7 – przed treningiem personalnym Body Creator Wrocław" loading="lazy">
+                        <img class="ba-after" src="zdjecia_przed_po/7po.webp" alt="Przemiana sylwetki nr 7 – po treningu personalnym Body Creator Wrocław" loading="lazy">
+                        <div class="ba-handle"></div>
+                        <span class="ba-label ba-label-before">Przed</span>
+                        <span class="ba-label ba-label-after">Po</span>
+                    </div>
+                </div>
+
+                <!-- Przemiana 8 -->
+                <div class="transformation-card" data-category="redukcja">
+                    <div class="ba-slider">
+                        <img class="ba-before" src="zdjecia_przed_po/8przed.webp" alt="Przemiana sylwetki nr 8 – przed treningiem personalnym Body Creator Wrocław" loading="lazy">
+                        <img class="ba-after" src="zdjecia_przed_po/8po.webp" alt="Przemiana sylwetki nr 8 – po treningu personalnym Body Creator Wrocław" loading="lazy">
+                        <div class="ba-handle"></div>
+                        <span class="ba-label ba-label-before">Przed</span>
+                        <span class="ba-label ba-label-after">Po</span>
+                    </div>
+                </div>
+
+                <!-- Przemiana 9 -->
+                <div class="transformation-card" data-category="redukcja">
+                    <div class="ba-slider">
+                        <img class="ba-before" src="zdjecia_przed_po/9przed.webp" alt="Przemiana sylwetki nr 9 – przed treningiem personalnym Body Creator Wrocław" loading="lazy">
+                        <img class="ba-after" src="zdjecia_przed_po/9po.webp" alt="Przemiana sylwetki nr 9 – po treningu personalnym Body Creator Wrocław" loading="lazy">
+                        <div class="ba-handle"></div>
+                        <span class="ba-label ba-label-before">Przed</span>
+                        <span class="ba-label ba-label-after">Po</span>
+                    </div>
+                </div>
+
+                <!-- Przemiana 10 -->
+                <div class="transformation-card" data-category="redukcja">
+                    <div class="ba-slider">
+                        <img class="ba-before" src="zdjecia_przed_po/10przed.webp" alt="Przemiana sylwetki nr 10 – przed treningiem personalnym Body Creator Wrocław" loading="lazy">
+                        <img class="ba-after" src="zdjecia_przed_po/10po.webp" alt="Przemiana sylwetki nr 10 – po treningu personalnym Body Creator Wrocław" loading="lazy">
+                        <div class="ba-handle"></div>
+                        <span class="ba-label ba-label-before">Przed</span>
+                        <span class="ba-label ba-label-after">Po</span>
+                    </div>
+                </div>
+
+                <!-- Przemiana 11 -->
+                <div class="transformation-card" data-category="redukcja">
+                    <div class="ba-slider">
+                        <img class="ba-before" src="zdjecia_przed_po/11przed.webp" alt="Przemiana sylwetki nr 11 – przed treningiem personalnym Body Creator Wrocław" loading="lazy">
+                        <img class="ba-after" src="zdjecia_przed_po/11po.webp" alt="Przemiana sylwetki nr 11 – po treningu personalnym Body Creator Wrocław" loading="lazy">
+                        <div class="ba-handle"></div>
+                        <span class="ba-label ba-label-before">Przed</span>
+                        <span class="ba-label ba-label-after">Po</span>
+                    </div>
+                </div>
+
+                <!-- Przemiana 12 -->
+                <div class="transformation-card" data-category="redukcja">
+                    <div class="ba-slider">
+                        <img class="ba-before" src="zdjecia_przed_po/12przed.webp" alt="Przemiana sylwetki nr 12 – przed treningiem personalnym Body Creator Wrocław" loading="lazy">
+                        <img class="ba-after" src="zdjecia_przed_po/12po.webp" alt="Przemiana sylwetki nr 12 – po treningu personalnym Body Creator Wrocław" loading="lazy">
+                        <div class="ba-handle"></div>
+                        <span class="ba-label ba-label-before">Przed</span>
+                        <span class="ba-label ba-label-after">Po</span>
+                    </div>
+                </div>
+
+                <!-- Przemiana 13 -->
+                <div class="transformation-card" data-category="redukcja">
+                    <div class="ba-slider">
+                        <img class="ba-before" src="zdjecia_przed_po/13przed.webp" alt="Przemiana sylwetki nr 13 – przed treningiem personalnym Body Creator Wrocław" loading="lazy">
+                        <img class="ba-after" src="zdjecia_przed_po/13po.webp" alt="Przemiana sylwetki nr 13 – po treningu personalnym Body Creator Wrocław" loading="lazy">
+                        <div class="ba-handle"></div>
+                        <span class="ba-label ba-label-before">Przed</span>
+                        <span class="ba-label ba-label-after">Po</span>
+                    </div>
+                </div>
+
+                <!-- Przemiana 14 -->
+                <div class="transformation-card" data-category="redukcja">
+                    <div class="ba-slider">
+                        <img class="ba-before" src="zdjecia_przed_po/14przed.webp" alt="Przemiana sylwetki nr 14 – przed treningiem personalnym Body Creator Wrocław" loading="lazy">
+                        <img class="ba-after" src="zdjecia_przed_po/14po.webp" alt="Przemiana sylwetki nr 14 – po treningu personalnym Body Creator Wrocław" loading="lazy">
+                        <div class="ba-handle"></div>
+                        <span class="ba-label ba-label-before">Przed</span>
+                        <span class="ba-label ba-label-after">Po</span>
+                    </div>
+                </div>
+
+            </div>
+
+            <div class="ba-empty" id="baEmpty" role="status">
+                <div class="ba-empty-icon"><i class="fas fa-dumbbell"></i></div>
+                <h3 data-empty-title>Wkrótce</h3>
+                <p data-empty-text>Kompletujemy przemiany w tej kategorii.</p>
+                <a href="rezerwacja.html" class="btn btn-primary">Umów darmową konsultację <i class="fas fa-arrow-right"></i></a>
             </div>
         </div>
     </section>
@@ -1317,6 +1534,100 @@
                 isDragging = false;
             });
         });
+    </script>
+
+    <script>
+        // Filtrowanie przemian po kategorii (zakładki)
+        (function () {
+            const filters = Array.from(document.querySelectorAll('.ba-filter'));
+            const cards = Array.from(document.querySelectorAll('.transformation-card'));
+            const empty = document.getElementById('baEmpty');
+            if (!filters.length || !empty) return;
+
+            const emptyIcon = empty.querySelector('.ba-empty-icon i');
+            const emptyTitle = empty.querySelector('[data-empty-title]');
+            const emptyText = empty.querySelector('[data-empty-text]');
+
+            function przemianaLabel(n) {
+                if (n === 1) return 'przemiana';
+                const d = n % 10, h = n % 100;
+                if (d >= 2 && d <= 4 && !(h >= 12 && h <= 14)) return 'przemiany';
+                return 'przemian';
+            }
+
+            const copy = {
+                redukcja: null,
+                sila: {
+                    icon: 'fas fa-dumbbell',
+                    title: 'Przemiany siłowe już w drodze',
+                    text: 'Kompletujemy historie podopiecznych budujących siłę i masę mięśniową. Chcesz być jedną z nich?'
+                },
+                zdrowie: {
+                    icon: 'fas fa-heart-pulse',
+                    title: 'Zdrowie w przygotowaniu',
+                    text: 'Zbieramy przemiany osób, które wróciły do formy po urazach i z przewlekłym bólem. Twoja może być następna.'
+                }
+            };
+
+            function apply(category) {
+                let visibleIndex = 0;
+                cards.forEach(card => {
+                    const match = card.dataset.category === category;
+                    card.classList.toggle('is-hidden', !match);
+                    if (match) {
+                        card.classList.remove('is-revealing');
+                        void card.offsetWidth; // restart animacji
+                        card.style.animationDelay = (visibleIndex * 45) + 'ms';
+                        card.classList.add('is-revealing');
+                        visibleIndex++;
+                    }
+                });
+
+                const info = copy[category];
+                if (info) {
+                    emptyIcon.className = info.icon;
+                    emptyTitle.textContent = info.title;
+                    emptyText.textContent = info.text;
+                    empty.classList.add('visible');
+                } else {
+                    empty.classList.remove('visible');
+                }
+            }
+
+            filters.forEach((btn, i) => {
+                btn.addEventListener('click', () => {
+                    filters.forEach(b => {
+                        b.classList.remove('active');
+                        b.setAttribute('aria-selected', 'false');
+                        b.tabIndex = -1;
+                    });
+                    btn.classList.add('active');
+                    btn.setAttribute('aria-selected', 'true');
+                    btn.tabIndex = 0;
+                    apply(btn.dataset.filter);
+                });
+
+                btn.addEventListener('keydown', (e) => {
+                    if (e.key !== 'ArrowRight' && e.key !== 'ArrowLeft') return;
+                    e.preventDefault();
+                    const dir = e.key === 'ArrowRight' ? 1 : -1;
+                    const next = filters[(i + dir + filters.length) % filters.length];
+                    next.focus();
+                    next.click();
+                });
+            });
+
+            // Licznik przy każdej zakładce — liczba przemian w danej kategorii (stała)
+            filters.forEach(btn => {
+                const cat = btn.dataset.filter;
+                const n = cards.filter(c => c.dataset.category === cat).length;
+                const badge = btn.querySelector('.ba-filter-count');
+                if (badge) badge.textContent = n;
+                const labelEl = btn.querySelector('.ba-filter-label');
+                const name = labelEl ? labelEl.textContent.trim() : cat;
+                btn.setAttribute('aria-label', name + ', ' + n + ' ' + przemianaLabel(n));
+            });
+        })();
     </script>
 
     <!-- Lenis smooth scroll -->
