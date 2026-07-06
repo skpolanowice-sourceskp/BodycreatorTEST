@@ -1,2 +1,3 @@
-# Local FTP deploy credentials — DO NOT COMMIT
+# Deploy config / secrets — contain FTP password, DO NOT COMMIT
+.vscode/sftp.json
 deploy.ftp.json
