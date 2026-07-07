@@ -985,10 +985,7 @@
     </script>
 
     <!-- FULL-PAGE VIDEO BACKGROUND -->
-    <video class="bg-video" id="bgVideo" autoplay muted loop playsinline>
-        <source src="bg-kalkulator.mp4" type="video/mp4">
-    </video>
-    <div class="bg-video-overlay"></div>
+    <!-- Tlo wideo wstrzykuje bg-rotator.js -->
 
     <!-- NAV -->
     <nav class="navbar" id="navbar">
@@ -1296,8 +1293,6 @@
             results.scrollIntoView({ behavior: 'smooth', block: 'nearest' });
         });
 
-        document.getElementById('bgVideo').playbackRate = 0.5;
-
     </script>
 
     <!-- Navigation -->
@@ -1375,5 +1370,6 @@
         }
     </style>
 
+    <script src="bg-rotator.js" defer></script>
 </body>
 </html>
