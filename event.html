@@ -1140,17 +1140,27 @@
 
     <!-- ========================================
          Zestaw prezentowy 3D (sekcja "Dlaczego warto")
-         Rotująca wizualizacja: torba, t-shirt, shaker + drobiazgi.
-         Przy braku WebGL / CDN pozostaje statyczna ikona prezentu.
+         Rotujący model z folderu 3d/ (Meshy AI) na złotym podeście.
+         Przy braku WebGL / CDN / modelu pozostaje statyczna ikona prezentu.
          ======================================== -->
+    <script type="importmap">
+        { "imports": { "three": "https://cdn.jsdelivr.net/npm/three@0.160.0/build/three.module.js" } }
+    </script>
     <script type="module">
-        (async () => {
-            const wrap = document.getElementById('giftViz');
-            if (!wrap || !window.WebGLRenderingContext) return;
+        const wrap = document.getElementById('giftViz');
+        if (wrap && window.WebGLRenderingContext) {
+            // model (6,5 MB) ładuje się dopiero, gdy sekcja zbliża się do ekranu
+            const startIO = new IntersectionObserver((entries) => {
+                if (entries[0].isIntersecting) { startIO.disconnect(); init(); }
+            }, { rootMargin: '600px' });
+            startIO.observe(wrap);
+        }
 
-            let THREE;
+        async function init() {
+            let THREE, GLTFLoader;
             try {
-                THREE = await import('https://cdn.jsdelivr.net/npm/three@0.160.0/build/three.module.js');
+                THREE = await import('three');
+                ({ GLTFLoader } = await import('https://cdn.jsdelivr.net/npm/three@0.160.0/examples/jsm/loaders/GLTFLoader.js'));
             } catch (e) { return; }
 
             let renderer;
@@ -1172,103 +1182,44 @@
             camera.position.set(0, 2.55, 7.6);
             camera.lookAt(0, 0.65, 0);
 
-            // ---- materiały (paleta strony: obsydian + Forge Gold) ----
+            // ---- podest (paleta strony: obsydian + Forge Gold) ----
             const GOLD = 0xf5ca00;
-            const matGold     = new THREE.MeshStandardMaterial({ color: GOLD, metalness: 0.55, roughness: 0.35 });
             const matGoldGlow = new THREE.MeshStandardMaterial({ color: GOLD, emissive: GOLD, emissiveIntensity: 0.55, metalness: 0.4, roughness: 0.4 });
-            const matBag      = new THREE.MeshStandardMaterial({ color: 0x1c1c1c, roughness: 0.62, metalness: 0.08 });
-            const matStrap    = new THREE.MeshStandardMaterial({ color: 0x2e2e2e, roughness: 0.9 });
-            const matTee      = new THREE.MeshStandardMaterial({ color: 0x323232, roughness: 0.95 });
-            const matTeeDark  = new THREE.MeshStandardMaterial({ color: 0x282828, roughness: 0.95 });
-            const matShaker   = new THREE.MeshStandardMaterial({ color: 0x202020, roughness: 0.35, metalness: 0.15 });
-            const matTowel    = new THREE.MeshStandardMaterial({ color: 0xdedede, roughness: 1.0 });
             const matPlatform = new THREE.MeshStandardMaterial({ color: 0x151515, roughness: 0.85 });
-
-            // logo firmowe jako tekstura naklejki
-            const markReady = () => wrap.classList.add('ready');
-            const logoTex = new THREE.TextureLoader().load('logobezpodpisu.png', markReady);
-            setTimeout(markReady, 1600); // fallback, gdyby tekstura ładowała się długo
-            logoTex.colorSpace = THREE.SRGBColorSpace;
-            logoTex.anisotropy = renderer.capabilities.getMaxAnisotropy();
-            const matLogo = new THREE.MeshBasicMaterial({ map: logoTex, transparent: true });
 
             const group = new THREE.Group();
             scene.add(group);
 
-            const mesh = (geo, mat, x, y, z, parent = group) => {
-                const m = new THREE.Mesh(geo, mat);
-                m.position.set(x, y, z);
-                m.castShadow = true;
-                m.receiveShadow = true;
-                parent.add(m);
-                return m;
-            };
-
-            // ---- podest ----
-            const platform = mesh(new THREE.CylinderGeometry(2.1, 2.25, 0.16, 64), matPlatform, 0, -0.08, 0);
-            platform.castShadow = false;
-            const rim = mesh(new THREE.TorusGeometry(2.11, 0.018, 12, 100), matGoldGlow, 0, 0, 0);
+            const platform = new THREE.Mesh(new THREE.CylinderGeometry(2.1, 2.25, 0.16, 64), matPlatform);
+            platform.position.y = -0.08;
+            platform.receiveShadow = true;
+            group.add(platform);
+            const rim = new THREE.Mesh(new THREE.TorusGeometry(2.11, 0.018, 12, 100), matGoldGlow);
             rim.rotation.x = Math.PI / 2;
-            rim.castShadow = false;
+            group.add(rim);
 
-            // ---- torba treningowa ----
-            const bag = new THREE.Group();
-            bag.position.set(0, 0, -0.45);
-            bag.rotation.y = -0.12;
-            group.add(bag);
-            const bagBody = mesh(new THREE.CapsuleGeometry(0.62, 1.4, 8, 32), matBag, 0, 0.66, 0, bag);
-            bagBody.rotation.z = Math.PI / 2;
-            [-0.7, 0.7].forEach(x => {
-                const ring = mesh(new THREE.TorusGeometry(0.625, 0.016, 10, 48), matGold, x, 0.66, 0, bag);
-                ring.rotation.y = Math.PI / 2;
+            // ---- model zestawu (Meshy AI, GLB z wbudowanymi teksturami) ----
+            let gltf;
+            try {
+                gltf = await new GLTFLoader().loadAsync('3d/Meshy_AI_3C_Body_Creator_Gear__0707161747_texture.glb');
+            } catch (e) { return; }
+            const model = gltf.scene;
+            model.traverse(o => {
+                if (o.isMesh) { o.castShadow = true; o.receiveShadow = true; }
             });
-            mesh(new THREE.BoxGeometry(1.4, 0.03, 0.055), matGold, 0, 1.285, 0, bag);      // zamek
-            mesh(new THREE.BoxGeometry(0.05, 0.05, 0.1), matGold, 0.32, 1.3, 0, bag);      // suwak
-            [-0.42, 0.42].forEach(x => {
-                mesh(new THREE.TorusGeometry(0.3, 0.038, 10, 40, Math.PI), matStrap, x, 1.22, 0, bag);
-            });
-            // logo po obu stronach torby (bez lustrzanego odbicia przy obrocie)
-            const bagLogoF = mesh(new THREE.PlaneGeometry(1.1, 0.53), matLogo, 0, 0.68, 0.635, bag);
-            bagLogoF.castShadow = false;
-            const bagLogoB = mesh(new THREE.PlaneGeometry(1.1, 0.53), matLogo, 0, 0.68, -0.635, bag);
-            bagLogoB.rotation.y = Math.PI;
-            bagLogoB.castShadow = false;
+            // normalizacja: zestaw mieści się na podeście i stoi na jego powierzchni
+            let box = new THREE.Box3().setFromObject(model);
+            const size = box.getSize(new THREE.Vector3());
+            const scale = Math.min(3.4 / Math.max(size.x, size.z), 2.6 / size.y);
+            model.scale.setScalar(scale);
+            box = new THREE.Box3().setFromObject(model);
+            const center = box.getCenter(new THREE.Vector3());
+            model.position.x -= center.x;
+            model.position.z -= center.z;
+            model.position.y -= box.min.y;
+            group.add(model);
 
-            // ---- złożony t-shirt ----
-            const tee = new THREE.Group();
-            tee.position.set(-1.05, 0, 0.62);
-            tee.rotation.y = 0.55;
-            group.add(tee);
-            mesh(new THREE.BoxGeometry(1.18, 0.07, 0.88), matTeeDark, 0, 0.035, 0, tee);   // dolna warstwa złożenia
-            mesh(new THREE.BoxGeometry(1.12, 0.13, 0.82), matTee, 0, 0.135, 0, tee);
-            const collar = mesh(new THREE.TorusGeometry(0.125, 0.032, 10, 40, Math.PI), matTeeDark, 0, 0.205, -0.27, tee);
-            collar.rotation.x = -Math.PI / 2;
-            const teeLogo = mesh(new THREE.PlaneGeometry(0.62, 0.3), matLogo, 0, 0.203, 0.09, tee);
-            teeLogo.rotation.x = -Math.PI / 2;
-            teeLogo.castShadow = false;
-
-            // ---- shaker ----
-            const shaker = new THREE.Group();
-            shaker.position.set(1.25, 0, 0.5);
-            group.add(shaker);
-            mesh(new THREE.CylinderGeometry(0.185, 0.16, 0.55, 32), matShaker, 0, 0.275, 0, shaker);
-            mesh(new THREE.CylinderGeometry(0.2, 0.195, 0.1, 32), matGold, 0, 0.6, 0, shaker);
-            mesh(new THREE.CylinderGeometry(0.075, 0.075, 0.07, 24), matGold, 0, 0.685, 0, shaker);
-            mesh(new THREE.SphereGeometry(0.045, 16, 12), matStrap, 0, 0.735, 0, shaker);
-
-            // ---- zrolowany ręcznik ----
-            const towelG = new THREE.Group();
-            towelG.position.set(0.4, 0, 1.05);
-            towelG.rotation.y = 0.5;
-            group.add(towelG);
-            const towel = mesh(new THREE.CylinderGeometry(0.15, 0.15, 0.52, 28), matTowel, 0, 0.15, 0, towelG);
-            towel.rotation.z = Math.PI / 2;
-            const towelBand = mesh(new THREE.TorusGeometry(0.155, 0.012, 10, 40), matGold, 0.1, 0.15, 0, towelG);
-            towelBand.rotation.y = Math.PI / 2;
-
-            // ---- opaska ----
-            const band = mesh(new THREE.TorusGeometry(0.1, 0.042, 12, 32), matGold, -0.28, 0.045, 1.25);
-            band.rotation.x = Math.PI / 2;
+            const markReady = () => wrap.classList.add('ready');
 
             // ---- światła: ciepły klucz + złoty kontr, jak podest w grze ----
             scene.add(new THREE.HemisphereLight(0xffffff, 0x0a0a0a, 0.85));
@@ -1353,7 +1304,8 @@
 
             group.rotation.y = rotY;
             renderer.render(scene, camera);
-        })();
+            markReady();
+        }
     </script>
 
     <!-- Rotujące wideo studia w tle (wspólne dla całego serwisu) -->
