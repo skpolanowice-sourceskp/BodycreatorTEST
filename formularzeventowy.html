@@ -1,0 +1,736 @@
+<!DOCTYPE html>
+<html lang="pl">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+    <title>Zapisz się na przedsprzedaż karnetów — Body Creator Wrocław</title>
+    <meta name="description" content="Formularz zapisu na przedsprzedaż karnetów w studio treningowym Body Creator we Wrocławiu. Zostaw kontakt — oddzwonimy i potwierdzimy Twój termin. Liczba miejsc ograniczona.">
+    <meta name="robots" content="index, follow">
+    <link rel="canonical" href="https://bodycreator.com.pl/formularzeventowy.html">
+    <meta name="theme-color" content="#F5CA00">
+
+    <link rel="icon" href="favicon.ico?v=3" sizes="any">
+    <link rel="icon" type="image/png" href="favicon.png?v=3">
+    <link rel="apple-touch-icon" sizes="180x180" href="apple-touch-icon.png?v=3">
+
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800;900&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css">
+
+    <style>
+        :root {
+            --yellow: #f5ca00;
+            --yellow-hover: #f9d84d;
+            --dark: #0A0A0A;
+            --dark-2: #111111;
+            --dark-3: #1A1A1A;
+            --dark-4: #222222;
+            --white: #FFFFFF;
+            --gray: #999999;
+            --gray-light: #CCCCCC;
+            --gray-dark: #444444;
+            --error: #e05260;
+            --error-bg: rgba(220, 53, 69, 0.1);
+            --error-border: rgba(220, 53, 69, 0.3);
+            --transition: 0.3s cubic-bezier(0.25, 1, 0.5, 1);
+            --transition-slow: 0.6s cubic-bezier(0.16, 1, 0.3, 1);
+            --font-primary: 'Inter', sans-serif;
+            --font-display: 'Inter', sans-serif;
+            --container: 1200px;
+            --section-padding: 120px;
+        }
+
+        *, *::before, *::after { margin: 0; padding: 0; box-sizing: border-box; }
+        html { scroll-behavior: smooth; font-size: 16px; }
+        body {
+            font-family: var(--font-primary);
+            background: var(--dark);
+            color: var(--white);
+            line-height: 1.6;
+            overflow-x: hidden;
+            -webkit-font-smoothing: antialiased;
+        }
+        img { max-width: 100%; height: auto; display: block; }
+        a { text-decoration: none; color: inherit; transition: var(--transition); }
+        ul { list-style: none; }
+        .container { max-width: var(--container); margin: 0 auto; padding: 0 24px; }
+
+        /* ============================================
+           REVEAL / ANIMATIONS
+           ============================================ */
+        .reveal {
+            opacity: 0;
+            transform: translateY(32px);
+            transition: opacity 0.7s cubic-bezier(0.16, 1, 0.3, 1), transform 0.7s cubic-bezier(0.16, 1, 0.3, 1);
+        }
+        .reveal.visible { opacity: 1; transform: translateY(0); }
+        .reveal-delay-1 { transition-delay: 0.1s; }
+
+        /* ============================================
+           BUTTONS
+           ============================================ */
+        .btn {
+            display: inline-flex;
+            align-items: center;
+            gap: 10px;
+            padding: 16px 36px;
+            font-family: var(--font-primary);
+            font-size: 0.9rem;
+            font-weight: 600;
+            letter-spacing: 1px;
+            text-transform: uppercase;
+            border: none;
+            border-radius: 50px;
+            cursor: pointer;
+            transition: var(--transition);
+            position: relative;
+            overflow: hidden;
+        }
+        .btn-primary { background: var(--yellow); color: var(--dark); }
+        .btn-primary:hover {
+            background: var(--yellow-hover);
+            transform: translateY(-2px);
+            box-shadow: 0 10px 30px rgba(242, 201, 76, 0.3);
+        }
+        .btn i { transition: transform var(--transition); }
+        .btn:hover i { transform: translateX(4px); }
+        .btn:focus-visible { outline: 3px solid var(--yellow); outline-offset: 3px; }
+        .btn-sm { padding: 14px 30px; font-size: 0.95rem; letter-spacing: 0.5px; }
+
+        /* ============================================
+           SECTION COMMON
+           ============================================ */
+        .section-label {
+            font-size: 0.75rem;
+            font-weight: 700;
+            letter-spacing: 3px;
+            text-transform: uppercase;
+            color: var(--yellow);
+            margin-bottom: 16px;
+            display: block;
+        }
+        .section-title {
+            font-family: var(--font-display);
+            font-size: clamp(2rem, 4vw, 3.2rem);
+            font-weight: 800;
+            line-height: 1.15;
+            letter-spacing: 1.5px;
+            text-transform: uppercase;
+            margin-bottom: 24px;
+        }
+        .section-title .highlight { color: var(--yellow); }
+        .section-text {
+            font-size: 1.05rem;
+            color: var(--gray-light);
+            line-height: 1.8;
+            max-width: 65ch;
+        }
+        section { padding: var(--section-padding) 0; position: relative; }
+
+        /* ============================================
+           NAVIGATION (wspólna z resztą serwisu)
+           ============================================ */
+        .navbar {
+            position: fixed;
+            top: 0; left: 0; right: 0;
+            z-index: 1000;
+            padding: 20px 0;
+            transition: var(--transition);
+            overflow: visible;
+        }
+        .navbar.scrolled {
+            background: rgba(10, 10, 10, 0.95);
+            backdrop-filter: blur(20px);
+            padding: 14px 0;
+            border-bottom: 1px solid rgba(255, 255, 255, 0.05);
+        }
+        .navbar .container {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            position: relative;
+        }
+        .nav-cta {
+            position: absolute;
+            left: 50%;
+            transform: translateX(-50%);
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            gap: 4px;
+            pointer-events: auto;
+        }
+        .nav-phone {
+            font-size: 1rem;
+            color: var(--gray-light);
+            display: flex;
+            align-items: center;
+            gap: 7px;
+            font-weight: 600;
+        }
+        .nav-phone i { color: var(--yellow); font-size: 0.9rem; }
+        .logo { z-index: 1001; display: flex; align-items: center; }
+        .logo img { height: 70px; width: auto; }
+        .nav-toggle {
+            display: flex;
+            flex-direction: column;
+            gap: 6px;
+            cursor: pointer;
+            z-index: 1001;
+            padding: 8px;
+        }
+        .nav-toggle span {
+            display: block;
+            width: 28px;
+            height: 2px;
+            background: var(--white);
+            transition: var(--transition);
+            transform-origin: center;
+        }
+        .nav-toggle.active span:nth-child(1) { transform: rotate(45deg) translate(6px, 6px); }
+        .nav-toggle.active span:nth-child(2) { opacity: 0; }
+        .nav-toggle.active span:nth-child(3) { transform: rotate(-45deg) translate(6px, -6px); }
+        .nav-overlay {
+            position: fixed;
+            inset: 0;
+            background: rgba(10, 10, 10, 0.98);
+            z-index: 999;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            opacity: 0;
+            visibility: hidden;
+            transition: var(--transition-slow);
+        }
+        .nav-overlay.active { opacity: 1; visibility: visible; }
+        .nav-menu { text-align: center; }
+        .nav-menu li { margin: 12px 0; }
+        .nav-menu a {
+            font-size: clamp(1.6rem, 4vw, 2.8rem);
+            font-family: var(--font-display);
+            font-weight: 700;
+            letter-spacing: 2px;
+            text-transform: uppercase;
+            color: var(--white);
+            position: relative;
+            transition: var(--transition);
+        }
+        .nav-menu a:hover { color: var(--yellow); }
+        .nav-socials { display: flex; gap: 24px; justify-content: center; margin-top: 48px; }
+        .nav-socials a { font-size: 1.2rem; color: var(--gray); }
+        .nav-socials a:hover { color: var(--yellow); transform: translateY(-3px); }
+
+        /* ============================================
+           SEKCJA ZAPISU (hero + formularz)
+           ============================================ */
+        .signup {
+            min-height: 100svh;
+            padding-top: 170px;
+            background: transparent;
+        }
+        /* Tło: rotujące wideo studia dostarcza bg-rotator.js (fixed, pod treścią).
+           Overlay dociemnia i wtapia dół sekcji w kolor strony. */
+        .signup-bg {
+            position: absolute;
+            inset: 0;
+            z-index: 0;
+            background: linear-gradient(180deg, rgba(10,10,10,0.55) 0%, rgba(10,10,10,0.72) 45%, var(--dark) 100%);
+        }
+        .signup .container { position: relative; z-index: 1; }
+        .signup-inner {
+            display: grid;
+            grid-template-columns: 1.05fr 1fr;
+            gap: clamp(40px, 6vw, 80px);
+            align-items: center;
+        }
+        .signup-list { margin-top: 28px; }
+        .signup-list li {
+            display: flex;
+            align-items: flex-start;
+            gap: 14px;
+            padding: 12px 0;
+            font-size: 1.02rem;
+            color: var(--gray-light);
+        }
+        .signup-list li i {
+            color: var(--yellow);
+            font-size: 0.95rem;
+            margin-top: 5px;
+            flex-shrink: 0;
+            width: 18px;
+            text-align: center;
+        }
+        .signup-list li strong { color: var(--white); font-weight: 600; }
+        .signup-note {
+            margin-top: 28px;
+            display: flex;
+            align-items: center;
+            gap: 12px;
+            font-size: 0.78rem;
+            font-weight: 700;
+            letter-spacing: 2.5px;
+            text-transform: uppercase;
+            color: var(--yellow);
+        }
+        .signup-note .dot {
+            width: 9px;
+            height: 9px;
+            border-radius: 50%;
+            background: var(--yellow);
+            animation: pulseDot 1.6s ease-in-out infinite;
+            flex-shrink: 0;
+        }
+        @keyframes pulseDot {
+            0%, 100% { opacity: 0.35; }
+            50% { opacity: 1; }
+        }
+
+        /* ============================================
+           FORMULARZ (spójny z rezerwacja.html)
+           ============================================ */
+        .contact-form {
+            background: var(--dark-3);
+            border-radius: 16px;
+            padding: 40px;
+            border: 1px solid rgba(255,255,255,0.05);
+        }
+        .form-group { margin-bottom: 20px; }
+        .form-group label {
+            display: block;
+            font-size: 0.8rem;
+            font-weight: 600;
+            text-transform: uppercase;
+            letter-spacing: 1px;
+            color: var(--gray-light);
+            margin-bottom: 8px;
+        }
+        .form-group input {
+            width: 100%;
+            padding: 14px 18px;
+            background: var(--dark-2);
+            border: 1px solid rgba(255,255,255,0.08);
+            border-radius: 10px;
+            color: var(--white);
+            font-family: var(--font-primary);
+            font-size: 0.9rem;
+            transition: var(--transition);
+            outline: none;
+        }
+        .form-group input:focus {
+            border-color: var(--yellow);
+            box-shadow: 0 0 0 3px rgba(242, 201, 76, 0.1);
+        }
+        .form-grid-2 {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 16px;
+        }
+        @media (max-width: 480px) {
+            .form-grid-2 { grid-template-columns: 1fr; }
+        }
+
+        .form-success {
+            display: none;
+            text-align: center;
+            padding: 40px 20px;
+        }
+        .form-success.show { display: block; }
+        .form-success i {
+            font-size: 3rem;
+            color: var(--yellow);
+            margin-bottom: 16px;
+        }
+        .form-success h3 { margin-bottom: 8px; font-size: 1.3rem; font-weight: 700; }
+        .form-success p { color: var(--gray); }
+
+        .form-error {
+            display: none;
+            margin-top: 16px;
+            padding: 14px 18px;
+            background: var(--error-bg);
+            border: 1px solid var(--error-border);
+            border-radius: 10px;
+            color: var(--error);
+            font-size: 0.9rem;
+        }
+
+        /* zgody (RODO + newsletter) */
+        .consent-block {
+            margin-top: 24px;
+            padding-top: 24px;
+            border-top: 1px solid rgba(255,255,255,0.07);
+            display: flex;
+            flex-direction: column;
+            gap: 16px;
+        }
+        .consent {
+            display: flex;
+            gap: 14px;
+            align-items: flex-start;
+            cursor: pointer;
+            user-select: none;
+            min-height: 24px;
+        }
+        .consent input {
+            position: absolute;
+            opacity: 0;
+            width: 0;
+            height: 0;
+        }
+        .consent .box {
+            flex-shrink: 0;
+            width: 22px;
+            height: 22px;
+            margin-top: 1px;
+            border-radius: 6px;
+            background: var(--dark-2);
+            border: 1.5px solid rgba(255,255,255,0.18);
+            display: grid;
+            place-items: center;
+            transition: background var(--transition), border-color var(--transition), box-shadow var(--transition);
+        }
+        .consent .box i {
+            color: var(--dark);
+            font-size: 0.68rem;
+            transform: scale(0);
+            transition: transform 0.28s cubic-bezier(0.165, 0.84, 0.44, 1);
+        }
+        .consent:hover .box { border-color: rgba(245,202,0,0.55); }
+        .consent input:focus-visible + .box {
+            border-color: var(--yellow);
+            box-shadow: 0 0 0 3px rgba(242,201,76,0.12);
+        }
+        .consent input:checked + .box {
+            background: var(--yellow);
+            border-color: var(--yellow);
+        }
+        .consent input:checked + .box i { transform: scale(1); }
+        .consent.invalid .box { border-color: var(--error); }
+        .consent .text {
+            font-size: 0.82rem;
+            line-height: 1.55;
+            color: var(--gray-light);
+        }
+        .consent .text a {
+            color: var(--yellow);
+            text-decoration: underline;
+            text-underline-offset: 2px;
+            font-weight: 500;
+        }
+        .consent .text a:hover { color: var(--yellow-hover); }
+        .consent .req { color: var(--yellow); font-weight: 700; }
+        .consent .opt {
+            font-size: 0.68rem;
+            font-weight: 700;
+            letter-spacing: 1.5px;
+            text-transform: uppercase;
+            color: var(--gray);
+            margin-left: 4px;
+        }
+
+        /* ============================================
+           FOOTER
+           ============================================ */
+        .footer {
+            padding: 12px 0 8px;
+            border-top: 1px solid rgba(255, 255, 255, 0.04);
+            background: var(--dark);
+        }
+        .footer-content {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            gap: 6px;
+            text-align: center;
+        }
+        .footer-copy { font-size: 0.62rem; color: var(--gray); }
+        .footer-links { display: flex; gap: 32px; }
+        .footer-links a { font-size: 0.62rem; color: var(--gray); }
+        .footer-links a:hover { color: var(--yellow); }
+
+        /* ============================================
+           RESPONSIVE
+           ============================================ */
+        @media (max-width: 1024px) {
+            :root { --section-padding: 90px; }
+            .signup-inner { grid-template-columns: 1fr; }
+        }
+
+        @media (max-width: 768px) {
+            :root { --section-padding: 72px; }
+            .section-title { font-size: clamp(1.4rem, 5vw, 2rem); }
+            .section-text { font-size: 0.95rem; }
+            .navbar { padding: 14px 0; }
+            .logo img { height: 56px; }
+            .nav-cta .btn-sm { padding: 6px 10px; font-size: 0.62rem; white-space: nowrap; letter-spacing: 0; }
+            .nav-phone { display: flex; font-size: 0.72rem; }
+            .footer-links { gap: 16px; flex-wrap: wrap; justify-content: center; }
+
+            .signup { padding-top: 130px; }
+            .contact-form { padding: 28px 20px; }
+        }
+
+        @media (max-width: 480px) {
+            .section-title { font-size: clamp(1.2rem, 5vw, 1.6rem); }
+            .section-label { font-size: 0.65rem; letter-spacing: 2px; }
+        }
+    </style>
+</head>
+<body>
+
+    <!-- NAVIGATION -->
+    <nav class="navbar" id="navbar">
+        <div class="container">
+            <a href="index.html" class="logo" aria-label="Body Creator — strona główna">
+                <img src="logobezpodpisu.png" alt="Body Creator — Studio Treningu Personalnego Wrocław" width="140" height="70">
+            </a>
+            <div class="nav-cta">
+                <a href="event.html" class="btn btn-primary btn-sm">
+                    Wróć do wydarzenia <i class="fas fa-arrow-right"></i>
+                </a>
+                <a href="tel:518167945" class="nav-phone"><i class="fas fa-phone"></i> 518 167 945</a>
+            </div>
+            <div class="nav-toggle" id="navToggle" aria-label="Menu">
+                <span></span>
+                <span></span>
+                <span></span>
+            </div>
+        </div>
+    </nav>
+
+    <!-- Mobile / Overlay Navigation -->
+    <div class="nav-overlay" id="navOverlay">
+        <nav class="nav-menu">
+            <ul>
+                <li><a href="index.html" data-nav>Strona Główna</a></li>
+                <li><a href="oferta.html" data-nav>Oferta</a></li>
+                <li><a href="o-nas.html" data-nav>O Nas</a></li>
+                <li><a href="przemiany.html" data-nav>Przemiany</a></li>
+                <li><a href="kalkulator.html" data-nav>Kalkulator</a></li>
+                <li><a href="rezerwacja.html" data-nav>Umów Wizytę</a></li>
+                <li><a href="kontakt.html" data-nav>Kontakt</a></li>
+            </ul>
+            <div class="nav-socials">
+                <a href="https://www.instagram.com/bodycreatorstudio/" target="_blank" rel="noopener noreferrer" aria-label="Body Creator na Instagramie"><i class="fab fa-instagram" aria-hidden="true"></i></a>
+            </div>
+        </nav>
+    </div>
+
+    <main>
+
+    <!-- ========================================
+         ZAPIS NA PRZEDSPRZEDAŻ
+         ======================================== -->
+    <section class="signup" id="zapis">
+        <div class="signup-bg" aria-hidden="true"></div>
+        <div class="container">
+            <div class="signup-inner">
+                <div class="reveal">
+                    <span class="section-label">Przedsprzedaż karnetów</span>
+                    <h1 class="section-title">Zapisz się na przedsprzedaż. <span class="highlight">Resztą zajmiemy się my.</span></h1>
+                    <p class="section-text">
+                        Zostaw kontakt, a nasz zespół odezwie się do Ciebie, żeby potwierdzić szczegóły i dopasować termin spotkania podczas wydarzenia 13.07–27.07.2026.
+                    </p>
+                    <ul class="signup-list">
+                        <li><i class="fas fa-phone" aria-hidden="true"></i> <span>Oddzwaniamy i <strong>potwierdzamy Twój termin</strong></span></li>
+                        <li><i class="fas fa-flask" aria-hidden="true"></i> <span>Na miejscu: testy diagnostyczne i analiza składu ciała</span></li>
+                        <li><i class="fas fa-gift" aria-hidden="true"></i> <span>Do pakietu w przedsprzedaży <strong>prezent od teamu</strong></span></li>
+                        <li><i class="fas fa-user-group" aria-hidden="true"></i> <span>Kameralnie, bez tłoku, w indywidualnej atmosferze</span></li>
+                    </ul>
+                    <div class="signup-note">
+                        <span class="dot" aria-hidden="true"></span>
+                        Liczba miejsc ograniczona
+                    </div>
+                </div>
+
+                <div class="reveal reveal-delay-1">
+                    <div class="contact-form">
+                        <form id="eventForm" novalidate>
+                            <input type="text" name="website" style="display:none;" tabindex="-1" autocomplete="off">
+                            <input type="hidden" name="formularz" value="event">
+
+                            <div class="form-group">
+                                <label for="imie">Imię *</label>
+                                <input type="text" id="imie" name="imie" placeholder="Jan" required autocomplete="given-name">
+                            </div>
+
+                            <div class="form-grid-2">
+                                <div class="form-group">
+                                    <label for="telefon">Numer telefonu *</label>
+                                    <input type="tel" id="telefon" name="telefon" placeholder="600 123 456" required autocomplete="tel">
+                                </div>
+                                <div class="form-group">
+                                    <label for="email">Adres e-mail *</label>
+                                    <input type="email" id="email" name="email" placeholder="jan@gmail.com" required autocomplete="email">
+                                </div>
+                            </div>
+
+                            <div class="consent-block">
+                                <label class="consent" id="consentDaneRow">
+                                    <input type="checkbox" id="zgodaDane" name="zgoda_dane" value="tak">
+                                    <span class="box"><i class="fas fa-check"></i></span>
+                                    <span class="text">
+                                        Wyrażam zgodę na przetwarzanie moich danych osobowych (imię, numer telefonu, adres e-mail) przez Body Creator w celu kontaktu i obsługi zapisu na przedsprzedaż karnetów, zgodnie z <a href="polityka-prywatnosci.html" target="_blank" rel="noopener">Polityką prywatności</a>.
+                                        <span class="req">*</span>
+                                    </span>
+                                </label>
+
+                                <label class="consent">
+                                    <input type="checkbox" id="zgodaNewsletter" name="zgoda_newsletter" value="tak">
+                                    <span class="box"><i class="fas fa-check"></i></span>
+                                    <span class="text">
+                                        Chcę otrzymywać newsletter Body Creator z poradami treningowymi, ofertami i promocjami. Zgodę mogę wycofać w każdej chwili.
+                                        <span class="opt">Opcjonalne</span>
+                                    </span>
+                                </label>
+                            </div>
+
+                            <button type="submit" class="btn btn-primary" id="submitBtn" style="width:100%;justify-content:center;padding:18px;font-size:0.95rem;margin-top:24px;">
+                                <span id="submitText">Zapisuję się na przedsprzedaż</span>
+                                <i class="fas fa-arrow-right" id="submitIcon"></i>
+                            </button>
+
+                            <p style="text-align:center;margin-top:14px;font-size:0.88rem;color:#aaa;">
+                                Wolisz zadzwonić? <a href="tel:518167945" style="color:#f5c518;font-weight:600;text-decoration:none;">518 167 945</a>
+                            </p>
+                        </form>
+
+                        <div class="form-success" id="formSuccess" aria-live="polite" role="status">
+                            <i class="fas fa-check-circle"></i>
+                            <h3>Zgłoszenie przyjęte!</h3>
+                            <p>Skontaktujemy się z Tobą wkrótce, aby potwierdzić szczegóły przedsprzedaży i Twój termin.</p>
+                        </div>
+
+                        <div id="formError" class="form-error" aria-live="assertive" role="alert"></div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    </main>
+
+    <footer class="footer">
+        <div class="container">
+            <div class="footer-content">
+                <div class="footer-links">
+                    <a href="index.html">Strona główna</a>
+                    <a href="event.html">Wydarzenie</a>
+                    <a href="oferta.html">Oferta</a>
+                    <a href="kontakt.html">Kontakt</a>
+                    <a href="polityka-prywatnosci.html">Polityka prywatności</a>
+                </div>
+                <p class="footer-copy">© 2026 Body Creator — Studio Treningu Personalnego Wrocław. Wszelkie prawa zastrzeżone.</p>
+            </div>
+        </div>
+    </footer>
+
+    <script>
+        // ========================================
+        // Navigation Toggle
+        // ========================================
+        const navToggle = document.getElementById('navToggle');
+        const navOverlay = document.getElementById('navOverlay');
+
+        navToggle.addEventListener('click', () => {
+            navToggle.classList.toggle('active');
+            navOverlay.classList.toggle('active');
+        });
+
+        document.querySelectorAll('[data-nav]').forEach(link => {
+            link.addEventListener('click', () => {
+                navToggle.classList.remove('active');
+                navOverlay.classList.remove('active');
+            });
+        });
+
+        // ========================================
+        // Navbar Scroll Effect
+        // ========================================
+        window.addEventListener('scroll', () => {
+            document.getElementById('navbar').classList.toggle('scrolled', window.scrollY > 50);
+        });
+
+        // ========================================
+        // Scroll Reveal
+        // ========================================
+        const revealObserver = new IntersectionObserver((entries) => {
+            entries.forEach(entry => {
+                if (entry.isIntersecting) {
+                    entry.target.classList.add('visible');
+                    revealObserver.unobserve(entry.target);
+                }
+            });
+        }, { threshold: 0.15, rootMargin: '0px 0px -40px 0px' });
+
+        document.querySelectorAll('.reveal').forEach(el => revealObserver.observe(el));
+
+        // ========================================
+        // Formularz (działanie jak w rezerwacja.html,
+        // pole "formularz=event" odróżnia zgłoszenia w mailu)
+        // ========================================
+        (function() {
+            const form = document.getElementById('eventForm');
+            const btn  = document.getElementById('submitBtn');
+            const btnText = document.getElementById('submitText');
+            const btnIcon = document.getElementById('submitIcon');
+            const success = document.getElementById('formSuccess');
+            const errorBox = document.getElementById('formError');
+
+            const zgodaDane = document.getElementById('zgodaDane');
+            const consentDaneRow = document.getElementById('consentDaneRow');
+            zgodaDane.addEventListener('change', () => {
+                if (zgodaDane.checked) consentDaneRow.classList.remove('invalid');
+            });
+
+            form.addEventListener('submit', async function(e) {
+                e.preventDefault();
+                errorBox.style.display = 'none';
+
+                if (!zgodaDane.checked) {
+                    consentDaneRow.classList.add('invalid');
+                    errorBox.textContent = 'Aby wysłać zgłoszenie, zaznacz zgodę na przetwarzanie danych.';
+                    errorBox.style.display = 'block';
+                    zgodaDane.focus();
+                    return;
+                }
+
+                btn.disabled = true;
+                btnText.textContent = 'Wysyłanie...';
+                btnIcon.className = 'fas fa-spinner fa-spin';
+
+                try {
+                    const res = await fetch('send_mail.php', {
+                        method: 'POST',
+                        body: new FormData(form)
+                    });
+                    const data = await res.json();
+
+                    if (data.ok) {
+                        form.style.display = 'none';
+                        success.classList.add('show');
+                    } else {
+                        errorBox.textContent = data.message || 'Wystąpił błąd. Spróbuj ponownie.';
+                        errorBox.style.display = 'block';
+                        btn.disabled = false;
+                        btnText.textContent = 'Zapisuję się na przedsprzedaż';
+                        btnIcon.className = 'fas fa-arrow-right';
+                    }
+                } catch {
+                    errorBox.textContent = 'Błąd połączenia. Sprawdź internet i spróbuj ponownie.';
+                    errorBox.style.display = 'block';
+                    btn.disabled = false;
+                    btnText.textContent = 'Zapisuję się na przedsprzedaż';
+                    btnIcon.className = 'fas fa-arrow-right';
+                }
+            });
+        })();
+    </script>
+
+    <!-- Rotujące wideo studia w tle (wspólne dla całego serwisu) -->
+    <script src="bg-rotator.js" defer></script>
+
+</body>
+</html>

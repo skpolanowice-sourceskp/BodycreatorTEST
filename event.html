@@ -801,8 +801,8 @@
                 <img src="logobezpodpisu.png" alt="Body Creator — Studio Treningu Personalnego Wrocław" width="140" height="70">
             </a>
             <div class="nav-cta">
-                <a href="rezerwacja.html" class="btn btn-primary btn-sm">
-                    Darmowa konsultacja <i class="fas fa-arrow-right"></i>
+                <a href="formularzeventowy.html" class="btn btn-primary btn-sm">
+                    Zapisz się na wydarzenie <i class="fas fa-arrow-right"></i>
                 </a>
                 <a href="tel:518167945" class="nav-phone"><i class="fas fa-phone"></i> 518 167 945</a>
             </div>
@@ -869,7 +869,7 @@
                 </div>
 
                 <div class="event-hero-cta">
-                    <a href="rezerwacja.html" class="btn btn-primary" aria-label="Zapisz się na wydarzenie — przejdź do formularza rezerwacji">
+                    <a href="formularzeventowy.html" class="btn btn-primary" aria-label="Zapisz się na wydarzenie — przejdź do formularza zapisu">
                         Zapisz się na wydarzenie <i class="fas fa-arrow-right" aria-hidden="true"></i>
                     </a>
                 </div>
@@ -994,7 +994,7 @@
                     <p>
                         Nie jesteśmy zwykłą siłownią. Body Creator to <strong>kameralne studio treningowe</strong>, w którym dbamy o najwyższy komfort i jakość treningu — a wybrana przez Ciebie godzina <strong>jest godziną przybycia</strong>.
                     </p>
-                    <a href="rezerwacja.html" class="btn btn-outline">
+                    <a href="formularzeventowy.html" class="btn btn-outline">
                         Wybierz swój termin <i class="fas fa-arrow-right" aria-hidden="true"></i>
                     </a>
                     <div class="slots-closed" style="margin-top: 26px;">
@@ -1052,7 +1052,7 @@
                     Przedsprzedaż trwa tylko przez ograniczony czas, a liczba pakietów objętych promocją jest ograniczona. Nie czekaj na oficjalne otwarcie.
                 </p>
                 <div class="final-cta-buttons">
-                    <a href="rezerwacja.html" class="btn btn-primary">
+                    <a href="formularzeventowy.html" class="btn btn-primary">
                         Zapisz się teraz <i class="fas fa-arrow-right" aria-hidden="true"></i>
                     </a>
                     <a href="tel:518167945" class="btn btn-outline">
@@ -1148,13 +1148,7 @@
     </script>
     <script type="module">
         const wrap = document.getElementById('giftViz');
-        if (wrap && window.WebGLRenderingContext) {
-            // model (6,5 MB) ładuje się dopiero, gdy sekcja zbliża się do ekranu
-            const startIO = new IntersectionObserver((entries) => {
-                if (entries[0].isIntersecting) { startIO.disconnect(); init(); }
-            }, { rootMargin: '600px' });
-            startIO.observe(wrap);
-        }
+        if (wrap && window.WebGLRenderingContext) init();
 
         async function init() {
             let THREE, GLTFLoader;

@@ -26,6 +26,7 @@ $subject = htmlspecialchars(trim($_POST['subject'] ?? ''), ENT_QUOTES, 'UTF-8');
 $message = htmlspecialchars(trim($_POST['message'] ?? ''), ENT_QUOTES, 'UTF-8');
 
 $isReservation = isset($_POST['imie']) || isset($_POST['telefon']);
+$isEvent = (($_POST['formularz'] ?? '') === 'event');
 
 if ($isReservation) {
     if (!$name || !$email || !$phone) {
@@ -33,8 +34,13 @@ if ($isReservation) {
         echo json_encode(['success' => false, 'ok' => false, 'error' => 'Wypełnij wszystkie wymagane pola.', 'message' => 'Wypełnij wszystkie wymagane pola.']);
         exit;
     }
-    $mailSubject = '=?UTF-8?B?' . base64_encode('Nowa rezerwacja konsultacji — Body Creator') . '?=';
-    $body  = "Nowa rezerwacja konsultacji ze strony bodycreator.com.pl\r\n";
+    if ($isEvent) {
+        $mailSubject = '=?UTF-8?B?' . base64_encode('EVENT: Zapis na przedsprzedaż karnetów — Body Creator') . '?=';
+        $body  = "Nowy zapis na PRZEDSPRZEDAŻ KARNETÓW (formularz eventowy)\r\n";
+    } else {
+        $mailSubject = '=?UTF-8?B?' . base64_encode('Nowa rezerwacja konsultacji — Body Creator') . '?=';
+        $body  = "Nowa rezerwacja konsultacji ze strony bodycreator.com.pl\r\n";
+    }
     $body .= "=========================================================\r\n\r\n";
     $body .= "Imię: $name\r\n";
     $body .= "Telefon: $phone\r\n";
