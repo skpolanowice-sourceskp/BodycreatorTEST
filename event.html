@@ -482,6 +482,45 @@
             gap: clamp(20px, 4vw, 40px);
             flex-wrap: wrap;
         }
+        .why-gift-viz {
+            position: relative;
+            width: clamp(260px, 32vw, 380px);
+            aspect-ratio: 1 / 1;
+            flex-shrink: 0;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+        }
+        .why-gift-viz canvas {
+            position: absolute;
+            inset: 0;
+            width: 100%;
+            height: 100%;
+            display: block;
+            cursor: grab;
+            touch-action: pan-y;
+            opacity: 0;
+            transition: opacity 1.2s cubic-bezier(0.16, 1, 0.3, 1);
+        }
+        .why-gift-viz canvas:active { cursor: grabbing; }
+        .why-gift-viz.ready canvas { opacity: 1; }
+        .why-gift-viz.ready .why-gift-icon { display: none; }
+        .why-gift-hint {
+            position: absolute;
+            bottom: -6px;
+            left: 50%;
+            transform: translateX(-50%);
+            font-size: 0.66rem;
+            font-weight: 600;
+            letter-spacing: 2.5px;
+            text-transform: uppercase;
+            color: var(--gray);
+            white-space: nowrap;
+            opacity: 0;
+            transition: opacity 0.8s ease 0.5s;
+            pointer-events: none;
+        }
+        .why-gift-viz.ready .why-gift-hint { opacity: 1; }
         .why-gift-icon {
             width: 72px;
             height: 72px;
@@ -742,6 +781,7 @@
             .why-list { grid-template-columns: 1fr; }
             .why-item { padding: 26px 0; }
             .why-gift { flex-direction: column; align-items: flex-start; text-align: left; }
+            .why-gift-viz { width: 100%; max-width: 400px; aspect-ratio: 4 / 3; margin: 0 auto; }
 
             .final-cta-buttons .btn { width: 100%; justify-content: center; }
         }
@@ -917,12 +957,15 @@
             </div>
 
             <div class="why-gift reveal">
-                <div class="why-gift-icon" aria-hidden="true">
-                    <i class="fas fa-gift"></i>
+                <div class="why-gift-viz" id="giftViz" aria-hidden="true">
+                    <div class="why-gift-icon">
+                        <i class="fas fa-gift"></i>
+                    </div>
+                    <span class="why-gift-hint">Przeciągnij, aby obrócić</span>
                 </div>
                 <div class="why-gift-body">
                     <h3>Prezent od <span>Team Body Creator</span></h3>
-                    <p>Każda osoba, która kupi pakiet w przedsprzedaży, otrzyma do zakupu prezent od naszego teamu.</p>
+                    <p>Każda osoba, która kupi pakiet w przedsprzedaży, otrzyma do zakupu prezent od naszego teamu: firmowy zestaw, w którym znajdziesz m.in. torbę treningową i t-shirt z logo Body Creator.</p>
                 </div>
             </div>
         </div>
@@ -1093,6 +1136,224 @@
         }, { threshold: 0.15, rootMargin: '0px 0px -40px 0px' });
 
         document.querySelectorAll('.reveal, .step').forEach(el => revealObserver.observe(el));
+    </script>
+
+    <!-- ========================================
+         Zestaw prezentowy 3D (sekcja "Dlaczego warto")
+         Rotująca wizualizacja: torba, t-shirt, shaker + drobiazgi.
+         Przy braku WebGL / CDN pozostaje statyczna ikona prezentu.
+         ======================================== -->
+    <script type="module">
+        (async () => {
+            const wrap = document.getElementById('giftViz');
+            if (!wrap || !window.WebGLRenderingContext) return;
+
+            let THREE;
+            try {
+                THREE = await import('https://cdn.jsdelivr.net/npm/three@0.160.0/build/three.module.js');
+            } catch (e) { return; }
+
+            let renderer;
+            try {
+                renderer = new THREE.WebGLRenderer({ antialias: true, alpha: true });
+            } catch (e) { return; }
+
+            renderer.setPixelRatio(Math.min(window.devicePixelRatio, 2));
+            renderer.shadowMap.enabled = true;
+            renderer.shadowMap.type = THREE.PCFSoftShadowMap;
+            renderer.toneMapping = THREE.ACESFilmicToneMapping;
+            renderer.toneMappingExposure = 1.15;
+
+            const canvas = renderer.domElement;
+            wrap.appendChild(canvas);
+
+            const scene = new THREE.Scene();
+            const camera = new THREE.PerspectiveCamera(35, 1, 0.1, 50);
+            camera.position.set(0, 2.55, 7.6);
+            camera.lookAt(0, 0.65, 0);
+
+            // ---- materiały (paleta strony: obsydian + Forge Gold) ----
+            const GOLD = 0xf5ca00;
+            const matGold     = new THREE.MeshStandardMaterial({ color: GOLD, metalness: 0.55, roughness: 0.35 });
+            const matGoldGlow = new THREE.MeshStandardMaterial({ color: GOLD, emissive: GOLD, emissiveIntensity: 0.55, metalness: 0.4, roughness: 0.4 });
+            const matBag      = new THREE.MeshStandardMaterial({ color: 0x1c1c1c, roughness: 0.62, metalness: 0.08 });
+            const matStrap    = new THREE.MeshStandardMaterial({ color: 0x2e2e2e, roughness: 0.9 });
+            const matTee      = new THREE.MeshStandardMaterial({ color: 0x323232, roughness: 0.95 });
+            const matTeeDark  = new THREE.MeshStandardMaterial({ color: 0x282828, roughness: 0.95 });
+            const matShaker   = new THREE.MeshStandardMaterial({ color: 0x202020, roughness: 0.35, metalness: 0.15 });
+            const matTowel    = new THREE.MeshStandardMaterial({ color: 0xdedede, roughness: 1.0 });
+            const matPlatform = new THREE.MeshStandardMaterial({ color: 0x151515, roughness: 0.85 });
+
+            // logo firmowe jako tekstura naklejki
+            const markReady = () => wrap.classList.add('ready');
+            const logoTex = new THREE.TextureLoader().load('logobezpodpisu.png', markReady);
+            setTimeout(markReady, 1600); // fallback, gdyby tekstura ładowała się długo
+            logoTex.colorSpace = THREE.SRGBColorSpace;
+            logoTex.anisotropy = renderer.capabilities.getMaxAnisotropy();
+            const matLogo = new THREE.MeshBasicMaterial({ map: logoTex, transparent: true });
+
+            const group = new THREE.Group();
+            scene.add(group);
+
+            const mesh = (geo, mat, x, y, z, parent = group) => {
+                const m = new THREE.Mesh(geo, mat);
+                m.position.set(x, y, z);
+                m.castShadow = true;
+                m.receiveShadow = true;
+                parent.add(m);
+                return m;
+            };
+
+            // ---- podest ----
+            const platform = mesh(new THREE.CylinderGeometry(2.1, 2.25, 0.16, 64), matPlatform, 0, -0.08, 0);
+            platform.castShadow = false;
+            const rim = mesh(new THREE.TorusGeometry(2.11, 0.018, 12, 100), matGoldGlow, 0, 0, 0);
+            rim.rotation.x = Math.PI / 2;
+            rim.castShadow = false;
+
+            // ---- torba treningowa ----
+            const bag = new THREE.Group();
+            bag.position.set(0, 0, -0.45);
+            bag.rotation.y = -0.12;
+            group.add(bag);
+            const bagBody = mesh(new THREE.CapsuleGeometry(0.62, 1.4, 8, 32), matBag, 0, 0.66, 0, bag);
+            bagBody.rotation.z = Math.PI / 2;
+            [-0.7, 0.7].forEach(x => {
+                const ring = mesh(new THREE.TorusGeometry(0.625, 0.016, 10, 48), matGold, x, 0.66, 0, bag);
+                ring.rotation.y = Math.PI / 2;
+            });
+            mesh(new THREE.BoxGeometry(1.4, 0.03, 0.055), matGold, 0, 1.285, 0, bag);      // zamek
+            mesh(new THREE.BoxGeometry(0.05, 0.05, 0.1), matGold, 0.32, 1.3, 0, bag);      // suwak
+            [-0.42, 0.42].forEach(x => {
+                mesh(new THREE.TorusGeometry(0.3, 0.038, 10, 40, Math.PI), matStrap, x, 1.22, 0, bag);
+            });
+            // logo po obu stronach torby (bez lustrzanego odbicia przy obrocie)
+            const bagLogoF = mesh(new THREE.PlaneGeometry(1.1, 0.53), matLogo, 0, 0.68, 0.635, bag);
+            bagLogoF.castShadow = false;
+            const bagLogoB = mesh(new THREE.PlaneGeometry(1.1, 0.53), matLogo, 0, 0.68, -0.635, bag);
+            bagLogoB.rotation.y = Math.PI;
+            bagLogoB.castShadow = false;
+
+            // ---- złożony t-shirt ----
+            const tee = new THREE.Group();
+            tee.position.set(-1.05, 0, 0.62);
+            tee.rotation.y = 0.55;
+            group.add(tee);
+            mesh(new THREE.BoxGeometry(1.18, 0.07, 0.88), matTeeDark, 0, 0.035, 0, tee);   // dolna warstwa złożenia
+            mesh(new THREE.BoxGeometry(1.12, 0.13, 0.82), matTee, 0, 0.135, 0, tee);
+            const collar = mesh(new THREE.TorusGeometry(0.125, 0.032, 10, 40, Math.PI), matTeeDark, 0, 0.205, -0.27, tee);
+            collar.rotation.x = -Math.PI / 2;
+            const teeLogo = mesh(new THREE.PlaneGeometry(0.62, 0.3), matLogo, 0, 0.203, 0.09, tee);
+            teeLogo.rotation.x = -Math.PI / 2;
+            teeLogo.castShadow = false;
+
+            // ---- shaker ----
+            const shaker = new THREE.Group();
+            shaker.position.set(1.25, 0, 0.5);
+            group.add(shaker);
+            mesh(new THREE.CylinderGeometry(0.185, 0.16, 0.55, 32), matShaker, 0, 0.275, 0, shaker);
+            mesh(new THREE.CylinderGeometry(0.2, 0.195, 0.1, 32), matGold, 0, 0.6, 0, shaker);
+            mesh(new THREE.CylinderGeometry(0.075, 0.075, 0.07, 24), matGold, 0, 0.685, 0, shaker);
+            mesh(new THREE.SphereGeometry(0.045, 16, 12), matStrap, 0, 0.735, 0, shaker);
+
+            // ---- zrolowany ręcznik ----
+            const towelG = new THREE.Group();
+            towelG.position.set(0.4, 0, 1.05);
+            towelG.rotation.y = 0.5;
+            group.add(towelG);
+            const towel = mesh(new THREE.CylinderGeometry(0.15, 0.15, 0.52, 28), matTowel, 0, 0.15, 0, towelG);
+            towel.rotation.z = Math.PI / 2;
+            const towelBand = mesh(new THREE.TorusGeometry(0.155, 0.012, 10, 40), matGold, 0.1, 0.15, 0, towelG);
+            towelBand.rotation.y = Math.PI / 2;
+
+            // ---- opaska ----
+            const band = mesh(new THREE.TorusGeometry(0.1, 0.042, 12, 32), matGold, -0.28, 0.045, 1.25);
+            band.rotation.x = Math.PI / 2;
+
+            // ---- światła: ciepły klucz + złoty kontr, jak podest w grze ----
+            scene.add(new THREE.HemisphereLight(0xffffff, 0x0a0a0a, 0.85));
+            const key = new THREE.DirectionalLight(0xfff2cf, 2.4);
+            key.position.set(3.5, 5.5, 4);
+            key.castShadow = true;
+            key.shadow.mapSize.set(1024, 1024);
+            key.shadow.camera.left = -3;
+            key.shadow.camera.right = 3;
+            key.shadow.camera.top = 4;
+            key.shadow.camera.bottom = -2;
+            key.shadow.camera.near = 1;
+            key.shadow.camera.far = 15;
+            key.shadow.bias = -0.0005;
+            scene.add(key);
+            const rimLight = new THREE.PointLight(GOLD, 20, 14, 2);
+            rimLight.position.set(-3.2, 2.2, -3.5);
+            scene.add(rimLight);
+            const fill = new THREE.PointLight(0xffffff, 6, 12, 2);
+            fill.position.set(-1.5, 1.5, 4.5);
+            scene.add(fill);
+
+            // ---- rozmiar ----
+            const resize = () => {
+                const w = wrap.clientWidth, h = wrap.clientHeight;
+                if (!w || !h) return;
+                renderer.setSize(w, h, false);
+                camera.aspect = w / h;
+                camera.updateProjectionMatrix();
+            };
+            new ResizeObserver(resize).observe(wrap);
+            resize();
+
+            // ---- powolna rotacja + przeciąganie ----
+            const reduceMotion = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+            const AUTO_SPEED = reduceMotion ? 0 : 0.28; // rad/s — pełny obrót ~22 s
+            let rotY = -0.5, vel = AUTO_SPEED, dragging = false, lastX = 0;
+
+            canvas.addEventListener('pointerdown', e => {
+                dragging = true;
+                lastX = e.clientX;
+                canvas.setPointerCapture(e.pointerId);
+            });
+            canvas.addEventListener('pointermove', e => {
+                if (!dragging) return;
+                const dx = e.clientX - lastX;
+                lastX = e.clientX;
+                rotY += dx * 0.0065;
+                vel = dx * 0.0065 * 60;
+            });
+            const endDrag = () => { dragging = false; };
+            canvas.addEventListener('pointerup', endDrag);
+            canvas.addEventListener('pointercancel', endDrag);
+
+            const clock = new THREE.Clock();
+            let raf = 0;
+            const tick = () => {
+                raf = requestAnimationFrame(tick);
+                const dt = Math.min(clock.getDelta(), 0.05);
+                if (!dragging) {
+                    // rozpęd z przeciągnięcia płynnie wraca do powolnego auto-obrotu
+                    vel += (AUTO_SPEED - vel) * Math.min(1, dt * 1.6);
+                    if (reduceMotion && Math.abs(vel) < 0.005) return;
+                    rotY += vel * dt;
+                }
+                group.rotation.y = rotY;
+                renderer.render(scene, camera);
+            };
+
+            // animuj tylko, gdy sekcja jest na ekranie
+            const io = new IntersectionObserver(([entry]) => {
+                if (entry.isIntersecting && !raf) {
+                    clock.start();
+                    clock.getDelta();
+                    tick();
+                } else if (!entry.isIntersecting && raf) {
+                    cancelAnimationFrame(raf);
+                    raf = 0;
+                }
+            }, { rootMargin: '80px' });
+            io.observe(wrap);
+
+            group.rotation.y = rotY;
+            renderer.render(scene, camera);
+        })();
     </script>
 
     <!-- Rotujące wideo studia w tle (wspólne dla całego serwisu) -->
