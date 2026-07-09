@@ -446,7 +446,33 @@
         /* ============================================
            DLACZEGO WARTO
            ============================================ */
-        .why { background: var(--dark-2); }
+        /* dark-2 u góry, wtapia się w var(--dark) kolejnej sekcji na dole */
+        .why {
+            background: linear-gradient(180deg, var(--dark-2) 0%, var(--dark-2) 80%, var(--dark) 100%);
+            padding-bottom: 88px;
+        }
+        /* domknięcie sekcji + płynne przejście do "Wybierz termin" */
+        .why-cta {
+            margin-top: 64px;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            gap: 14px;
+            text-align: center;
+            color: var(--white);
+        }
+        .why-cta span {
+            font-size: 0.8rem;
+            font-weight: 700;
+            letter-spacing: 2.5px;
+            text-transform: uppercase;
+        }
+        .why-cta i {
+            color: var(--yellow);
+            font-size: 1.3rem;
+            animation: arrowNudge 1.8s ease-in-out infinite;
+        }
+        .why-cta:hover span { color: var(--yellow); }
         .why-list {
             display: grid;
             grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
@@ -471,6 +497,18 @@
         .why-item p { color: var(--gray-light); font-size: 0.98rem; line-height: 1.75; max-width: 44ch; }
 
         /* prezent — wyróżniony pas */
+        .gift-section {
+            position: relative;
+            z-index: 1;
+            padding-top: 64px;
+            padding-bottom: 64px;
+            /* czarne tło z subtelnym gradientem; góra i dół = var(--dark),
+               więc wtapia się w hero powyżej i sekcję "O wydarzeniu" poniżej */
+            background:
+                radial-gradient(120% 70% at 50% 42%, rgba(245, 202, 0, 0.06) 0%, transparent 60%),
+                linear-gradient(180deg, var(--dark) 0%, var(--dark-2) 48%, var(--dark) 100%);
+        }
+        .gift-section .why-gift { margin-top: 0; }
         .why-gift {
             margin-top: 56px;
             border: 1px solid rgba(245, 202, 0, 0.35);
@@ -762,6 +800,7 @@
             .event-dates .sep { display: none; }
             .event-hero-cta .btn { width: 100%; justify-content: center; }
             .event-scroll { margin-top: 40px; }
+            .why-cta span { letter-spacing: 1.5px; font-size: 0.72rem; }
 
             .agenda-item { padding: 22px 0; }
             .agenda-num { min-width: 40px; }
@@ -883,6 +922,26 @@
     </section>
 
     <!-- ========================================
+         PREZENT
+         ======================================== -->
+    <section class="gift-section" id="prezent">
+        <div class="container">
+            <div class="why-gift reveal">
+                <div class="why-gift-viz" id="giftViz" aria-hidden="true">
+                    <div class="why-gift-icon">
+                        <i class="fas fa-gift"></i>
+                    </div>
+                    <span class="why-gift-hint">Przeciągnij, aby obrócić</span>
+                </div>
+                <div class="why-gift-body">
+                    <h3>Prezent od <span>Team Body Creator</span></h3>
+                    <p>Każda osoba, która kupi pakiet w przedsprzedaży, otrzyma prezent od naszego teamu — do wyboru jedną rzecz z firmowej kolekcji Body Creator, np. torbę treningową albo t-shirt z logo.</p>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- ========================================
          O WYDARZENIU
          ======================================== -->
     <div class="about-wrap">
@@ -955,19 +1014,10 @@
                     <p>Zaopiekują się Tobą specjaliści z dużym bagażem wiedzy oraz zaangażowaniem i miłością do sportu.</p>
                 </div>
             </div>
-
-            <div class="why-gift reveal">
-                <div class="why-gift-viz" id="giftViz" aria-hidden="true">
-                    <div class="why-gift-icon">
-                        <i class="fas fa-gift"></i>
-                    </div>
-                    <span class="why-gift-hint">Przeciągnij, aby obrócić</span>
-                </div>
-                <div class="why-gift-body">
-                    <h3>Prezent od <span>Team Body Creator</span></h3>
-                    <p>Każda osoba, która kupi pakiet w przedsprzedaży, otrzyma do zakupu prezent od naszego teamu: firmowy zestaw, w którym znajdziesz m.in. torbę treningową i t-shirt z logo Body Creator.</p>
-                </div>
-            </div>
+            <a href="#termin" class="why-cta reveal" aria-label="Przewiń do wyboru terminu">
+                <span>Gotowy? Wybierz termin dla siebie</span>
+                <i class="fas fa-chevron-down" aria-hidden="true"></i>
+            </a>
         </div>
     </section>
 
