@@ -60,4 +60,25 @@
         <priority>0.7</priority>
     </url>
 
+    <url>
+        <loc>https://bodycreator.com.pl/event.html</loc>
+        <lastmod>2026-07-21</lastmod>
+        <changefreq>daily</changefreq>
+        <priority>0.85</priority>
+    </url>
+
+    <url>
+        <loc>https://bodycreator.com.pl/formularzeventowy.html</loc>
+        <lastmod>2026-07-21</lastmod>
+        <changefreq>daily</changefreq>
+        <priority>0.6</priority>
+    </url>
+
+    <url>
+        <loc>https://bodycreator.com.pl/polityka-prywatnosci.html</loc>
+        <lastmod>2026-05-28</lastmod>
+        <changefreq>yearly</changefreq>
+        <priority>0.3</priority>
+    </url>
+
 </urlset>
