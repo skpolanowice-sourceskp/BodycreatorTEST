@@ -1,3 +1,6 @@
 # Deploy config / secrets — contain FTP password, DO NOT COMMIT
 .vscode/sftp.json
 deploy.ftp.json
+
+# Sekret antyspamowy generowany przez send_mail.php na serwerze
+.antispam_secret

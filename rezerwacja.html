@@ -3057,7 +3057,15 @@
 
                     <div class="contact-form">
                         <form id="reservationForm" novalidate>
-                            <input type="text" name="website" style="display:none;" tabindex="-1" autocomplete="off">
+                            <!-- Honeypot: pola niewidoczne dla użytkownika. Bot czytający
+                                 formularz "na ślepo" wypełnia wszystko, człowiek ich nie widzi
+                                 (poza ekranem, poza kolejnością Tab, ukryte dla czytników ekranu),
+                                 więc cokolwiek tu trafi, zgłoszenie jest odrzucane po stronie serwera. -->
+                            <input type="text" name="website" style="display:none;" tabindex="-1" autocomplete="off" aria-hidden="true">
+                            <div aria-hidden="true" style="position:absolute;left:-9999px;width:1px;height:1px;overflow:hidden;">
+                                <label for="poleKontrolne">Nie wypełniaj tego pola</label>
+                                <input type="text" id="poleKontrolne" name="pole_kontrolne" tabindex="-1" autocomplete="off">
+                            </div>
 
                             <div class="form-group">
                                 <label for="imie">Imię *</label>
@@ -3256,6 +3264,48 @@
             if (zgodaDane.checked) consentDaneRow.classList.remove('invalid');
         });
 
+        // ── Antyspam: token z serwera + minimalny czas wypełniania ─────────
+        // Bot wysyła formularz w ~200 ms i najczęściej w ogóle nie otwiera
+        // strony. Token pobrany przy wejściu jest dowodem, że strona została
+        // załadowana, a zaszyty w nim czas — że wypełnianie trwało po ludzku.
+        let asToken = null;
+        let asTokenAt = 0;
+        let asMinSeconds = 3;
+        let asMaxSeconds = 10800;
+
+        async function asFetchToken() {
+            try {
+                const res = await fetch('send_mail.php?token=1', { cache: 'no-store' });
+                const data = await res.json();
+                if (data && data.token) {
+                    asToken = data.token;
+                    asTokenAt = Date.now();
+                    if (data.min_seconds) asMinSeconds = data.min_seconds;
+                    if (data.max_seconds) asMaxSeconds = data.max_seconds;
+                    return true;
+                }
+            } catch {}
+            return false;
+        }
+        asFetchToken();
+
+        // Jeśli ktoś wypełni formularz szybciej niż minimalny czas (np. przez
+        // autouzupełnianie przeglądarki), nie blokujemy go — po prostu czekamy
+        // brakującą chwilę przed wysyłką, niezauważalnie dla użytkownika.
+        async function asPrepare() {
+            const tokenAge = (Date.now() - asTokenAt) / 1000;
+            if (!asToken || tokenAge > asMaxSeconds - 300) {
+                await asFetchToken();
+            }
+            if (!asToken) return false;
+
+            const elapsed = (Date.now() - asTokenAt) / 1000;
+            if (elapsed < asMinSeconds) {
+                await new Promise(r => setTimeout(r, (asMinSeconds - elapsed) * 1000 + 400));
+            }
+            return true;
+        }
+
         form.addEventListener('submit', async function(e) {
             e.preventDefault();
             errorBox.style.display = 'none';
@@ -3272,12 +3322,36 @@
             btnText.textContent = 'Wysyłanie...';
             btnIcon.className = 'fas fa-spinner fa-spin';
 
+            const restoreBtn = () => {
+                btn.disabled = false;
+                btnText.textContent = 'Zapisuję się na konsultację';
+                btnIcon.className = 'fas fa-arrow-right';
+            };
+
             try {
-                const res = await fetch('send_mail.php', {
-                    method: 'POST',
-                    body: new FormData(form)
-                });
-                const data = await res.json();
+                if (!await asPrepare()) {
+                    errorBox.textContent = 'Nie udało się przygotować formularza. Odśwież stronę i spróbuj ponownie.';
+                    errorBox.style.display = 'block';
+                    restoreBtn();
+                    return;
+                }
+
+                const send = () => {
+                    const fd = new FormData(form);
+                    fd.append('as_token', asToken);
+                    return fetch('send_mail.php', { method: 'POST', body: fd });
+                };
+
+                let data = await (await send()).json();
+
+                // Strona otwarta od wielu godzin — token wygasł. Pobieramy nowy
+                // i ponawiamy raz, bez angażowania użytkownika.
+                if (!data.ok && data.code === 'token_expired') {
+                    asToken = null;
+                    if (await asPrepare()) {
+                        data = await (await send()).json();
+                    }
+                }
 
                 if (data.ok) {
                     form.style.display = 'none';
@@ -3285,16 +3359,12 @@
                 } else {
                     errorBox.textContent = data.message || 'Wystąpił błąd. Spróbuj ponownie.';
                     errorBox.style.display = 'block';
-                    btn.disabled = false;
-                    btnText.textContent = 'Wyślij zapytanie';
-                    btnIcon.className = 'fas fa-arrow-right';
+                    restoreBtn();
                 }
             } catch {
                 errorBox.textContent = 'Błąd połączenia. Sprawdź internet i spróbuj ponownie.';
                 errorBox.style.display = 'block';
-                btn.disabled = false;
-                btnText.textContent = 'Wyślij zapytanie';
-                btnIcon.className = 'fas fa-arrow-right';
+                restoreBtn();
             }
         });
     })();
