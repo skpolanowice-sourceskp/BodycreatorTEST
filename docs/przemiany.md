@@ -13,18 +13,18 @@ Nowy system leży w **`demo-przemiany/`** (po wgraniu do `/bodycreatorMJ/demo-pr
 ## Trzy poziomy
 
 ```
-przemiany.html                     hub: akordeon obszarów z kafelkami celów
+przemiany.html                     hub: zakładki obszarów + kafelki celów
   └─ kategoria.html?k=<slug>       cel: opis, „dla kogo”, „jak pracujemy”, przemiany, wideo
        └─ case-study.html?id=<id>  pełna historia jednej osoby
 ```
 
 ### 1. `przemiany.html` (hub)
 
-Po feedbacku klienta (10.2026) hub jest **maksymalnie prosty**: mały nagłówek „Wybierz cel” i 3 obszary jako akordeon. Klient wyraźnie **nie chce** na tej stronie zdjęć (miniatur), liczników przy obszarach, statystyk typu „7 celów · 11 przemian · 3 case study”, opisów obszarów ani paska wyróżnionych historii.
+Po feedbacku klienta (10.2026) hub jest **maksymalnie prosty**: mały nagłówek „Wybierz cel”, pod nim pasek 3 zakładek obszarów (bez liczników), a pod nim kafelki celów. Klient najpierw dostał akordeon, ale wolał pasek zakładek z pierwszej wersji. Klient wyraźnie **nie chce** na tej stronie zdjęć (miniatur), liczników przy obszarach, statystyk typu „7 celów · 11 przemian · 3 case study”, opisów obszarów ani paska wyróżnionych historii.
 
-- Domyślnie wszystkie obszary są zwinięte. Klik rozwija jeden (drugi się zwija), pod spodem wyjeżdża ciasna siatka kafelków celów.
+- Zakładki: `role="tablist"`, strzałki ←/→ działają. Bez hasha w adresie wybrany jest pierwszy obszar. Zmiana zakładki podmienia ciasną siatkę kafelków pod paskiem (z animacją wjazdu).
 - Kafelek: nazwa celu ze strzałką, w prawym górnym rogu **liczba przemian** (np. „8 przemian”). Cel bez przemian ma w rogu „Wkrótce”.
-- Otwarty obszar trafia do adresu: `przemiany.html#bol`. Okruszki z podstron linkują do `#<area-id>` i otwierają ten obszar.
+- Wybrany obszar trafia do adresu: `przemiany.html#bol`. Okruszki z podstron linkują do `#<area-id>` i wybierają tę zakładkę.
 - **Bez numeracji „01 / 07”**, bo klient jej nie chce.
 - Pola `area.lead`, `category.tagline` i `featured` nie są już używane na hubie (zostają w danych dla podstron i panelu).
 

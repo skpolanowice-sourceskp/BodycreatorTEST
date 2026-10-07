@@ -37,55 +37,43 @@
             text-transform: uppercase;
         }
 
-        /* ============ KATEGORIE (akordeon) ============ */
+        /* ============ OBSZARY (zakładki) ============ */
         .areas { padding: 0 0 24px; }
-        .acc-list { border-bottom: 1px solid var(--line); }
-        .acc { border-top: 1px solid var(--line); }
-        .acc-head {
+        .area-tabs {
+            display: grid;
+            grid-template-columns: repeat(3, 1fr);
+            gap: 6px;
+            padding: 6px;
+            max-width: 820px;
+            background: var(--dark-2);
+            border: 1px solid var(--line);
+            border-radius: 28px;
+        }
+        .area-tab {
             appearance: none;
-            width: 100%;
             border: 0;
             background: transparent;
-            color: var(--white);
+            color: var(--gray-light);
             display: flex;
             align-items: center;
-            justify-content: space-between;
-            gap: 20px;
-            padding: 28px 0;
+            justify-content: center;
+            min-height: 60px;
+            padding: 10px 18px;
+            border-radius: 22px;
             cursor: pointer;
             font: inherit;
-            font-size: clamp(1.3rem, 3.4vw, 2.2rem);
-            font-weight: 900;
-            letter-spacing: 1px;
-            line-height: 1.15;
+            font-size: 0.8rem;
+            font-weight: 800;
+            letter-spacing: 1.5px;
+            line-height: 1.25;
             text-transform: uppercase;
-            text-align: left;
-            transition: color var(--transition);
+            text-align: center;
+            transition: color var(--transition), background-color var(--transition);
         }
-        .acc-head:hover, .acc-head[aria-expanded="true"] { color: var(--yellow); }
-        .acc-icon {
-            flex: none;
-            width: 48px;
-            height: 48px;
-            display: grid;
-            place-items: center;
-            border-radius: 50%;
-            border: 1px solid rgba(255,255,255,0.14);
-            color: var(--white);
-            font-size: 0.95rem;
-            transition: background-color var(--transition), border-color var(--transition), color var(--transition), transform .45s var(--ease-out);
-        }
-        .acc-head:hover .acc-icon { border-color: var(--yellow); }
-        .acc-head[aria-expanded="true"] .acc-icon { background: var(--yellow); border-color: var(--yellow); color: var(--dark); transform: rotate(45deg); }
-
-        .acc-panel {
-            display: grid;
-            grid-template-rows: 0fr;
-            visibility: hidden;
-            transition: grid-template-rows .5s var(--ease-out), visibility 0s linear .5s;
-        }
-        .acc-panel.is-open { grid-template-rows: 1fr; visibility: visible; transition: grid-template-rows .5s var(--ease-out); }
-        .acc-inner { overflow: hidden; min-height: 0; }
+        .area-tab:hover { color: var(--white); }
+        .area-tab[aria-selected="true"] { background: var(--yellow); color: var(--dark); }
+        .area-panel { padding-top: 20px; }
+        .area-panel[hidden] { display: none; }
 
         /* ============ CELE (kafelki) ============ */
         .goal-grid {
@@ -93,7 +81,6 @@
             display: grid;
             grid-template-columns: repeat(auto-fill, minmax(230px, 1fr));
             gap: 8px;
-            padding: 0 0 28px;
         }
         .goal {
             position: relative;
@@ -134,19 +121,17 @@
         .goal.is-soon .goal-name { color: var(--gray-light); }
         .goal.is-soon .goal-count { color: var(--gray); font-size: 0.6rem; font-weight: 700; letter-spacing: 1px; text-transform: uppercase; }
 
-        .acc-panel.is-open .goal-grid li { animation: goalIn .5s var(--ease-out) both; }
+        .area-panel.is-entering .goal-grid li { animation: goalIn .5s var(--ease-out) both; }
         @keyframes goalIn { from { opacity: 0; transform: translateY(10px); } to { opacity: 1; transform: none; } }
-        @media (prefers-reduced-motion: reduce) {
-            .acc-panel, .acc-panel.is-open { transition: none; }
-            .acc-panel.is-open .goal-grid li { animation: none; }
-        }
+        @media (prefers-reduced-motion: reduce) { .area-panel.is-entering .goal-grid li { animation: none; } }
 
         /* ============ RESPONSIVE ============ */
         @media (max-width: 768px) {
             .hub-hero { padding: 124px 0 16px; }
-            .acc-head { padding: 22px 0; }
-            .acc-icon { width: 42px; height: 42px; font-size: 0.85rem; }
-            .goal-grid { grid-template-columns: repeat(2, minmax(0, 1fr)); gap: 6px; padding-bottom: 22px; }
+            .area-tabs { gap: 4px; padding: 5px; border-radius: 24px; }
+            .area-tab { min-height: 58px; padding: 8px 6px; font-size: 0.66rem; letter-spacing: 1px; border-radius: 19px; }
+            .area-panel { padding-top: 14px; }
+            .goal-grid { grid-template-columns: repeat(2, minmax(0, 1fr)); gap: 6px; }
             .goal { min-height: 104px; padding: 12px 12px 14px; border-radius: 14px; }
             .goal-name { font-size: 0.9rem; }
             .goal-count { top: 10px; right: 12px; font-size: 1.6rem; }
@@ -202,7 +187,8 @@
 
         <section class="areas" aria-label="Obszary przemian">
             <div class="container">
-                <div class="acc-list" id="areaAcc"></div>
+                <div class="area-tabs" role="tablist" aria-label="Obszary" id="areaTabs"></div>
+                <div id="areaPanels"></div>
             </div>
         </section>
 
@@ -246,10 +232,11 @@
     <script>
         (function () {
             var D = BC.data, esc = BC.esc;
-            var acc = document.getElementById('areaAcc');
+            var tabs = document.getElementById('areaTabs');
+            var panels = document.getElementById('areaPanels');
 
-            /* ---- Obszary jako akordeon, w środku kafelki celów z liczbą przemian w rogu ---- */
-            acc.innerHTML = D.areas.map(function (area) {
+            /* ---- Zakładki obszarów, pod nimi kafelki celów z liczbą przemian w rogu ---- */
+            D.areas.forEach(function (area) {
                 var id = esc(area.id);
                 var tiles = BC.categoriesIn(area.id).map(function (cat) {
                     var n = BC.casesIn(cat.slug).length;
@@ -261,38 +248,46 @@
                         '<span class="goal-name">' + esc(cat.title) + '<i class="fas fa-arrow-right" aria-hidden="true"></i></span>' +
                         '</a></li>';
                 }).join('');
-                return '<div class="acc" data-area="' + id + '">' +
-                    '<h2><button class="acc-head" id="acc-' + id + '" aria-expanded="false" aria-controls="accp-' + id + '">' +
-                        '<span>' + esc(area.name) + '</span><span class="acc-icon" aria-hidden="true"><i class="fas fa-plus"></i></span>' +
-                    '</button></h2>' +
-                    '<div class="acc-panel" id="accp-' + id + '" role="region" aria-labelledby="acc-' + id + '">' +
-                        '<div class="acc-inner"><ul class="goal-grid">' + tiles + '</ul></div>' +
-                    '</div></div>';
-            }).join('');
+                tabs.insertAdjacentHTML('beforeend',
+                    '<button class="area-tab" role="tab" id="tab-' + id + '" aria-controls="panel-' + id + '" aria-selected="false" tabindex="-1" data-area="' + id + '">' + esc(area.name) + '</button>');
+                panels.insertAdjacentHTML('beforeend',
+                    '<div class="area-panel" role="tabpanel" id="panel-' + id + '" aria-labelledby="tab-' + id + '" hidden>' +
+                        '<ul class="goal-grid">' + tiles + '</ul></div>');
+            });
 
-            var items = Array.prototype.slice.call(acc.querySelectorAll('.acc'));
+            var tabEls = Array.prototype.slice.call(tabs.querySelectorAll('.area-tab'));
 
-            // Otwarty jest najwyżej jeden obszar; null zamyka wszystkie
-            function open(id) {
-                items.forEach(function (it) {
-                    var on = it.dataset.area === id;
-                    var panel = it.querySelector('.acc-panel');
-                    it.querySelector('.acc-head').setAttribute('aria-expanded', on);
-                    panel.classList.toggle('is-open', on);
-                    if (on) panel.querySelectorAll('.goal-grid li').forEach(function (li, i) { li.style.animationDelay = (i * 35) + 'ms'; });
+            function select(id, focus) {
+                if (!BC.area(id)) id = D.areas[0].id;
+                tabEls.forEach(function (t) {
+                    var on = t.dataset.area === id;
+                    t.setAttribute('aria-selected', on);
+                    t.tabIndex = on ? 0 : -1;
+                    if (on && focus) t.focus();
                 });
-                if (history.replaceState) history.replaceState(null, '', id ? '#' + id : location.pathname + location.search);
+                panels.querySelectorAll('.area-panel').forEach(function (p) {
+                    var on = p.id === 'panel-' + id;
+                    p.hidden = !on;
+                    if (on) {
+                        p.classList.remove('is-entering'); void p.offsetWidth; p.classList.add('is-entering');
+                        p.querySelectorAll('.goal-grid li').forEach(function (li, i) { li.style.animationDelay = (i * 35) + 'ms'; });
+                    }
+                });
+                if (history.replaceState) history.replaceState(null, '', '#' + id);
             }
 
-            items.forEach(function (it) {
-                it.querySelector('.acc-head').addEventListener('click', function () {
-                    open(this.getAttribute('aria-expanded') === 'true' ? null : it.dataset.area);
+            tabEls.forEach(function (t, i) {
+                t.addEventListener('click', function () { select(t.dataset.area); });
+                t.addEventListener('keydown', function (e) {
+                    if (e.key !== 'ArrowRight' && e.key !== 'ArrowLeft') return;
+                    e.preventDefault();
+                    var next = tabEls[(i + (e.key === 'ArrowRight' ? 1 : -1) + tabEls.length) % tabEls.length];
+                    select(next.dataset.area, true);
                 });
             });
 
-            // Okruszki z podstron linkują do przemiany.html#<obszar>
-            var fromHash = decodeURIComponent(location.hash.slice(1));
-            if (BC.area(fromHash)) open(fromHash);
+            // Okruszki z podstron linkują do przemiany.html#<obszar>; bez hasha pierwszy obszar
+            select(decodeURIComponent(location.hash.slice(1)));
 
             BC.initReveal();
         })();
