@@ -1,0 +1,4 @@
+# Wersja demo nowej sekcji Przemiany: niewidoczna dla wyszukiwarek.
+<IfModule mod_headers.c>
+    Header set X-Robots-Tag "noindex, nofollow"
+</IfModule>

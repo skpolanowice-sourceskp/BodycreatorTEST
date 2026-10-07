@@ -1,0 +1,537 @@
+<!DOCTYPE html>
+<html lang="pl">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+    <title>Przemiany Klientów — Efekty Treningu Personalnego | Body Creator Wrocław</title>
+    <meta name="description" content="Zobacz realne przemiany podopiecznych Body Creator we Wrocławiu: redukcja, budowa masy, ból kręgosłupa, powrót po urazie, siła i sprawność. Zdjęcia przed i po oraz case study.">
+    <meta name="robots" content="noindex, nofollow">
+    <meta name="theme-color" content="#F5CA00">
+
+    <link rel="icon" href="../favicon.ico?v=3" sizes="any">
+    <link rel="icon" type="image/png" href="../favicon.png?v=3">
+    <link rel="apple-touch-icon" sizes="180x180" href="../apple-touch-icon.png?v=3">
+
+    <meta property="og:type" content="website">
+    <meta property="og:site_name" content="Body Creator">
+    <meta property="og:locale" content="pl_PL">
+    <meta property="og:title" content="Przemiany Klientów — Body Creator Wrocław">
+    <meta property="og:description" content="Wybierz cel i zobacz, jak wygląda droga od pierwszej konsultacji do mierzalnego efektu.">
+    <meta property="og:image" content="https://bodycreator.com.pl/logobezpodpisu.png">
+
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800;900&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css">
+    <link rel="stylesheet" href="przemiany.css">
+
+    <style>
+        /* ============ HERO ============ */
+        .hub-hero { padding: 168px 0 48px; }
+        .hub-hero h1 {
+            font-size: clamp(2.1rem, 6vw, 4.4rem);
+            font-weight: 900;
+            letter-spacing: 1.5px;
+            line-height: 1.04;
+            text-transform: uppercase;
+            max-width: 15ch;
+        }
+        .hub-hero p {
+            margin-top: 22px;
+            color: var(--gray-light);
+            font-size: 1.08rem;
+            line-height: 1.75;
+            max-width: 52ch;
+        }
+
+        /* ============ AREA TABS ============ */
+        .area-tabs {
+            display: grid;
+            grid-template-columns: repeat(3, 1fr);
+            gap: 6px;
+            padding: 6px;
+            max-width: 820px;
+            background: var(--dark-2);
+            border: 1px solid var(--line);
+            border-radius: 28px;
+        }
+        .area-tab {
+            appearance: none;
+            border: 0;
+            background: transparent;
+            color: var(--gray-light);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            gap: 12px;
+            min-height: 64px;
+            padding: 10px 18px;
+            border-radius: 22px;
+            cursor: pointer;
+            font-size: 0.8rem;
+            font-weight: 800;
+            letter-spacing: 1.5px;
+            line-height: 1.25;
+            text-transform: uppercase;
+            text-align: left;
+            white-space: nowrap;
+            transition: color var(--transition), background-color var(--transition);
+        }
+        .area-tab:hover { color: var(--white); }
+        .area-tab[aria-selected="true"] { background: var(--yellow); color: var(--dark); }
+        .area-tab-count {
+            flex: none;
+            display: grid;
+            place-items: center;
+            width: 30px;
+            height: 30px;
+            border-radius: 50%;
+            background: rgba(255,255,255,0.08);
+            font-size: 0.78rem;
+            letter-spacing: 0;
+            font-variant-numeric: tabular-nums;
+        }
+        .area-tab[aria-selected="true"] .area-tab-count { background: rgba(10,10,10,0.14); }
+
+        /* ============ AREA PANEL ============ */
+        .areas { padding: 0 0 40px; }
+        .area-panel {
+            display: grid;
+            grid-template-columns: minmax(0, 4fr) minmax(0, 7fr);
+            gap: 72px;
+            padding-top: 64px;
+        }
+        .area-panel[hidden] { display: none; }
+        .area-intro { position: sticky; top: 130px; align-self: start; }
+        .area-intro h2 {
+            font-size: clamp(1.6rem, 3vw, 2.4rem);
+            font-weight: 800;
+            letter-spacing: 1px;
+            line-height: 1.12;
+            text-transform: uppercase;
+        }
+        .area-intro p { margin-top: 16px; color: var(--gray-light); line-height: 1.75; max-width: 40ch; }
+        .area-intro-meta {
+            margin-top: 24px;
+            padding-top: 20px;
+            border-top: 1px solid var(--line);
+            color: var(--gray);
+            font-size: 0.85rem;
+            font-weight: 600;
+        }
+        .area-intro-meta strong { color: var(--white); }
+        .area-help {
+            display: inline-flex;
+            align-items: center;
+            gap: 10px;
+            margin-top: 28px;
+            color: var(--yellow);
+            font-weight: 700;
+            font-size: 0.9rem;
+        }
+        .area-help i { transition: transform var(--transition); }
+        .area-help:hover i { transform: translateX(4px); }
+
+        /* ============ GOAL LIST ============ */
+        .goal-list { list-style: none; border-bottom: 1px solid var(--line); }
+        .goal-list li { border-top: 1px solid var(--line); }
+        .goal {
+            position: relative;
+            display: grid;
+            grid-template-columns: minmax(0, 1fr) auto 48px;
+            align-items: center;
+            gap: 20px;
+            padding: 28px 4px;
+            isolation: isolate;
+        }
+        .goal::before {
+            content: '';
+            position: absolute;
+            inset: 4px -16px;
+            border-radius: 16px;
+            background: var(--dark-2);
+            opacity: 0;
+            transition: opacity .35s var(--ease-out);
+            z-index: -1;
+        }
+        .goal:hover::before, .goal:focus-visible::before { opacity: 1; }
+        .goal-body { display: flex; flex-direction: column; gap: 6px; transition: transform .45s var(--ease-out); }
+        .goal:hover .goal-body { transform: translateX(6px); }
+        .goal-title { font-size: clamp(1.2rem, 2.1vw, 1.55rem); font-weight: 700; line-height: 1.25; letter-spacing: 0.2px; }
+        .goal-tag { color: var(--gray-light); font-size: 0.92rem; line-height: 1.5; }
+        .goal-meta { color: var(--gray); font-size: 0.78rem; font-weight: 600; letter-spacing: 0.3px; margin-top: 2px; }
+        .goal-meta.is-soon { color: var(--gray); font-style: italic; font-weight: 500; }
+        .goal-thumbs { display: flex; padding-left: 10px; }
+        .goal-thumbs img {
+            width: 44px;
+            height: 62px;
+            object-fit: cover;
+            border-radius: 8px;
+            margin-left: -10px;
+            border: 2px solid var(--dark);
+            background: var(--dark-3);
+            transition: transform .45s var(--ease-out);
+        }
+        .goal:hover .goal-thumbs img:nth-child(1) { transform: translateX(-6px) rotate(-4deg); }
+        .goal:hover .goal-thumbs img:nth-child(3) { transform: translateX(6px) rotate(4deg); }
+        .goal-arrow {
+            width: 48px;
+            height: 48px;
+            display: grid;
+            place-items: center;
+            border-radius: 50%;
+            border: 1px solid rgba(255,255,255,0.14);
+            color: var(--white);
+            font-size: 0.9rem;
+            transition: background-color var(--transition), border-color var(--transition), color var(--transition), transform .45s var(--ease-out);
+        }
+        .goal:hover .goal-arrow { background: var(--yellow); border-color: var(--yellow); color: var(--dark); transform: rotate(-45deg); }
+
+        .area-panel.is-entering .goal-list li { animation: goalIn .6s var(--ease-out) both; }
+        @keyframes goalIn { from { opacity: 0; transform: translateY(14px); } to { opacity: 1; transform: none; } }
+        @media (prefers-reduced-motion: reduce) { .area-panel.is-entering .goal-list li { animation: none; } }
+
+        /* ============ FEATURED STORIES ============ */
+        .stories { padding: 104px 0 0; }
+        .stories-head { display: flex; align-items: end; justify-content: space-between; gap: 24px; margin-bottom: 36px; }
+        .stories-head p { color: var(--gray-light); max-width: 44ch; margin-top: 12px; }
+        .stories-track {
+            display: grid;
+            grid-template-columns: repeat(4, minmax(0, 1fr));
+            gap: 20px;
+        }
+        .story {
+            position: relative;
+            display: flex;
+            flex-direction: column;
+            justify-content: flex-end;
+            aspect-ratio: 4 / 5.4;
+            border-radius: 18px;
+            overflow: hidden;
+            background: var(--dark-3);
+            isolation: isolate;
+        }
+        .story img {
+            position: absolute;
+            inset: 0;
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+            z-index: -2;
+            transition: transform .9s var(--ease-out);
+        }
+        .story::after {
+            content: '';
+            position: absolute;
+            inset: 0;
+            z-index: -1;
+            background: linear-gradient(180deg, rgba(10,10,10,0) 30%, rgba(10,10,10,0.7) 55%, rgba(10,10,10,0.96) 85%);
+        }
+        .story:hover img { transform: scale(1.05); }
+        .story-body { padding: 22px; }
+        .story-cat { font-size: 0.66rem; font-weight: 700; letter-spacing: 2.5px; text-transform: uppercase; color: var(--yellow); }
+        .story-highlight { display: block; font-size: 2.3rem; font-weight: 900; line-height: 1; margin: 10px 0 8px; letter-spacing: -0.5px; }
+        .story-title { font-size: 0.95rem; font-weight: 600; line-height: 1.4; color: var(--gray-light); }
+        .story-link {
+            display: inline-flex;
+            align-items: center;
+            gap: 8px;
+            margin-top: 16px;
+            font-size: 0.75rem;
+            font-weight: 700;
+            letter-spacing: 1.5px;
+            text-transform: uppercase;
+        }
+        .story-link i { color: var(--yellow); transition: transform var(--transition); }
+        .story:hover .story-link i { transform: translateX(4px); }
+        .story.is-quote { background: var(--dark-2); border: 1px solid var(--line); }
+        .story.is-quote::after { display: none; }
+        .story-quote {
+            position: absolute;
+            top: 22px;
+            left: 22px;
+            right: 22px;
+            font-size: 1.02rem;
+            line-height: 1.6;
+            color: var(--gray-light);
+        }
+        .story-quote::before {
+            content: '\201C';
+            display: block;
+            font-family: Georgia, serif;
+            font-size: 4rem;
+            line-height: 0.8;
+            color: var(--yellow);
+            margin-bottom: 6px;
+        }
+
+        /* ============ RESPONSIVE ============ */
+        @media (max-width: 1024px) {
+            .area-panel { grid-template-columns: 1fr; gap: 32px; }
+            .area-intro { position: static; }
+            .stories-track { grid-template-columns: repeat(2, minmax(0, 1fr)); }
+        }
+
+        @media (max-width: 768px) {
+            .hub-hero { padding: 128px 0 32px; }
+            .hub-hero p { font-size: 0.98rem; }
+
+            .area-tabs { gap: 4px; padding: 5px; border-radius: 24px; }
+            .area-tab {
+                flex-direction: column;
+                gap: 8px;
+                min-height: 88px;
+                padding: 12px 6px;
+                font-size: 0.66rem;
+                letter-spacing: 1px;
+                text-align: center;
+                white-space: normal;
+                border-radius: 19px;
+            }
+            .area-tab-count { width: 26px; height: 26px; font-size: 0.72rem; }
+
+            .area-panel { padding-top: 40px; gap: 24px; }
+            .area-intro p { font-size: 0.95rem; }
+            .area-intro-meta { margin-top: 18px; padding-top: 16px; }
+            .area-help { display: none; }
+
+            .goal {
+                grid-template-columns: minmax(0, 1fr) 44px;
+                grid-template-areas: "body arrow" "thumbs arrow";
+                gap: 10px 16px;
+                padding: 22px 0;
+            }
+            .goal::before { inset: 2px -10px; }
+            .goal-body { grid-area: body; gap: 4px; }
+            .goal:hover .goal-body { transform: none; }
+            .goal-title { font-size: 1.18rem; }
+            .goal-tag { font-size: 0.86rem; }
+            .goal-thumbs { grid-area: thumbs; padding-left: 8px; margin-top: 4px; }
+            .goal-thumbs:empty { display: none; }
+            .goal-thumbs img { width: 34px; height: 48px; margin-left: -8px; border-radius: 6px; }
+            .goal-arrow { grid-area: arrow; width: 44px; height: 44px; align-self: center; }
+
+            .stories { padding-top: 72px; }
+            .stories-head { display: block; margin-bottom: 24px; }
+            .stories-track {
+                display: flex;
+                overflow-x: auto;
+                scroll-snap-type: x mandatory;
+                gap: 12px;
+                margin: 0 -16px;
+                padding: 0 16px 8px;
+                scrollbar-width: none;
+            }
+            .stories-track::-webkit-scrollbar { display: none; }
+            .story { flex: 0 0 76%; scroll-snap-align: start; scroll-margin-left: 16px; }
+            .story-highlight { font-size: 2rem; }
+        }
+    </style>
+
+</head>
+<body>
+
+    <div id="page-loader">
+        <div class="loader-rig">
+            <div class="loader-ring"></div>
+            <div class="loader-ring-inner"></div>
+            <img class="loader-logo" src="../favicon.png" alt="Ładowanie strony">
+        </div>
+        <div class="loader-text"><span>L</span><span>O</span><span>A</span><span>D</span><span>I</span><span>N</span><span>G</span></div>
+    </div>
+
+    <nav class="navbar" id="navbar">
+        <div class="container">
+            <a href="../index.html" class="logo" aria-label="Body Creator — strona główna"><img src="../logobezpodpisu.png" alt="Body Creator — Studio Treningu Personalnego Wrocław" width="140" height="70"></a>
+            <div class="nav-cta">
+                <a href="../rezerwacja.html" class="btn btn-primary btn-sm">Darmowa konsultacja <i class="fas fa-arrow-right"></i></a>
+                <a href="tel:518167945" class="nav-phone"><i class="fas fa-phone"></i> 518 167 945</a>
+            </div>
+            <div class="nav-toggle" id="navToggle" aria-label="Menu"><span></span><span></span><span></span></div>
+        </div>
+    </nav>
+    <div class="nav-overlay" id="navOverlay">
+        <nav class="nav-menu">
+            <ul>
+                <li><a href="../index.html">Strona Główna</a></li>
+                <li><a href="../oferta.html">Oferta</a></li>
+                <li><a href="../o-nas.html">O Nas</a></li>
+                <li><a href="przemiany.html">Przemiany</a></li>
+                <li><a href="../kalkulator.html">Kalkulator</a></li>
+                <li><a href="../rezerwacja.html">Umów Wizytę</a></li>
+                <li><a href="../kontakt.html">Kontakt</a></li>
+            </ul>
+            <div class="nav-socials">
+                <a href="https://www.instagram.com/bodycreatorstudio/" target="_blank" rel="noopener noreferrer" aria-label="Body Creator na Instagramie"><i class="fab fa-instagram" aria-hidden="true"></i></a>
+            </div>
+        </nav>
+    </div>
+
+    <main>
+        <section class="hub-hero">
+            <div class="container">
+                <span class="section-label">Przemiany podopiecznych</span>
+                <h1>Wybierz cel. <span class="accent">Zobacz drogę do efektu.</span></h1>
+                <p>Wybierz obszar, a pokażemy Ci, jak może wyglądać droga od pierwszej konsultacji do mierzalnego efektu. Prawdziwi ludzie, prawdziwe liczby.</p>
+            </div>
+        </section>
+
+        <section class="areas" aria-label="Obszary przemian">
+            <div class="container">
+                <div class="area-tabs" role="tablist" aria-label="Obszary" id="areaTabs"></div>
+                <div id="areaPanels"></div>
+            </div>
+        </section>
+
+        <section class="stories" aria-labelledby="storiesTitle">
+            <div class="container">
+                <div class="stories-head">
+                    <div>
+                        <span class="section-label">Case study</span>
+                        <h2 class="h-section" id="storiesTitle">Historie od pierwszej<br>wizyty do <span class="accent">efektu</span></h2>
+                    </div>
+                    <p>Punkt wyjścia, plan, kryzysy po drodze i liczby na końcu. Bez retuszu.</p>
+                </div>
+                <div class="stories-track" id="storiesTrack"></div>
+            </div>
+        </section>
+
+        <section class="cta-band">
+            <div class="container">
+                <div class="cta-band-inner reveal">
+                    <div>
+                        <span class="section-label">Twoja kolej</span>
+                        <h2>Nie widzisz swojego celu?</h2>
+                        <p>Na bezpłatnej konsultacji sprawdzimy, od czego zacząć. Bez zobowiązań.</p>
+                    </div>
+                    <div class="cta-band-actions">
+                        <a href="../rezerwacja.html" class="btn btn-primary">Umów konsultację <i class="fas fa-arrow-right"></i></a>
+                        <a href="tel:518167945" class="cta-band-phone"><i class="fas fa-phone"></i> 518 167 945</a>
+                    </div>
+                </div>
+            </div>
+        </section>
+    </main>
+
+    <footer class="footer">
+        <div class="container">
+            <div class="footer-content">
+                <div class="footer-links">
+                    <a href="../index.html">Strona główna</a>
+                    <a href="../oferta.html">Oferta</a>
+                    <a href="../o-nas.html">O nas</a>
+                    <a href="../kontakt.html">Kontakt</a>
+                    <a href="../polityka-prywatnosci.html">Polityka prywatności</a>
+                </div>
+                <p class="footer-copy">© 2026 Body Creator — Studio Treningu Personalnego Wrocław. Wszelkie prawa zastrzeżone.</p>
+            </div>
+        </div>
+    </footer>
+
+    <a href="https://wa.me/48518167945" target="_blank" rel="noopener noreferrer" class="whatsapp-float" aria-label="Napisz do nas na WhatsApp"><i class="fab fa-whatsapp"></i></a>
+
+    <script src="https://cdn.jsdelivr.net/npm/@studio-freight/lenis@1.0.42/dist/lenis.min.js"></script>
+    <script src="przemiany-data.js"></script>
+    <script src="przemiany.js"></script>
+    <script>
+        (function () {
+            var D = BC.data, esc = BC.esc;
+            var tabs = document.getElementById('areaTabs');
+            var panels = document.getElementById('areaPanels');
+
+            /* ---- Zakładki + panele obszarów ---- */
+            D.areas.forEach(function (area) {
+                var cats = BC.categoriesIn(area.id);
+                var allCases = D.cases.filter(function (c) { return cats.some(function (k) { return k.slug === c.category; }); });
+                var stories = allCases.filter(BC.isStory).length;
+
+                tabs.insertAdjacentHTML('beforeend',
+                    '<button class="area-tab" role="tab" id="tab-' + area.id + '" aria-controls="panel-' + area.id + '" aria-selected="false" tabindex="-1" data-area="' + area.id + '">' +
+                    '<span>' + esc(area.name) + '</span><span class="area-tab-count" aria-label="' + cats.length + ' ' + BC.plural(cats.length, ['cel', 'cele', 'celów']) + '">' + cats.length + '</span></button>');
+
+                var rows = cats.map(function (cat) {
+                    var cases = BC.casesIn(cat.slug);
+                    var thumbs = cases.filter(function (c) { return c.after; }).slice(0, 3)
+                        .map(function (c) { return '<img src="' + esc(c.after) + '" alt="" loading="lazy">'; }).join('');
+                    return '<li><a class="goal" href="' + BC.categoryUrl(cat.slug) + '">' +
+                        '<span class="goal-body">' +
+                            '<span class="goal-title">' + esc(cat.title) + '</span>' +
+                            '<span class="goal-tag">' + esc(cat.tagline) + '</span>' +
+                            '<span class="goal-meta' + (cases.length ? '' : ' is-soon') + '">' + esc(BC.countLabel(cases)) + '</span>' +
+                        '</span>' +
+                        '<span class="goal-thumbs" aria-hidden="true">' + thumbs + '</span>' +
+                        '<span class="goal-arrow" aria-hidden="true"><i class="fas fa-arrow-right"></i></span>' +
+                        '</a></li>';
+                }).join('');
+
+                panels.insertAdjacentHTML('beforeend',
+                    '<div class="area-panel" role="tabpanel" id="panel-' + area.id + '" aria-labelledby="tab-' + area.id + '" hidden>' +
+                        '<div class="area-intro">' +
+                            '<span class="section-label">Obszar</span>' +
+                            '<h2>' + esc(area.name) + '</h2>' +
+                            '<p>' + esc(area.lead) + '</p>' +
+                            '<div class="area-intro-meta"><strong>' + cats.length + '</strong> ' + BC.plural(cats.length, ['cel', 'cele', 'celów']) +
+                                ' · <strong>' + allCases.length + '</strong> ' + BC.plural(allCases.length, ['przemiana', 'przemiany', 'przemian']) +
+                                (stories ? ' · <strong>' + stories + '</strong> case study' : '') + '</div>' +
+                            '<a class="area-help" href="../rezerwacja.html">Nie wiesz, od czego zacząć? <i class="fas fa-arrow-right"></i></a>' +
+                        '</div>' +
+                        '<ol class="goal-list">' + rows + '</ol>' +
+                    '</div>');
+            });
+
+            var tabEls = Array.prototype.slice.call(tabs.querySelectorAll('.area-tab'));
+
+            function select(id, focus) {
+                if (!BC.area(id)) id = D.areas[0].id;
+                tabEls.forEach(function (t) {
+                    var on = t.dataset.area === id;
+                    t.setAttribute('aria-selected', on);
+                    t.tabIndex = on ? 0 : -1;
+                    if (on && focus) t.focus();
+                });
+                panels.querySelectorAll('.area-panel').forEach(function (p) {
+                    var on = p.id === 'panel-' + id;
+                    p.hidden = !on;
+                    if (on) {
+                        p.classList.remove('is-entering'); void p.offsetWidth; p.classList.add('is-entering');
+                        p.querySelectorAll('.goal-list li').forEach(function (li, i) { li.style.animationDelay = (i * 50) + 'ms'; });
+                    }
+                });
+                if (history.replaceState) history.replaceState(null, '', '#' + id);
+            }
+
+            tabEls.forEach(function (t, i) {
+                t.addEventListener('click', function () { select(t.dataset.area); });
+                t.addEventListener('keydown', function (e) {
+                    if (e.key !== 'ArrowRight' && e.key !== 'ArrowLeft') return;
+                    e.preventDefault();
+                    var next = tabEls[(i + (e.key === 'ArrowRight' ? 1 : -1) + tabEls.length) % tabEls.length];
+                    select(next.dataset.area, true);
+                });
+            });
+
+            select(decodeURIComponent(location.hash.slice(1)));
+
+            /* ---- Wyróżnione case study ---- */
+            var track = document.getElementById('storiesTrack');
+            track.innerHTML = D.cases.filter(function (c) { return c.featured && c.story; }).map(function (c) {
+                var cat = BC.category(c.category);
+                var media = c.after
+                    ? '<img src="' + esc(c.after) + '" alt="' + esc(BC.altFor(c)) + '" loading="lazy">'
+                    : '<p class="story-quote">' + esc(c.quote) + '</p>';
+                return '<a class="story reveal' + (c.after ? '' : ' is-quote') + '" href="' + BC.caseUrl(c) + '">' + media +
+                    '<div class="story-body">' +
+                        '<span class="story-cat">' + esc(cat ? cat.title : '') + '</span>' +
+                        '<span class="story-highlight">' + esc(c.highlight) + '</span>' +
+                        '<p class="story-title">' + esc(BC.whoLine(c)) + '</p>' +
+                        '<span class="story-link">Czytaj historię <i class="fas fa-arrow-right"></i></span>' +
+                    '</div></a>';
+            }).join('');
+
+            BC.initReveal();
+        })();
+    </script>
+    <script src="bg-rotator.js" defer></script>
+</body>
+</html>

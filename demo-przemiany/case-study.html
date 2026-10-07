@@ -1,0 +1,369 @@
+<!DOCTYPE html>
+<html lang="pl">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+    <title>Case study | Body Creator Wrocław</title>
+    <meta name="description" content="Historia przemiany podopiecznego Body Creator: punkt wyjścia, plan, przebieg i mierzalne efekty.">
+    <meta name="robots" content="noindex, nofollow">
+    <meta name="theme-color" content="#F5CA00">
+
+    <link rel="icon" href="../favicon.ico?v=3" sizes="any">
+    <link rel="icon" type="image/png" href="../favicon.png?v=3">
+    <link rel="apple-touch-icon" sizes="180x180" href="../apple-touch-icon.png?v=3">
+
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800;900&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css">
+    <link rel="stylesheet" href="przemiany.css">
+
+    <style>
+        /* ============ HERO ============ */
+        .cs-hero { padding: 150px 0 80px; }
+        .cs-hero-grid { display: grid; grid-template-columns: minmax(0, 5fr) minmax(0, 6fr); gap: 64px; align-items: center; }
+        .cs-media { border-radius: 24px; overflow: hidden; border: 1px solid var(--line); }
+        .cs-media .ba-slider { aspect-ratio: 5 / 7; }
+        .cs-media-quote {
+            aspect-ratio: 5 / 6;
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            padding: 48px 40px;
+            background: var(--dark-2);
+            font-size: 1.35rem;
+            line-height: 1.55;
+        }
+        .cs-media-quote::before {
+            content: '\201C';
+            font-family: Georgia, serif;
+            font-size: 6rem;
+            line-height: 0.7;
+            color: var(--yellow);
+            margin-bottom: 14px;
+        }
+        .cs-media-quote cite { display: block; margin-top: 22px; font-style: normal; color: var(--gray); font-size: 0.9rem; font-weight: 600; }
+        .cs-highlight {
+            display: block;
+            font-size: clamp(3.4rem, 8vw, 6rem);
+            font-weight: 900;
+            line-height: 0.95;
+            letter-spacing: -2px;
+            color: var(--yellow);
+        }
+        .cs-hero h1 {
+            margin-top: 18px;
+            font-size: clamp(1.6rem, 3.4vw, 2.6rem);
+            font-weight: 800;
+            letter-spacing: 0.5px;
+            line-height: 1.15;
+            text-transform: uppercase;
+            max-width: 20ch;
+        }
+        .cs-who { margin-top: 14px; color: var(--gray-light); font-weight: 600; }
+        .cs-facts { display: grid; grid-template-columns: 1fr 1fr; margin: 36px 0; border-top: 1px solid var(--line); }
+        .cs-facts div { padding: 16px 16px 16px 0; border-bottom: 1px solid var(--line); }
+        .cs-facts div:nth-child(even) { padding-left: 20px; border-left: 1px solid var(--line); }
+        .cs-facts dt { font-size: 0.64rem; font-weight: 700; letter-spacing: 2px; text-transform: uppercase; color: var(--gray); }
+        .cs-facts dd { font-size: 1.05rem; font-weight: 700; margin-top: 4px; }
+
+        /* ============ NUMBERS ============ */
+        .cs-numbers { padding: 24px 0 88px; }
+        .num-list { list-style: none; margin-top: 32px; display: grid; grid-template-columns: repeat(auto-fit, minmax(220px, 1fr)); gap: 1px; background: var(--line); border: 1px solid var(--line); border-radius: 20px; overflow: hidden; }
+        .num-list li { background: var(--dark); padding: 26px 24px; }
+        .num-label { font-size: 0.7rem; font-weight: 700; letter-spacing: 2px; text-transform: uppercase; color: var(--gray); }
+        .num-vals { display: flex; align-items: baseline; flex-wrap: wrap; gap: 4px 12px; margin-top: 12px; font-variant-numeric: tabular-nums; }
+        .num-before { color: var(--gray); font-size: 1rem; font-weight: 500; text-decoration: line-through; text-decoration-color: rgba(255,255,255,0.3); }
+        .num-after { font-size: 1.9rem; font-weight: 900; letter-spacing: -0.5px; }
+        .num-vals i { color: var(--yellow); font-size: 0.75rem; }
+
+        /* ============ STORY ============ */
+        .cs-story { padding: 0 0 40px; }
+        .chapter { display: grid; grid-template-columns: 260px minmax(0, 1fr); gap: 48px; padding: 48px 0; border-top: 1px solid var(--line); }
+        .chapter-num { font-size: 0.78rem; font-weight: 800; letter-spacing: 2px; color: var(--yellow); }
+        .chapter h2 { font-size: 1.3rem; font-weight: 800; letter-spacing: 1px; text-transform: uppercase; margin-top: 8px; }
+        .chapter p { color: var(--gray-light); font-size: 1.06rem; line-height: 1.85; max-width: 62ch; }
+        .timeline { list-style: none; display: grid; gap: 0; max-width: 62ch; }
+        .timeline li { position: relative; display: grid; grid-template-columns: 120px 1fr; gap: 20px; padding: 0 0 26px 26px; }
+        .timeline li::before {
+            content: '';
+            position: absolute;
+            left: 0;
+            top: 7px;
+            width: 11px;
+            height: 11px;
+            border-radius: 50%;
+            background: var(--dark);
+            border: 2px solid var(--yellow);
+        }
+        .timeline li:not(:last-child)::after { content: ''; position: absolute; left: 5px; top: 22px; bottom: 2px; width: 1px; background: var(--line); }
+        .timeline li:last-child::before { background: var(--yellow); }
+        .timeline strong { font-size: 0.85rem; font-weight: 800; letter-spacing: 0.5px; }
+        .timeline span { color: var(--gray-light); line-height: 1.7; }
+
+        /* ============ QUOTE ============ */
+        .cs-quote { padding: 72px 0; }
+        .cs-quote blockquote {
+            font-size: clamp(1.4rem, 3.2vw, 2.3rem);
+            font-weight: 700;
+            line-height: 1.35;
+            letter-spacing: -0.3px;
+            max-width: 28ch;
+        }
+        .cs-quote blockquote::before { content: '\201C'; color: var(--yellow); }
+        .cs-quote blockquote::after { content: '\201D'; color: var(--yellow); }
+        .cs-quote figcaption { margin-top: 20px; color: var(--gray); font-weight: 600; }
+
+        /* ============ VIDEO + TRAINER ============ */
+        .cs-extra { padding: 24px 0 0; }
+        .cs-extra-grid { display: grid; grid-template-columns: minmax(0, 300px) minmax(0, 1fr); gap: 40px; align-items: end; }
+        .cs-video { position: relative; aspect-ratio: 9 / 16; border-radius: 20px; overflow: hidden; background: var(--dark-3); }
+        .cs-video video { width: 100%; height: 100%; object-fit: cover; }
+        .cs-video button {
+            position: absolute; inset: 0; border: 0; cursor: pointer; color: var(--white);
+            display: flex; flex-direction: column; align-items: center; justify-content: center; gap: 14px;
+            background: rgba(10,10,10,0.35); font-weight: 700; font-size: 0.8rem; letter-spacing: 2px; text-transform: uppercase;
+        }
+        .cs-video button span { width: 68px; height: 68px; border-radius: 50%; display: grid; place-items: center; background: var(--yellow); color: var(--dark); font-size: 1.1rem; transition: transform var(--transition); }
+        .cs-video button:hover span { transform: scale(1.06); }
+        .cs-video.is-playing button { display: none; }
+        .trainer { display: flex; align-items: center; gap: 20px; padding: 24px; border-radius: 20px; background: var(--dark-2); border: 1px solid var(--line); }
+        .trainer img { width: 84px; height: 84px; border-radius: 50%; object-fit: cover; object-position: top; background: var(--dark-3); }
+        .trainer small { display: block; font-size: 0.66rem; font-weight: 700; letter-spacing: 2px; text-transform: uppercase; color: var(--gray); }
+        .trainer strong { display: block; font-size: 1.15rem; margin: 4px 0 8px; }
+        .trainer a { color: var(--yellow); font-weight: 700; font-size: 0.85rem; display: inline-flex; gap: 8px; align-items: center; }
+
+        /* ============ NEXT ============ */
+        .cs-next { padding: 96px 0 0; }
+        .next-card {
+            display: grid;
+            grid-template-columns: 1fr auto;
+            align-items: center;
+            gap: 24px;
+            padding: 32px 0;
+            border-top: 1px solid var(--line);
+            border-bottom: 1px solid var(--line);
+        }
+        .next-card small { font-size: 0.68rem; font-weight: 700; letter-spacing: 2px; text-transform: uppercase; color: var(--gray); }
+        .next-card strong { display: block; font-size: clamp(1.2rem, 2.6vw, 1.8rem); font-weight: 800; margin-top: 6px; line-height: 1.25; transition: color var(--transition); }
+        .next-card .goal-arrow {
+            width: 56px; height: 56px; display: grid; place-items: center; border-radius: 50%;
+            border: 1px solid rgba(255,255,255,0.14); transition: background-color var(--transition), color var(--transition), border-color var(--transition);
+        }
+        .next-card:hover strong { color: var(--yellow); }
+        .next-card:hover .goal-arrow { background: var(--yellow); color: var(--dark); border-color: var(--yellow); }
+
+        /* ============ RESPONSIVE ============ */
+        @media (max-width: 1024px) {
+            .cs-hero-grid { gap: 40px; }
+            .chapter { grid-template-columns: 1fr; gap: 16px; }
+        }
+
+        @media (max-width: 768px) {
+            .cs-hero { padding: 118px 0 56px; }
+            .cs-hero-grid { grid-template-columns: 1fr; gap: 28px; }
+            .cs-media { border-radius: 18px; }
+            .cs-media .ba-slider { aspect-ratio: 5 / 6.5; }
+            .cs-media-quote { aspect-ratio: auto; padding: 32px 24px; font-size: 1.12rem; }
+            .cs-highlight { letter-spacing: -1px; }
+            .cs-facts { margin: 28px 0; }
+            .cs-facts dd { font-size: 0.95rem; }
+            .cs-hero .btn { width: 100%; }
+
+            .cs-numbers { padding: 8px 0 56px; }
+            .num-list { grid-template-columns: 1fr 1fr; border-radius: 16px; }
+            .num-list li { padding: 18px 16px; }
+            .num-label { font-size: 0.6rem; letter-spacing: 1.2px; }
+            .num-after { font-size: 1.35rem; }
+            .num-before { font-size: 0.85rem; }
+
+            .chapter { padding: 36px 0; }
+            .chapter p { font-size: 0.98rem; }
+            .timeline li { grid-template-columns: 1fr; gap: 2px; }
+
+            .cs-quote { padding: 48px 0; }
+
+            .cs-extra-grid { grid-template-columns: 1fr; gap: 20px; }
+            .cs-video { max-width: 280px; }
+            .trainer { padding: 18px; }
+            .trainer img { width: 68px; height: 68px; }
+
+            .cs-next { padding-top: 64px; }
+            .next-card .goal-arrow { width: 46px; height: 46px; }
+        }
+    </style>
+</head>
+<body>
+
+    <div id="page-loader">
+        <div class="loader-rig">
+            <div class="loader-ring"></div>
+            <div class="loader-ring-inner"></div>
+            <img class="loader-logo" src="../favicon.png" alt="Ładowanie strony">
+        </div>
+        <div class="loader-text"><span>L</span><span>O</span><span>A</span><span>D</span><span>I</span><span>N</span><span>G</span></div>
+    </div>
+
+    <nav class="navbar" id="navbar">
+        <div class="container">
+            <a href="../index.html" class="logo" aria-label="Body Creator — strona główna"><img src="../logobezpodpisu.png" alt="Body Creator — Studio Treningu Personalnego Wrocław" width="140" height="70"></a>
+            <div class="nav-cta">
+                <a href="../rezerwacja.html" class="btn btn-primary btn-sm">Darmowa konsultacja <i class="fas fa-arrow-right"></i></a>
+                <a href="tel:518167945" class="nav-phone"><i class="fas fa-phone"></i> 518 167 945</a>
+            </div>
+            <div class="nav-toggle" id="navToggle" aria-label="Menu"><span></span><span></span><span></span></div>
+        </div>
+    </nav>
+    <div class="nav-overlay" id="navOverlay">
+        <nav class="nav-menu">
+            <ul>
+                <li><a href="../index.html">Strona Główna</a></li>
+                <li><a href="../oferta.html">Oferta</a></li>
+                <li><a href="../o-nas.html">O Nas</a></li>
+                <li><a href="przemiany.html">Przemiany</a></li>
+                <li><a href="../kalkulator.html">Kalkulator</a></li>
+                <li><a href="../rezerwacja.html">Umów Wizytę</a></li>
+                <li><a href="../kontakt.html">Kontakt</a></li>
+            </ul>
+            <div class="nav-socials">
+                <a href="https://www.instagram.com/bodycreatorstudio/" target="_blank" rel="noopener noreferrer" aria-label="Body Creator na Instagramie"><i class="fab fa-instagram" aria-hidden="true"></i></a>
+            </div>
+        </nav>
+    </div>
+
+    <main id="app"></main>
+
+    <footer class="footer">
+        <div class="container">
+            <div class="footer-content">
+                <div class="footer-links">
+                    <a href="../index.html">Strona główna</a>
+                    <a href="../oferta.html">Oferta</a>
+                    <a href="../o-nas.html">O nas</a>
+                    <a href="../kontakt.html">Kontakt</a>
+                    <a href="../polityka-prywatnosci.html">Polityka prywatności</a>
+                </div>
+                <p class="footer-copy">© 2026 Body Creator — Studio Treningu Personalnego Wrocław. Wszelkie prawa zastrzeżone.</p>
+            </div>
+        </div>
+    </footer>
+
+    <a href="https://wa.me/48518167945" target="_blank" rel="noopener noreferrer" class="whatsapp-float" aria-label="Napisz do nas na WhatsApp"><i class="fab fa-whatsapp"></i></a>
+
+    <script src="https://cdn.jsdelivr.net/npm/@studio-freight/lenis@1.0.42/dist/lenis.min.js"></script>
+    <script src="przemiany-data.js"></script>
+    <script src="przemiany.js"></script>
+    <script>
+        (function () {
+            var esc = BC.esc;
+            var app = document.getElementById('app');
+            var c = BC.caseById(BC.param('id'));
+            if (!c || !c.story) { BC.notFound(app, 'Nie znaleźliśmy tej historii'); return; }
+
+            var cat = BC.category(c.category);
+            var area = BC.area(cat.area);
+            var trainer = c.trainer && BC.data.trainers[c.trainer];
+            var personLine = [c.name, BC.age(c.age)].filter(Boolean).join(', ');
+
+            document.title = c.title + ' — case study | Body Creator Wrocław';
+            var md = document.querySelector('meta[name="description"]');
+            if (md) md.content = (personLine ? personLine + ': ' : '') + c.title + '. ' + cat.title + ' w Body Creator Wrocław.';
+
+            var media = (c.before && c.after)
+                ? BC.sliderHTML(c, BC.altFor(c))
+                : '<blockquote class="cs-media-quote">' + esc(c.quote) + '<cite>' + esc(personLine) + '</cite></blockquote>';
+
+            var facts = [
+                ['Czas współpracy', c.duration],
+                ['Treningi', c.perWeek ? c.perWeek + '× w tygodniu' : null],
+                ['Cel', cat.title],
+                ['Trener', trainer ? trainer.name.split(' ')[0] : null]
+            ].filter(function (f) { return f[1]; });
+
+            var chapters = [
+                { title: 'Punkt wyjścia', body: '<p>' + esc(c.story.start) + '</p>' },
+                { title: 'Plan', body: '<p>' + esc(c.story.plan) + '</p>' }
+            ];
+            if (c.timeline && c.timeline.length) {
+                chapters.push({ title: 'Przebieg', body: '<ol class="timeline">' + c.timeline.map(function (t) {
+                    return '<li><strong>' + esc(t.when) + '</strong><span>' + esc(t.text) + '</span></li>';
+                }).join('') + '</ol>' });
+            }
+            chapters.push({ title: 'Efekt', body: '<p>' + esc(c.story.result) + '</p>' });
+
+            // Następna historia: kolejne case study z listy (w kółko)
+            var all = BC.data.cases.filter(BC.isStory);
+            var next = all[(all.indexOf(c) + 1) % all.length];
+
+            app.innerHTML =
+                '<section class="cs-hero"><div class="container">' +
+                    '<nav class="crumbs" aria-label="Okruszki"><a href="przemiany.html">Przemiany</a><i class="fas fa-chevron-right" aria-hidden="true"></i>' +
+                    '<a href="' + BC.areaUrl(area.id) + '">' + esc(area.name) + '</a><i class="fas fa-chevron-right" aria-hidden="true"></i>' +
+                    '<a href="' + BC.categoryUrl(cat.slug) + '">' + esc(cat.title) + '</a></nav>' +
+                    '<div class="cs-hero-grid">' +
+                        '<div class="cs-media">' + media + '</div>' +
+                        '<div>' +
+                            '<span class="section-label">Case study · ' + esc(cat.title) + '</span>' +
+                            '<span class="cs-highlight">' + esc(c.highlight) + '</span>' +
+                            '<h1>' + esc(c.title) + '</h1>' +
+                            '<p class="cs-who">' + esc([personLine, c.condition].filter(Boolean).join(' · ')) + '</p>' +
+                            '<dl class="cs-facts">' + facts.map(function (f) { return '<div><dt>' + esc(f[0]) + '</dt><dd>' + esc(f[1]) + '</dd></div>'; }).join('') + '</dl>' +
+                            '<a class="btn btn-primary" href="../rezerwacja.html">Chcę podobny efekt <i class="fas fa-arrow-right"></i></a>' +
+                        '</div>' +
+                    '</div>' +
+                '</div></section>' +
+
+                (c.metrics && c.metrics.length ? '<section class="cs-numbers"><div class="container">' +
+                    '<span class="section-label">Liczby</span><h2 class="h-section">Start i meta</h2>' +
+                    '<ul class="num-list">' + c.metrics.map(function (m) {
+                        return '<li class="reveal"><div class="num-label">' + esc(m.label) + '</div><div class="num-vals">' +
+                            '<span class="num-before"><span class="sr-only">Na starcie: </span>' + esc(m.before) + '</span><i class="fas fa-arrow-right" aria-hidden="true"></i>' +
+                            '<span class="num-after"><span class="sr-only">Po: </span>' + esc(m.after) + '</span></div></li>';
+                    }).join('') + '</ul></div></section>' : '') +
+
+                '<section class="cs-story"><div class="container">' +
+                    chapters.map(function (ch, i) {
+                        return '<div class="chapter reveal"><div><span class="chapter-num">0' + (i + 1) + '</span><h2>' + esc(ch.title) + '</h2></div><div>' + ch.body + '</div></div>';
+                    }).join('') +
+                '</div></section>' +
+
+                (c.quote && c.after ? '<section class="cs-quote"><div class="container"><figure class="reveal"><blockquote>' + esc(c.quote) + '</blockquote>' +
+                    '<figcaption>' + esc(personLine) + '</figcaption></figure></div></section>' : '') +
+
+                (c.video || trainer ? '<section class="cs-extra"><div class="container cs-extra-grid">' +
+                    (c.video ? '<div class="cs-video"><video src="' + esc(c.video) + '" preload="metadata" playsinline loop></video>' +
+                        '<button type="button" aria-label="Odtwórz wideo"><span><i class="fas fa-play"></i></span>Zobacz wideo</button></div>' : '<div></div>') +
+                    (trainer ? '<div class="trainer reveal"><img src="' + esc(trainer.photo) + '" alt="' + esc(trainer.name) + '" loading="lazy">' +
+                        '<div><small>Trening prowadzi</small><strong>' + esc(trainer.name) + '</strong>' +
+                        '<a href="../o-nas.html">Poznaj zespół <i class="fas fa-arrow-right"></i></a></div></div>' : '') +
+                '</div></section>' : '') +
+
+                (next && next !== c ? '<section class="cs-next"><div class="container">' +
+                    '<a class="next-card" href="' + BC.caseUrl(next) + '"><div><small>Następna historia · ' + esc(BC.category(next.category).title) + '</small>' +
+                    '<strong>' + esc(next.highlight) + ': ' + esc(next.title) + '</strong></div>' +
+                    '<span class="goal-arrow" aria-hidden="true"><i class="fas fa-arrow-right"></i></span></a>' +
+                '</div></section>' : '') +
+
+                '<section class="cta-band"><div class="container"><div class="cta-band-inner reveal">' +
+                    '<div><span class="section-label">Twoja historia</span><h2>Zacznij od darmowej konsultacji</h2>' +
+                    '<p>Ta historia też zaczęła się od jednej rozmowy. Sprawdzimy, jak może wyglądać Twoja droga.</p></div>' +
+                    '<div class="cta-band-actions"><a href="../rezerwacja.html" class="btn btn-primary">Umów konsultację <i class="fas fa-arrow-right"></i></a>' +
+                    '<a href="tel:518167945" class="cta-band-phone"><i class="fas fa-phone"></i> 518 167 945</a></div>' +
+                '</div></div></section>';
+
+            var vid = app.querySelector('.cs-video');
+            if (vid) vid.querySelector('button').addEventListener('click', function () {
+                var v = vid.querySelector('video');
+                vid.classList.add('is-playing');
+                v.controls = true;
+                v.play();
+            });
+
+            BC.initSliders(app);
+            BC.initReveal(app);
+        })();
+    </script>
+    <script src="bg-rotator.js" defer></script>
+</body>
+</html>
