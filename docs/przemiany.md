@@ -35,7 +35,7 @@ Przebudowana po głosowym feedbacku klienta (07.10.2026). Zasada klienta: **mał
 Kolejność sekcji:
 1. Hero: okruszki, etykieta obszaru, nazwa celu. **Bez** `lead`, bez CTA na górze („ktoś wszedł zobaczyć przemiany, a nie umawiać się”).
 2. Przemiany, jedna pod drugą:
-   - przemiana z opisem (`BC.hasDescription`: jest `goal`, `actions` lub `effects`) to duży blok: suwak przed/po, wynik (`highlight`) + linia osoby, potem 3 krótkie bloki: **Cel** (w obszarze Ból i urazy: **Opis problemu**) / **Podjęte działania** (punkty) / **Efekty współpracy**, pod nimi wideo (jeśli jest `video`) i mały link „Masz podobny cel/problem? Umów darmową konsultację”. Bez zdjęć blok pokazuje sam opis (bez cytatu, żeby nie dublować treści);
+   - przemiana z opisem (`BC.hasDescription`: jest `goal`, `actions` lub `effects`) to duży blok: suwak przed/po, wynik (`highlight`) + linia osoby, potem 3 krótkie bloki: **Cel** (w obszarze Ból i urazy: **Opis problemu**) / **Podjęte działania** (punkty) / **Efekty współpracy**, pod nimi wideo (jeśli jest `video`). Bez linku do konsultacji w bloku (klient go usunął, CTA jest raz, pod listą). Bez zdjęć blok pokazuje sam opis (bez cytatu, żeby nie dublować treści);
    - same zdjęcia (bez opisu): siatka, pierwsze 6 widoczne, reszta pod przyciskiem „Zobacz więcej przemian”;
    - opinie bez zdjęć i bez opisu: karty z cytatem.
 3. Krótkie CTA z pilnością: „Terminy współpracy szybko się zapełniają. Nie zwlekaj, umów się już dziś.” + mały przycisk.

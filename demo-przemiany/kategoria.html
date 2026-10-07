@@ -79,9 +79,6 @@
         }
         .video-play:hover .video-play-icon { transform: scale(1.06); }
         .story-video.is-playing .video-play { display: none; }
-        .story-cta { align-self: flex-start; color: var(--yellow); font-size: 0.88rem; font-weight: 700; }
-        .story-cta i { margin-left: 6px; transition: transform var(--transition); }
-        .story-cta:hover i { transform: translateX(4px); }
 
         /* Same zdjęcia przed/po (bez opisu) */
         .ba-grid { display: grid; grid-template-columns: repeat(auto-fill, minmax(240px, 1fr)); gap: 16px; align-items: start; }
@@ -257,8 +254,8 @@
     <a href="https://wa.me/48518167945" target="_blank" rel="noopener noreferrer" class="whatsapp-float" aria-label="Napisz do nas na WhatsApp"><i class="fab fa-whatsapp"></i></a>
 
     <script src="https://cdn.jsdelivr.net/npm/@studio-freight/lenis@1.0.42/dist/lenis.min.js"></script>
-    <script src="przemiany-data.js"></script>
-    <script src="przemiany.js"></script>
+    <script src="przemiany-data.js?v=20261007"></script>
+    <script src="przemiany.js?v=20261007"></script>
     <script>
         (function () {
             var esc = BC.esc;
@@ -297,7 +294,6 @@
                         (c.effects ? '<div class="story-block"><h3>Efekty współpracy</h3><p>' + esc(c.effects) + '</p></div>' : '') +
                         (c.video ? '<div class="story-video"><video src="' + esc(c.video) + '" preload="metadata" playsinline loop></video>' +
                             '<button class="video-play" type="button" aria-label="Odtwórz wideo"><span class="video-play-icon"><i class="fas fa-play"></i></span></button></div>' : '') +
-                        '<a class="story-cta" href="../rezerwacja.html">' + (cat.area === 'bol' ? 'Masz podobny problem?' : 'Masz podobny cel?') + ' Umów darmową konsultację <i class="fas fa-arrow-right"></i></a>' +
                     '</div></article>';
             }
 
