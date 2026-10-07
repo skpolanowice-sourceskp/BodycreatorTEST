@@ -13,32 +13,33 @@ Nowy system leży w **`demo-przemiany/`** (po wgraniu do `/bodycreatorMJ/demo-pr
 ## Trzy poziomy
 
 ```
-przemiany.html                     hub: zakładki obszarów + lista celów
+przemiany.html                     hub: akordeon obszarów z kafelkami celów
   └─ kategoria.html?k=<slug>       cel: opis, „dla kogo”, „jak pracujemy”, przemiany, wideo
        └─ case-study.html?id=<id>  pełna historia jednej osoby
 ```
 
 ### 1. `przemiany.html` (hub)
 
-- Zakładki obszarów (`role="tablist"`, strzałki ←/→ działają). Licznik przy zakładce to liczba celów.
-- Wybrany obszar trafia do adresu: `przemiany.html#bol`. Okruszki z podstron linkują do `#<area-id>`.
-- Lista celów to wiersze-linki: nazwa, tagline, licznik („8 przemian · 2 case study”), do 3 miniatur zdjęć „po” i strzałka.
-  **Bez numeracji „01 / 07”**, bo klient jej nie chce.
-- Cel bez przemian pokazuje „Wkrótce pierwsze historie”.
-- Pasek wyróżnionych historii: przemiany z `featured: true` **i** `story`.
+Po feedbacku klienta (10.2026) hub jest **maksymalnie prosty**: mały nagłówek „Wybierz cel” i 3 obszary jako akordeon. Klient wyraźnie **nie chce** na tej stronie zdjęć (miniatur), liczników przy obszarach, statystyk typu „7 celów · 11 przemian · 3 case study”, opisów obszarów ani paska wyróżnionych historii.
+
+- Domyślnie wszystkie obszary są zwinięte. Klik rozwija jeden (drugi się zwija), pod spodem wyjeżdża ciasna siatka kafelków celów.
+- Kafelek: nazwa celu ze strzałką, w prawym górnym rogu **liczba przemian** (np. „8 przemian”). Cel bez przemian ma w rogu „Wkrótce”.
+- Otwarty obszar trafia do adresu: `przemiany.html#bol`. Okruszki z podstron linkują do `#<area-id>` i otwierają ten obszar.
+- **Bez numeracji „01 / 07”**, bo klient jej nie chce.
+- Pola `area.lead`, `category.tagline` i `featured` nie są już używane na hubie (zostają w danych dla podstron i panelu).
 
 ### 2. `kategoria.html?k=<slug>`
 
 Kolejność sekcji:
-1. Hero: okruszki, nazwa, `lead`, fakty (typowy czas / liczba przemian / liczba case study), CTA.
-2. „Dla kogo” (`forWho`) i „Jak pracujemy” (`process`, 3 kroki).
-3. Efekty:
+1. Hero: okruszki, nazwa, `lead`, jeden przycisk CTA (konsultacja).
+   Po feedbacku klienta (10.2026) usunięte: pasek faktów (typowy czas / przemiany / case study), link „Zobacz efekty”, sekcje „Dla kogo” i „Jak pracujemy”. Pola `typicalTime`, `forWho`, `process` zostają w danych, ale nie są wyświetlane.
+2. Efekty:
    - case study jako duże bloki (suwak przed/po + tabela `metrics`);
    - siatka pozostałych zdjęć;
    - karty z cytatem dla przemian bez zdjęć.
-4. Wideo, jeśli którakolwiek przemiana ma `video`.
-5. Inne cele z obszaru + poprzedni/następny cel.
-6. CTA.
+3. Wideo, jeśli którakolwiek przemiana ma `video`.
+4. Inne cele z obszaru + poprzedni/następny cel.
+5. CTA.
 
 Brak przemian: pusty stan „Pierwsze historie w drodze”. Nieznany slug: komunikat z linkiem do huba.
 
@@ -65,7 +66,10 @@ Globalny obiekt `window.BC_PRZEMIANY`:
     title, tagline, lead,
     typicalTime,              // "3–8 miesięcy"
     forWho: [string],         // 3 punkty
-    process: [{ title, text }]// 3 kroki
+    process: [{ title, text }],// 3 kroki
+    // --- planowane w panelu (patrz Plan backendu, pkt 3) ---
+    visible,                  // false = kafelek zdjęty ze strony, dane zostają
+    order                     // kolejność kafelków w obszarze
   }],
   cases: [{
     id, category,             // WYMAGANE; category = categories[].slug
@@ -106,8 +110,17 @@ Obecne imiona, liczby (kg, cm, ciężary), historie przy zdjęciach i 4 z 7 cel�
 
 Cel: klient sam dodaje zdjęcia, filmy, przemiany i case study.
 
-1. **Źródło danych.** `przemiany-data.js` zastąpić endpointem, np. `api/przemiany.php`, zwracającym **dokładnie tę samą strukturę** jako JSON. Szablony stron czytają tylko `window.BC_PRZEMIANY`, więc wystarczy załadować JSON i przypisać go do tej zmiennej przed `przemiany.js`. Albo, lepiej, renderować po stronie serwera (pkt 3).
-2. **Panel.** Logowanie klienta, CRUD dla `areas`, `categories`, `cases`, `trainers`. Upload zdjęć z konwersją do `.webp` 500×800 (proporcje 5:8) i wideo `.mp4` (pionowe 9:16). Pola podpisu jako opcjonalne, z opisem „zostaw puste, żeby ukryć podpis”.
-3. **SEO.** Podstrony z `?k=` / `?id=` budują treść w JS. Docelowo PHP powinien renderować HTML po stronie serwera, z ładnymi adresami przez `.htaccess` (np. `/przemiany/redukcja`, `/przemiany/redukcja/kasia`), `canonical`, wpisami w `sitemap.xml` i `BreadcrumbList`. Patrz [seo.md](seo.md).
-4. **Bezpieczeństwo.** Escapowanie wyjścia, walidacja typów plików przy uploadzie, katalog uploadów bez wykonywania PHP, ochrona panelu (hasło + limit prób). Antyspam można wziąć z [formularze.md](formularze.md).
-5. **Kolejność.** `featured` / kolejność na listach jako pole `order` (dziś decyduje kolejność w tablicy).
+1. **Źródło danych.** `przemiany-data.js` zastąpić endpointem, np. `api/przemiany.php`, zwracającym **dokładnie tę samą strukturę** jako JSON. Szablony stron czytają tylko `window.BC_PRZEMIANY`, więc wystarczy załadować JSON i przypisać go do tej zmiennej przed `przemiany.js`. Albo, lepiej, renderować po stronie serwera (pkt 4).
+2. **Panel.** Logowanie klienta, CRUD dla `categories` (szczegóły w pkt 3), `cases`, `trainers`. Upload zdjęć z konwersją do `.webp` 500×800 (proporcje 5:8) i wideo `.mp4` (pionowe 9:16). Pola podpisu jako opcjonalne, z opisem „zostaw puste, żeby ukryć podpis”.
+3. **Kafelki celów (zarządzanie kategoriami).** Klient sam decyduje, jakie cele (małe kafelki pod obszarem na hubie, np. „Redukcja tkanki tłuszczowej”, „Ból barku”) są na stronie. W panelu:
+   - **dodawanie** kafelka: nazwa + wybór obszaru (Sylwetka i zdrowie / Ból i urazy / Sport i sprawność); slug generowany automatycznie z nazwy, opis (`lead`) opcjonalny;
+   - **edycja** nazwy i opisu. Slug po utworzeniu się nie zmienia, żeby nie psuć linków (albo zmiana slugu zapisuje przekierowanie 301);
+   - **zdejmowanie** kafelka: przełącznik „widoczny / ukryty” (pole `visible`). Ukryty kafelek znika z huba, a jego podstrona zwraca 404 lub przekierowuje do huba. Przemiany i zdjęcia zostają w bazie, więc kafelek można przywrócić jednym kliknięciem;
+   - **usuwanie na stałe** tylko dla kafelka bez przemian. Jeśli ma przemiany, panel każe je najpierw przenieść do innego celu albo ukryć kafelek;
+   - **kolejność** kafelków w obszarze: przeciąganie lub strzałki góra/dół (pole `order`);
+   - opcjonalnie: przełącznik „ukrywaj puste kafelki”, żeby cele bez przemian nie pokazywały „Wkrótce”.
+
+   Liczba w rogu kafelka liczy się sama z przemian przypisanych do celu, klient jej nie wpisuje. Same obszary (3 duże kategorie) zostają stałe, bez edycji w panelu, chyba że klient poprosi.
+4. **SEO.** Podstrony z `?k=` / `?id=` budują treść w JS. Docelowo PHP powinien renderować HTML po stronie serwera, z ładnymi adresami przez `.htaccess` (np. `/przemiany/redukcja`, `/przemiany/redukcja/kasia`), `canonical`, wpisami w `sitemap.xml` i `BreadcrumbList`. Patrz [seo.md](seo.md).
+5. **Bezpieczeństwo.** Escapowanie wyjścia, walidacja typów plików przy uploadzie, katalog uploadów bez wykonywania PHP, ochrona panelu (hasło + limit prób). Antyspam można wziąć z [formularze.md](formularze.md).
+6. **Kolejność.** `featured` / kolejność na listach jako pole `order` (dziś decyduje kolejność w tablicy).

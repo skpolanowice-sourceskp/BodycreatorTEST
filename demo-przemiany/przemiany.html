@@ -28,154 +28,43 @@
 
     <style>
         /* ============ HERO ============ */
-        .hub-hero { padding: 168px 0 48px; }
+        .hub-hero { padding: 156px 0 28px; }
         .hub-hero h1 {
-            font-size: clamp(2.1rem, 6vw, 4.4rem);
+            font-size: clamp(1.7rem, 4vw, 2.6rem);
             font-weight: 900;
             letter-spacing: 1.5px;
-            line-height: 1.04;
+            line-height: 1.1;
             text-transform: uppercase;
-            max-width: 15ch;
-        }
-        .hub-hero p {
-            margin-top: 22px;
-            color: var(--gray-light);
-            font-size: 1.08rem;
-            line-height: 1.75;
-            max-width: 52ch;
         }
 
-        /* ============ AREA TABS ============ */
-        .area-tabs {
-            display: grid;
-            grid-template-columns: repeat(3, 1fr);
-            gap: 6px;
-            padding: 6px;
-            max-width: 820px;
-            background: var(--dark-2);
-            border: 1px solid var(--line);
-            border-radius: 28px;
-        }
-        .area-tab {
+        /* ============ KATEGORIE (akordeon) ============ */
+        .areas { padding: 0 0 24px; }
+        .acc-list { border-bottom: 1px solid var(--line); }
+        .acc { border-top: 1px solid var(--line); }
+        .acc-head {
             appearance: none;
+            width: 100%;
             border: 0;
             background: transparent;
-            color: var(--gray-light);
+            color: var(--white);
             display: flex;
             align-items: center;
-            justify-content: center;
-            gap: 12px;
-            min-height: 64px;
-            padding: 10px 18px;
-            border-radius: 22px;
+            justify-content: space-between;
+            gap: 20px;
+            padding: 28px 0;
             cursor: pointer;
-            font-size: 0.8rem;
-            font-weight: 800;
-            letter-spacing: 1.5px;
-            line-height: 1.25;
+            font: inherit;
+            font-size: clamp(1.3rem, 3.4vw, 2.2rem);
+            font-weight: 900;
+            letter-spacing: 1px;
+            line-height: 1.15;
             text-transform: uppercase;
             text-align: left;
-            white-space: nowrap;
-            transition: color var(--transition), background-color var(--transition);
+            transition: color var(--transition);
         }
-        .area-tab:hover { color: var(--white); }
-        .area-tab[aria-selected="true"] { background: var(--yellow); color: var(--dark); }
-        .area-tab-count {
+        .acc-head:hover, .acc-head[aria-expanded="true"] { color: var(--yellow); }
+        .acc-icon {
             flex: none;
-            display: grid;
-            place-items: center;
-            width: 30px;
-            height: 30px;
-            border-radius: 50%;
-            background: rgba(255,255,255,0.08);
-            font-size: 0.78rem;
-            letter-spacing: 0;
-            font-variant-numeric: tabular-nums;
-        }
-        .area-tab[aria-selected="true"] .area-tab-count { background: rgba(10,10,10,0.14); }
-
-        /* ============ AREA PANEL ============ */
-        .areas { padding: 0 0 40px; }
-        .area-panel {
-            display: grid;
-            grid-template-columns: minmax(0, 4fr) minmax(0, 7fr);
-            gap: 72px;
-            padding-top: 64px;
-        }
-        .area-panel[hidden] { display: none; }
-        .area-intro { position: sticky; top: 130px; align-self: start; }
-        .area-intro h2 {
-            font-size: clamp(1.6rem, 3vw, 2.4rem);
-            font-weight: 800;
-            letter-spacing: 1px;
-            line-height: 1.12;
-            text-transform: uppercase;
-        }
-        .area-intro p { margin-top: 16px; color: var(--gray-light); line-height: 1.75; max-width: 40ch; }
-        .area-intro-meta {
-            margin-top: 24px;
-            padding-top: 20px;
-            border-top: 1px solid var(--line);
-            color: var(--gray);
-            font-size: 0.85rem;
-            font-weight: 600;
-        }
-        .area-intro-meta strong { color: var(--white); }
-        .area-help {
-            display: inline-flex;
-            align-items: center;
-            gap: 10px;
-            margin-top: 28px;
-            color: var(--yellow);
-            font-weight: 700;
-            font-size: 0.9rem;
-        }
-        .area-help i { transition: transform var(--transition); }
-        .area-help:hover i { transform: translateX(4px); }
-
-        /* ============ GOAL LIST ============ */
-        .goal-list { list-style: none; border-bottom: 1px solid var(--line); }
-        .goal-list li { border-top: 1px solid var(--line); }
-        .goal {
-            position: relative;
-            display: grid;
-            grid-template-columns: minmax(0, 1fr) auto 48px;
-            align-items: center;
-            gap: 20px;
-            padding: 28px 4px;
-            isolation: isolate;
-        }
-        .goal::before {
-            content: '';
-            position: absolute;
-            inset: 4px -16px;
-            border-radius: 16px;
-            background: var(--dark-2);
-            opacity: 0;
-            transition: opacity .35s var(--ease-out);
-            z-index: -1;
-        }
-        .goal:hover::before, .goal:focus-visible::before { opacity: 1; }
-        .goal-body { display: flex; flex-direction: column; gap: 6px; transition: transform .45s var(--ease-out); }
-        .goal:hover .goal-body { transform: translateX(6px); }
-        .goal-title { font-size: clamp(1.2rem, 2.1vw, 1.55rem); font-weight: 700; line-height: 1.25; letter-spacing: 0.2px; }
-        .goal-tag { color: var(--gray-light); font-size: 0.92rem; line-height: 1.5; }
-        .goal-meta { color: var(--gray); font-size: 0.78rem; font-weight: 600; letter-spacing: 0.3px; margin-top: 2px; }
-        .goal-meta.is-soon { color: var(--gray); font-style: italic; font-weight: 500; }
-        .goal-thumbs { display: flex; padding-left: 10px; }
-        .goal-thumbs img {
-            width: 44px;
-            height: 62px;
-            object-fit: cover;
-            border-radius: 8px;
-            margin-left: -10px;
-            border: 2px solid var(--dark);
-            background: var(--dark-3);
-            transition: transform .45s var(--ease-out);
-        }
-        .goal:hover .goal-thumbs img:nth-child(1) { transform: translateX(-6px) rotate(-4deg); }
-        .goal:hover .goal-thumbs img:nth-child(3) { transform: translateX(6px) rotate(4deg); }
-        .goal-arrow {
             width: 48px;
             height: 48px;
             display: grid;
@@ -183,149 +72,84 @@
             border-radius: 50%;
             border: 1px solid rgba(255,255,255,0.14);
             color: var(--white);
-            font-size: 0.9rem;
+            font-size: 0.95rem;
             transition: background-color var(--transition), border-color var(--transition), color var(--transition), transform .45s var(--ease-out);
         }
-        .goal:hover .goal-arrow { background: var(--yellow); border-color: var(--yellow); color: var(--dark); transform: rotate(-45deg); }
+        .acc-head:hover .acc-icon { border-color: var(--yellow); }
+        .acc-head[aria-expanded="true"] .acc-icon { background: var(--yellow); border-color: var(--yellow); color: var(--dark); transform: rotate(45deg); }
 
-        .area-panel.is-entering .goal-list li { animation: goalIn .6s var(--ease-out) both; }
-        @keyframes goalIn { from { opacity: 0; transform: translateY(14px); } to { opacity: 1; transform: none; } }
-        @media (prefers-reduced-motion: reduce) { .area-panel.is-entering .goal-list li { animation: none; } }
-
-        /* ============ FEATURED STORIES ============ */
-        .stories { padding: 104px 0 0; }
-        .stories-head { display: flex; align-items: end; justify-content: space-between; gap: 24px; margin-bottom: 36px; }
-        .stories-head p { color: var(--gray-light); max-width: 44ch; margin-top: 12px; }
-        .stories-track {
+        .acc-panel {
             display: grid;
-            grid-template-columns: repeat(4, minmax(0, 1fr));
-            gap: 20px;
+            grid-template-rows: 0fr;
+            visibility: hidden;
+            transition: grid-template-rows .5s var(--ease-out), visibility 0s linear .5s;
         }
-        .story {
+        .acc-panel.is-open { grid-template-rows: 1fr; visibility: visible; transition: grid-template-rows .5s var(--ease-out); }
+        .acc-inner { overflow: hidden; min-height: 0; }
+
+        /* ============ CELE (kafelki) ============ */
+        .goal-grid {
+            list-style: none;
+            display: grid;
+            grid-template-columns: repeat(auto-fill, minmax(230px, 1fr));
+            gap: 8px;
+            padding: 0 0 28px;
+        }
+        .goal {
             position: relative;
             display: flex;
-            flex-direction: column;
-            justify-content: flex-end;
-            aspect-ratio: 4 / 5.4;
-            border-radius: 18px;
-            overflow: hidden;
-            background: var(--dark-3);
-            isolation: isolate;
-        }
-        .story img {
-            position: absolute;
-            inset: 0;
-            width: 100%;
+            align-items: flex-end;
             height: 100%;
-            object-fit: cover;
-            z-index: -2;
-            transition: transform .9s var(--ease-out);
+            min-height: 112px;
+            padding: 16px 18px;
+            border-radius: 16px;
+            background: var(--dark-2);
+            border: 1px solid var(--line);
+            transition: border-color var(--transition), background-color var(--transition);
         }
-        .story::after {
-            content: '';
+        .goal:hover, .goal:focus-visible { border-color: rgba(245,202,0,0.5); background: var(--dark-3); }
+        .goal-name { padding-top: 40px; font-size: 1.02rem; font-weight: 700; line-height: 1.3; }
+        .goal-name i { margin-left: 6px; color: var(--yellow); font-size: 0.8em; transition: transform var(--transition); }
+        .goal:hover .goal-name i { transform: translateX(4px); }
+        .goal-count {
             position: absolute;
-            inset: 0;
-            z-index: -1;
-            background: linear-gradient(180deg, rgba(10,10,10,0) 30%, rgba(10,10,10,0.7) 55%, rgba(10,10,10,0.96) 85%);
+            top: 12px;
+            right: 16px;
+            text-align: right;
+            color: var(--yellow);
+            font-size: 1.9rem;
+            font-weight: 900;
+            line-height: 1;
+            font-variant-numeric: tabular-nums;
         }
-        .story:hover img { transform: scale(1.05); }
-        .story-body { padding: 22px; }
-        .story-cat { font-size: 0.66rem; font-weight: 700; letter-spacing: 2.5px; text-transform: uppercase; color: var(--yellow); }
-        .story-highlight { display: block; font-size: 2.3rem; font-weight: 900; line-height: 1; margin: 10px 0 8px; letter-spacing: -0.5px; }
-        .story-title { font-size: 0.95rem; font-weight: 600; line-height: 1.4; color: var(--gray-light); }
-        .story-link {
-            display: inline-flex;
-            align-items: center;
-            gap: 8px;
-            margin-top: 16px;
-            font-size: 0.75rem;
+        .goal-count small {
+            display: block;
+            margin-top: 3px;
+            color: var(--gray);
+            font-size: 0.6rem;
             font-weight: 700;
-            letter-spacing: 1.5px;
+            letter-spacing: 1px;
             text-transform: uppercase;
         }
-        .story-link i { color: var(--yellow); transition: transform var(--transition); }
-        .story:hover .story-link i { transform: translateX(4px); }
-        .story.is-quote { background: var(--dark-2); border: 1px solid var(--line); }
-        .story.is-quote::after { display: none; }
-        .story-quote {
-            position: absolute;
-            top: 22px;
-            left: 22px;
-            right: 22px;
-            font-size: 1.02rem;
-            line-height: 1.6;
-            color: var(--gray-light);
-        }
-        .story-quote::before {
-            content: '\201C';
-            display: block;
-            font-family: Georgia, serif;
-            font-size: 4rem;
-            line-height: 0.8;
-            color: var(--yellow);
-            margin-bottom: 6px;
+        .goal.is-soon .goal-name { color: var(--gray-light); }
+        .goal.is-soon .goal-count { color: var(--gray); font-size: 0.6rem; font-weight: 700; letter-spacing: 1px; text-transform: uppercase; }
+
+        .acc-panel.is-open .goal-grid li { animation: goalIn .5s var(--ease-out) both; }
+        @keyframes goalIn { from { opacity: 0; transform: translateY(10px); } to { opacity: 1; transform: none; } }
+        @media (prefers-reduced-motion: reduce) {
+            .acc-panel, .acc-panel.is-open { transition: none; }
+            .acc-panel.is-open .goal-grid li { animation: none; }
         }
 
         /* ============ RESPONSIVE ============ */
-        @media (max-width: 1024px) {
-            .area-panel { grid-template-columns: 1fr; gap: 32px; }
-            .area-intro { position: static; }
-            .stories-track { grid-template-columns: repeat(2, minmax(0, 1fr)); }
-        }
-
         @media (max-width: 768px) {
-            .hub-hero { padding: 128px 0 32px; }
-            .hub-hero p { font-size: 0.98rem; }
-
-            .area-tabs { gap: 4px; padding: 5px; border-radius: 24px; }
-            .area-tab {
-                flex-direction: column;
-                gap: 8px;
-                min-height: 88px;
-                padding: 12px 6px;
-                font-size: 0.66rem;
-                letter-spacing: 1px;
-                text-align: center;
-                white-space: normal;
-                border-radius: 19px;
-            }
-            .area-tab-count { width: 26px; height: 26px; font-size: 0.72rem; }
-
-            .area-panel { padding-top: 40px; gap: 24px; }
-            .area-intro p { font-size: 0.95rem; }
-            .area-intro-meta { margin-top: 18px; padding-top: 16px; }
-            .area-help { display: none; }
-
-            .goal {
-                grid-template-columns: minmax(0, 1fr) 44px;
-                grid-template-areas: "body arrow" "thumbs arrow";
-                gap: 10px 16px;
-                padding: 22px 0;
-            }
-            .goal::before { inset: 2px -10px; }
-            .goal-body { grid-area: body; gap: 4px; }
-            .goal:hover .goal-body { transform: none; }
-            .goal-title { font-size: 1.18rem; }
-            .goal-tag { font-size: 0.86rem; }
-            .goal-thumbs { grid-area: thumbs; padding-left: 8px; margin-top: 4px; }
-            .goal-thumbs:empty { display: none; }
-            .goal-thumbs img { width: 34px; height: 48px; margin-left: -8px; border-radius: 6px; }
-            .goal-arrow { grid-area: arrow; width: 44px; height: 44px; align-self: center; }
-
-            .stories { padding-top: 72px; }
-            .stories-head { display: block; margin-bottom: 24px; }
-            .stories-track {
-                display: flex;
-                overflow-x: auto;
-                scroll-snap-type: x mandatory;
-                gap: 12px;
-                margin: 0 -16px;
-                padding: 0 16px 8px;
-                scrollbar-width: none;
-            }
-            .stories-track::-webkit-scrollbar { display: none; }
-            .story { flex: 0 0 76%; scroll-snap-align: start; scroll-margin-left: 16px; }
-            .story-highlight { font-size: 2rem; }
+            .hub-hero { padding: 124px 0 16px; }
+            .acc-head { padding: 22px 0; }
+            .acc-icon { width: 42px; height: 42px; font-size: 0.85rem; }
+            .goal-grid { grid-template-columns: repeat(2, minmax(0, 1fr)); gap: 6px; padding-bottom: 22px; }
+            .goal { min-height: 104px; padding: 12px 12px 14px; border-radius: 14px; }
+            .goal-name { font-size: 0.9rem; }
+            .goal-count { top: 10px; right: 12px; font-size: 1.6rem; }
         }
     </style>
 
@@ -372,28 +196,13 @@
         <section class="hub-hero">
             <div class="container">
                 <span class="section-label">Przemiany podopiecznych</span>
-                <h1>Wybierz cel. <span class="accent">Zobacz drogę do efektu.</span></h1>
-                <p>Wybierz obszar, a pokażemy Ci, jak może wyglądać droga od pierwszej konsultacji do mierzalnego efektu. Prawdziwi ludzie, prawdziwe liczby.</p>
+                <h1>Wybierz <span class="accent">cel</span></h1>
             </div>
         </section>
 
         <section class="areas" aria-label="Obszary przemian">
             <div class="container">
-                <div class="area-tabs" role="tablist" aria-label="Obszary" id="areaTabs"></div>
-                <div id="areaPanels"></div>
-            </div>
-        </section>
-
-        <section class="stories" aria-labelledby="storiesTitle">
-            <div class="container">
-                <div class="stories-head">
-                    <div>
-                        <span class="section-label">Case study</span>
-                        <h2 class="h-section" id="storiesTitle">Historie od pierwszej<br>wizyty do <span class="accent">efektu</span></h2>
-                    </div>
-                    <p>Punkt wyjścia, plan, kryzysy po drodze i liczby na końcu. Bez retuszu.</p>
-                </div>
-                <div class="stories-track" id="storiesTrack"></div>
+                <div class="acc-list" id="areaAcc"></div>
             </div>
         </section>
 
@@ -437,97 +246,53 @@
     <script>
         (function () {
             var D = BC.data, esc = BC.esc;
-            var tabs = document.getElementById('areaTabs');
-            var panels = document.getElementById('areaPanels');
+            var acc = document.getElementById('areaAcc');
 
-            /* ---- Zakładki + panele obszarów ---- */
-            D.areas.forEach(function (area) {
-                var cats = BC.categoriesIn(area.id);
-                var allCases = D.cases.filter(function (c) { return cats.some(function (k) { return k.slug === c.category; }); });
-                var stories = allCases.filter(BC.isStory).length;
-
-                tabs.insertAdjacentHTML('beforeend',
-                    '<button class="area-tab" role="tab" id="tab-' + area.id + '" aria-controls="panel-' + area.id + '" aria-selected="false" tabindex="-1" data-area="' + area.id + '">' +
-                    '<span>' + esc(area.name) + '</span><span class="area-tab-count" aria-label="' + cats.length + ' ' + BC.plural(cats.length, ['cel', 'cele', 'celów']) + '">' + cats.length + '</span></button>');
-
-                var rows = cats.map(function (cat) {
-                    var cases = BC.casesIn(cat.slug);
-                    var thumbs = cases.filter(function (c) { return c.after; }).slice(0, 3)
-                        .map(function (c) { return '<img src="' + esc(c.after) + '" alt="" loading="lazy">'; }).join('');
-                    return '<li><a class="goal" href="' + BC.categoryUrl(cat.slug) + '">' +
-                        '<span class="goal-body">' +
-                            '<span class="goal-title">' + esc(cat.title) + '</span>' +
-                            '<span class="goal-tag">' + esc(cat.tagline) + '</span>' +
-                            '<span class="goal-meta' + (cases.length ? '' : ' is-soon') + '">' + esc(BC.countLabel(cases)) + '</span>' +
-                        '</span>' +
-                        '<span class="goal-thumbs" aria-hidden="true">' + thumbs + '</span>' +
-                        '<span class="goal-arrow" aria-hidden="true"><i class="fas fa-arrow-right"></i></span>' +
+            /* ---- Obszary jako akordeon, w środku kafelki celów z liczbą przemian w rogu ---- */
+            acc.innerHTML = D.areas.map(function (area) {
+                var id = esc(area.id);
+                var tiles = BC.categoriesIn(area.id).map(function (cat) {
+                    var n = BC.casesIn(cat.slug).length;
+                    var count = n
+                        ? n + '<small>' + BC.plural(n, ['przemiana', 'przemiany', 'przemian']) + '</small>'
+                        : 'Wkrótce';
+                    return '<li><a class="goal' + (n ? '' : ' is-soon') + '" href="' + BC.categoryUrl(cat.slug) + '">' +
+                        '<span class="goal-count">' + count + '</span>' +
+                        '<span class="goal-name">' + esc(cat.title) + '<i class="fas fa-arrow-right" aria-hidden="true"></i></span>' +
                         '</a></li>';
                 }).join('');
+                return '<div class="acc" data-area="' + id + '">' +
+                    '<h2><button class="acc-head" id="acc-' + id + '" aria-expanded="false" aria-controls="accp-' + id + '">' +
+                        '<span>' + esc(area.name) + '</span><span class="acc-icon" aria-hidden="true"><i class="fas fa-plus"></i></span>' +
+                    '</button></h2>' +
+                    '<div class="acc-panel" id="accp-' + id + '" role="region" aria-labelledby="acc-' + id + '">' +
+                        '<div class="acc-inner"><ul class="goal-grid">' + tiles + '</ul></div>' +
+                    '</div></div>';
+            }).join('');
 
-                panels.insertAdjacentHTML('beforeend',
-                    '<div class="area-panel" role="tabpanel" id="panel-' + area.id + '" aria-labelledby="tab-' + area.id + '" hidden>' +
-                        '<div class="area-intro">' +
-                            '<span class="section-label">Obszar</span>' +
-                            '<h2>' + esc(area.name) + '</h2>' +
-                            '<p>' + esc(area.lead) + '</p>' +
-                            '<div class="area-intro-meta"><strong>' + cats.length + '</strong> ' + BC.plural(cats.length, ['cel', 'cele', 'celów']) +
-                                ' · <strong>' + allCases.length + '</strong> ' + BC.plural(allCases.length, ['przemiana', 'przemiany', 'przemian']) +
-                                (stories ? ' · <strong>' + stories + '</strong> case study' : '') + '</div>' +
-                            '<a class="area-help" href="../rezerwacja.html">Nie wiesz, od czego zacząć? <i class="fas fa-arrow-right"></i></a>' +
-                        '</div>' +
-                        '<ol class="goal-list">' + rows + '</ol>' +
-                    '</div>');
-            });
+            var items = Array.prototype.slice.call(acc.querySelectorAll('.acc'));
 
-            var tabEls = Array.prototype.slice.call(tabs.querySelectorAll('.area-tab'));
-
-            function select(id, focus) {
-                if (!BC.area(id)) id = D.areas[0].id;
-                tabEls.forEach(function (t) {
-                    var on = t.dataset.area === id;
-                    t.setAttribute('aria-selected', on);
-                    t.tabIndex = on ? 0 : -1;
-                    if (on && focus) t.focus();
+            // Otwarty jest najwyżej jeden obszar; null zamyka wszystkie
+            function open(id) {
+                items.forEach(function (it) {
+                    var on = it.dataset.area === id;
+                    var panel = it.querySelector('.acc-panel');
+                    it.querySelector('.acc-head').setAttribute('aria-expanded', on);
+                    panel.classList.toggle('is-open', on);
+                    if (on) panel.querySelectorAll('.goal-grid li').forEach(function (li, i) { li.style.animationDelay = (i * 35) + 'ms'; });
                 });
-                panels.querySelectorAll('.area-panel').forEach(function (p) {
-                    var on = p.id === 'panel-' + id;
-                    p.hidden = !on;
-                    if (on) {
-                        p.classList.remove('is-entering'); void p.offsetWidth; p.classList.add('is-entering');
-                        p.querySelectorAll('.goal-list li').forEach(function (li, i) { li.style.animationDelay = (i * 50) + 'ms'; });
-                    }
-                });
-                if (history.replaceState) history.replaceState(null, '', '#' + id);
+                if (history.replaceState) history.replaceState(null, '', id ? '#' + id : location.pathname + location.search);
             }
 
-            tabEls.forEach(function (t, i) {
-                t.addEventListener('click', function () { select(t.dataset.area); });
-                t.addEventListener('keydown', function (e) {
-                    if (e.key !== 'ArrowRight' && e.key !== 'ArrowLeft') return;
-                    e.preventDefault();
-                    var next = tabEls[(i + (e.key === 'ArrowRight' ? 1 : -1) + tabEls.length) % tabEls.length];
-                    select(next.dataset.area, true);
+            items.forEach(function (it) {
+                it.querySelector('.acc-head').addEventListener('click', function () {
+                    open(this.getAttribute('aria-expanded') === 'true' ? null : it.dataset.area);
                 });
             });
 
-            select(decodeURIComponent(location.hash.slice(1)));
-
-            /* ---- Wyróżnione case study ---- */
-            var track = document.getElementById('storiesTrack');
-            track.innerHTML = D.cases.filter(function (c) { return c.featured && c.story; }).map(function (c) {
-                var cat = BC.category(c.category);
-                var media = c.after
-                    ? '<img src="' + esc(c.after) + '" alt="' + esc(BC.altFor(c)) + '" loading="lazy">'
-                    : '<p class="story-quote">' + esc(c.quote) + '</p>';
-                return '<a class="story reveal' + (c.after ? '' : ' is-quote') + '" href="' + BC.caseUrl(c) + '">' + media +
-                    '<div class="story-body">' +
-                        '<span class="story-cat">' + esc(cat ? cat.title : '') + '</span>' +
-                        '<span class="story-highlight">' + esc(c.highlight) + '</span>' +
-                        '<p class="story-title">' + esc(BC.whoLine(c)) + '</p>' +
-                        '<span class="story-link">Czytaj historię <i class="fas fa-arrow-right"></i></span>' +
-                    '</div></a>';
-            }).join('');
+            // Okruszki z podstron linkują do przemiany.html#<obszar>
+            var fromHash = decodeURIComponent(location.hash.slice(1));
+            if (BC.area(fromHash)) open(fromHash);
 
             BC.initReveal();
         })();

@@ -31,63 +31,7 @@
             max-width: 16ch;
         }
         .cat-lead { margin-top: 22px; color: var(--gray-light); font-size: 1.08rem; line-height: 1.75; max-width: 56ch; }
-        .cat-facts {
-            display: flex;
-            flex-wrap: wrap;
-            margin-top: 40px;
-            border-top: 1px solid var(--line);
-            border-bottom: 1px solid var(--line);
-        }
-        .cat-fact { padding: 18px 40px 18px 0; margin-right: 40px; border-right: 1px solid var(--line); }
-        .cat-fact:last-child { border-right: 0; margin-right: 0; }
-        .cat-fact dt { font-size: 0.68rem; font-weight: 700; letter-spacing: 2px; text-transform: uppercase; color: var(--gray); }
-        .cat-fact dd { font-size: 1.3rem; font-weight: 800; margin-top: 4px; font-variant-numeric: tabular-nums; }
         .cat-hero-actions { display: flex; flex-wrap: wrap; align-items: center; gap: 14px 28px; margin-top: 36px; }
-        .text-link { display: inline-flex; align-items: center; gap: 10px; font-weight: 700; font-size: 0.9rem; color: var(--white); }
-        .text-link i { color: var(--yellow); transition: transform var(--transition); }
-        .text-link:hover i { transform: translateY(3px); }
-
-        /* ============ APPROACH ============ */
-        .approach { padding: 24px 0 96px; }
-        .approach-grid { display: grid; grid-template-columns: minmax(0, 5fr) minmax(0, 7fr); gap: 72px; }
-        .approach h2 { font-size: 1.05rem; font-weight: 800; letter-spacing: 2px; text-transform: uppercase; margin-bottom: 22px; }
-        .for-who { list-style: none; display: grid; gap: 14px; }
-        .for-who li { display: grid; grid-template-columns: 22px 1fr; gap: 12px; color: var(--gray-light); line-height: 1.6; }
-        .for-who i { color: var(--yellow); margin-top: 5px; font-size: 0.85rem; }
-        .steps { list-style: none; counter-reset: step; display: grid; gap: 0; }
-        .steps li {
-            counter-increment: step;
-            position: relative;
-            display: grid;
-            grid-template-columns: 52px 1fr;
-            gap: 18px;
-            padding-bottom: 28px;
-        }
-        .steps li::before {
-            content: counter(step, decimal-leading-zero);
-            display: grid;
-            place-items: center;
-            width: 52px;
-            height: 52px;
-            border-radius: 50%;
-            background: var(--dark-2);
-            border: 1px solid var(--line);
-            color: var(--yellow);
-            font-weight: 800;
-            font-size: 0.85rem;
-            letter-spacing: 1px;
-        }
-        .steps li:not(:last-child)::after {
-            content: '';
-            position: absolute;
-            left: 26px;
-            top: 56px;
-            bottom: 4px;
-            width: 1px;
-            background: var(--line);
-        }
-        .steps h3 { font-size: 1.08rem; font-weight: 700; margin: 4px 0 6px; }
-        .steps p { color: var(--gray-light); font-size: 0.95rem; line-height: 1.65; }
 
         /* ============ RESULTS ============ */
         .results { padding: 0 0 40px; scroll-margin-top: 110px; }
@@ -238,7 +182,6 @@
 
         /* ============ RESPONSIVE ============ */
         @media (max-width: 1024px) {
-            .approach-grid { grid-template-columns: 1fr; gap: 48px; }
             .feature { grid-template-columns: 1fr 1fr; }
             .feature-body { padding: 32px; }
         }
@@ -246,15 +189,7 @@
         @media (max-width: 768px) {
             .cat-hero { padding: 124px 0 48px; }
             .cat-lead { font-size: 0.98rem; }
-            .cat-facts { margin-top: 28px; }
-            .cat-facts { display: grid; grid-template-columns: 1.4fr 1fr 1fr; }
-            .cat-fact { padding: 14px 10px 14px 12px; margin-right: 0; }
-            .cat-fact:first-child { padding-left: 0; }
-            .cat-fact dd { font-size: 1rem; }
-            .cat-fact dt { font-size: 0.58rem; letter-spacing: 1.2px; }
             .cat-hero-actions .btn { width: 100%; }
-
-            .approach { padding: 8px 0 64px; }
 
             .feature { grid-template-columns: 1fr; border-radius: 20px; }
             .feature .ba-slider { aspect-ratio: 5 / 6; min-height: 0; height: auto; }
@@ -438,24 +373,9 @@
                     '<span class="section-label">' + esc(area.name) + '</span>' +
                     '<h1>' + esc(cat.title) + '</h1>' +
                     '<p class="cat-lead">' + esc(cat.lead) + '</p>' +
-                    '<dl class="cat-facts">' +
-                        '<div class="cat-fact"><dt>Typowy czas</dt><dd>' + esc(cat.typicalTime) + '</dd></div>' +
-                        '<div class="cat-fact"><dt>Przemiany</dt><dd>' + cases.length + '</dd></div>' +
-                        '<div class="cat-fact"><dt>Case study</dt><dd>' + stories.length + '</dd></div>' +
-                    '</dl>' +
                     '<div class="cat-hero-actions">' +
                         '<a class="btn btn-primary" href="../rezerwacja.html">Umów darmową konsultację <i class="fas fa-arrow-right"></i></a>' +
-                        (cases.length ? '<a class="text-link" href="#efekty">Zobacz efekty <i class="fas fa-arrow-down"></i></a>' : '') +
                     '</div>' +
-                '</div></section>' +
-
-                '<section class="approach"><div class="container approach-grid">' +
-                    '<div class="reveal"><h2>Dla kogo</h2><ul class="for-who">' +
-                        cat.forWho.map(function (t) { return '<li><i class="fas fa-check" aria-hidden="true"></i><span>' + esc(t) + '</span></li>'; }).join('') +
-                    '</ul></div>' +
-                    '<div class="reveal"><h2>Jak pracujemy</h2><ol class="steps">' +
-                        cat.process.map(function (s) { return '<li><div><h3>' + esc(s.title) + '</h3><p>' + esc(s.text) + '</p></div></li>'; }).join('') +
-                    '</ol></div>' +
                 '</div></section>' +
 
                 '<section class="results" id="efekty"><div class="container">' +

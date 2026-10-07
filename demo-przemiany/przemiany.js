@@ -34,15 +34,6 @@
         categoryUrl: function (slug) { return 'kategoria.html?k=' + encodeURIComponent(slug); },
         areaUrl: function (id) { return 'przemiany.html#' + encodeURIComponent(id); },
 
-        countLabel: function (cases) {
-            var n = cases.length;
-            var s = cases.filter(BC.isStory).length;
-            if (!n) return 'Wkrótce pierwsze historie';
-            var out = n + ' ' + plural(n, ['przemiana', 'przemiany', 'przemian']);
-            if (s) out += ' · ' + s + ' case study';
-            return out;
-        },
-
         // "Kasia, 31 lat · 5 miesięcy" — z pominięciem pustych pól ('' gdy brak wszystkich)
         whoLine: function (c) {
             var who = [c.name, BC.age(c.age)].filter(Boolean).join(', ');
