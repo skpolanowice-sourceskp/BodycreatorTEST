@@ -21,7 +21,7 @@
 
     <style>
         /* ============ HERO ============ */
-        .cat-hero { padding: 160px 0 72px; }
+        .cat-hero { padding: 150px 0 36px; }
         .cat-hero h1 {
             font-size: clamp(2rem, 5.4vw, 4rem);
             font-weight: 900;
@@ -30,75 +30,72 @@
             text-transform: uppercase;
             max-width: 16ch;
         }
-        .cat-lead { margin-top: 22px; color: var(--gray-light); font-size: 1.08rem; line-height: 1.75; max-width: 56ch; }
-        .cat-hero-actions { display: flex; flex-wrap: wrap; align-items: center; gap: 14px 28px; margin-top: 36px; }
 
-        /* ============ RESULTS ============ */
-        .results { padding: 0 0 40px; scroll-margin-top: 110px; }
-        .results-head { margin-bottom: 40px; }
+        /* ============ PRZEMIANY ============ */
+        .results { padding: 0 0 24px; }
+        .results-list { display: grid; gap: 24px; }
 
-        /* Case study feature (duży blok) */
-        .feature {
+        /* Przemiana z opisem: zdjęcie + cel / działania / efekty */
+        .story {
             display: grid;
             grid-template-columns: minmax(0, 5fr) minmax(0, 7fr);
-            gap: 0;
             border-radius: 24px;
             overflow: hidden;
             background: var(--dark-2);
             border: 1px solid var(--line);
-            margin-bottom: 24px;
         }
-        .feature .ba-slider { aspect-ratio: auto; height: 100%; min-height: 460px; }
-        .feature-quote-media {
-            display: flex;
-            align-items: center;
-            padding: 48px 40px;
-            background: var(--dark-3);
-            font-size: 1.25rem;
-            line-height: 1.6;
-            color: var(--white);
+        .story > .ba-slider { aspect-ratio: auto; height: 100%; min-height: 460px; }
+        .story.is-text { grid-template-columns: 1fr; }
+        .story-body { padding: 40px 44px; display: flex; flex-direction: column; gap: 22px; }
+        .story-top { display: flex; flex-wrap: wrap; align-items: baseline; gap: 6px 16px; }
+        .story-highlight { font-size: clamp(2.4rem, 4.6vw, 3.4rem); font-weight: 900; line-height: 1; letter-spacing: -1px; }
+        .story-meta { color: var(--gray); font-size: 0.88rem; font-weight: 600; }
+        .story-block h3 { font-size: 0.72rem; font-weight: 800; letter-spacing: 2px; text-transform: uppercase; color: var(--white); margin-bottom: 8px; }
+        .story-block p, .story-block li { color: var(--gray-light); font-size: 0.95rem; line-height: 1.65; }
+        .story-block ul { list-style: none; display: grid; gap: 6px; }
+        .story-block li { display: grid; grid-template-columns: 18px 1fr; gap: 8px; }
+        .story-block li i { color: var(--yellow); font-size: 0.75rem; margin-top: 6px; }
+        .story-video { position: relative; width: 100%; max-width: 240px; aspect-ratio: 9 / 16; border-radius: 16px; overflow: hidden; background: var(--dark-3); }
+        .story-video video { width: 100%; height: 100%; object-fit: cover; }
+        .video-play {
+            position: absolute;
+            inset: 0;
+            display: grid;
+            place-items: center;
+            border: 0;
+            background: linear-gradient(180deg, rgba(10,10,10,0.1), rgba(10,10,10,0.55));
+            cursor: pointer;
         }
-        .feature-quote-media p::before {
-            content: '\201C';
-            display: block;
-            font-family: Georgia, serif;
-            font-size: 5rem;
-            line-height: 0.7;
-            color: var(--yellow);
-            margin-bottom: 10px;
+        .video-play-icon {
+            width: 60px;
+            height: 60px;
+            border-radius: 50%;
+            display: grid;
+            place-items: center;
+            background: var(--yellow);
+            color: var(--dark);
+            font-size: 1.05rem;
+            transition: transform var(--transition);
         }
-        .feature-body { padding: 44px 44px 40px; display: flex; flex-direction: column; }
-        .feature-kicker { font-size: 0.68rem; font-weight: 700; letter-spacing: 2.5px; text-transform: uppercase; color: var(--yellow); }
-        .feature-highlight { font-size: clamp(2.6rem, 5vw, 3.8rem); font-weight: 900; line-height: 1; letter-spacing: -1px; margin: 14px 0 10px; }
-        .feature-title { font-size: 1.3rem; font-weight: 700; line-height: 1.35; max-width: 30ch; }
-        .feature-who { color: var(--gray); font-size: 0.88rem; font-weight: 600; margin-top: 10px; }
-        .metrics { width: 100%; border-collapse: collapse; margin: 28px 0 32px; font-variant-numeric: tabular-nums; }
-        .metrics th, .metrics td { text-align: left; padding: 11px 0; border-bottom: 1px solid var(--line); font-size: 0.9rem; }
-        .metrics thead th { font-size: 0.64rem; letter-spacing: 2px; text-transform: uppercase; color: var(--gray); font-weight: 700; padding-top: 0; }
-        .metrics tbody th { font-weight: 500; color: var(--gray-light); }
-        .metrics td { font-weight: 700; }
-        .metrics td.is-before { color: var(--gray); font-weight: 500; }
-        .metrics td i { color: var(--gray-dark); font-size: 0.7rem; margin: 0 8px; }
-        .feature .btn { align-self: flex-start; margin-top: auto; }
+        .video-play:hover .video-play-icon { transform: scale(1.06); }
+        .story-video.is-playing .video-play { display: none; }
+        .story-cta { align-self: flex-start; color: var(--yellow); font-size: 0.88rem; font-weight: 700; }
+        .story-cta i { margin-left: 6px; transition: transform var(--transition); }
+        .story-cta:hover i { transform: translateX(4px); }
 
-        /* Siatka zdjęć przed/po */
-        .ba-grid { display: grid; grid-template-columns: repeat(auto-fill, minmax(240px, 1fr)); gap: 20px; margin-top: 48px; align-items: start; }
+        /* Same zdjęcia przed/po (bez opisu) */
+        .ba-grid { display: grid; grid-template-columns: repeat(auto-fill, minmax(240px, 1fr)); gap: 16px; align-items: start; }
+        .results-list > .ba-grid { margin-top: 8px; }
         .ba-card { background: var(--dark-2); border: 1px solid var(--line); border-radius: 16px; overflow: hidden; }
+        .ba-card[hidden] { display: none; }
         .ba-card-info { display: flex; align-items: baseline; justify-content: space-between; gap: 10px; padding: 16px 18px 18px; }
         .ba-card-highlight { font-size: 1.15rem; font-weight: 800; }
         .ba-card-who { font-size: 0.78rem; color: var(--gray); font-weight: 600; text-align: right; }
+        .more-btn { justify-self: center; margin-top: 8px; }
 
-        /* Opinie bez zdjęć */
-        .quote-grid { display: grid; grid-template-columns: repeat(auto-fill, minmax(300px, 1fr)); gap: 20px; margin-top: 48px; }
-        .quote-card {
-            display: flex;
-            flex-direction: column;
-            gap: 18px;
-            padding: 28px;
-            background: var(--dark-2);
-            border: 1px solid var(--line);
-            border-radius: 16px;
-        }
+        /* Opinie bez zdjęć i bez opisu */
+        .quote-grid { display: grid; grid-template-columns: repeat(auto-fill, minmax(300px, 1fr)); gap: 16px; }
+        .quote-card { display: flex; flex-direction: column; gap: 18px; padding: 28px; background: var(--dark-2); border: 1px solid var(--line); border-radius: 16px; }
         .quote-card-highlight { font-size: 1.5rem; font-weight: 900; letter-spacing: -0.3px; }
         .quote-card blockquote { color: var(--gray-light); line-height: 1.75; font-size: 0.95rem; flex: 1; }
         .quote-card footer { padding-top: 16px; border-top: 1px solid var(--line); font-size: 0.82rem; }
@@ -106,116 +103,99 @@
         .quote-card footer span { color: var(--gray); }
 
         /* Pusty stan */
-        .empty {
-            display: grid;
-            grid-template-columns: auto 1fr auto;
-            align-items: center;
-            gap: 28px;
-            padding: 40px;
-            border-radius: 24px;
-            border: 1px dashed rgba(255,255,255,0.14);
-        }
-        .empty-icon { width: 64px; height: 64px; border-radius: 50%; display: grid; place-items: center; background: var(--dark-2); color: var(--yellow); font-size: 1.4rem; }
-        .empty h3 { font-size: 1.3rem; font-weight: 800; text-transform: uppercase; letter-spacing: 1px; }
+        .empty { display: grid; grid-template-columns: auto 1fr; align-items: center; gap: 24px; padding: 36px; border-radius: 24px; border: 1px dashed rgba(255,255,255,0.14); }
+        .empty-icon { width: 60px; height: 60px; border-radius: 50%; display: grid; place-items: center; background: var(--dark-2); color: var(--yellow); font-size: 1.3rem; }
+        .empty h2 { font-size: 1.2rem; font-weight: 800; text-transform: uppercase; letter-spacing: 1px; }
         .empty p { color: var(--gray-light); margin-top: 6px; max-width: 52ch; }
 
-        /* ============ VIDEO ============ */
-        .videos { padding: 72px 0 0; }
-        .video-track { display: grid; grid-template-columns: repeat(auto-fill, minmax(220px, 260px)); gap: 20px; margin-top: 32px; }
-        .video-tile { position: relative; aspect-ratio: 9 / 16; border-radius: 18px; overflow: hidden; background: var(--dark-3); }
-        .video-tile video { width: 100%; height: 100%; object-fit: cover; }
-        .video-play {
-            position: absolute;
-            inset: 0;
+        /* ============ CTA (krótkie) ============ */
+        .urgent { padding: 40px 0 0; }
+        .urgent-inner {
             display: flex;
-            flex-direction: column;
-            justify-content: space-between;
-            padding: 18px;
-            border: 0;
-            background: linear-gradient(180deg, rgba(10,10,10,0) 50%, rgba(10,10,10,0.85));
-            color: var(--white);
-            text-align: left;
-            cursor: pointer;
-        }
-        .video-play-icon {
-            align-self: center;
-            margin-top: auto;
-            width: 64px;
-            height: 64px;
-            border-radius: 50%;
-            display: grid;
-            place-items: center;
-            background: var(--yellow);
-            color: var(--dark);
-            font-size: 1.1rem;
-            transition: transform var(--transition), box-shadow var(--transition);
-        }
-        .video-play:hover .video-play-icon { transform: scale(1.06); box-shadow: 0 10px 30px rgba(245,202,0,0.3); }
-        .video-play-caption { margin-top: auto; font-weight: 700; font-size: 0.92rem; }
-        .video-play-caption small { display: block; color: var(--gray-light); font-weight: 500; font-size: 0.78rem; }
-        .video-tile.is-playing .video-play { display: none; }
-
-        /* ============ SIBLINGS ============ */
-        .siblings { padding: 96px 0 0; }
-        .sibling-chips { display: flex; flex-wrap: wrap; gap: 10px; margin-top: 24px; }
-        .chip {
-            display: inline-flex;
+            flex-wrap: wrap;
             align-items: center;
-            gap: 10px;
-            min-height: 44px;
-            padding: 10px 18px;
-            border-radius: 50px;
+            justify-content: space-between;
+            gap: 18px 32px;
+            padding: 26px 32px;
+            border-radius: 20px;
             background: var(--dark-2);
             border: 1px solid var(--line);
-            font-size: 0.88rem;
-            font-weight: 600;
-            transition: border-color var(--transition), color var(--transition);
         }
-        .chip:hover { border-color: var(--yellow); color: var(--yellow); }
-        .chip small { color: var(--gray); font-weight: 600; font-size: 0.75rem; }
-        .pager { display: grid; grid-template-columns: 1fr 1fr; margin-top: 48px; border-top: 1px solid var(--line); border-bottom: 1px solid var(--line); }
-        .pager a { display: flex; flex-direction: column; gap: 6px; padding: 26px 0; }
-        .pager a + a { text-align: right; border-left: 1px solid var(--line); padding-left: 24px; }
-        .pager small { font-size: 0.68rem; font-weight: 700; letter-spacing: 2px; text-transform: uppercase; color: var(--gray); }
-        .pager span { font-size: 1.1rem; font-weight: 700; transition: color var(--transition); }
-        .pager a:hover span { color: var(--yellow); }
+        .urgent p { font-size: 1.05rem; font-weight: 600; line-height: 1.5; }
+        .urgent p span { display: block; color: var(--gray-light); font-weight: 400; font-size: 0.95rem; }
+
+        /* ============ INNE PRZEMIANY (przewijane w bok) ============ */
+        .others { padding: 88px 0 104px; }
+        .others-head { display: flex; align-items: end; justify-content: space-between; gap: 20px; }
+        .others-head h2 { font-size: clamp(1.4rem, 3vw, 2rem); font-weight: 900; letter-spacing: 1px; text-transform: uppercase; }
+        .others-track {
+            display: flex;
+            gap: 14px;
+            overflow-x: auto;
+            scroll-snap-type: x mandatory;
+            margin-top: 24px;
+            padding-bottom: 10px;
+            scrollbar-width: thin;
+            scrollbar-color: var(--dark-4) transparent;
+        }
+        .other {
+            flex: 0 0 250px;
+            scroll-snap-align: start;
+            display: flex;
+            flex-direction: column;
+            border-radius: 16px;
+            overflow: hidden;
+            background: var(--dark-2);
+            border: 1px solid var(--line);
+            transition: border-color var(--transition);
+        }
+        .other:hover { border-color: rgba(245,202,0,0.5); }
+        .other img { width: 100%; aspect-ratio: 5 / 6; object-fit: cover; background: var(--dark-3); }
+        .other-quote { aspect-ratio: 4 / 3; display: flex; align-items: center; padding: 22px; background: var(--dark-3); font-size: 1.6rem; font-weight: 900; line-height: 1.15; }
+        .other-body { padding: 14px 16px 16px; display: flex; flex-direction: column; gap: 4px; }
+        .other-title { font-weight: 700; line-height: 1.3; }
+        .other-link { color: var(--yellow); font-size: 0.8rem; font-weight: 700; }
+        .others-all { display: inline-flex; align-items: center; gap: 8px; color: var(--yellow); font-weight: 700; font-size: 0.9rem; white-space: nowrap; }
+        .others-all i { transition: transform var(--transition); }
+        .others-all:hover i { transform: translateX(4px); }
 
         /* ============ RESPONSIVE ============ */
         @media (max-width: 1024px) {
-            .feature { grid-template-columns: 1fr 1fr; }
-            .feature-body { padding: 32px; }
+            .story { grid-template-columns: 1fr 1fr; }
+            .story-body { padding: 32px; }
         }
 
         @media (max-width: 768px) {
-            .cat-hero { padding: 124px 0 48px; }
-            .cat-lead { font-size: 0.98rem; }
-            .cat-hero-actions .btn { width: 100%; }
+            .cat-hero { padding: 124px 0 24px; }
 
-            .feature { grid-template-columns: 1fr; border-radius: 20px; }
-            .feature .ba-slider { aspect-ratio: 5 / 6; min-height: 0; height: auto; }
-            .feature-quote-media { padding: 32px 24px; font-size: 1.08rem; }
-            .feature-body { padding: 26px 22px 24px; }
-            .feature .btn { width: 100%; }
+            .results-list { gap: 16px; }
+            .story { grid-template-columns: 1fr; border-radius: 20px; }
+            .story > .ba-slider { aspect-ratio: 5 / 6; min-height: 0; height: auto; }
+            .story-body { padding: 24px 20px 26px; gap: 18px; }
+            .story-video { max-width: 200px; }
 
-            .ba-grid { grid-template-columns: 1fr 1fr; gap: 10px; margin-top: 32px; }
+            .ba-grid { grid-template-columns: 1fr 1fr; gap: 10px; }
             .ba-card { border-radius: 12px; }
             .ba-card-info { flex-direction: column; gap: 2px; padding: 12px 12px 14px; }
             .ba-card-highlight { font-size: 1rem; }
             .ba-card-who { text-align: left; font-size: 0.72rem; }
+            .more-btn { width: 100%; }
 
-            .quote-grid { grid-template-columns: 1fr; gap: 12px; margin-top: 32px; }
+            .quote-grid { grid-template-columns: 1fr; gap: 12px; }
             .quote-card { padding: 22px 20px; }
 
-            .empty { grid-template-columns: 1fr; padding: 28px 22px; gap: 18px; }
-            .empty .btn { width: 100%; }
+            .empty { grid-template-columns: 1fr; padding: 26px 22px; gap: 16px; }
 
-            .videos { padding-top: 56px; }
-            .video-track { display: flex; overflow-x: auto; scroll-snap-type: x mandatory; margin: 32px -16px 0; padding: 0 16px; gap: 12px; scrollbar-width: none; }
-            .video-tile { flex: 0 0 62%; scroll-snap-align: start; scroll-margin-left: 16px; }
+            .urgent { padding-top: 32px; }
+            .urgent-inner { padding: 22px 20px; }
+            .urgent .btn { width: 100%; }
 
-            .siblings { padding-top: 72px; }
-            .pager span { font-size: 0.95rem; }
-            .pager a + a { padding-left: 14px; }
+            .others { padding: 64px 0 88px; }
+            .others-head { display: block; }
+            .others-all { margin-top: 10px; }
+            .others-track { margin: 20px -16px 0; padding: 0 16px 8px; scroll-padding-left: 16px; scrollbar-width: none; }
+            .others-track::-webkit-scrollbar { display: none; }
+            .other { flex-basis: 64%; }
         }
     </style>
 </head>
@@ -288,58 +268,61 @@
 
             var area = BC.area(cat.area);
             var cases = BC.casesIn(cat.slug);
-            var stories = cases.filter(BC.isStory);
-            var photos = cases.filter(function (c) { return !c.story && c.before && c.after; });
-            var quotes = cases.filter(function (c) { return !c.story && !c.after && c.quote; });
-            var videos = cases.filter(function (c) { return c.video; });
+            var stories = cases.filter(BC.hasDescription);
+            var photos = cases.filter(function (c) { return !BC.hasDescription(c) && c.before && c.after; });
+            var quotes = cases.filter(function (c) { return !BC.hasDescription(c) && !c.after && c.quote; });
+            var PHOTOS_VISIBLE = 6;
 
             document.title = cat.title + ' — przemiany | Body Creator Wrocław';
             var md = document.querySelector('meta[name="description"]');
             if (md) md.content = cat.title + ': ' + cat.tagline + ' Zobacz przemiany podopiecznych Body Creator we Wrocławiu.';
 
-            function metricsTable(c) {
-                if (!c.metrics || !c.metrics.length) return '';
-                return '<table class="metrics"><thead><tr><th scope="col">Parametr</th><th scope="col">Start</th><th scope="col">Efekt</th></tr></thead><tbody>' +
-                    c.metrics.slice(0, 3).map(function (m) {
-                        return '<tr><th scope="row">' + esc(m.label) + '</th><td class="is-before">' + esc(m.before) + '</td><td>' + esc(m.after) + '</td></tr>';
-                    }).join('') + '</tbody></table>';
+            // Ból i urazy opisujemy problemem, pozostałe obszary celem
+            var firstLabel = cat.area === 'bol' ? 'Opis problemu' : 'Cel';
+
+            function storyHTML(c) {
+                // Bez zdjęć sam opis (cytat by go dublował)
+                var media = (c.before && c.after) ? BC.sliderHTML(c, BC.altFor(c)) : '';
+                var actions = Array.isArray(c.actions)
+                    ? '<ul>' + c.actions.map(function (a) { return '<li><i class="fas fa-check" aria-hidden="true"></i><span>' + esc(a) + '</span></li>'; }).join('') + '</ul>'
+                    : (c.actions ? '<p>' + esc(c.actions) + '</p>' : '');
+                var meta = [BC.whoLine(c)].filter(Boolean).join('');
+                return '<article class="story reveal' + (media ? '' : ' is-text') + '">' + media +
+                    '<div class="story-body">' +
+                        ((c.highlight || meta) ? '<div class="story-top">' +
+                            (c.highlight ? '<span class="story-highlight">' + esc(c.highlight) + '</span>' : '') +
+                            (meta ? '<span class="story-meta">' + esc(meta) + '</span>' : '') + '</div>' : '') +
+                        (c.goal ? '<div class="story-block"><h3>' + firstLabel + '</h3><p>' + esc(c.goal) + '</p></div>' : '') +
+                        (actions ? '<div class="story-block"><h3>Podjęte działania</h3>' + actions + '</div>' : '') +
+                        (c.effects ? '<div class="story-block"><h3>Efekty współpracy</h3><p>' + esc(c.effects) + '</p></div>' : '') +
+                        (c.video ? '<div class="story-video"><video src="' + esc(c.video) + '" preload="metadata" playsinline loop></video>' +
+                            '<button class="video-play" type="button" aria-label="Odtwórz wideo"><span class="video-play-icon"><i class="fas fa-play"></i></span></button></div>' : '') +
+                        '<a class="story-cta" href="../rezerwacja.html">' + (cat.area === 'bol' ? 'Masz podobny problem?' : 'Masz podobny cel?') + ' Umów darmową konsultację <i class="fas fa-arrow-right"></i></a>' +
+                    '</div></article>';
             }
 
-            function featureHTML(c) {
-                var media = (c.before && c.after)
-                    ? BC.sliderHTML(c, BC.altFor(c))
-                    : '<div class="feature-quote-media"><p>' + esc(c.quote) + '</p></div>';
-                return '<article class="feature reveal">' + media +
-                    '<div class="feature-body">' +
-                        '<span class="feature-kicker">Case study</span>' +
-                        '<div class="feature-highlight">' + esc(c.highlight) + '</div>' +
-                        '<h3 class="feature-title">' + esc(c.title) + '</h3>' +
-                        '<p class="feature-who">' + esc([BC.whoLine(c), c.perWeek ? c.perWeek + '× w tygodniu' : ''].filter(Boolean).join(' · ')) + '</p>' +
-                        metricsTable(c) +
-                        '<a class="btn btn-primary" href="' + BC.caseUrl(c) + '">Czytaj całą historię <i class="fas fa-arrow-right"></i></a>' +
-                    '</div></article>';
+            function photoHTML(c, i) {
+                // Podpis pod zdjęciem jest opcjonalny: pokazujemy tylko pola uzupełnione w panelu
+                var who = BC.whoLine(c);
+                var caption = (c.highlight || who)
+                    ? '<figcaption class="ba-card-info">' +
+                        (c.highlight ? '<span class="ba-card-highlight">' + esc(c.highlight) + '</span>' : '') +
+                        (who ? '<span class="ba-card-who">' + esc(who) + '</span>' : '') +
+                      '</figcaption>'
+                    : '';
+                return '<figure class="ba-card reveal"' + (i >= PHOTOS_VISIBLE ? ' hidden' : '') + '>' + BC.sliderHTML(c, BC.altFor(c)) + caption + '</figure>';
             }
 
             var resultsHTML;
             if (!cases.length) {
                 resultsHTML = '<div class="empty reveal">' +
                     '<div class="empty-icon"><i class="fas fa-seedling"></i></div>' +
-                    '<div><h3>Pierwsze historie w drodze</h3><p>Nasi podopieczni są właśnie w trakcie. Wkrótce pokażemy tu ich efekty. Twoja przemiana może być pierwsza.</p></div>' +
-                    '<a class="btn btn-primary" href="../rezerwacja.html">Zacznij swoją <i class="fas fa-arrow-right"></i></a>' +
+                    '<div><h2>Pierwsze historie w drodze</h2><p>Nasi podopieczni są właśnie w trakcie. Wkrótce pokażemy tu ich efekty.</p></div>' +
                     '</div>';
             } else {
-                resultsHTML = stories.map(featureHTML).join('') +
-                    (photos.length ? '<div class="ba-grid">' + photos.map(function (c) {
-                        // Podpis pod zdjęciem jest opcjonalny: pokazujemy tylko pola uzupełnione w panelu
-                        var who = BC.whoLine(c);
-                        var caption = (c.highlight || who)
-                            ? '<figcaption class="ba-card-info">' +
-                                (c.highlight ? '<span class="ba-card-highlight">' + esc(c.highlight) + '</span>' : '') +
-                                (who ? '<span class="ba-card-who">' + esc(who) + '</span>' : '') +
-                              '</figcaption>'
-                            : '';
-                        return '<figure class="ba-card reveal">' + BC.sliderHTML(c, BC.altFor(c)) + caption + '</figure>';
-                    }).join('') + '</div>' : '') +
+                resultsHTML = stories.map(storyHTML).join('') +
+                    (photos.length ? '<div class="ba-grid">' + photos.map(photoHTML).join('') + '</div>' +
+                        (photos.length > PHOTOS_VISIBLE ? '<button class="btn btn-outline more-btn" type="button">Zobacz więcej przemian <i class="fas fa-arrow-down"></i></button>' : '') : '') +
                     (quotes.length ? '<div class="quote-grid">' + quotes.map(function (c) {
                         return '<figure class="quote-card reveal">' +
                             '<span class="quote-card-highlight">' + esc(c.highlight) + '</span>' +
@@ -349,21 +332,18 @@
                     }).join('') + '</div>' : '');
             }
 
-            var videosHTML = videos.length ? '<section class="videos"><div class="container">' +
-                '<span class="section-label">Wideo</span><h2 class="h-section">Zobacz w ruchu</h2>' +
-                '<div class="video-track">' + videos.map(function (c) {
-                    return '<div class="video-tile">' +
-                        '<video src="' + esc(c.video) + '" preload="metadata" playsinline muted loop></video>' +
-                        '<button class="video-play" type="button" aria-label="Odtwórz wideo: ' + esc(c.name) + '">' +
-                            '<span class="video-play-icon"><i class="fas fa-play"></i></span>' +
-                            '<span class="video-play-caption">' + esc(c.name) + ' · ' + esc(c.highlight) + '<small>' + esc(c.duration) + '</small></span>' +
-                        '</button></div>';
-                }).join('') + '</div></div></section>' : '';
-
-            var siblings = BC.categoriesIn(cat.area);
-            var idx = siblings.indexOf(cat);
-            var prev = siblings[(idx - 1 + siblings.length) % siblings.length];
-            var next = siblings[(idx + 1) % siblings.length];
+            /* Inne przemiany z tego samego obszaru: jedna karta na cel, przewijane w bok */
+            var others = BC.categoriesIn(cat.area).filter(function (s) { return s !== cat; }).map(function (s) {
+                var list = BC.casesIn(s.slug);
+                if (!list.length) return '';
+                var pic = list.find(function (c) { return c.after; });
+                var top = pic
+                    ? '<img src="' + esc(pic.after) + '" alt="' + esc(BC.altFor(pic)) + '" loading="lazy">'
+                    : '<div class="other-quote">' + esc(list[0].highlight || s.title) + '</div>';
+                return '<a class="other" href="' + BC.categoryUrl(s.slug) + '">' + top +
+                    '<span class="other-body"><span class="other-title">' + esc(s.title) + '</span>' +
+                    '<span class="other-link">Dostrzegasz swój problem? Kliknij <i class="fas fa-arrow-right"></i></span></span></a>';
+            }).join('');
 
             app.innerHTML =
                 '<section class="cat-hero"><div class="container">' +
@@ -372,40 +352,22 @@
                     '<span aria-current="page">' + esc(cat.title) + '</span></nav>' +
                     '<span class="section-label">' + esc(area.name) + '</span>' +
                     '<h1>' + esc(cat.title) + '</h1>' +
-                    '<p class="cat-lead">' + esc(cat.lead) + '</p>' +
-                    '<div class="cat-hero-actions">' +
-                        '<a class="btn btn-primary" href="../rezerwacja.html">Umów darmową konsultację <i class="fas fa-arrow-right"></i></a>' +
-                    '</div>' +
                 '</div></section>' +
 
-                '<section class="results" id="efekty"><div class="container">' +
-                    '<div class="results-head"><span class="section-label">Efekty</span><h2 class="h-section">Przemiany podopiecznych</h2></div>' +
-                    resultsHTML +
-                '</div></section>' +
+                '<section class="results" aria-label="Przemiany podopiecznych"><div class="container results-list">' + resultsHTML + '</div></section>' +
 
-                videosHTML +
+                '<section class="urgent"><div class="container"><div class="urgent-inner reveal">' +
+                    '<p>Terminy współpracy szybko się zapełniają.<span>Nie zwlekaj, umów się już dziś. Pierwsza konsultacja jest bezpłatna.</span></p>' +
+                    '<a class="btn btn-primary btn-sm" href="../rezerwacja.html">Umów konsultację <i class="fas fa-arrow-right"></i></a>' +
+                '</div></div></section>' +
 
-                '<section class="siblings"><div class="container">' +
-                    '<span class="section-label">Inne cele</span><h2 class="h-section">' + esc(area.name) + '</h2>' +
-                    '<div class="sibling-chips">' + siblings.filter(function (s) { return s !== cat; }).map(function (s) {
-                        var n = BC.casesIn(s.slug).length;
-                        return '<a class="chip" href="' + BC.categoryUrl(s.slug) + '">' + esc(s.title) + (n ? ' <small>' + n + '</small>' : '') + '</a>';
-                    }).join('') + '</div>' +
-                    '<nav class="pager" aria-label="Sąsiednie cele">' +
-                        '<a href="' + BC.categoryUrl(prev.slug) + '"><small><i class="fas fa-arrow-left"></i> Poprzedni</small><span>' + esc(prev.title) + '</span></a>' +
-                        '<a href="' + BC.categoryUrl(next.slug) + '"><small>Następny <i class="fas fa-arrow-right"></i></small><span>' + esc(next.title) + '</span></a>' +
-                    '</nav>' +
-                '</div></section>' +
+                '<section class="others"><div class="container">' +
+                    '<div class="others-head"><div><span class="section-label">Zobacz też</span><h2>Inne przemiany</h2></div>' +
+                    '<a class="others-all" href="' + BC.areaUrl(area.id) + '">Zobacz więcej <i class="fas fa-arrow-right"></i></a></div>' +
+                    (others ? '<div class="others-track">' + others + '</div>' : '') +
+                '</div></section>';
 
-                '<section class="cta-band"><div class="container"><div class="cta-band-inner reveal">' +
-                    '<div><span class="section-label">Twój cel: ' + esc(cat.title.toLowerCase()) + '</span>' +
-                    '<h2>Zacznijmy od rozmowy</h2>' +
-                    '<p>Bezpłatna konsultacja: pomiary, wywiad i plan pierwszych tygodni. Bez zobowiązań.</p></div>' +
-                    '<div class="cta-band-actions"><a href="../rezerwacja.html" class="btn btn-primary">Umów konsultację <i class="fas fa-arrow-right"></i></a>' +
-                    '<a href="tel:518167945" class="cta-band-phone"><i class="fas fa-phone"></i> 518 167 945</a></div>' +
-                '</div></div></section>';
-
-            app.querySelectorAll('.video-tile').forEach(function (tile) {
+            app.querySelectorAll('.story-video').forEach(function (tile) {
                 var v = tile.querySelector('video');
                 tile.querySelector('.video-play').addEventListener('click', function () {
                     tile.classList.add('is-playing');
@@ -414,11 +376,10 @@
                 });
             });
 
-            var jump = app.querySelector('a[href="#efekty"]');
-            if (jump) jump.addEventListener('click', function (e) {
-                if (!BC.lenis) return;
-                e.preventDefault();
-                BC.lenis.scrollTo('#efekty', { offset: -100 });
+            var more = app.querySelector('.more-btn');
+            if (more) more.addEventListener('click', function () {
+                app.querySelectorAll('.ba-card[hidden]').forEach(function (el) { el.hidden = false; el.classList.add('in'); });
+                more.remove();
             });
 
             BC.initSliders(app);

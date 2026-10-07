@@ -267,15 +267,23 @@ window.BC_PRZEMIANY = {
        Podpis pod zdjęciem (OPCJONALNY, domyślnie pusty = brak podpisu):
                    highlight ("−11 kg"), name, age, duration
                    Wyświetlane są tylko uzupełnione pola.
-       Opcjonalne: video (mp4), quote, condition, metrics, trainer, featured
-       story:      jeśli jest, przemiana ma pełną podstronę case study
-                   (wtedy warto uzupełnić też title, highlight, name, age) */
+       Krótki opis na stronie celu (po kilka zdań, wszystkie OPCJONALNE):
+                   goal     cel; w obszarze Ból i urazy wyświetlany jako „Opis problemu”
+                   actions  „Podjęte działania”: tablica punktów albo tekst
+                   effects  „Efekty współpracy”
+                   Jeśli jest choć jedno z nich, przemiana dostaje duży blok
+                   (zdjęcie + opis + wideo pod spodem). Bez nich: samo zdjęcie lub opinia.
+       Opcjonalne: video (mp4, wyświetlane w bloku z opisem), quote, condition, trainer
+       Nieużywane od 10.2026 (zostają dla panelu): metrics, featured, title, story, timeline */
     cases: [
         {
             id: 'kasia-redukcja', category: 'redukcja', featured: true,
             name: 'Kasia', age: 31, trainer: 'aleksandra',
             title: 'Minus 11 kg mimo pracy zmianowej',
             highlight: '−11 kg', duration: '5 miesięcy', perWeek: 3,
+            goal: 'Zejść z wagi na stałe mimo pracy zmianowej w szpitalu, bez kolejnej diety pudełkowej.',
+            actions: ['3 stałe posiłki niezależne od godziny zmiany', 'Trening siłowy 3× w tygodniu, ustalany pod grafik', 'Białkowa przekąska na nocne zmiany'],
+            effects: '−11 kg i −14 cm w talii w 5 miesięcy. Nawyki zostały, waga stoi od pół roku.',
             before: '../zdjecia_przed_po/2przed.webp', after: '../zdjecia_przed_po/2po.webp',
             metrics: [
                 { label: 'Masa ciała', before: '72 kg', after: '61 kg' },
@@ -302,6 +310,9 @@ window.BC_PRZEMIANY = {
             name: 'Tomek', age: 27, trainer: 'jakub',
             title: 'Z 77 kg do sylwetki, której nie miał nigdy',
             highlight: '−9 kg', duration: '6 miesięcy', perWeek: 3,
+            goal: 'Zrzucić brzuch po latach pracy zdalnej. Bieganie odpadało, bo bolały kolana.',
+            actions: ['Trening siłowy całego ciała 3× w tygodniu', '8000 kroków dziennie zamiast biegania', 'Białko w każdym posiłku, woda zamiast słodzonych napojów'],
+            effects: '−9 kg, martwy ciąg z 60 do 130 kg i zero bólu kolan.',
             before: '../zdjecia_przed_po/3przed.webp', after: '../zdjecia_przed_po/3po.webp',
             metrics: [
                 { label: 'Masa ciała', before: '77 kg', after: '68 kg' },
@@ -332,6 +343,9 @@ window.BC_PRZEMIANY = {
             name: 'Paweł', age: 24, trainer: 'konrad',
             title: 'Plus 7 kg mięśni u „wiecznie chudego”',
             highlight: '+7 kg', duration: '10 miesięcy', perWeek: 4,
+            goal: 'Przybrać na masie przy 182 cm wzrostu i 64 kg wagi.',
+            actions: ['Nadwyżka 300 kcal w 4 posiłkach', 'Ćwiczenia wielostawowe z progresją co tydzień'],
+            effects: '+7 kg przy prawie niezmienionej talii. Wyciskanie z 40 do 85 kg.',
             before: '../zdjecia_przed_po/5przed.webp', after: '../zdjecia_przed_po/5po.webp',
             metrics: [
                 { label: 'Masa ciała', before: '64 kg', after: '71 kg' },
@@ -364,6 +378,9 @@ window.BC_PRZEMIANY = {
             title: 'Koniec z tabletkami przeciwbólowymi po 3 latach',
             highlight: '0 tabletek', duration: '4 miesiące', perWeek: 2,
             condition: 'Przewlekły ból dolnego odcinka kręgosłupa',
+            goal: 'Ból lędźwi od 3 lat, codzienne tabletki przeciwbólowe. Fizjoterapia pomagała tylko na kilka dni.',
+            actions: ['Ruch w zakresie bez bólu i nauka oddechu', 'Ćwiczenia z obciążeniem od 2. miesiąca', 'Martwy ciąg z kettlem po 3 miesiącach'],
+            effects: 'Ból spadł z 7 do 1 w skali 0–10. Leki odstawione całkowicie.',
             metrics: [
                 { label: 'Ból (skala 0–10)', before: '7', after: '1' },
                 { label: 'Leki przeciwbólowe', before: 'codziennie', after: 'wcale' },
@@ -381,11 +398,11 @@ window.BC_PRZEMIANY = {
                 { when: 'Miesiąc 4', text: 'Odstawienie leków, martwy ciąg z kettlem 16 kg.' }
             ]
         },
-        { id: 'robert-dyskopatia', category: 'bol-kregoslupa', name: 'Robert', age: 52, condition: 'Dyskopatia L4/L5', highlight: 'Bez operacji', duration: '7 miesięcy', quote: 'Neurochirurg zaproponował mi kolejną operację. Zdecydowałem się najpierw spróbować rehabilitacji przez ruch. Po 7 miesiącach bólu nie ma, operacji nie będzie.' },
-        { id: 'piotr-kolano', category: 'po-urazie', name: 'Piotr', age: 45, condition: 'Po operacji łąkotki', highlight: 'Znów na rowerze', duration: '6 miesięcy', quote: 'Sześć miesięcy po operacji łąkotki myślałem, że jazda na rowerze to już przeszłość. Trener ułożył mi program, który stopniowo przywrócił pełen zakres ruchu.' },
-        { id: 'dawid-bark', category: 'po-urazie', name: 'Dawid', age: 33, condition: 'Zerwanie stożka rotatorów', highlight: '4 mies. szybciej', duration: '8 miesięcy', quote: 'Ortopeda dał mi 12 miesięcy przerwy od sportu. Wróciłem po 8. Trener wiedział, kiedy przyspieszać, a kiedy hamować.' },
-        { id: 'marta-postawa', category: 'wady-postawy', name: 'Marta', age: 29, condition: 'Wady postawy, praca siedząca', highlight: 'Prosta sylwetka', duration: '3 miesiące', quote: 'Siedziałam 8 godzin dziennie przy biurku od 5 lat. Miałam tak poważne zaokrąglenie pleców, że sama tego nie widziałam. Po 3 miesiącach stałam prosto.' },
-        { id: 'zofia-fibromialgia', category: 'przewlekly-bol', name: 'Zofia', age: 38, condition: 'Fibromialgia, chroniczny ból', highlight: 'Mniej bólu', duration: '9 miesięcy', quote: 'Fibromialgia sprawia, że każdy dzień jest nieprzewidywalny. Nauczyłam się ćwiczyć mądrze, nie na przekór ciału. Po raz pierwszy od lat czuję, że mam wpływ.' }
+        { id: 'robert-dyskopatia', goal: 'Dyskopatia L4/L5 i propozycja kolejnej operacji kręgosłupa.', actions: ['Ruch w zakresie bez bólu', 'Stopniowe wzmacnianie mięśni głębokich', 'Kontrolowane wprowadzanie obciążenia'], effects: 'Po 7 miesiącach bez bólu. Operacja okazała się niepotrzebna.', category: 'bol-kregoslupa', name: 'Robert', age: 52, condition: 'Dyskopatia L4/L5', highlight: 'Bez operacji', duration: '7 miesięcy', quote: 'Neurochirurg zaproponował mi kolejną operację. Zdecydowałem się najpierw spróbować rehabilitacji przez ruch. Po 7 miesiącach bólu nie ma, operacji nie będzie.' },
+        { id: 'piotr-kolano', goal: 'Ograniczony zakres ruchu w kolanie po operacji łąkotki.', actions: ['Stopniowe przywracanie zakresu ruchu', 'Wzmacnianie mięśni wokół kolana'], effects: 'Pełny zakres ruchu i powrót na rower po 6 miesiącach.', category: 'po-urazie', name: 'Piotr', age: 45, condition: 'Po operacji łąkotki', highlight: 'Znów na rowerze', duration: '6 miesięcy', quote: 'Sześć miesięcy po operacji łąkotki myślałem, że jazda na rowerze to już przeszłość. Trener ułożył mi program, który stopniowo przywrócił pełen zakres ruchu.' },
+        { id: 'dawid-bark', goal: 'Zerwany stożek rotatorów. Ortopeda zalecił 12 miesięcy przerwy od sportu.', actions: ['Plan powrotu etapami, kontrola obciążenia barku', 'Trening reszty ciała bez przerwy'], effects: 'Powrót do sportu po 8 miesiącach zamiast 12.', category: 'po-urazie', name: 'Dawid', age: 33, condition: 'Zerwanie stożka rotatorów', highlight: '4 mies. szybciej', duration: '8 miesięcy', quote: 'Ortopeda dał mi 12 miesięcy przerwy od sportu. Wróciłem po 8. Trener wiedział, kiedy przyspieszać, a kiedy hamować.' },
+        { id: 'marta-postawa', goal: 'Zaokrąglone plecy po 5 latach pracy przy biurku po 8 godzin dziennie.', actions: ['Wzmacnianie mięśni grzbietu', 'Mobilność odcinka piersiowego', 'Proste przerwy ruchowe w pracy'], effects: 'Wyprostowana sylwetka po 3 miesiącach.', category: 'wady-postawy', name: 'Marta', age: 29, condition: 'Wady postawy, praca siedząca', highlight: 'Prosta sylwetka', duration: '3 miesiące', quote: 'Siedziałam 8 godzin dziennie przy biurku od 5 lat. Miałam tak poważne zaokrąglenie pleców, że sama tego nie widziałam. Po 3 miesiącach stałam prosto.' },
+        { id: 'zofia-fibromialgia', goal: 'Fibromialgia i chroniczny ból, który zmienia się z dnia na dzień.', actions: ['Trening dopasowywany do samopoczucia w danym dniu', 'Nauka dawkowania wysiłku'], effects: 'Mniej bólu i poczucie wpływu na własne ciało po 9 miesiącach.', category: 'przewlekly-bol', name: 'Zofia', age: 38, condition: 'Fibromialgia, chroniczny ból', highlight: 'Mniej bólu', duration: '9 miesięcy', quote: 'Fibromialgia sprawia, że każdy dzień jest nieprzewidywalny. Nauczyłam się ćwiczyć mądrze, nie na przekór ciału. Po raz pierwszy od lat czuję, że mam wpływ.' }
     ],
 
     trainers: {

@@ -30,20 +30,24 @@ Po feedbacku klienta (10.2026) hub jest **maksymalnie prosty**: mały nagłówek
 
 ### 2. `kategoria.html?k=<slug>`
 
+Przebudowana po głosowym feedbacku klienta (07.10.2026). Zasada klienta: **mało tekstu, obrazki, ludzie scrollują**. Wzór od klienta: https://reskateam.pl/sukcesy/redukcja-dolegliwosci-bolowych-przepuklina-pepkowa/ (nie 1:1).
+
 Kolejność sekcji:
-1. Hero: okruszki, nazwa, `lead`, jeden przycisk CTA (konsultacja).
-   Po feedbacku klienta (10.2026) usunięte: pasek faktów (typowy czas / przemiany / case study), link „Zobacz efekty”, sekcje „Dla kogo” i „Jak pracujemy”. Pola `typicalTime`, `forWho`, `process` zostają w danych, ale nie są wyświetlane.
-2. Efekty:
-   - case study jako duże bloki (suwak przed/po + tabela `metrics`);
-   - siatka pozostałych zdjęć;
-   - karty z cytatem dla przemian bez zdjęć.
-3. Wideo, jeśli którakolwiek przemiana ma `video`.
-4. Inne cele z obszaru + poprzedni/następny cel.
-5. CTA.
+1. Hero: okruszki, etykieta obszaru, nazwa celu. **Bez** `lead`, bez CTA na górze („ktoś wszedł zobaczyć przemiany, a nie umawiać się”).
+2. Przemiany, jedna pod drugą:
+   - przemiana z opisem (`BC.hasDescription`: jest `goal`, `actions` lub `effects`) to duży blok: suwak przed/po, wynik (`highlight`) + linia osoby, potem 3 krótkie bloki: **Cel** (w obszarze Ból i urazy: **Opis problemu**) / **Podjęte działania** (punkty) / **Efekty współpracy**, pod nimi wideo (jeśli jest `video`) i mały link „Masz podobny cel/problem? Umów darmową konsultację”. Bez zdjęć blok pokazuje sam opis (bez cytatu, żeby nie dublować treści);
+   - same zdjęcia (bez opisu): siatka, pierwsze 6 widoczne, reszta pod przyciskiem „Zobacz więcej przemian”;
+   - opinie bez zdjęć i bez opisu: karty z cytatem.
+3. Krótkie CTA z pilnością: „Terminy współpracy szybko się zapełniają. Nie zwlekaj, umów się już dziś.” + mały przycisk.
+4. „Inne przemiany”: karty innych celów z tego obszaru (tylko te z przemianami) przewijane w bok, z linkiem „Dostrzegasz swój problem? Kliknij” i „Zobacz więcej” do huba.
+
+Usunięte na życzenie klienta: `lead`, CTA w hero, pasek faktów, „Dla kogo”, „Jak pracujemy”, tabela `metrics`, link „Czytaj całą historię”, osobna sekcja wideo, chipy i pager innych celów, duży baner CTA.
 
 Brak przemian: pusty stan „Pierwsze historie w drodze”. Nieznany slug: komunikat z linkiem do huba.
 
 ### 3. `case-study.html?id=<id>`
+
+**Od 07.10.2026 nic do niej nie linkuje.** Klient uznał link do pełnej historii za zbędny (wystarczą 3 krótkie bloki + wideo na stronie celu). Plik zostaje na wypadek powrotu do pomysłu; przy przenoszeniu sekcji na stronę można go pominąć.
 
 Działa tylko dla przemian z polem `story`.
 
@@ -82,6 +86,10 @@ Globalny obiekt `window.BC_PRZEMIANY`:
     video,                    // mp4
     featured,                 // pokaż w pasku na hubie (wymaga story)
     trainer,                  // klucz z trainers
+    // --- krótki opis na stronie celu (po kilka zdań) ---
+    goal,                     // Cel / Opis problemu (Ból i urazy)
+    actions,                  // Podjęte działania: [string] albo string
+    effects,                  // Efekty współpracy
     perWeek,                  // treningi w tygodniu
     metrics: [{ label, before, after }],
     // --- case study ---
@@ -104,7 +112,7 @@ Globalny obiekt `window.BC_PRZEMIANY`:
 
 ### Dane przykładowe — UWAGA
 
-Obecne imiona, liczby (kg, cm, ciężary), historie przy zdjęciach i 4 z 7 celów w „Sylwetka i zdrowie” oraz wszystkie cele „Sport i sprawność” poza „Siła i trójbój” to **wypełniacz projektowy**. Cytaty w „Ból i urazy” pochodzą z wcześniejszej wersji strony. Wideo przy historii „Kasia” to klip tła strony. Przed publikacją wszystko musi potwierdzić klient.
+Obecne imiona, liczby (kg, cm, ciężary), historie przy zdjęciach i 4 z 7 celów w „Sylwetka i zdrowie” oraz wszystkie cele „Sport i sprawność” poza „Siła i trójbój” to **wypełniacz projektowy**. Cytaty w „Ból i urazy” pochodzą z wcześniejszej wersji strony. Krótkie opisy (`goal`, `actions`, `effects`) przy 9 przemianach są dopisane na podstawie tych historii i cytatów, czyli też są wypełniaczem. Wideo przy historii „Kasia” to klip tła strony. Przed publikacją wszystko musi potwierdzić klient.
 
 ## Plan backendu
 

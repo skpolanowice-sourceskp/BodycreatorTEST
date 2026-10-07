@@ -30,6 +30,8 @@
         casesIn: function (slug) { return D.cases.filter(function (c) { return c.category === slug; }); },
         caseById: function (id) { return D.cases.find(function (c) { return c.id === id; }); },
         isStory: function (c) { return !!c.story; },
+        // Przemiana z krótkim opisem (cel / działania / efekty) dostaje duży blok na stronie celu
+        hasDescription: function (c) { return !!(c.goal || c.actions || c.effects); },
         caseUrl: function (c) { return 'case-study.html?id=' + encodeURIComponent(c.id); },
         categoryUrl: function (slug) { return 'kategoria.html?k=' + encodeURIComponent(slug); },
         areaUrl: function (id) { return 'przemiany.html#' + encodeURIComponent(id); },
