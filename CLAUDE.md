@@ -2,22 +2,23 @@
 
 Strona marketingowa **Body Creator**, studia treningu personalnego we Wrocławiu (ul. Rafała Wojaczka 3g, Sołtysowice). Domena: `https://bodycreator.com.pl` (bez www, HTTPS). Cel strony: zamiana odwiedzających w klientów, czyli umówienie darmowej konsultacji (`rezerwacja.html`) lub telefon (518 167 945).
 
-Statyczne HTML + CSS + vanilla JS, jeden plik PHP (`send_mail.php`). Bez bundlera i bez frameworka. Hosting: home.pl (Apache, PHP).
+Statyczne HTML + CSS + vanilla JS, PHP w `send_mail.php` i w panelu Przemian (`demo-przemiany/admin/`). Bez bundlera i bez frameworka. Hosting: home.pl (Apache, PHP).
 
 ## Zasady krytyczne
 
 1. **Nigdy nie wgrywaj na FTP bez testu lokalnego.** Najpierw render w przeglądarce, w tym mobile ~390px. FTP 226 oznacza tylko, że plik się wgrał, a nie że strona działa. Szczegóły: [docs/deploy.md](docs/deploy.md).
 2. **Push/FTP/commit tylko na wyraźną prośbę użytkownika.**
 3. **Mobile-first.** Każdą zmianę layoutu testuj najpierw przy ~390px. Pierwsza decyzja klienta zapada na telefonie.
-4. **Nie commituj sekretów.** `sftp.json` (hasło FTP) leży poza repo, a `.antispam_secret` jest w `.gitignore`.
+4. **Nie commituj sekretów.** `sftp.json` (hasło FTP) leży poza repo, a `.antispam_secret` i `demo-przemiany/dane/` (hasło panelu, dane) są w `.gitignore`.
 5. **Dane przykładowe ≠ prawdziwe.** W `demo-przemiany/przemiany-data.js` część liczb i historii to wypełniacz projektowy. Nie publikuj ich jako prawdziwych wyników klientów bez potwierdzenia od klienta.
+6. **Dane Przemian żyją na serwerze.** Po starcie panelu nie wgrywaj z repo `przemiany-data.js`, `dane/` ani `uploads/`, bo nadpiszesz zmiany klienta. Patrz [docs/deploy.md](docs/deploy.md#panel-przemian).
 
 ## Mapa dokumentacji
 
 | Temat | Plik |
 |---|---|
 | Struktura plików, podstrony, wspólne elementy, konwencje kodu | [docs/architektura.md](docs/architektura.md) |
-| Sekcja Przemiany: 3 poziomy stron, model danych, plan backendu | [docs/przemiany.md](docs/przemiany.md) |
+| Sekcja Przemiany: 3 poziomy stron, model danych, backend i panel | [docs/przemiany.md](docs/przemiany.md) |
 | Formularze, `send_mail.php`, antyspam | [docs/formularze.md](docs/formularze.md) |
 | Deploy FTP, checklista testów, testowanie lokalne | [docs/deploy.md](docs/deploy.md) |
 | SEO: canonical, sitemap, robots, `.htaccess`, dane strukturalne | [docs/seo.md](docs/seo.md) |
@@ -40,5 +41,5 @@ Statyczne HTML + CSS + vanilla JS, jeden plik PHP (`send_mail.php`). Bez bundler
 
 ## Status / TODO
 
-- Sekcja Przemiany: nowy design (hub → cel → case study) leży w ukrytym folderze `demo-przemiany/` (noindex, brak linków ze strony) do pokazania klientowi. Na stronie nadal działa stary `przemiany.html`. Czeka na akceptację klienta i backend z panelem. Plan: [docs/przemiany.md](docs/przemiany.md#plan-backendu).
+- Sekcja Przemiany: nowy design (hub → cel → case study) leży w ukrytym folderze `demo-przemiany/` (noindex, brak linków ze strony) do pokazania klientowi. Na stronie nadal działa stary `przemiany.html`. Panel (etap 1: cele i przemiany, render w JS) jest w `demo-przemiany/admin/`, jeszcze niewdrożony. Etap 2: SSR, ładne URL-e, przeniesienie do katalogu głównego. Patrz [docs/przemiany.md](docs/przemiany.md).
 - `todolist.md`: newsletter, zdjęcia.

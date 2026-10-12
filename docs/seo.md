@@ -38,4 +38,4 @@ Frazy docelowe: „trener personalny Wrocław”, „Sołtysowice”, „trening
 
 ## Otwarte kwestie
 
-- `kategoria.html` i `case-study.html` renderują treść w JS i nie mają `canonical` ani wpisów w sitemap. Google je zobaczy, ale gorzej niż HTML z serwera. Rozwiązanie przy backendzie: render po stronie PHP z ładnymi adresami. Patrz [przemiany.md](przemiany.md#plan-backendu).
+- `kategoria.html` i `case-study.html` renderują treść w JS i nie mają `canonical` ani wpisów w sitemap. Google je zobaczy, ale gorzej niż HTML z serwera. Rozwiązanie przy backendzie: render po stronie PHP z ładnymi adresami. Patrz [przemiany.md](przemiany.md#etap-2-do-zrobienia).

@@ -4,3 +4,9 @@ deploy.ftp.json
 
 # Sekret antyspamowy generowany przez send_mail.php na serwerze
 .antispam_secret
+
+# Panel Przemian: dane i pliki tworzone na serwerze (hasło, JSON, kopie, uploady)
+demo-przemiany/dane/*
+!demo-przemiany/dane/.htaccess
+demo-przemiany/uploads/*
+!demo-przemiany/uploads/.htaccess

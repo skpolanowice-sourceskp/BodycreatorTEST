@@ -272,7 +272,7 @@
 
             document.title = cat.title + ' — przemiany | Body Creator Wrocław';
             var md = document.querySelector('meta[name="description"]');
-            if (md) md.content = cat.title + ': ' + cat.tagline + ' Zobacz przemiany podopiecznych Body Creator we Wrocławiu.';
+            if (md) md.content = cat.title + (cat.tagline ? ': ' + cat.tagline : '.') + ' Zobacz przemiany podopiecznych Body Creator we Wrocławiu.';
 
             // Ból i urazy opisujemy problemem, pozostałe obszary celem
             var firstLabel = cat.area === 'bol' ? 'Opis problemu' : 'Cel';

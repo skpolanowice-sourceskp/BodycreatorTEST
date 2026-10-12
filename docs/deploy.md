@@ -13,12 +13,21 @@
 - Wgrywaj tylko zmienione pliki. Przy zmianach w sekcji Przemiany pamiętaj o plikach wspólnych: `przemiany.css`, `przemiany.js`, `przemiany-data.js`.
 - `.htaccess` ma długi cache dla CSS/JS (1 rok). Po zmianie `przemiany.css` / `przemiany.js` może być potrzebny parametr wersji w `<link>` / `<script>` (np. `?v=2`), żeby powracający użytkownicy zobaczyli zmianę.
 
+## Panel Przemian
+
+Od uruchomienia panelu **dane Przemian żyją na serwerze**, nie w repo.
+
+- **Nigdy nie wgrywaj z lokalnego repo** na serwer: `demo-przemiany/przemiany-data.js`, `demo-przemiany/dane/*` (poza pierwszym `haslo.php`) ani `demo-przemiany/uploads/*`. Nadpisałbyś zmiany klienta. Kopia danych z serwera: pobrać `dane/przemiany.json` i `uploads/` przez FTP.
+- Pierwsze wdrożenie: lokalnie `php admin/ustaw-haslo.php "haslo"`, potem wgrać `dane/haslo.php`. Hasło przekazać klientowi osobnym kanałem. Zmiana hasła: to samo jeszcze raz.
+- PHP na serwerze musi mieć prawo zapisu do `demo-przemiany/`, `dane/` i `uploads/` (`dane/kopie` i `dane/tmp` tworzą się same).
+- Po wgraniu sprawdzić, że `dane/haslo.php`, `dane/przemiany.json`, `admin/lib.php` i `admin/seed.json` zwracają 403. `php -S` ignoruje `.htaccess`, więc lokalnie tego nie sprawdzisz.
+
 ## Testowanie lokalne
 
 ```bash
 # w katalogu BodycreatorTEST/
 python -m http.server 8000        # strony statyczne
-php -S localhost:8000             # gdy potrzebny send_mail.php
+php -S localhost:8000             # send_mail.php albo panel Przemian
 ```
 
 Otwórz `http://localhost:8000/<strona>.html`. Nie testuj przez `file://`, bo `fetch` i część skryptów nie zadziała.

@@ -71,9 +71,8 @@ Globalny obiekt `window.BC_PRZEMIANY`:
     typicalTime,              // "3–8 miesięcy"
     forWho: [string],         // 3 punkty
     process: [{ title, text }],// 3 kroki
-    // --- planowane w panelu (patrz Plan backendu, pkt 3) ---
-    visible,                  // false = kafelek zdjęty ze strony, dane zostają
-    order                     // kolejność kafelków w obszarze
+    // --- pola panelu: są w dane/przemiany.json, nie trafiają do przemiany-data.js ---
+    visible                   // false = kafelek zdjęty ze strony, dane zostają (kolejność = kolejność w tablicy)
   }],
   cases: [{
     id, category,             // WYMAGANE; category = categories[].slug
@@ -114,21 +113,65 @@ Globalny obiekt `window.BC_PRZEMIANY`:
 
 Obecne imiona, liczby (kg, cm, ciężary), historie przy zdjęciach i 4 z 7 celów w „Sylwetka i zdrowie” oraz wszystkie cele „Sport i sprawność” poza „Siła i trójbój” to **wypełniacz projektowy**. Cytaty w „Ból i urazy” pochodzą z wcześniejszej wersji strony. Krótkie opisy (`goal`, `actions`, `effects`) przy 9 przemianach są dopisane na podstawie tych historii i cytatów, czyli też są wypełniaczem. Wideo przy historii „Kasia” to klip tła strony. Przed publikacją wszystko musi potwierdzić klient.
 
-## Plan backendu
+## Backend i panel (etap 1, od 12.10.2026)
 
-Cel: klient sam dodaje zdjęcia, filmy, przemiany i case study.
+Klient sam dodaje cele, przemiany, zdjęcia i filmy w panelu **`demo-przemiany/admin/`** (lokalnie `http://localhost:8000/demo-przemiany/admin/`). Strony dalej renderują się w JS z `window.BC_PRZEMIANY`, więc szablony się nie zmieniły.
 
-1. **Źródło danych.** `przemiany-data.js` zastąpić endpointem, np. `api/przemiany.php`, zwracającym **dokładnie tę samą strukturę** jako JSON. Szablony stron czytają tylko `window.BC_PRZEMIANY`, więc wystarczy załadować JSON i przypisać go do tej zmiennej przed `przemiany.js`. Albo, lepiej, renderować po stronie serwera (pkt 4).
-2. **Panel.** Logowanie klienta, CRUD dla `categories` (szczegóły w pkt 3), `cases`, `trainers`. Upload zdjęć z konwersją do `.webp` 500×800 (proporcje 5:8) i wideo `.mp4` (pionowe 9:16). Pola podpisu jako opcjonalne, z opisem „zostaw puste, żeby ukryć podpis”.
-3. **Kafelki celów (zarządzanie kategoriami).** Klient sam decyduje, jakie cele (małe kafelki pod obszarem na hubie, np. „Redukcja tkanki tłuszczowej”, „Ból barku”) są na stronie. W panelu:
-   - **dodawanie** kafelka: nazwa + wybór obszaru (Sylwetka i zdrowie / Ból i urazy / Sport i sprawność); slug generowany automatycznie z nazwy, opis (`lead`) opcjonalny;
-   - **edycja** nazwy i opisu. Slug po utworzeniu się nie zmienia, żeby nie psuć linków (albo zmiana slugu zapisuje przekierowanie 301);
-   - **zdejmowanie** kafelka: przełącznik „widoczny / ukryty” (pole `visible`). Ukryty kafelek znika z huba, a jego podstrona zwraca 404 lub przekierowuje do huba. Przemiany i zdjęcia zostają w bazie, więc kafelek można przywrócić jednym kliknięciem;
-   - **usuwanie na stałe** tylko dla kafelka bez przemian. Jeśli ma przemiany, panel każe je najpierw przenieść do innego celu albo ukryć kafelek;
-   - **kolejność** kafelków w obszarze: przeciąganie lub strzałki góra/dół (pole `order`);
-   - opcjonalnie: przełącznik „ukrywaj puste kafelki”, żeby cele bez przemian nie pokazywały „Wkrótce”.
+### Przepływ danych
 
-   Liczba w rogu kafelka liczy się sama z przemian przypisanych do celu, klient jej nie wpisuje. Same obszary (3 duże kategorie) zostają stałe, bez edycji w panelu, chyba że klient poprosi.
-4. **SEO.** Podstrony z `?k=` / `?id=` budują treść w JS. Docelowo PHP powinien renderować HTML po stronie serwera, z ładnymi adresami przez `.htaccess` (np. `/przemiany/redukcja`, `/przemiany/redukcja/kasia`), `canonical`, wpisami w `sitemap.xml` i `BreadcrumbList`. Patrz [seo.md](seo.md).
-5. **Bezpieczeństwo.** Escapowanie wyjścia, walidacja typów plików przy uploadzie, katalog uploadów bez wykonywania PHP, ochrona panelu (hasło + limit prób). Antyspam można wziąć z [formularze.md](formularze.md).
-6. **Kolejność.** `featured` / kolejność na listach jako pole `order` (dziś decyduje kolejność w tablicy).
+```
+panel (admin/panel.js) → admin/api.php → dane/przemiany.json   (źródło prawdy + kopia przy każdym zapisie)
+                                       → przemiany-data.js      (GENEROWANY: tylko widoczne cele i przemiany)
+```
+
+- `dane/przemiany.json`: pełne dane z polami panelu (`visible` przy celach i przemianach, `settings.hideEmpty`, `rev`). Przy pierwszym zapisie tworzony z `admin/seed.json` (obecne dane demo).
+- `przemiany-data.js` jest **generowany przy każdym zapisie**. Pomija ukryte cele i przemiany, przemiany ukrytych celów, a przy `hideEmpty` także puste cele. Pole `visible` jest usuwane. Ukryty cel na stronie pokazuje „Nie znaleźliśmy tego celu” z linkiem do huba.
+- Kolejność = kolejność w tablicach (strzałki w panelu zamieniają sąsiadów w obrębie obszaru / celu). Pola `order` nie ma.
+- `demo-przemiany/.htaccess` ustawia `no-cache` dla `przemiany-data.js`, więc zmiany z panelu widać od razu mimo rocznego cache JS w głównym `.htaccess`.
+- Kopie: `dane/kopie/przemiany-<data>.json`, ostatnie 60. Przywrócenie: skopiować wybraną kopię na `dane/przemiany.json` i zapisać cokolwiek w panelu (to wygeneruje JS).
+
+### Pliki
+
+| Plik | Rola |
+|---|---|
+| `admin/index.php` | Strona panelu (logowanie + aplikacja) |
+| `admin/panel.js`, `admin/panel.css` | Front panelu: widoki celów i przemian, kadrowanie zdjęć, wysyłka wideo |
+| `admin/api.php` | API JSON: `state`, `login`, `logout`, `category-save/delete`, `case-save/delete`, `toggle`, `move`, `settings-save`, `upload` |
+| `admin/lib.php` | Sesja, logowanie, zapis z blokadą, kopie, generowanie JS, walidacja, uploady |
+| `admin/ustaw-haslo.php` | Ustawienie hasła z linii poleceń (tylko CLI) |
+| `admin/seed.json` | Dane startowe (kopia demo) |
+| `dane/` | JSON, kopie, hasło, licznik prób logowania. **Poza gitem, zablokowany w `.htaccess`** |
+| `uploads/` | Zdjęcia i filmy z panelu. **Poza gitem**, bez wykonywania skryptów |
+
+### Co robi panel
+
+- **Cele:** dodawanie (nazwa, obszar, opcjonalny krótki opis do meta description), edycja, ukrywanie, kolejność, usuwanie tylko pustego celu. Slug generowany z nazwy i **niezmienny**. Przełącznik „Ukrywaj puste cele”.
+- **Przemiany:** zdjęcia przed/po (oba albo żadne), opis (Cel / Opis problemu, Podjęte działania po jednym w linii, Efekty), wideo, podpis (wynik, imię, wiek, czas), opinia i schorzenie, przeniesienie do innego celu, ukrywanie, kolejność, usuwanie. Przemiana musi mieć zdjęcia, opis albo opinię. Pola nieobsługiwane w panelu (`metrics`, `story`, `timeline`, `title`, `trainer`, `featured`, `perWeek`) są **zachowywane** przy zapisie.
+- **Zdjęcia:** kadrowanie w przeglądarce do 5:8 (przeciąganie, suwak, pinch), eksport 500×800 WEBP (Safari: JPG). Serwer sprawdza typ po zawartości (finfo + getimagesize), maks. 5 MB, losowa nazwa.
+- **Wideo:** tylko MP4, maks. 300 MB. Serwer sprawdza typ po złożeniu pliku.
+- **Upload w częściach po 12 KB** (`PRZ_CHUNK_BYTES` w `lib.php`), jako surowe body z parametrami w adresie. Powód: na home.pl (PHP 8.5 przez uWSGI, stan na 12.10.2026) `/tmp` nie ma prawa zapisu, więc body powyżej ~16 KB dochodzi do PHP puste, a multipart zwraca `UPLOAD_ERR_NO_TMP_DIR`. Z tego samego powodu sesje panelu są w `dane/sesje/`. Duże filmy wysyłają się przez to wolno (tysiące zapytań). Gdy home.pl naprawi `/tmp`, podnieść `PRZ_CHUNK_BYTES` do np. 4 MB.
+- **Trenerzy:** bez edycji w panelu (pole `trainer` jest używane tylko w nielinkowanym case study).
+
+### Bezpieczeństwo
+
+- Jedno hasło (hash bcrypt w `dane/haslo.php`), sesja `BCPANEL` (HttpOnly, SameSite=Strict, Secure na HTTPS), wylogowanie po 4 h bezczynności.
+- 5 błędnych haseł w 15 minut = blokada logowania z tego IP na 15 minut.
+- Każdy POST wymaga nagłówka `X-CSRF-Token`.
+- Walidacja i limity długości po stronie serwera. Ścieżki plików tylko `uploads/<24 hex>.<ext>` albo istniejące zasoby demo (`../zdjecia_przed_po/`, `../video/`).
+- Wyjście: JSON z `JSON_HEX_TAG`, a na stronach wszystko i tak przechodzi przez `BC.esc`.
+
+### Uruchomienie
+
+```bash
+php admin/ustaw-haslo.php "silne-haslo"     # w demo-przemiany/, tworzy dane/haslo.php
+php -S localhost:8000                       # w BodycreatorTEST/
+```
+
+Na serwer: `admin/`, `dane/.htaccess`, `uploads/.htaccess`, `.htaccess`, `kategoria.html` oraz **raz** `dane/haslo.php` (wygenerowany lokalnie z prawdziwym hasłem). Ostrzeżenia: [deploy.md](deploy.md#panel-przemian).
+
+### Etap 2 (do zrobienia)
+
+1. **SEO:** renderowanie w PHP z ładnymi adresami (`/przemiany/redukcja`), `canonical`, `sitemap.xml`, `BreadcrumbList`. Patrz [seo.md](seo.md).
+2. Przeniesienie sekcji z `demo-przemiany/` do katalogu głównego (patrz „Gdzie to jest”), razem z `dane/` i `uploads/`.
+3. Opcjonalnie: przywracanie kopii z panelu, sprzątanie nieużywanych plików w `uploads/`, edycja trenerów.
+4. Odpowiedzi klienta: galeria kilku etapów zamiast jednej pary zdjęć? Filmy niezwiązane z osobą? Edytowalne teksty stałe?
