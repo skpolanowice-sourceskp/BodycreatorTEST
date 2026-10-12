@@ -983,6 +983,8 @@
 
         .team-slider {
             display: flex;
+            flex-direction: column;
+            gap: 48px;
             align-items: stretch;
             transition: transform 0.5s cubic-bezier(0.25, 0.46, 0.45, 0.94);
         }
@@ -3058,20 +3060,6 @@
                     </div>
                 </div>
             </div>
-            <div class="team-slider-controls">
-                <button class="team-slider-btn" id="teamPrev" aria-label="Poprzedni panel" disabled>
-                    <i class="fas fa-arrow-left"></i>
-                    <span class="team-btn-text">Jednak zobacz mniej</span>
-                </button>
-                <div class="team-dots">
-                    <span class="team-dot active" data-index="0"></span>
-                    <span class="team-dot" data-index="1"></span>
-                </div>
-                <button class="team-slider-btn" id="teamNext" aria-label="Następny panel">
-                    <span class="team-btn-text">Zobacz więcej</span>
-                    <i class="fas fa-arrow-right"></i>
-                </button>
-            </div>
         </div>
     </section>
 
@@ -3225,29 +3213,7 @@
         }, { threshold: 0.15, rootMargin: '0px 0px -40px 0px' });
         revealElements.forEach(el => revealObserver.observe(el));
 
-        (function() {
-            const slider = document.getElementById('teamPanelSlider');
-            const prevBtn = document.getElementById('teamPrev');
-            const nextBtn = document.getElementById('teamNext');
-            const dots = document.querySelectorAll('.team-dot');
-            if (!slider) return;
-            let current = 0;
-            const total = slider.children.length;
-            function goTo(index) {
-                current = Math.max(0, Math.min(index, total - 1));
-                slider.style.transform = `translateX(-${current * 100}%)`;
-                dots.forEach((d, i) => d.classList.toggle('active', i === current));
-                prevBtn.disabled = current === 0;
-                nextBtn.disabled = current === total - 1;
-            }
-            nextBtn.addEventListener('click', () => goTo(current + 1));
-            prevBtn.addEventListener('click', () => goTo(current - 1));
-            dots.forEach((dot, i) => dot.addEventListener('click', () => goTo(i)));
-            let startX = 0;
-            slider.addEventListener('touchstart', e => { startX = e.touches[0].clientX; }, { passive: true });
-            slider.addEventListener('touchend', e => { const diff = startX - e.changedTouches[0].clientX; if (diff > 50) goTo(current + 1); else if (diff < -50) goTo(current - 1); }, { passive: true });
-            goTo(0);
-        })();
+        
 
         (function() {
             const slider = document.getElementById('studioSlider');
