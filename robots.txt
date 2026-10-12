@@ -3,21 +3,8 @@
 User-agent: *
 Allow: /
 
-# Block crawl of helper / build files
+# Pliki robocze sa zablokowane po stronie serwera (.htaccess), nie wymieniamy ich tutaj.
 Disallow: /node_modules/
-Disallow: /*.psd$
-Disallow: /*.psb$
-Disallow: /*.rar$
-Disallow: /package.json
-Disallow: /package-lock.json
-Disallow: /skills-lock.json
-Disallow: /DESIGN.json
-Disallow: /DESIGN.md
-Disallow: /PRODUCT.md
-Disallow: /todolist.md
-Disallow: /instrukcjaodklienta.txt
-Disallow: /send_mail.php
-Disallow: /sftp.json
 
 # AI crawler bots — allow indexing but you can edit if you want to opt out
 User-agent: GPTBot

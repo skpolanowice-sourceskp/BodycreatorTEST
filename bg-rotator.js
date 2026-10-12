@@ -5,6 +5,10 @@
 
     if (window.matchMedia && window.matchMedia('(prefers-reduced-motion: reduce)').matches) return;
 
+    // Oszczędzanie danych albo wolne łącze: bez pobierania klipów mp4.
+    var conn = navigator.connection;
+    if (conn && (conn.saveData || /(^|-)2g$|^3g$/.test(conn.effectiveType || ''))) return;
+
     var CLIPS = [
         { src: 'video/bg/bg-20260630_204725.mp4', pos: 'center top' },
         { src: 'video/bg/bg-20260630_204754.mp4', pos: 'center center' },

@@ -37,7 +37,7 @@
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
     <link rel="preconnect" href="https://cdnjs.cloudflare.com" crossorigin>
-    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800;900&display=swap" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800;900&display=swap" rel="stylesheet">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css">
 
     <style>
@@ -162,8 +162,8 @@
     <!-- TOP BAR -->
     <div class="legal-bar">
         <div class="container">
-            <a href="index.html" aria-label="Body Creator — strona główna"><img src="logobezpodpisu.png" alt="Body Creator"></a>
-            <a href="index.html" class="legal-back" id="legalBack"><i class="fas fa-arrow-left"></i><span>Powrót na stronę</span></a>
+            <a href="/" aria-label="Body Creator — strona główna"><img src="logobezpodpisu.png" alt="Body Creator"></a>
+            <a href="/" class="legal-back" id="legalBack"><i class="fas fa-arrow-left"></i><span>Powrót na stronę</span></a>
         </div>
     </div>
 
@@ -283,7 +283,7 @@
         <div class="container">
             <div class="footer-content">
                 <div class="footer-links">
-                    <a href="index.html">Strona główna</a>
+                    <a href="/">Strona główna</a>
                     <a href="oferta.html">Oferta</a>
                     <a href="o-nas.html">O nas</a>
                     <a href="kontakt.html">Kontakt</a>
@@ -296,7 +296,7 @@
 
     <script>
         // "Powrót na stronę" wraca do poprzednio odwiedzonej strony w obrębie serwisu.
-        // Fallback (href="index.html") działa przy wejściu bezpośrednim lub z innej domeny.
+        // Fallback (href="/") działa przy wejściu bezpośrednim lub z innej domeny.
         document.getElementById('legalBack').addEventListener('click', function (e) {
             var ref = document.referrer;
             if (window.history.length > 1 && ref && new URL(ref).origin === location.origin) {
@@ -306,6 +306,6 @@
         });
     </script>
 
-    <script src="bg-rotator.js" defer></script>
+    <script src="bg-rotator.js?v=2" defer></script>
 </body>
 </html>

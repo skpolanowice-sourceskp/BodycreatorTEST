@@ -26,6 +26,11 @@
     # co rozjezdza sie z canonical wskazujacym na wersje bez www.
     RewriteCond %{HTTP_HOST} ^www\.(.+)$ [NC]
     RewriteRule ^(.*)$ https://%1/$1 [R=301,L]
+
+    # /index.html -> / (tylko gdy ktos wpisal index.html w adresie;
+    # THE_REQUEST nie zmienia sie przy wewnetrznym DirectoryIndex, wiec bez petli)
+    RewriteCond %{THE_REQUEST} \s/+index\.html[\s?] [NC]
+    RewriteRule ^index\.html$ https://bodycreator.com.pl/ [R=301,L]
 </IfModule>
 
 # ----------------------------------------------------------
@@ -76,6 +81,10 @@
     Header set X-Content-Type-Options "nosniff"
     Header set Referrer-Policy "strict-origin-when-cross-origin"
     Header set X-Frame-Options "SAMEORIGIN"
+    # Przegladarka zawsze laczy sie po https (rok). Bez includeSubDomains,
+    # zeby nie zablokowac ewentualnych subdomen bez certyfikatu.
+    Header always set Strict-Transport-Security "max-age=31536000"
+    Header set Permissions-Policy "camera=(), microphone=(), payment=(), usb=()"
 </IfModule>
 
 # ----------------------------------------------------------

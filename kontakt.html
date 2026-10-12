@@ -18,8 +18,8 @@
     <!-- Geo / Local SEO -->
     <meta name="geo.region" content="PL-DS">
     <meta name="geo.placename" content="Wrocław, Sołtysowice">
-    <meta name="geo.position" content="51.144900;17.079200">
-    <meta name="ICBM" content="51.144900, 17.079200">
+    <meta name="geo.position" content="51.145982;17.069418">
+    <meta name="ICBM" content="51.145982, 17.069418">
 
     <!-- Icons -->
     <link rel="icon" href="favicon.ico?v=3" sizes="any">
@@ -52,7 +52,7 @@
     <link rel="dns-prefetch" href="//cdn.jsdelivr.net">
 
     <!-- Google Fonts -->
-    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800;900&display=swap" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800;900&display=swap" rel="stylesheet">
 
     <!-- Font Awesome Icons -->
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css">
@@ -436,6 +436,9 @@
             cursor: pointer;
             z-index: 1001;
             padding: 8px;
+            background: none;
+            border: none;
+            color: inherit;
         }
 
         .nav-toggle span {
@@ -2748,8 +2751,8 @@
                     "postalCode": "51-168",
                     "addressCountry": "PL"
                 },
-                "geo": { "@type": "GeoCoordinates", "latitude": 51.144900, "longitude": 17.079200 },
-                "hasMap": "https://www.google.com/maps?q=Body+Creator+ul.+Rafa%C5%82a+Wojaczka+3g+Wroc%C5%82aw",
+                "geo": { "@type": "GeoCoordinates", "latitude": 51.145982, "longitude": 17.069418 },
+                "hasMap": "https://maps.app.goo.gl/Ec2oVXhHD9GgGTvS7",
                 "openingHoursSpecification": [
                     { "@type": "OpeningHoursSpecification", "dayOfWeek": ["Monday","Tuesday","Wednesday","Thursday","Friday"], "opens": "07:00", "closes": "21:00" },
                     { "@type": "OpeningHoursSpecification", "dayOfWeek": ["Saturday"], "opens": "08:00", "closes": "15:00" }
@@ -2764,7 +2767,8 @@
                     }
                 ],
                 "sameAs": [
-                    "https://www.instagram.com/bodycreatorstudio/"
+                    "https://www.instagram.com/bodycreatorstudio/",
+                    "https://maps.app.goo.gl/Ec2oVXhHD9GgGTvS7"
                 ]
             },
             {
@@ -2789,7 +2793,7 @@
 <body>
     <div id="page-loader">
         <div class="loader-rig"><div class="loader-ring"></div><div class="loader-ring-inner"></div>
-            <img class="loader-logo" src="favicon.png" alt="Ładowanie strony">
+            <img class="loader-logo" src="favicon.png?v=3" alt="Ładowanie strony">
         </div>
         <div class="loader-text"><span>L</span><span>O</span><span>A</span><span>D</span><span>I</span><span>N</span><span>G</span></div>
     </div>
@@ -2818,18 +2822,18 @@
 
     <nav class="navbar" id="navbar">
         <div class="container">
-            <a href="index.html" class="logo" aria-label="Body Creator — strona główna"><img src="logobezpodpisu.png" alt="Body Creator — Studio Treningu Personalnego Wrocław" width="140" height="70"></a>
+            <a href="/" class="logo" aria-label="Body Creator — strona główna"><img src="logobezpodpisu.png" alt="Body Creator — Studio Treningu Personalnego Wrocław" width="140" height="70"></a>
             <div class="nav-cta">
                 <a href="rezerwacja.html" class="btn btn-primary btn-sm">Darmowa konsultacja <i class="fas fa-arrow-right"></i></a>
                 <a href="tel:518167945" class="nav-phone"><i class="fas fa-phone"></i> 518 167 945</a>
             </div>
-            <div class="nav-toggle" id="navToggle" aria-label="Menu"><span></span><span></span><span></span></div>
+            <button class="nav-toggle" id="navToggle" type="button" aria-label="Otwórz menu nawigacji" aria-expanded="false" aria-controls="navOverlay"><span></span><span></span><span></span></button>
         </div>
     </nav>
     <div class="nav-overlay" id="navOverlay">
         <nav class="nav-menu">
             <ul>
-                <li><a href="index.html" data-nav>Strona Główna</a></li>
+                <li><a href="/" data-nav>Strona Główna</a></li>
                 <li><a href="oferta.html" data-nav>Oferta</a></li>
                 <li><a href="o-nas.html" data-nav>O Nas</a></li>
                 <li><a href="przemiany.html" data-nav>Przemiany</a></li>
@@ -2886,7 +2890,7 @@
     <section style="padding:0;margin:0;">
         <div style="height:400px;overflow:hidden;">
             <iframe
-                src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d2504.5!2d17.05!3d51.13!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x0%3A0x0!2zUmFmYcWCYSBXb2phY3prYSAzZywgV3JvY8WCYXc!5e0!3m2!1spl!2spl!4v1"
+                src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d3118.9300087332126!2d17.069417976977103!3d51.14598223704121!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x470feb804f897e1d%3A0xbbac09c916965088!2sStudio%20Treningu%20Body%20Creator%20Wroc%C5%82aw!5e1!3m2!1spl!2spl!4v1791798848493!5m2!1spl!2spl"
                 width="100%" height="400"
                 allowfullscreen=""
                 loading="lazy"
@@ -2902,7 +2906,7 @@
         <div class="container">
             <div class="footer-content">
                 <div class="footer-links">
-                    <a href="index.html">Strona główna</a>
+                    <a href="/">Strona główna</a>
                     <a href="oferta.html">Oferta</a>
                     <a href="o-nas.html">O nas</a>
                     <a href="kontakt.html">Kontakt</a>
@@ -2916,8 +2920,9 @@
     <script>
         const navToggle = document.getElementById('navToggle');
         const navOverlay = document.getElementById('navOverlay');
-        navToggle.addEventListener('click', () => { navToggle.classList.toggle('active'); navOverlay.classList.toggle('active'); });
-        document.querySelectorAll('[data-nav]').forEach(link => link.addEventListener('click', () => { navToggle.classList.remove('active'); navOverlay.classList.remove('active'); }));
+        navToggle.addEventListener('click', () => { navToggle.classList.toggle('active');
+            navToggle.setAttribute('aria-expanded', String(navToggle.classList.contains('active'))); navOverlay.classList.toggle('active'); });
+        document.querySelectorAll('[data-nav]').forEach(link => link.addEventListener('click', () => { navToggle.classList.remove('active'); navToggle.setAttribute('aria-expanded', 'false'); navOverlay.classList.remove('active'); }));
         window.addEventListener('scroll', () => { document.getElementById('navbar').classList.toggle('scrolled', window.scrollY > 50); });
         const revealElements = document.querySelectorAll('.reveal');
         const revealObserver = new IntersectionObserver((entries) => {
@@ -2927,7 +2932,7 @@
     </script>
     <script src="https://cdn.jsdelivr.net/npm/@studio-freight/lenis@1.0.42/dist/lenis.min.js"></script>
     <script>
-        const lenis = new Lenis({ duration: 1.4, easing: t => Math.min(1, 1.001 - Math.pow(2, -10 * t)), smoothWheel: true, touchMultiplier: 1.5 });
+        const lenis = new Lenis({ duration: 1.4, easing: t => Math.min(1, 1.001 - Math.pow(2, -10 * t)), smoothWheel: !window.matchMedia('(prefers-reduced-motion: reduce)').matches, touchMultiplier: 1.5 });
         function raf(time) { lenis.raf(time); requestAnimationFrame(raf); }
         requestAnimationFrame(raf);
     </script>
@@ -2968,6 +2973,6 @@
         }
     </style>
 
-    <script src="bg-rotator.js" defer></script>
+    <script src="bg-rotator.js?v=2" defer></script>
 </body>
 </html>
