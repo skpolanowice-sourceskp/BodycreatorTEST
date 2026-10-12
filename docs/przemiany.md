@@ -136,7 +136,7 @@ panel (admin/panel.js) → admin/api.php → dane/przemiany.json   (źródło pr
 |---|---|
 | `admin/index.php` | Strona panelu (logowanie + aplikacja) |
 | `admin/panel.js`, `admin/panel.css` | Front panelu: widoki celów i przemian, kadrowanie zdjęć, wysyłka wideo |
-| `admin/api.php` | API JSON: `state`, `login`, `logout`, `category-save/delete`, `case-save/delete`, `toggle`, `move`, `settings-save`, `upload` |
+| `admin/api.php` | API JSON: `state`, `login`, `logout`, `category-save/delete`, `case-save/delete`, `toggle`, `move`, `settings-save`, `password-change`, `upload` |
 | `admin/lib.php` | Sesja, logowanie, zapis z blokadą, kopie, generowanie JS, walidacja, uploady |
 | `admin/ustaw-haslo.php` | Ustawienie hasła z linii poleceń (tylko CLI) |
 | `admin/seed.json` | Dane startowe (kopia demo) |
@@ -154,8 +154,9 @@ panel (admin/panel.js) → admin/api.php → dane/przemiany.json   (źródło pr
 
 ### Bezpieczeństwo
 
-- Jedno hasło (hash bcrypt w `dane/haslo.php`), sesja `BCPANEL` (HttpOnly, SameSite=Strict, Secure na HTTPS), wylogowanie po 4 h bezczynności.
-- 5 błędnych haseł w 15 minut = blokada logowania z tego IP na 15 minut.
+- Jedno hasło (hash bcrypt w `dane/haslo.php`). Klient zmienia je sam w panelu (Hasło w górnym pasku: obecne + nowe min. 8 znaków); po zmianie inne sesje są wylogowane (odcisk hasha w sesji). Hasło startowe: `admin/ustaw-haslo.php` + FTP.
+- Sesja `BCPANEL` (HttpOnly, SameSite=Strict, Secure na HTTPS), wylogowanie po 4 h bezczynności.
+- 5 błędnych haseł w 15 minut (logowanie i zmiana hasła liczą się razem) = blokada z tego IP na 15 minut.
 - Każdy POST wymaga nagłówka `X-CSRF-Token`.
 - Walidacja i limity długości po stronie serwera. Ścieżki plików tylko `uploads/<24 hex>.<ext>` albo istniejące zasoby demo (`../zdjecia_przed_po/`, `../video/`).
 - Wyjście: JSON z `JSON_HEX_TAG`, a na stronach wszystko i tak przechodzi przez `BC.esc`.

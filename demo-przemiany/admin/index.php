@@ -24,6 +24,7 @@ $hasPassword = prz_password_hash() !== null;
         <a class="brand" href="#/"><img src="../../logobezpodpisu.png" alt="" width="28" height="28"><span>Panel Przemian</span></a>
         <nav class="topbar-actions" id="topActions" hidden>
             <a class="icon-btn" href="../przemiany.html" target="_blank" rel="noopener" title="Zobacz stronę"><i class="fas fa-arrow-up-right-from-square"></i><span>Strona</span></a>
+            <a class="icon-btn" href="#/haslo" title="Zmień hasło"><i class="fas fa-key"></i><span>Hasło</span></a>
             <button class="icon-btn" type="button" id="logoutBtn" title="Wyloguj"><i class="fas fa-right-from-bracket"></i><span>Wyloguj</span></button>
         </nav>
     </header>

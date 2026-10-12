@@ -4,6 +4,7 @@
      #/cel/<slug>           ustawienia celu + lista jego przemian
      #/cel/<slug>/nowa      nowa przemiana
      #/przemiana/<id>       edycja przemiany
+     #/haslo                zmiana hasła
    Dane i zapis: api.php. Każdy zapis od razu publikuje zmiany na stronie. */
 (function () {
     'use strict';
@@ -126,6 +127,7 @@
         if (parts[0] === 'cel' && parts[2] === 'nowa') return renderCaseForm(null, parts[1]);
         if (parts[0] === 'cel' && parts[1]) return renderCategory(parts[1]);
         if (parts[0] === 'przemiana' && parts[1]) return renderCaseForm(parts[1]);
+        if (parts[0] === 'haslo') return renderPassword();
         renderHome();
     }
 
@@ -501,6 +503,38 @@
             '<span class="photo-busy"><i class="fas fa-circle-notch fa-spin"></i></span>';
         slot.querySelector('[data-pick]').textContent = path ? 'Zmień' : 'Wybierz';
         slot.querySelector('[data-remove]').hidden = !path;
+    }
+
+    /* ===== WIDOK: ZMIANA HASŁA ===== */
+
+    function renderPassword() {
+        app.innerHTML =
+            '<a class="back" href="#/"><i class="fas fa-arrow-left"></i> Cele</a>' +
+            '<div class="page-head"><div><span class="label">Ustawienia</span><h1>Zmiana hasła</h1></div></div>' +
+            '<form class="card section narrow" id="passForm">' +
+                '<label class="field"><span>Obecne hasło</span><input type="password" name="current" autocomplete="current-password" required></label>' +
+                '<label class="field"><span>Nowe hasło <em>co najmniej 8 znaków</em></span><input type="password" name="new" autocomplete="new-password" minlength="8" required></label>' +
+                '<label class="field"><span>Powtórz nowe hasło</span><input type="password" name="repeat" autocomplete="new-password" minlength="8" required></label>' +
+                '<label class="check"><input type="checkbox" id="showPass"> Pokaż hasła</label>' +
+                '<p class="muted hint">Po zmianie inne urządzenia zalogowane do panelu zostaną wylogowane.</p>' +
+                '<div class="actions"><button class="btn btn-primary btn-sm" type="submit">Zmień hasło</button></div>' +
+            '</form>';
+        var form = document.getElementById('passForm');
+        document.getElementById('showPass').addEventListener('change', function () {
+            var type = this.checked ? 'text' : 'password';
+            form.querySelectorAll('input[name]').forEach(function (i) { i.type = type; });
+        });
+        form.addEventListener('submit', function (e) {
+            e.preventDefault();
+            var el = form.elements;
+            if (el['new'].value.length < 8) { toast('Nowe hasło musi mieć co najmniej 8 znaków.', true); return; }
+            if (el['new'].value !== el.repeat.value) { toast('Nowe hasła nie są takie same.', true); return; }
+            var btn = form.querySelector('[type=submit]');
+            btn.disabled = true;
+            mutate('password-change', { current: el.current.value, 'new': el['new'].value, repeat: el.repeat.value })
+                .then(function () { toast('Hasło zmienione.'); go('#/'); })
+                .catch(function () { btn.disabled = false; });
+        });
     }
 
     /* ===== WYSYŁANIE PLIKÓW W CZĘŚCIACH (rozmiar części podaje serwer) ===== */

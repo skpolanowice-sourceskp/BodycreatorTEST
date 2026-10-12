@@ -1,0 +1,39 @@
+Dzień dobry,
+
+przygotowaliśmy panel, w którym sam Pan dodaje i edytuje przemiany na nowej stronie Przemian.
+
+LOGOWANIE
+Adres: https://bodycreator.com.pl/demo-przemiany/admin/
+Hasło startowe przekażę osobno (telefonicznie lub SMS-em).
+
+Po pierwszym zalogowaniu proszę od razu ustawić własne hasło: przycisk "Hasło" (ikona klucza) w górnym pasku, potem obecne hasło i dwa razy nowe, co najmniej 8 znaków. Po zmianie hasła inne urządzenia zalogowane do panelu zostaną wylogowane.
+
+Panel działa na telefonie i na komputerze. Po 4 godzinach bez aktywności wylogowuje automatycznie. Po 5 błędnych hasłach logowanie blokuje się na 15 minut.
+
+Na razie panel zmienia wersję podglądową:
+https://bodycreator.com.pl/demo-przemiany/przemiany.html
+Obecna strona Przemian działa bez zmian. Wszystko, co Pan zapisze w panelu, od razu pojawia się na stronie podglądowej.
+
+CELE (kafelki na stronie Przemian)
+- Na górze wybiera Pan obszar: Sylwetka i zdrowie, Ból i urazy, Sport i sprawność.
+- "Dodaj cel": nazwa (np. Ból barku) i obszar.
+- Strzałki zmieniają kolejność kafelków, oko ukrywa kafelek albo go przywraca. Ukryty cel znika ze strony, ale nic się nie usuwa.
+- Cel można usunąć na stałe tylko wtedy, gdy nie ma w nim przemian.
+- Na dole listy: "Ukrywaj puste cele", czyli cele bez przemian nie pokażą się jako "Wkrótce".
+
+PRZEMIANY
+Kliknięcie w cel otwiera jego listę przemian. "Dodaj przemianę" otwiera formularz. Wystarczy wypełnić tylko to, co Pan ma, bo puste pola się nie pokażą.
+- Zdjęcia przed i po: po wybraniu zdjęcia ustawia Pan kadr (przesuwanie palcem, powiększanie suwakiem). Trzeba dodać oba zdjęcia albo żadnego.
+- Opis: Cel (przy Bólu i urazach: Opis problemu), Podjęte działania (każdy punkt w osobnej linii), Efekty współpracy. Przemiana z opisem pokazuje się jako duży blok ze zdjęciami. Same zdjęcia trafiają do siatki.
+- Wideo: plik MP4, najlepiej pionowy. Z iPhone'a najlepiej wysłać film w formacie "Najbardziej zgodny". Na razie duże filmy wgrywają się wolno (ok. 1 minuty na każde 4 MB), więc trzeba poczekać, aż pasek dojdzie do 100%, i dopiero wtedy kliknąć Zapisz.
+- Podpis (opcjonalnie): wynik (np. -11 kg), imię, wiek, czas współpracy.
+- Opinia klienta: przemiana bez zdjęć i bez opisu pokaże się jako karta z cytatem.
+- Publikacja: tu można przenieść przemianę do innego celu albo ją ukryć (odznaczyć "Widoczna na stronie").
+- Strzałki na liście zmieniają kolejność przemian na stronie.
+
+WAŻNE
+- Zgoda: proszę dodawać tylko zdjęcia i historie osób, które zgodziły się na publikację.
+- Dane w podglądzie (imiona, liczby, część historii) są przykładowe. Przed publikacją nowej sekcji zastąpimy je prawdziwymi.
+- Każdy zapis tworzy kopię zapasową, więc w razie pomyłki możemy przywrócić wcześniejszą wersję.
+
+Pozdrawiam

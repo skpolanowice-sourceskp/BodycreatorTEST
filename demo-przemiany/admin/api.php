@@ -54,6 +54,10 @@ try {
             prz_logout();
             prz_respond(['ok' => true]);
 
+        case 'password-change':
+            prz_change_password($in['current'] ?? '', $in['new'] ?? '', $in['repeat'] ?? '');
+            prz_respond(prz_state(prz_load()));
+
         case 'upload':
             prz_respond(['ok' => true] + prz_upload_chunk($_GET['kind'] ?? '', $_GET['uid'] ?? '', $_GET['offset'] ?? -1, $_GET['total'] ?? 0));
 

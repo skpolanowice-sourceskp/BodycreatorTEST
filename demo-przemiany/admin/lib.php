@@ -67,7 +67,9 @@ function prz_session_start() {
 function prz_is_logged_in() {
     prz_session_start();
     if (empty($_SESSION['prz_admin'])) return false;
-    if (time() - (int)($_SESSION['prz_seen'] ?? 0) > PRZ_SESSION_IDLE) {
+    // Wylogowanie po bezczynności albo po zmianie hasła (na innym urządzeniu)
+    if (time() - (int)($_SESSION['prz_seen'] ?? 0) > PRZ_SESSION_IDLE
+        || !hash_equals(prz_password_fingerprint(), (string)($_SESSION['prz_pass'] ?? ''))) {
         prz_logout();
         return false;
     }
@@ -92,6 +94,20 @@ function prz_password_hash() {
     if (!is_file(PRZ_PASS_FILE)) return null;
     $cfg = include PRZ_PASS_FILE;
     return (is_array($cfg) && !empty($cfg['hash'])) ? $cfg['hash'] : null;
+}
+
+function prz_password_fingerprint() {
+    $hash = prz_password_hash();
+    return $hash ? hash('sha256', $hash) : '';
+}
+
+define('PRZ_PASSWORD_MIN', 8);
+
+function prz_write_password($password) {
+    prz_ensure_dirs();
+    $hash = password_hash($password, PASSWORD_DEFAULT);
+    prz_write_atomic(PRZ_PASS_FILE, "<?php\n// Hasło do panelu Przemian (hash). Nie commituj.\nreturn ['hash' => " . var_export($hash, true) . "];\n");
+    if (function_exists('opcache_invalidate')) @opcache_invalidate(PRZ_PASS_FILE, true);
 }
 
 function prz_client_key() {
@@ -121,7 +137,8 @@ function prz_attempts($fn) {
     return $result;
 }
 
-function prz_login($password) {
+/* Sprawdzenie hasła z limitem prób (logowanie i zmiana hasła liczą się razem) */
+function prz_verify_password($password) {
     $hash = prz_password_hash();
     if (!$hash) throw new PrzError('Panel nie ma jeszcze ustawionego hasła.', 503);
     $key = prz_client_key();
@@ -137,15 +154,36 @@ function prz_login($password) {
             $all[$key]['count']++;
         });
         usleep(400000);
-        throw new PrzError('Nieprawidłowe hasło.', 401);
+        return false;
     }
-
     prz_attempts(function (&$all) use ($key) { unset($all[$key]); });
+    return true;
+}
+
+function prz_start_admin_session() {
     prz_session_start();
     session_regenerate_id(true);
     $_SESSION['prz_admin'] = true;
     $_SESSION['prz_seen'] = time();
+    $_SESSION['prz_pass'] = prz_password_fingerprint();
     $_SESSION['prz_csrf'] = bin2hex(random_bytes(32));
+}
+
+function prz_login($password) {
+    if (!prz_verify_password($password)) throw new PrzError('Nieprawidłowe hasło.', 401);
+    prz_start_admin_session();
+}
+
+function prz_change_password($current, $new, $repeat) {
+    if (!is_string($new) || !is_string($repeat)) throw new PrzError('Nieprawidłowe dane.');
+    if ($new !== $repeat) throw new PrzError('Nowe hasła nie są takie same.');
+    if (mb_strlen($new) < PRZ_PASSWORD_MIN) throw new PrzError('Nowe hasło musi mieć co najmniej ' . PRZ_PASSWORD_MIN . ' znaków.');
+    if (mb_strlen($new) > 200) throw new PrzError('Nowe hasło jest za długie.');
+    // Błędne obecne hasło nie wylogowuje, ale liczy się do blokady prób
+    if (!prz_verify_password($current)) throw new PrzError('Obecne hasło jest nieprawidłowe.', 400);
+    prz_write_password($new);
+    // Ta sesja zostaje (nowy identyfikator), pozostałe urządzenia zostaną wylogowane
+    prz_start_admin_session();
 }
 
 function prz_logout() {

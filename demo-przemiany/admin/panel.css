@@ -89,6 +89,7 @@ h2 em, .field em { font-style: normal; font-weight: 400; color: var(--gray); fon
 .card { background: var(--dark-2); border: 1px solid var(--line); border-radius: var(--radius); padding: 18px; }
 .section { margin-top: 16px; }
 .add-form { margin-bottom: 16px; }
+.narrow { max-width: 480px; }
 
 .field { display: block; margin-bottom: 14px; }
 .field > span { display: block; font-size: 0.85rem; font-weight: 600; color: var(--gray-light); margin-bottom: 6px; }
