@@ -10,3 +10,6 @@ demo-przemiany/dane/*
 !demo-przemiany/dane/.htaccess
 demo-przemiany/uploads/*
 !demo-przemiany/uploads/.htaccess
+
+# Robocza odpowiedź dla klienta (nie do repo)
+odpowiedz-audyt.txt
