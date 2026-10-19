@@ -18,9 +18,18 @@
         return (d >= 2 && d <= 4 && !(h >= 12 && h <= 14)) ? forms[1] : forms[2];
     }
 
+    // Tekst z panelu: [Umów się…] = link do formularza konsultacji (adres stały, tekst escapowany)
+    var CTA_LINK = /\[([^\[\]\n]{1,150})\]/g;
+    function richText(s) {
+        return esc(s).replace(CTA_LINK, function (m, label) {
+            return '<a class="text-cta" href="../rezerwacja.html"><img src="../bc-znak.webp" alt="" width="31" height="12">' + label.trim() + '</a>';
+        });
+    }
+
     var BC = {
         data: D,
         esc: esc,
+        richText: richText,
         plural: plural,
         age: function (n) { return n ? n + ' ' + plural(n, ['rok', 'lata', 'lat']) : ''; },
         param: function (name) { return new URLSearchParams(location.search).get(name); },

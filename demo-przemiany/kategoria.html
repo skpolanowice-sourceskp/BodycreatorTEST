@@ -55,6 +55,19 @@
         .story-block ul { list-style: none; display: grid; gap: 6px; }
         .story-block li { display: grid; grid-template-columns: 18px 1fr; gap: 8px; }
         .story-block li i { color: var(--yellow); font-size: 0.75rem; margin-top: 6px; }
+        .story-block p { white-space: pre-line; }
+        /* Link do konsultacji wpisany w opisie: [tekst] w panelu */
+        .text-cta {
+            color: var(--yellow);
+            font-weight: 700;
+            text-decoration: underline;
+            text-decoration-thickness: 1px;
+            text-underline-offset: 3px;
+            padding: 2px 0;
+            transition: color 0.2s;
+        }
+        .text-cta img { display: inline-block; width: auto; height: 0.75em; margin: 0 6px 0 2px; vertical-align: 0; }
+        .text-cta:hover { color: var(--yellow-hover); }
         .story-video { position: relative; width: 100%; max-width: 240px; aspect-ratio: 9 / 16; border-radius: 16px; overflow: hidden; background: var(--dark-3); }
         .story-video video { width: 100%; height: 100%; object-fit: cover; }
         .video-play {
@@ -255,7 +268,7 @@
 
     <script src="https://cdn.jsdelivr.net/npm/@studio-freight/lenis@1.0.42/dist/lenis.min.js"></script>
     <script src="przemiany-data.js?v=20261007"></script>
-    <script src="przemiany.js?v=20261007"></script>
+    <script src="przemiany.js?v=20261019"></script>
     <script>
         (function () {
             var esc = BC.esc;
@@ -281,17 +294,17 @@
                 // Bez zdjęć sam opis (cytat by go dublował)
                 var media = (c.before && c.after) ? BC.sliderHTML(c, BC.altFor(c)) : '';
                 var actions = Array.isArray(c.actions)
-                    ? '<ul>' + c.actions.map(function (a) { return '<li><i class="fas fa-check" aria-hidden="true"></i><span>' + esc(a) + '</span></li>'; }).join('') + '</ul>'
-                    : (c.actions ? '<p>' + esc(c.actions) + '</p>' : '');
+                    ? '<ul>' + c.actions.map(function (a) { return '<li><i class="fas fa-check" aria-hidden="true"></i><span>' + BC.richText(a) + '</span></li>'; }).join('') + '</ul>'
+                    : (c.actions ? '<p>' + BC.richText(c.actions) + '</p>' : '');
                 var meta = [BC.whoLine(c)].filter(Boolean).join('');
                 return '<article class="story reveal' + (media ? '' : ' is-text') + '">' + media +
                     '<div class="story-body">' +
                         ((c.highlight || meta) ? '<div class="story-top">' +
                             (c.highlight ? '<span class="story-highlight">' + esc(c.highlight) + '</span>' : '') +
                             (meta ? '<span class="story-meta">' + esc(meta) + '</span>' : '') + '</div>' : '') +
-                        (c.goal ? '<div class="story-block"><h3>' + firstLabel + '</h3><p>' + esc(c.goal) + '</p></div>' : '') +
+                        (c.goal ? '<div class="story-block"><h3>' + firstLabel + '</h3><p>' + BC.richText(c.goal) + '</p></div>' : '') +
                         (actions ? '<div class="story-block"><h3>Podjęte działania</h3>' + actions + '</div>' : '') +
-                        (c.effects ? '<div class="story-block"><h3>Efekty współpracy</h3><p>' + esc(c.effects) + '</p></div>' : '') +
+                        (c.effects ? '<div class="story-block"><h3>Efekty współpracy</h3><p>' + BC.richText(c.effects) + '</p></div>' : '') +
                         (c.video ? '<div class="story-video"><video src="' + esc(c.video) + '" preload="metadata" playsinline loop></video>' +
                             '<button class="video-play" type="button" aria-label="Odtwórz wideo"><span class="video-play-icon"><i class="fas fa-play"></i></span></button></div>' : '') +
                     '</div></article>';

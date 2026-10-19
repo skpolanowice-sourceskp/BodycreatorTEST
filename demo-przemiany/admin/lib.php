@@ -297,6 +297,49 @@ function prz_publish($data) {
     prz_write_atomic(PRZ_PUBLIC_JS, $js);
 }
 
+/* ===== WIDEO: KODEK =====
+   MP4 i MOV mają ten sam układ boksów. Idziemy moov → trak → mdia → minf → stbl → stsd
+   i zbieramy kody formatów ścieżek (avc1 = H.264, hvc1/hev1 = HEVC, mp4a = dźwięk).
+   Czytamy tylko nagłówki, mdat (sam obraz) przeskakujemy. */
+
+function prz_video_codecs($file) {
+    $fh = fopen($file, 'rb');
+    if (!$fh) return [];
+    $out = [];
+    prz_walk_boxes($fh, 0, filesize($file), 0, $out);
+    fclose($fh);
+    return $out;
+}
+
+function prz_walk_boxes($fh, $start, $end, $depth, &$out) {
+    $pos = $start;
+    while ($pos + 8 <= $end && $depth <= 6) {
+        fseek($fh, $pos);
+        $head = fread($fh, 16);
+        if ($head === false || strlen($head) < 8) return;
+        $len = unpack('N', $head)[1];
+        $type = substr($head, 4, 4);
+        $hlen = 8;
+        if ($len === 1) {
+            if (strlen($head) < 16) return;
+            $big = unpack('N2', substr($head, 8, 8));
+            $len = $big[1] * 4294967296 + $big[2];
+            $hlen = 16;
+        } elseif ($len === 0) {
+            $len = $end - $pos;
+        }
+        if ($len < $hlen || $pos + $len > $end) return;
+        if (in_array($type, ['moov', 'trak', 'mdia', 'minf', 'stbl'], true)) {
+            prz_walk_boxes($fh, $pos + $hlen, $pos + $len, $depth + 1, $out);
+        } elseif ($type === 'stsd') {
+            fseek($fh, $pos + $hlen + 8);   // wersja + flagi + liczba wpisów
+            $entry = fread($fh, 8);
+            if ($entry !== false && strlen($entry) === 8) $out[] = substr($entry, 4, 4);
+        }
+        $pos += $len;
+    }
+}
+
 /* ===== WALIDACJA ===== */
 
 function prz_text($v, $max, $multiline = false) {
@@ -459,7 +502,13 @@ function prz_upload_chunk($kind, $uid, $offset, $total) {
     try {
         $mime = (new finfo(FILEINFO_MIME_TYPE))->file($part);
         if ($kind === 'video') {
-            if ($mime !== 'video/mp4') throw new PrzError('Dozwolone są tylko filmy MP4. Z iPhone’a wyeksportuj film jako „Najbardziej zgodny” (H.264).');
+            // MOV z iPhone'a z H.264 to ten sam układ co MP4: zapisujemy jako .mp4 i gra wszędzie
+            if ($mime !== 'video/mp4' && $mime !== 'video/quicktime') throw new PrzError('Dozwolone są tylko filmy MP4 albo MOV.');
+            $codecs = prz_video_codecs($part);
+            if (array_intersect($codecs, ['hvc1', 'hev1', 'dvh1', 'dvhe'])) {
+                throw new PrzError('Film jest w formacie HEVC i nie odtworzy się na części urządzeń. Na iPhonie: Ustawienia → Aparat → Formaty → Najbardziej zgodny, potem nagraj film jeszcze raz.');
+            }
+            if (!array_intersect($codecs, ['avc1', 'avc3'])) throw new PrzError('Nie rozpoznaliśmy formatu filmu. Wybierz film MP4 albo MOV (H.264).');
             $ext = 'mp4';
         } else {
             $exts = ['image/webp' => 'webp', 'image/jpeg' => 'jpg', 'image/png' => 'png'];

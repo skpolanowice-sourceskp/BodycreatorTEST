@@ -355,14 +355,15 @@
                 '</section>' +
 
                 '<section class="card section"><h2>Opis</h2>' +
-                    '<p class="muted hint">Z opisem przemiana dostaje duży blok na stronie celu (zdjęcia, opis i wideo). Bez opisu trafia do siatki zdjęć.</p>' +
-                    '<label class="field"><span>' + (isPain ? 'Opis problemu' : 'Cel') + '</span><textarea name="goal" rows="3" maxlength="1200">' + h(x.goal) + '</textarea></label>' +
+                    '<p class="muted hint">Z opisem przemiana dostaje duży blok na stronie celu (zdjęcia, opis i wideo). Bez opisu trafia do siatki zdjęć. ' +
+                        'Tekst w [nawiasach kwadratowych] będzie na stronie złotym linkiem do formularza konsultacji.</p>' +
+                    richField('goal', isPain ? 'Opis problemu' : 'Cel', x.goal) +
                     '<label class="field"><span>Podjęte działania <em>jeden punkt w linii</em></span><textarea name="actions" rows="4">' + h(actionsText) + '</textarea></label>' +
-                    '<label class="field"><span>Efekty współpracy</span><textarea name="effects" rows="3" maxlength="1200">' + h(x.effects) + '</textarea></label>' +
+                    richField('effects', 'Efekty współpracy', x.effects) +
                 '</section>' +
 
                 '<section class="card section"><h2>Wideo <em>opcjonalnie</em></h2>' +
-                    '<p class="muted hint">Plik MP4, najlepiej pionowy (9:16). Pokazuje się pod opisem.</p>' +
+                    '<p class="muted hint">MP4 albo MOV (np. prosto z iPhone’a), najlepiej pionowy (9:16). Pokazuje się pod opisem.</p>' +
                     '<div class="video-slot" id="videoSlot"></div>' +
                 '</section>' +
 
@@ -427,15 +428,19 @@
             });
         });
 
+        /* Link do konsultacji w opisie */
+        form.querySelectorAll('[data-rich]').forEach(bindRichField);
+
         /* Wideo */
         var videoSlot = document.getElementById('videoSlot');
+        var videoHelp = false;
         function drawVideo() {
-            videoSlot.innerHTML = media.video
+            videoSlot.innerHTML = (videoHelp ? HEVC_HELP : '') + (media.video
                 ? '<video src="' + h(src(media.video)) + '" controls preload="metadata" playsinline></video>' +
                   '<div class="actions"><button class="btn btn-ghost btn-sm" type="button" data-vpick>Zmień film</button>' +
                   '<button class="btn btn-ghost btn-sm" type="button" data-vremove>Usuń film</button></div>'
-                : '<button class="drop" type="button" data-vpick><i class="fas fa-film"></i><span>Wybierz film MP4</span></button>';
-            videoSlot.insertAdjacentHTML('beforeend', '<input type="file" accept="video/mp4" hidden>');
+                : '<button class="drop" type="button" data-vpick><i class="fas fa-film"></i><span>Wybierz film</span></button>');
+            videoSlot.insertAdjacentHTML('beforeend', '<input type="file" accept="video/mp4,video/quicktime,.mp4,.mov" hidden>');
             var input = videoSlot.querySelector('input');
             videoSlot.querySelector('[data-vpick]').addEventListener('click', function () { input.click(); });
             var rm = videoSlot.querySelector('[data-vremove]');
@@ -443,17 +448,25 @@
             input.addEventListener('change', function () {
                 var file = input.files[0];
                 if (!file) return;
-                if (file.type && file.type !== 'video/mp4') { toast('Wybierz plik MP4.', true); return; }
+                var isVideo = /^video\/(mp4|quicktime)$/.test(file.type) || /\.(mp4|mov)$/i.test(file.name);
+                if (!isVideo) { toast('Wybierz film MP4 albo MOV (np. z iPhone’a).', true); return; }
                 busy++;
-                videoSlot.innerHTML = '<div class="progress"><div class="progress-bar"></div></div><p class="muted" data-pct>Wysyłanie filmu… 0%</p>';
-                uploadFile(file, 'video', function (p) {
-                    videoSlot.querySelector('.progress-bar').style.width = (p * 100) + '%';
-                    videoSlot.querySelector('[data-pct]').textContent = 'Wysyłanie filmu… ' + Math.round(p * 100) + '%';
+                videoSlot.innerHTML = '<p class="muted">Sprawdzanie filmu…</p>';
+                // Kodek sprawdzamy przed wysyłką: HEVC odrzuciłby dopiero serwer, po wielu minutach
+                videoCodecs(file).then(function (codecs) {
+                    if (codecs.some(isHevc)) throw Object.assign(new Error('hevc'), { hevc: true });
+                    videoSlot.innerHTML = '<div class="progress"><div class="progress-bar"></div></div><p class="muted" data-pct>Wysyłanie filmu… 0%</p>';
+                    return uploadFile(file, 'video', function (p) {
+                        videoSlot.querySelector('.progress-bar').style.width = (p * 100) + '%';
+                        videoSlot.querySelector('[data-pct]').textContent = 'Wysyłanie filmu… ' + Math.round(p * 100) + '%';
+                    });
                 }).then(function (path) {
                     media.video = path;
+                    videoHelp = false;
                     S.dirty = true;
-                }).catch(function (err) { toast(err.message, true); })
-                  .finally(function () { busy--; drawVideo(); });
+                }).catch(function (err) {
+                    if (err.hevc) videoHelp = true; else toast(err.message, true);
+                }).finally(function () { busy--; drawVideo(); });
             });
         }
         drawVideo();
@@ -485,6 +498,114 @@
             if (!confirm('Usunąć tę przemianę na stałe? Jeśli chcesz ją tylko zdjąć ze strony, odznacz „Widoczna na stronie”.')) return;
             mutate('case-delete', { id: existing.id }).then(function () { toast('Usunięto przemianę.'); go('#/cel/' + encodeURIComponent(existing.category)); }).catch(function () {});
         });
+    }
+
+    /* ===== LINK DO KONSULTACJI W OPISIE ===== */
+    // Na stronie [tekst] zamienia się w link do rezerwacja.html (przemiany.js → BC.richText)
+
+    var CTA_LINK = /\[([^\[\]\n]{1,150})\]/g;
+    var CTA_TEXT = 'Umów się na bezpłatną konsultację';
+    var TEXT_MAX = 1200;
+
+    function richField(name, label, value) {
+        return '<div class="field rich-field" data-rich>' +
+            '<label class="field-label" for="f-' + name + '">' + label + '</label>' +
+            '<textarea id="f-' + name + '" name="' + name + '" rows="4" maxlength="' + TEXT_MAX + '">' + h(value) + '</textarea>' +
+            '<button class="cta-insert" type="button"><img src="../../bc-znak.webp" alt="" width="31" height="12">Wstaw link do konsultacji</button>' +
+            '<div class="rich-preview" hidden><span class="rich-preview-label">Tak będzie na stronie</span><p></p></div>' +
+            '<p class="rich-warn" hidden>Brakuje nawiasu [ albo ]. Bez pary nawiasów link się nie pokaże.</p>' +
+        '</div>';
+    }
+
+    function bindRichField(box) {
+        var ta = box.querySelector('textarea');
+        var btn = box.querySelector('.cta-insert');
+        var preview = box.querySelector('.rich-preview');
+        var warn = box.querySelector('.rich-warn');
+        var touched = false, wasFocused = false;
+
+        function draw() {
+            var v = ta.value;
+            var hasLink = v.search(CTA_LINK) !== -1;
+            preview.hidden = !hasLink;
+            if (hasLink) {
+                preview.querySelector('p').innerHTML = h(v).replace(CTA_LINK, function (m, t) {
+                    return '<span class="text-cta"><img src="../../bc-znak.webp" alt="" width="31" height="12">' + t.trim() + '</span>';
+                });
+            }
+            warn.hidden = !/[\[\]]/.test(v.replace(CTA_LINK, ''));
+        }
+
+        ta.addEventListener('focus', function () { touched = true; });
+        ta.addEventListener('input', draw);
+        // Nie zabieraj fokusu polu: na telefonie klawiatura i kursor zostają na miejscu
+        btn.addEventListener('pointerdown', function (e) {
+            wasFocused = document.activeElement === ta;
+            if (wasFocused) e.preventDefault();
+        });
+        btn.addEventListener('click', function () {
+            var v = ta.value;
+            var a = touched ? ta.selectionStart : v.length;
+            var b = touched ? ta.selectionEnd : v.length;
+            // Zaznaczony fragment staje się linkiem, bez zaznaczenia wstawiamy gotowy tekst
+            var label = v.slice(a, b).replace(/[\[\]\s]+/g, ' ').trim();
+            if (label.length > 150) { toast('Zaznacz krótszy fragment (do 150 znaków).', true); return; }
+            var before = v.slice(0, a), after = v.slice(b);
+            var ins = '[' + (label || CTA_TEXT) + ']';
+            if (!label && before && !/\s$/.test(before)) ins = (after ? ' ' : '\n') + ins;
+            if (after && !/^[\s.,!?;:)]/.test(after)) ins += ' ';
+            if ((before + ins + after).length > TEXT_MAX) { toast('Tekst jest za długi, skróć go trochę.', true); return; }
+            ta.value = before + ins + after;
+            var caret = before.length + ins.length;
+            if (wasFocused) ta.focus();
+            ta.setSelectionRange(caret, caret);
+            touched = true;
+            wasFocused = false;
+            S.dirty = true;
+            draw();
+        });
+        draw();
+    }
+
+    /* ===== WIDEO: KODEK ===== */
+    // MP4 i MOV to ten sam układ boksów. Szukamy stsd (moov → trak → mdia → minf → stbl)
+    // i czytamy kod formatu ścieżki: avc1 = H.264 (gra wszędzie), hvc1/hev1 = HEVC (iPhone, nie wszędzie gra).
+    // Czytamy tylko nagłówki przez slice(), więc nawet 300 MB nie trafia do pamięci.
+
+    var BOX_CONTAINERS = ['moov', 'trak', 'mdia', 'minf', 'stbl'];
+    var HEVC_HELP = '<div class="notice notice-warn"><strong>Ten film jest w formacie HEVC</strong> (domyślnym w iPhonie). ' +
+        'Na części telefonów i komputerów by się nie odtworzył, więc go nie wysłaliśmy.' +
+        '<ol><li>Na iPhonie otwórz <b>Ustawienia → Aparat → Formaty</b> i wybierz <b>Najbardziej zgodny</b>.</li>' +
+        '<li>Nagraj film jeszcze raz i dodaj go tutaj.</li></ol></div>';
+
+    function isHevc(c) { return /^(hvc1|hev1|dvh1|dvhe)$/.test(c); }
+
+    function readBytes(file, start, len) {
+        return file.slice(start, start + len).arrayBuffer().then(function (b) { return new DataView(b); });
+    }
+
+    function fourcc(dv, at) {
+        return String.fromCharCode(dv.getUint8(at), dv.getUint8(at + 1), dv.getUint8(at + 2), dv.getUint8(at + 3));
+    }
+
+    function walkBoxes(file, start, end, depth, out) {
+        if (start + 8 > end || depth > 6) return Promise.resolve(out);
+        return readBytes(file, start, 16).then(function (dv) {
+            if (dv.byteLength < 8) return out;
+            var len = dv.getUint32(0), type = fourcc(dv, 4), head = 8;
+            if (len === 1 && dv.byteLength >= 16) { len = dv.getUint32(8) * 4294967296 + dv.getUint32(12); head = 16; }
+            else if (len === 0) len = end - start;
+            if (len < head || start + len > end) return out;
+            var inner = Promise.resolve();
+            if (BOX_CONTAINERS.indexOf(type) !== -1) inner = walkBoxes(file, start + head, start + len, depth + 1, out);
+            else if (type === 'stsd') inner = readBytes(file, start + head + 8, 8).then(function (e) { if (e.byteLength === 8) out.push(fourcc(e, 4)); });
+            return inner.then(function () { return walkBoxes(file, start + len, end, depth, out); });
+        });
+    }
+
+    // Gdy pliku nie da się odczytać, zwracamy [] i decyzję zostawiamy serwerowi
+    function videoCodecs(file) {
+        return walkBoxes(file, 0, file.size, 0, []).catch(function () { return []; });
     }
 
     function photoSlot(key, label, path) {
