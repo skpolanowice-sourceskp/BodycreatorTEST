@@ -41,5 +41,5 @@ Statyczne HTML + CSS + vanilla JS, PHP w `send_mail.php` i w panelu Przemian (`d
 
 ## Status / TODO
 
-- Sekcja Przemiany: nowy design (hub → cel → case study) leży w ukrytym folderze `demo-przemiany/` (noindex, brak linków ze strony) do pokazania klientowi. Na stronie nadal działa stary `przemiany.html`. Panel (etap 1: cele i przemiany, render w JS) jest w `demo-przemiany/admin/`, jeszcze niewdrożony. Etap 2: SSR, ładne URL-e, przeniesienie do katalogu głównego. Patrz [docs/przemiany.md](docs/przemiany.md).
+- Sekcja Przemiany: nowy design (hub → cel → case study) leży w ukrytym folderze `demo-przemiany/` (noindex, brak linków ze strony) do pokazania klientowi. Na stronie nadal działa stary `przemiany.html`. Panel (etap 1: cele i przemiany, render w JS) jest w `demo-przemiany/admin/`, **wdrożony i używany przez klienta** (z telefonu): link do konsultacji w opisach (`[tekst]`) i filmy MOV z iPhone'a (H.264 tak, HEVC nie) od 19.10.2026. Etap 2: SSR, ładne URL-e, przeniesienie do katalogu głównego. Patrz [docs/przemiany.md](docs/przemiany.md).
 - `todolist.md`: newsletter, zdjęcia.

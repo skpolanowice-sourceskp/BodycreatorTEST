@@ -38,7 +38,27 @@ Headless Chrome ma minimalną szerokość okna ok. 500px, więc widoku 390px nie
 - `--force-prefers-reduced-motion`: wyłącza animacje wejścia, które w headless potrafią zostać w połowie;
 - `--virtual-time-budget=12000`: czas na załadowanie zasobów.
 
+Prościej: `puppeteer-core` (npm, w katalogu tymczasowym) z systemowym Chrome i `page.setViewport({ width: 390, isMobile: true, hasTouch: true })`. Viewport 390px działa wtedy bez iframe'a. Uwaga: przy `networkidle0` strony z wideo w tle się nie doczekasz, używaj `load`. Panel przy niezapisanych zmianach blokuje wyjście (`beforeunload`), więc do kolejnej strony otwieraj nową kartę.
+
 Pliki pomocnicze trzymaj poza repo albo usuń po teście.
+
+### PHP lokalnie (panel Przemian)
+
+PHP 8.4 jest zainstalowany przez winget, ale **nie ma go w PATH**: `%LOCALAPPDATA%\Microsoft\WinGet\Packages\PHP.PHP.8.4_Microsoft.Winget.Source_8wekyb3d8bbwe\php.exe`. Nie ma też `php.ini`, więc rozszerzenia trzeba włączyć własnym plikiem (`php -c moj.ini`):
+
+```ini
+extension_dir="<katalog php>/ext"
+extension=fileinfo
+extension=mbstring
+extension=openssl
+```
+
+- **Nie testuj na lokalnym `demo-przemiany/dane/`**: `haslo.php` może być tym samym plikiem co na serwerze. Skopiuj `demo-przemiany/` (plus `bc-znak.webp`, `logobezpodpisu.png`) do katalogu tymczasowego, usuń w kopii `dane/haslo.php`, ustaw hasło testowe (`php admin/ustaw-haslo.php`) i uruchom `php -S 127.0.0.1:8766 -t <kopia>`.
+- Testowe filmy: `ffmpeg -f lavfi -i testsrc=size=720x1280:rate=30 -t 2 -c:v libx264 -f mov h264.mov` (HEVC: `-c:v libx265 -tag:v hvc1`).
+
+### Przed nadpisaniem plików na serwerze
+
+Pobierz zdalne wersje przez FTP i porównaj z poprzednim commitem (bez różnic CRLF). Jeśli się różnią, ktoś poprawiał na serwerze: najpierw scal, potem wgrywaj.
 
 ## Checklista przed wgraniem
 
