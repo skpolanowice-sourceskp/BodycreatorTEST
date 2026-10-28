@@ -17,7 +17,7 @@
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
     <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800;900&display=swap" rel="stylesheet">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css">
-    <link rel="stylesheet" href="przemiany.css">
+    <link rel="stylesheet" href="przemiany.css?v=20261028">
 
     <style>
         /* ============ HERO ============ */
@@ -253,7 +253,7 @@
 
     <script src="https://cdn.jsdelivr.net/npm/@studio-freight/lenis@1.0.42/dist/lenis.min.js"></script>
     <script src="przemiany-data.js?v=20261007"></script>
-    <script src="przemiany.js?v=20261019"></script>
+    <script src="przemiany.js?v=20261028"></script>
     <script>
         (function () {
             var esc = BC.esc;
@@ -270,8 +270,8 @@
             var md = document.querySelector('meta[name="description"]');
             if (md) md.content = (personLine ? personLine + ': ' : '') + c.title + '. ' + cat.title + ' w Body Creator Wrocław.';
 
-            var media = (c.before && c.after)
-                ? BC.sliderHTML(c, BC.altFor(c))
+            var media = c.after
+                ? BC.mediaHTML(c, BC.altFor(c))
                 : '<blockquote class="cs-media-quote">' + esc(c.quote) + '<cite>' + esc(personLine) + '</cite></blockquote>';
 
             var facts = [

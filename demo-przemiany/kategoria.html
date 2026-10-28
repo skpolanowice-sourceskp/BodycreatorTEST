@@ -17,7 +17,7 @@
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
     <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800;900&display=swap" rel="stylesheet">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css">
-    <link rel="stylesheet" href="przemiany.css">
+    <link rel="stylesheet" href="przemiany.css?v=20261028">
 
     <style>
         /* ============ HERO ============ */
@@ -268,7 +268,7 @@
 
     <script src="https://cdn.jsdelivr.net/npm/@studio-freight/lenis@1.0.42/dist/lenis.min.js"></script>
     <script src="przemiany-data.js?v=20261007"></script>
-    <script src="przemiany.js?v=20261019"></script>
+    <script src="przemiany.js?v=20261028"></script>
     <script>
         (function () {
             var esc = BC.esc;
@@ -279,7 +279,7 @@
             var area = BC.area(cat.area);
             var cases = BC.casesIn(cat.slug);
             var stories = cases.filter(BC.hasDescription);
-            var photos = cases.filter(function (c) { return !BC.hasDescription(c) && c.before && c.after; });
+            var photos = cases.filter(function (c) { return !BC.hasDescription(c) && c.after; });
             var quotes = cases.filter(function (c) { return !BC.hasDescription(c) && !c.after && c.quote; });
             var PHOTOS_VISIBLE = 6;
 
@@ -292,7 +292,7 @@
 
             function storyHTML(c) {
                 // Bez zdjęć sam opis (cytat by go dublował)
-                var media = (c.before && c.after) ? BC.sliderHTML(c, BC.altFor(c)) : '';
+                var media = BC.mediaHTML(c, BC.altFor(c));
                 var actions = Array.isArray(c.actions)
                     ? '<ul>' + c.actions.map(function (a) { return '<li><i class="fas fa-check" aria-hidden="true"></i><span>' + BC.richText(a) + '</span></li>'; }).join('') + '</ul>'
                     : (c.actions ? '<p>' + BC.richText(c.actions) + '</p>' : '');
@@ -319,7 +319,7 @@
                         (who ? '<span class="ba-card-who">' + esc(who) + '</span>' : '') +
                       '</figcaption>'
                     : '';
-                return '<figure class="ba-card reveal"' + (i >= PHOTOS_VISIBLE ? ' hidden' : '') + '>' + BC.sliderHTML(c, BC.altFor(c)) + caption + '</figure>';
+                return '<figure class="ba-card reveal"' + (i >= PHOTOS_VISIBLE ? ' hidden' : '') + '>' + BC.mediaHTML(c, BC.altFor(c)) + caption + '</figure>';
             }
 
             var resultsHTML;

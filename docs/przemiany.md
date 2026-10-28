@@ -76,7 +76,7 @@ Globalny obiekt `window.BC_PRZEMIANY`:
   }],
   cases: [{
     id, category,             // WYMAGANE; category = categories[].slug
-    before, after,            // zdjęcia (bez nich karta pokazuje quote)
+    before, after,            // zdjęcia: oba = suwak, samo after = jedno zdjęcie (BC.mediaHTML), brak = quote
     // --- podpis pod zdjęciem: OPCJONALNY, domyślnie pusty = brak podpisu ---
     highlight,                // "−11 kg"
     name, age, duration,      // "Kasia", 31, "5 miesięcy"

@@ -415,7 +415,8 @@ function prz_validate_case($in, $data, $existing) {
 
     $before = prz_media_path($in['before'] ?? '', 'image');
     $after = prz_media_path($in['after'] ?? '', 'image');
-    if (($before === '') !== ($after === '')) throw new PrzError('Dodaj oba zdjęcia: przed i po (albo żadnego).');
+    // Jedno zdjęcie (bez suwaka) trzymamy w „after”; samo „przed” nie ma sensu na stronie
+    if ($before !== '' && $after === '') throw new PrzError('Dodaj zdjęcie „po” albo wybierz „Jedno zdjęcie”.');
     prz_set($c, 'before', $before);
     prz_set($c, 'after', $after);
 
@@ -446,7 +447,7 @@ function prz_validate_case($in, $data, $existing) {
 
     // Bez zdjęć, opisu i opinii przemiana nie ma czego pokazać na stronie
     if (empty($c['after']) && empty($c['goal']) && empty($c['actions']) && empty($c['effects']) && empty($c['quote'])) {
-        throw new PrzError('Dodaj zdjęcia przed/po, opis albo opinię klienta.');
+        throw new PrzError('Dodaj zdjęcie, opis albo opinię klienta.');
     }
     return $c;
 }

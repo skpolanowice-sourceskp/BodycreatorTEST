@@ -139,6 +139,8 @@ button { font-family: inherit; }
 }
 .ba-label-before { left: 12px; }
 .ba-label-after { right: 12px; }
+/* Jedno zdjęcie: ta sama ramka, bez suwaka */
+.ba-single { cursor: auto; }
 
 /* ---------- REVEAL ---------- */
 .reveal { opacity: 0; transform: translateY(18px); transition: opacity .7s var(--ease-out), transform .7s var(--ease-out); }

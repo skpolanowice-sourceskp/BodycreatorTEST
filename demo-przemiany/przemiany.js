@@ -65,6 +65,13 @@
                 '</div>';
         },
 
+        // Przed i po = suwak, samo „after” = jedno zdjęcie w tej samej ramce, brak zdjęć = ''
+        mediaHTML: function (c, alt) {
+            if (c.before && c.after) return BC.sliderHTML(c, alt);
+            if (c.after) return '<div class="ba-slider ba-single"><img src="' + esc(c.after) + '" alt="' + esc(alt) + '" loading="lazy"></div>';
+            return '';
+        },
+
         initSliders: function (root) {
             (root || document).querySelectorAll('[data-ba]:not([data-ba-ready])').forEach(function (slider) {
                 slider.setAttribute('data-ba-ready', '');

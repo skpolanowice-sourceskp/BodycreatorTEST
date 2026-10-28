@@ -349,8 +349,12 @@
             '<p class="muted intro">Wypełnij tylko to, co masz. Puste pola nie pokażą się na stronie.</p>' +
 
             '<form id="caseForm" novalidate>' +
-                '<section class="card section"><h2>Zdjęcia przed i po</h2>' +
-                    '<p class="muted hint">Po wybraniu zdjęcia ustawisz kadr (pion 5:8). Bez zdjęć przemiana pokaże się jako opis albo opinia.</p>' +
+                '<section class="card section"><h2>Zdjęcia</h2>' +
+                    '<div class="photo-mode" role="group" aria-label="Rodzaj zdjęć">' +
+                        '<button class="tab" type="button" data-mode="pair">Przed i po</button>' +
+                        '<button class="tab" type="button" data-mode="single">Jedno zdjęcie</button>' +
+                    '</div>' +
+                    '<p class="muted hint">Po wybraniu zdjęcia ustawisz kadr (pion 5:8). Przed i po pokaże się z suwakiem, jedno zdjęcie bez suwaka. Bez zdjęć przemiana pokaże się jako opis albo opinia.</p>' +
                     '<div class="photos">' + photoSlot('before', 'Przed', x.before) + photoSlot('after', 'Po', x.after) + '</div>' +
                 '</section>' +
 
@@ -399,6 +403,28 @@
         var busy = 0;
 
         form.addEventListener('input', function () { S.dirty = true; });
+
+        /* Rodzaj zdjęć: jedno zdjęcie zapisujemy w polu „after” (before puste) */
+        var photoMode = (x.after && !x.before) ? 'single' : 'pair';
+        function drawMode() {
+            form.querySelectorAll('[data-mode]').forEach(function (b) {
+                var on = b.dataset.mode === photoMode;
+                b.classList.toggle('is-active', on);
+                b.setAttribute('aria-pressed', on ? 'true' : 'false');
+            });
+            form.querySelector('.photos').classList.toggle('is-single', photoMode === 'single');
+            form.querySelector('[data-photo="before"]').hidden = photoMode === 'single';
+            form.querySelector('[data-photo="after"] .photo-label').textContent = photoMode === 'single' ? 'Zdjęcie' : 'Po';
+        }
+        form.querySelectorAll('[data-mode]').forEach(function (b) {
+            b.addEventListener('click', function () {
+                if (photoMode === b.dataset.mode) return;
+                photoMode = b.dataset.mode;
+                S.dirty = true;
+                drawMode();
+            });
+        });
+        drawMode();
 
         /* Zdjęcia */
         ['before', 'after'].forEach(function (key) {
@@ -475,10 +501,15 @@
         form.addEventListener('submit', function (e) {
             e.preventDefault();
             if (busy) { toast('Poczekaj, aż pliki się wyślą.', true); return; }
+            var single = photoMode === 'single';
+            if (!single && !media.before !== !media.after) {
+                toast('Dodaj oba zdjęcia: przed i po. Jeśli masz tylko jedno, wybierz „Jedno zdjęcie”.', true);
+                return;
+            }
             var data = {
                 id: existing ? existing.id : '',
                 category: form.elements.category.value,
-                before: media.before, after: media.after, video: media.video,
+                before: single ? '' : media.before, after: media.after, video: media.video,
                 goal: form.elements.goal.value, actions: form.elements.actions.value, effects: form.elements.effects.value,
                 highlight: form.elements.highlight.value, name: form.elements.name.value, age: form.elements.age.value.trim(), duration: form.elements.duration.value,
                 quote: form.elements.quote.value, condition: form.elements.condition ? form.elements.condition.value : (x.condition || ''),
