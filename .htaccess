@@ -75,6 +75,20 @@
 </IfModule>
 
 # ----------------------------------------------------------
+# 3a. DANE SEKCJI PRZEMIANY
+# Plik generowany przez panel: przegladarka sprawdza przy kazdym wejsciu,
+# czy sie zmienil (304, gdy nie), wiec zmiany z panelu widac od razu.
+# ----------------------------------------------------------
+<Files "przemiany-data.js">
+    <IfModule mod_expires.c>
+        ExpiresActive Off
+    </IfModule>
+    <IfModule mod_headers.c>
+        Header set Cache-Control "no-cache"
+    </IfModule>
+</Files>
+
+# ----------------------------------------------------------
 # 4. NAGLOWKI BEZPIECZENSTWA
 # ----------------------------------------------------------
 <IfModule mod_headers.c>

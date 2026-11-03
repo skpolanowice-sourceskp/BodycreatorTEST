@@ -3,16 +3,16 @@ Dzień dobry,
 przygotowaliśmy panel, w którym sam Pan dodaje i edytuje przemiany na nowej stronie Przemian.
 
 LOGOWANIE
-Adres: https://bodycreator.com.pl/demo-przemiany/admin/
+Adres: https://bodycreator.com.pl/admin/
 Hasło startowe przekażę osobno (telefonicznie lub SMS-em).
 
 Po pierwszym zalogowaniu proszę od razu ustawić własne hasło: przycisk "Hasło" (ikona klucza) w górnym pasku, potem obecne hasło i dwa razy nowe, co najmniej 8 znaków. Po zmianie hasła inne urządzenia zalogowane do panelu zostaną wylogowane.
 
 Panel działa na telefonie i na komputerze. Po 4 godzinach bez aktywności wylogowuje automatycznie. Po 5 błędnych hasłach logowanie blokuje się na 15 minut.
 
-Na razie panel zmienia wersję podglądową:
-https://bodycreator.com.pl/demo-przemiany/przemiany.html
-Obecna strona Przemian działa bez zmian. Wszystko, co Pan zapisze w panelu, od razu pojawia się na stronie podglądowej.
+Panel zmienia stronę Przemian:
+https://bodycreator.com.pl/przemiany.html
+Wszystko, co Pan zapisze w panelu, od razu pojawia się na stronie.
 
 CELE (kafelki na stronie Przemian)
 - Na górze wybiera Pan obszar: Sylwetka i zdrowie, Ból i urazy, Sport i sprawność.

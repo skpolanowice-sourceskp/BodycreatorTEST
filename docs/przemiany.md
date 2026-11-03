@@ -2,13 +2,13 @@
 
 Klient chciał podzielić przemiany na obszary i cele, a w nich pokazać konkretne przypadki. Zamiast rozwijanych kart (akordeon z konceptu klienta) **każdy cel ma własną podstronę**.
 
-## Gdzie to jest: wersja demo
+## Gdzie to jest
 
-Nowy system leży w **`demo-przemiany/`** (po wgraniu do `/bodycreatorMJ/demo-przemiany/`: `https://bodycreator.com.pl/demo-przemiany/przemiany.html`, lokalnie `http://localhost:8000/demo-przemiany/przemiany.html`). Na żywej stronie nadal działa stary `przemiany.html` w katalogu głównym.
+Sekcja działa w **katalogu głównym** strony (`przemiany.html`, `kategoria.html`, `przemiany.css`, `przemiany.js`, `przemiany-data.js`), panel w `admin/`, dane w `dane/`, pliki w `uploads/`. Przeniesiona z `demo-przemiany/` w 11.2026.
 
-- Ukrycie: `noindex, nofollow` w każdym pliku + `demo-przemiany/.htaccess` (`X-Robots-Tag`), brak canonical i JSON-LD, brak linków ze strony. Folder **celowo nie jest w `robots.txt`**, bo to by go ujawniło.
-- Zasoby (zdjęcia, trenerzy, wideo, favicon, logo) i linki do innych podstron mają prefiks `../`. W folderze jest kopia `bg-rotator.js` ze ścieżkami `../video/bg/`.
-- Po akceptacji klienta: przenieść pliki do katalogu głównego, usunąć prefiksy `../`, przywrócić `index, follow`, canonical i JSON-LD huba, usunąć kopię `bg-rotator.js`.
+- `demo-przemiany/.htaccess` przekierowuje 301 stare adresy, w tym panel, pod nowe.
+- Ścieżki w danych są względem katalogu głównego (`zdjecia_przed_po/...`, `uploads/...`). **Kopie w `dane/kopie/` sprzed przeniesienia mają stare ścieżki `../`:** po przywróceniu takiej kopii trzeba je usunąć z JSON-a (`"../zdjecia_przed_po/` → `"zdjecia_przed_po/`, tak samo `video` i `Trenerzy`).
+- `case-study.html` nie został przeniesiony, bo nic do niego nie linkuje. Wersja z demo jest w historii gita.
 
 ## Trzy poziomy
 
@@ -23,7 +23,7 @@ przemiany.html                     hub: zakładki obszarów + kafelki celów
 Po feedbacku klienta (10.2026) hub jest **maksymalnie prosty**: mały nagłówek „Wybierz cel”, pod nim pasek 3 zakładek obszarów (bez liczników), a pod nim kafelki celów. Klient najpierw dostał akordeon, ale wolał pasek zakładek z pierwszej wersji. Klient wyraźnie **nie chce** na tej stronie zdjęć (miniatur), liczników przy obszarach, statystyk typu „7 celów · 11 przemian · 3 case study”, opisów obszarów ani paska wyróżnionych historii.
 
 - Zakładki: `role="tablist"`, strzałki ←/→ działają. Bez hasha w adresie wybrany jest pierwszy obszar. Zmiana zakładki podmienia ciasną siatkę kafelków pod paskiem (z animacją wjazdu).
-- Kafelek: nazwa celu ze strzałką, w prawym górnym rogu **liczba przemian** (np. „8 przemian”). Cel bez przemian ma w rogu „Wkrótce”.
+- Kafelek: nazwa celu ze strzałką, w prawym górnym rogu **sama liczba przemian: czarna cyfra w żółtym kółku** (prośba klienta, 11.2026; słowo „przemiany” tylko w `aria-label`). Cel bez przemian ma w rogu „Wkrótce”.
 - Wybrany obszar trafia do adresu: `przemiany.html#bol`. Okruszki z podstron linkują do `#<area-id>` i wybierają tę zakładkę.
 - **Bez numeracji „01 / 07”**, bo klient jej nie chce.
 - Pola `area.lead`, `category.tagline` i `featured` nie są już używane na hubie (zostają w danych dla podstron i panelu).
@@ -47,7 +47,7 @@ Brak przemian: pusty stan „Pierwsze historie w drodze”. Nieznany slug: komun
 
 ### 3. `case-study.html?id=<id>`
 
-**Od 07.10.2026 nic do niej nie linkuje.** Klient uznał link do pełnej historii za zbędny (wystarczą 3 krótkie bloki + wideo na stronie celu). Plik zostaje na wypadek powrotu do pomysłu; przy przenoszeniu sekcji na stronę można go pominąć.
+**Od 07.10.2026 nic do niej nie linkuje.** Klient uznał link do pełnej historii za zbędny (wystarczą 3 krótkie bloki + wideo na stronie celu). Pliku nie ma już na stronie (patrz „Gdzie to jest”), opis zostaje na wypadek powrotu do pomysłu.
 
 Działa tylko dla przemian z polem `story`.
 
@@ -116,7 +116,7 @@ Obecne imiona, liczby (kg, cm, ciężary), historie przy zdjęciach i 4 z 7 cel�
 
 ## Backend i panel (etap 1, od 12.10.2026)
 
-Klient sam dodaje cele, przemiany, zdjęcia i filmy w panelu **`demo-przemiany/admin/`** (lokalnie `http://localhost:8000/demo-przemiany/admin/`). Strony dalej renderują się w JS z `window.BC_PRZEMIANY`, więc szablony się nie zmieniły.
+Klient sam dodaje cele, przemiany, zdjęcia i filmy w panelu **`admin/`** (lokalnie `http://localhost:8000/admin/`). Strony dalej renderują się w JS z `window.BC_PRZEMIANY`, więc szablony się nie zmieniły.
 
 ### Przepływ danych
 
@@ -128,7 +128,7 @@ panel (admin/panel.js) → admin/api.php → dane/przemiany.json   (źródło pr
 - `dane/przemiany.json`: pełne dane z polami panelu (`visible` przy celach i przemianach, `settings.hideEmpty`, `rev`). Przy pierwszym zapisie tworzony z `admin/seed.json` (obecne dane demo).
 - `przemiany-data.js` jest **generowany przy każdym zapisie**. Pomija ukryte cele i przemiany, przemiany ukrytych celów, a przy `hideEmpty` także puste cele. Pole `visible` jest usuwane. Ukryty cel na stronie pokazuje „Nie znaleźliśmy tego celu” z linkiem do huba.
 - Kolejność = kolejność w tablicach (strzałki w panelu zamieniają sąsiadów w obrębie obszaru / celu). Pola `order` nie ma.
-- `demo-przemiany/.htaccess` ustawia `no-cache` dla `przemiany-data.js`, więc zmiany z panelu widać od razu mimo rocznego cache JS w głównym `.htaccess`.
+- Główny `.htaccess` ustawia `no-cache` dla `przemiany-data.js`, więc zmiany z panelu widać od razu mimo rocznego cache JS w głównym `.htaccess`.
 - Kopie: `dane/kopie/przemiany-<data>.json`, ostatnie 60. Przywrócenie: skopiować wybraną kopię na `dane/przemiany.json` i zapisać cokolwiek w panelu (to wygeneruje JS).
 
 ### Pliki
@@ -159,13 +159,13 @@ panel (admin/panel.js) → admin/api.php → dane/przemiany.json   (źródło pr
 - Sesja `BCPANEL` (HttpOnly, SameSite=Strict, Secure na HTTPS), wylogowanie po 4 h bezczynności.
 - 5 błędnych haseł w 15 minut (logowanie i zmiana hasła liczą się razem) = blokada z tego IP na 15 minut.
 - Każdy POST wymaga nagłówka `X-CSRF-Token`.
-- Walidacja i limity długości po stronie serwera. Ścieżki plików tylko `uploads/<24 hex>.<ext>` albo istniejące zasoby demo (`../zdjecia_przed_po/`, `../video/`).
+- Walidacja i limity długości po stronie serwera. Ścieżki plików tylko `uploads/<24 hex>.<ext>` albo istniejące zasoby strony (`zdjecia_przed_po/`, `video/`).
 - Wyjście: JSON z `JSON_HEX_TAG`, a na stronach wszystko i tak przechodzi przez `BC.esc`.
 
 ### Uruchomienie
 
 ```bash
-php admin/ustaw-haslo.php "silne-haslo"     # w demo-przemiany/, tworzy dane/haslo.php
+php admin/ustaw-haslo.php "silne-haslo"     # w BodycreatorTEST/, tworzy dane/haslo.php
 php -S localhost:8000                       # w BodycreatorTEST/
 ```
 
@@ -174,6 +174,5 @@ Na serwer: `admin/`, `dane/.htaccess`, `uploads/.htaccess`, `.htaccess`, `katego
 ### Etap 2 (do zrobienia)
 
 1. **SEO:** renderowanie w PHP z ładnymi adresami (`/przemiany/redukcja`), `canonical`, `sitemap.xml`, `BreadcrumbList`. Patrz [seo.md](seo.md).
-2. Przeniesienie sekcji z `demo-przemiany/` do katalogu głównego (patrz „Gdzie to jest”), razem z `dane/` i `uploads/`.
-3. Opcjonalnie: przywracanie kopii z panelu, sprzątanie nieużywanych plików w `uploads/`, edycja trenerów.
-4. Odpowiedzi klienta: galeria kilku etapów zamiast jednej pary zdjęć? Filmy niezwiązane z osobą? Edytowalne teksty stałe?
+2. Opcjonalnie: przywracanie kopii z panelu, sprzątanie nieużywanych plików w `uploads/`, edycja trenerów.
+3. Odpowiedzi klienta: galeria kilku etapów zamiast jednej pary zdjęć? Filmy niezwiązane z osobą? Edytowalne teksty stałe?

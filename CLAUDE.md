@@ -2,15 +2,15 @@
 
 Strona marketingowa **Body Creator**, studia treningu personalnego we Wrocławiu (ul. Rafała Wojaczka 3g, Sołtysowice). Domena: `https://bodycreator.com.pl` (bez www, HTTPS). Cel strony: zamiana odwiedzających w klientów, czyli umówienie darmowej konsultacji (`rezerwacja.html`) lub telefon (518 167 945).
 
-Statyczne HTML + CSS + vanilla JS, PHP w `send_mail.php` i w panelu Przemian (`demo-przemiany/admin/`). Bez bundlera i bez frameworka. Hosting: home.pl (Apache, PHP).
+Statyczne HTML + CSS + vanilla JS, PHP w `send_mail.php` i w panelu Przemian (`admin/`). Bez bundlera i bez frameworka. Hosting: home.pl (Apache, PHP).
 
 ## Zasady krytyczne
 
 1. **Nigdy nie wgrywaj na FTP bez testu lokalnego.** Najpierw render w przeglądarce, w tym mobile ~390px. FTP 226 oznacza tylko, że plik się wgrał, a nie że strona działa. Szczegóły: [docs/deploy.md](docs/deploy.md).
 2. **Push/FTP/commit tylko na wyraźną prośbę użytkownika.**
 3. **Mobile-first.** Każdą zmianę layoutu testuj najpierw przy ~390px. Pierwsza decyzja klienta zapada na telefonie.
-4. **Nie commituj sekretów.** `sftp.json` (hasło FTP) leży poza repo, a `.antispam_secret` i `demo-przemiany/dane/` (hasło panelu, dane) są w `.gitignore`.
-5. **Dane przykładowe ≠ prawdziwe.** W `demo-przemiany/przemiany-data.js` część liczb i historii to wypełniacz projektowy. Nie publikuj ich jako prawdziwych wyników klientów bez potwierdzenia od klienta.
+4. **Nie commituj sekretów.** `sftp.json` (hasło FTP) leży poza repo, a `.antispam_secret` i `dane/` (hasło panelu, dane) są w `.gitignore`.
+5. **Dane przykładowe ≠ prawdziwe.** W `przemiany-data.js` część liczb i historii to wypełniacz projektowy. Nie publikuj ich jako prawdziwych wyników klientów bez potwierdzenia od klienta.
 6. **Dane Przemian żyją na serwerze.** Po starcie panelu nie wgrywaj z repo `przemiany-data.js`, `dane/` ani `uploads/`, bo nadpiszesz zmiany klienta. Patrz [docs/deploy.md](docs/deploy.md#panel-przemian).
 
 ## Mapa dokumentacji
@@ -33,7 +33,7 @@ Statyczne HTML + CSS + vanilla JS, PHP w `send_mail.php` i w panelu Przemian (`d
 - Każda sekcja zaczyna się złotą etykietą `.section-label` nad nagłówkiem (UPPERCASE).
 - Przyciski to pigułki (`.btn .btn-primary`, radius 50px).
 - Większość podstron ma CSS inline w `<head>`. Nawigacja, loader i stopka są **skopiowane w każdym pliku**, więc zmiana menu oznacza edycję wszystkich HTML-i.
-- Wyjątek: nowa sekcja Przemiany (na razie **demo** w `demo-przemiany/`) ma wspólne `przemiany.css` + `przemiany.js` + `przemiany-data.js`.
+- Wyjątek: sekcja Przemiany ma wspólne `przemiany.css` + `przemiany.js` + `przemiany-data.js`.
 - Ikony: Font Awesome 6.5.1 (cdnjs). Smooth scroll: Lenis. Tło wideo: `bg-rotator.js`.
 - Klient **nie chce numeracji** typu „01 / 07” na listach w Przemianach.
 - Zdjęcia w `.webp` (z oryginałem `.jpeg/.png` obok).
@@ -41,5 +41,5 @@ Statyczne HTML + CSS + vanilla JS, PHP w `send_mail.php` i w panelu Przemian (`d
 
 ## Status / TODO
 
-- Sekcja Przemiany: nowy design (hub → cel → case study) leży w ukrytym folderze `demo-przemiany/` (noindex, brak linków ze strony) do pokazania klientowi. Na stronie nadal działa stary `przemiany.html`. Panel (etap 1: cele i przemiany, render w JS) jest w `demo-przemiany/admin/`, **wdrożony i używany przez klienta** (z telefonu): link do konsultacji w opisach (`[tekst]`) i filmy MOV z iPhone'a (H.264 tak, HEVC nie) od 19.10.2026. Etap 2: SSR, ładne URL-e, przeniesienie do katalogu głównego. Patrz [docs/przemiany.md](docs/przemiany.md).
+- Sekcja Przemiany (hub → cel) działa w katalogu głównym, panel klienta w `admin/`. Filmy MOV z iPhone'a: H.264 tak, HEVC nie. Stary adres `demo-przemiany/` przekierowuje 301. Etap 2: SSR i ładne URL-e. Patrz [docs/przemiany.md](docs/przemiany.md).
 - `todolist.md`: newsletter, zdjęcia.

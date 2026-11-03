@@ -22,7 +22,7 @@
     var CTA_LINK = /\[([^\[\]\n]{1,150})\]/g;
     function richText(s) {
         return esc(s).replace(CTA_LINK, function (m, label) {
-            return '<a class="text-cta" href="../rezerwacja.html"><img src="../bc-znak.webp" alt="" width="31" height="12">' + label.trim() + '</a>';
+            return '<a class="text-cta" href="rezerwacja.html"><img src="bc-znak.webp" alt="" width="31" height="12">' + label.trim() + '</a>';
         });
     }
 

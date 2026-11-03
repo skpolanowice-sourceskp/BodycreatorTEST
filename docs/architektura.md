@@ -18,8 +18,10 @@
 | `index.html` | Strona główna (hero z wideo, opinie, nawigacja do podstron) | tak |
 | `oferta.html` | Warianty współpracy: personalny, hybrydowy, grupowy, online | tak |
 | `o-nas.html` | Zespół trenerów i studio | tak |
-| `przemiany.html` | Obecna (stara) strona przemian | tak |
-| `demo-przemiany/` | **Ukryte demo** nowej sekcji Przemiany (hub, `kategoria.html?k=`, `case-study.html?id=`), `noindex`. Patrz [przemiany.md](przemiany.md) | nie |
+| `przemiany.html` | Hub przemian: zakładki obszarów + kafelki celów. Patrz [przemiany.md](przemiany.md) | tak |
+| `kategoria.html` | Strona celu (`?k=<slug>`), treść renderowana w JS | nie |
+| `admin/`, `dane/`, `uploads/` | Panel klienta, jego dane i pliki. Patrz [przemiany.md](przemiany.md) | nie |
+| `demo-przemiany/` | Sam `.htaccess`: przekierowanie 301 ze starych adresów | nie |
 | `kalkulator.html` | Kalkulator TDEE / BMI | tak |
 | `rezerwacja.html` | Formularz darmowej konsultacji (główny cel konwersji) | tak |
 | `kontakt.html` | Adres, telefon, mapa | tak |
@@ -44,7 +46,7 @@ Poza sekcją Przemiany **każdy HTML ma własny CSS inline** w `<head>` oraz sko
 
 **Konsekwencja:** zmiana w menu, stopce czy numerze telefonu wymaga edycji **wszystkich** plików HTML. Szukaj grepem, np. `518 167 945` albo `nav-menu`.
 
-## Sekcja Przemiany: wspólne pliki (w `demo-przemiany/`)
+## Sekcja Przemiany: wspólne pliki
 
 | Plik | Zawartość |
 |---|---|

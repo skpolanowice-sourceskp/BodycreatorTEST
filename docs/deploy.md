@@ -17,9 +17,9 @@
 
 Od uruchomienia panelu **dane Przemian żyją na serwerze**, nie w repo.
 
-- **Nigdy nie wgrywaj z lokalnego repo** na serwer: `demo-przemiany/przemiany-data.js`, `demo-przemiany/dane/*` (poza pierwszym `haslo.php`) ani `demo-przemiany/uploads/*`. Nadpisałbyś zmiany klienta. Kopia danych z serwera: pobrać `dane/przemiany.json` i `uploads/` przez FTP.
+- **Nigdy nie wgrywaj z lokalnego repo** na serwer: `przemiany-data.js`, `dane/*` (poza pierwszym `haslo.php`) ani `uploads/*`. Nadpisałbyś zmiany klienta. Kopia danych z serwera: pobrać `dane/przemiany.json` i `uploads/` przez FTP.
 - Pierwsze wdrożenie: lokalnie `php admin/ustaw-haslo.php "haslo"`, potem wgrać `dane/haslo.php`. Hasło przekazać klientowi osobnym kanałem. Zmiana hasła: to samo jeszcze raz.
-- PHP na serwerze musi mieć prawo zapisu do `demo-przemiany/`, `dane/` i `uploads/` (`dane/kopie` i `dane/tmp` tworzą się same).
+- PHP na serwerze musi mieć prawo zapisu do katalogu głównego (tam powstaje `przemiany-data.js`), `dane/` i `uploads/` (`dane/kopie` i `dane/tmp` tworzą się same).
 - Po wgraniu sprawdzić, że `dane/haslo.php`, `dane/przemiany.json`, `admin/lib.php` i `admin/seed.json` zwracają 403. `php -S` ignoruje `.htaccess`, więc lokalnie tego nie sprawdzisz.
 
 ## Testowanie lokalne
@@ -53,7 +53,7 @@ extension=mbstring
 extension=openssl
 ```
 
-- **Nie testuj na lokalnym `demo-przemiany/dane/`**: `haslo.php` może być tym samym plikiem co na serwerze. Skopiuj `demo-przemiany/` (plus `bc-znak.webp`, `logobezpodpisu.png`) do katalogu tymczasowego, usuń w kopii `dane/haslo.php`, ustaw hasło testowe (`php admin/ustaw-haslo.php`) i uruchom `php -S 127.0.0.1:8766 -t <kopia>`.
+- **Nie testuj na lokalnym `dane/`**: `haslo.php` może być tym samym plikiem co na serwerze. Skopiuj stronę do katalogu tymczasowego, usuń w kopii `dane/haslo.php`, ustaw hasło testowe (`php admin/ustaw-haslo.php`) i uruchom `php -S 127.0.0.1:8766 -t <kopia>`.
 - Testowe filmy: `ffmpeg -f lavfi -i testsrc=size=720x1280:rate=30 -t 2 -c:v libx264 -f mov h264.mov` (HEVC: `-c:v libx265 -tag:v hvc1`).
 
 ### Przed nadpisaniem plików na serwerze

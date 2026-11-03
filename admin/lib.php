@@ -216,7 +216,7 @@ function prz_read_json($file) {
 function prz_load() {
     $data = prz_read_json(PRZ_DATA_FILE);
     if ($data === null) {
-        // Pierwsze uruchomienie: start z danych demo
+        // Pierwsze uruchomienie: start z danych startowych
         $data = prz_read_json(PRZ_SEED_FILE);
         if ($data === null) throw new PrzError('Brak danych przemian na serwerze.', 500);
     }
@@ -355,13 +355,13 @@ function prz_text($v, $max, $multiline = false) {
     return $v;
 }
 
-/* Ścieżka do pliku: tylko nasze uploady albo istniejące zasoby demo */
+/* Ścieżka do pliku: tylko nasze uploady albo istniejące zasoby strony */
 function prz_media_path($v, $kind) {
     $v = prz_text($v, 200);
     if ($v === '') return '';
     $ext = $kind === 'video' ? 'mp4' : '(?:webp|jpe?g|png)';
     $ok = preg_match('#^uploads/[a-f0-9]{24}\.' . $ext . '$#', $v)
-        || preg_match('#^\.\./(?:zdjecia_przed_po|video)/[A-Za-z0-9_\-/]+\.' . $ext . '$#', $v);
+        || preg_match('#^(?:zdjecia_przed_po|video)/[A-Za-z0-9_\-/]+\.' . $ext . '$#', $v);
     if (!$ok || strpos($v, '/../') !== false) throw new PrzError('Nieprawidłowa ścieżka pliku.');
     return $v;
 }

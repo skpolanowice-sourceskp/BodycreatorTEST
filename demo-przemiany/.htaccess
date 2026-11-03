@@ -1,15 +1,3 @@
-# Wersja demo nowej sekcji Przemiany: niewidoczna dla wyszukiwarek.
-<IfModule mod_headers.c>
-    Header set X-Robots-Tag "noindex, nofollow"
-</IfModule>
-
-# Dane generowane przez panel: przeglądarka sprawdza przy każdym wejściu,
-# czy plik się zmienił (304, gdy nie), więc zmiany z panelu widać od razu.
-<Files "przemiany-data.js">
-    <IfModule mod_expires.c>
-        ExpiresActive Off
-    </IfModule>
-    <IfModule mod_headers.c>
-        Header set Cache-Control "no-cache"
-    </IfModule>
-</Files>
+# Sekcja Przemiany przeniesiona do katalogu glownego (11.2026).
+# Stare adresy, w tym zakladka panelu, trafiaja pod nowe.
+Redirect 301 /demo-przemiany/ https://bodycreator.com.pl/

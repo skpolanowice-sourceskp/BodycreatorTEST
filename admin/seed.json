@@ -519,8 +519,8 @@
         "Białkowa przekąska na nocne zmiany"
       ],
       "effects": "−11 kg i −14 cm w talii w 5 miesięcy. Nawyki zostały, waga stoi od pół roku.",
-      "before": "../zdjecia_przed_po/2przed.webp",
-      "after": "../zdjecia_przed_po/2po.webp",
+      "before": "zdjecia_przed_po/2przed.webp",
+      "after": "zdjecia_przed_po/2po.webp",
       "metrics": [
         {
           "label": "Masa ciała",
@@ -567,7 +567,7 @@
           "text": "Cel osiągnięty. Stopniowe wyjście z deficytu."
         }
       ],
-      "video": "../video/bg/bg-20260630_204754.mp4",
+      "video": "video/bg/bg-20260630_204754.mp4",
       "visible": true
     },
     {
@@ -588,8 +588,8 @@
         "Białko w każdym posiłku, woda zamiast słodzonych napojów"
       ],
       "effects": "−9 kg, martwy ciąg z 60 do 130 kg i zero bólu kolan.",
-      "before": "../zdjecia_przed_po/3przed.webp",
-      "after": "../zdjecia_przed_po/3po.webp",
+      "before": "zdjecia_przed_po/3przed.webp",
+      "after": "zdjecia_przed_po/3po.webp",
       "metrics": [
         {
           "label": "Masa ciała",
@@ -632,43 +632,43 @@
     {
       "id": "r-4",
       "category": "redukcja",
-      "before": "../zdjecia_przed_po/4przed.webp",
-      "after": "../zdjecia_przed_po/4po.webp",
+      "before": "zdjecia_przed_po/4przed.webp",
+      "after": "zdjecia_przed_po/4po.webp",
       "visible": true
     },
     {
       "id": "r-8",
       "category": "redukcja",
-      "before": "../zdjecia_przed_po/8przed.webp",
-      "after": "../zdjecia_przed_po/8po.webp",
+      "before": "zdjecia_przed_po/8przed.webp",
+      "after": "zdjecia_przed_po/8po.webp",
       "visible": true
     },
     {
       "id": "r-9",
       "category": "redukcja",
-      "before": "../zdjecia_przed_po/9przed.webp",
-      "after": "../zdjecia_przed_po/9po.webp",
+      "before": "zdjecia_przed_po/9przed.webp",
+      "after": "zdjecia_przed_po/9po.webp",
       "visible": true
     },
     {
       "id": "r-10",
       "category": "redukcja",
-      "before": "../zdjecia_przed_po/10przed.webp",
-      "after": "../zdjecia_przed_po/10po.webp",
+      "before": "zdjecia_przed_po/10przed.webp",
+      "after": "zdjecia_przed_po/10po.webp",
       "visible": true
     },
     {
       "id": "r-13",
       "category": "redukcja",
-      "before": "../zdjecia_przed_po/13przed.webp",
-      "after": "../zdjecia_przed_po/13po.webp",
+      "before": "zdjecia_przed_po/13przed.webp",
+      "after": "zdjecia_przed_po/13po.webp",
       "visible": true
     },
     {
       "id": "r-14",
       "category": "redukcja",
-      "before": "../zdjecia_przed_po/14przed.webp",
-      "after": "../zdjecia_przed_po/14po.webp",
+      "before": "zdjecia_przed_po/14przed.webp",
+      "after": "zdjecia_przed_po/14po.webp",
       "visible": true
     },
     {
@@ -688,8 +688,8 @@
         "Ćwiczenia wielostawowe z progresją co tydzień"
       ],
       "effects": "+7 kg przy prawie niezmienionej talii. Wyciskanie z 40 do 85 kg.",
-      "before": "../zdjecia_przed_po/5przed.webp",
-      "after": "../zdjecia_przed_po/5po.webp",
+      "before": "zdjecia_przed_po/5przed.webp",
+      "after": "zdjecia_przed_po/5po.webp",
       "metrics": [
         {
           "label": "Masa ciała",
@@ -732,29 +732,29 @@
     {
       "id": "rk-1",
       "category": "rekompozycja",
-      "before": "../zdjecia_przed_po/1przed.webp",
-      "after": "../zdjecia_przed_po/1po.webp",
+      "before": "zdjecia_przed_po/1przed.webp",
+      "after": "zdjecia_przed_po/1po.webp",
       "visible": true
     },
     {
       "id": "rk-11",
       "category": "rekompozycja",
-      "before": "../zdjecia_przed_po/11przed.webp",
-      "after": "../zdjecia_przed_po/11po.webp",
+      "before": "zdjecia_przed_po/11przed.webp",
+      "after": "zdjecia_przed_po/11po.webp",
       "visible": true
     },
     {
       "id": "rk-12",
       "category": "rekompozycja",
-      "before": "../zdjecia_przed_po/12przed.webp",
-      "after": "../zdjecia_przed_po/12po.webp",
+      "before": "zdjecia_przed_po/12przed.webp",
+      "after": "zdjecia_przed_po/12po.webp",
       "visible": true
     },
     {
       "id": "s-7",
       "category": "sila",
-      "before": "../zdjecia_przed_po/7przed.webp",
-      "after": "../zdjecia_przed_po/7po.webp",
+      "before": "zdjecia_przed_po/7przed.webp",
+      "after": "zdjecia_przed_po/7po.webp",
       "visible": true
     },
     {
@@ -906,19 +906,19 @@
   "trainers": {
     "aleksandra": {
       "name": "Aleksandra Dunajewska",
-      "photo": "../Trenerzy/aleksandra_dunajewska.webp"
+      "photo": "Trenerzy/aleksandra_dunajewska.webp"
     },
     "jakub": {
       "name": "Jakub Cyndecki",
-      "photo": "../Trenerzy/jakub_cyndecki.webp"
+      "photo": "Trenerzy/jakub_cyndecki.webp"
     },
     "konrad": {
       "name": "Konrad",
-      "photo": "../Trenerzy/konrad.webp"
+      "photo": "Trenerzy/konrad.webp"
     },
     "marta": {
       "name": "Marta",
-      "photo": "../Trenerzy/marta.webp"
+      "photo": "Trenerzy/marta.webp"
     }
   }
 }

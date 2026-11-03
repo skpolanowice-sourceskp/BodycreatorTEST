@@ -12,7 +12,7 @@ $hasPassword = prz_password_hash() !== null;
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <meta name="robots" content="noindex, nofollow">
     <title>Panel Przemian | Body Creator</title>
-    <link rel="icon" type="image/png" href="../../favicon.png">
+    <link rel="icon" type="image/png" href="../favicon.png">
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
     <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&display=swap" rel="stylesheet">
@@ -21,7 +21,7 @@ $hasPassword = prz_password_hash() !== null;
 </head>
 <body>
     <header class="topbar">
-        <a class="brand" href="#/"><img src="../../logobezpodpisu.png" alt="" width="28" height="28"><span>Panel Przemian</span></a>
+        <a class="brand" href="#/"><img src="../logobezpodpisu.png" alt="" width="28" height="28"><span>Panel Przemian</span></a>
         <nav class="topbar-actions" id="topActions" hidden>
             <a class="icon-btn" href="../przemiany.html" target="_blank" rel="noopener" title="Zobacz stronę"><i class="fas fa-arrow-up-right-from-square"></i><span>Strona</span></a>
             <a class="icon-btn" href="#/haslo" title="Zmień hasło"><i class="fas fa-key"></i><span>Hasło</span></a>

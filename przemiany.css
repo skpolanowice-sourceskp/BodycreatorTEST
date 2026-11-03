@@ -129,7 +129,7 @@ button { font-family: inherit; }
 .ba-handle::before {
     content: ''; position: absolute; top: 50%; left: 50%; transform: translate(-50%, -50%);
     width: 40px; height: 40px; border-radius: 50%;
-    background: #2a2a2a url('../favicon.png') center calc(50% + 1px)/32px 32px no-repeat;
+    background: #2a2a2a url('favicon.png') center calc(50% + 1px)/32px 32px no-repeat;
     box-shadow: 0 2px 12px rgba(0,0,0,0.4);
 }
 .ba-label {

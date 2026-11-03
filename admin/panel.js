@@ -29,7 +29,7 @@
 
     function przemian(n) { return n + ' ' + plural(n, ['przemiana', 'przemiany', 'przemian']); }
 
-    // Ścieżki w danych są względem demo-przemiany/, panel leży piętro niżej
+    // Ścieżki w danych są względem katalogu strony, panel leży piętro niżej
     function src(path) { return path ? '../' + path : ''; }
 
     function toast(msg, isError) {
@@ -542,7 +542,7 @@
         return '<div class="field rich-field" data-rich>' +
             '<label class="field-label" for="f-' + name + '">' + label + '</label>' +
             '<textarea id="f-' + name + '" name="' + name + '" rows="4" maxlength="' + TEXT_MAX + '">' + h(value) + '</textarea>' +
-            '<button class="cta-insert" type="button"><img src="../../bc-znak.webp" alt="" width="31" height="12">Wstaw link do konsultacji</button>' +
+            '<button class="cta-insert" type="button"><img src="../bc-znak.webp" alt="" width="31" height="12">Wstaw link do konsultacji</button>' +
             '<div class="rich-preview" hidden><span class="rich-preview-label">Tak będzie na stronie</span><p></p></div>' +
             '<p class="rich-warn" hidden>Brakuje nawiasu [ albo ]. Bez pary nawiasów link się nie pokaże.</p>' +
         '</div>';
@@ -561,7 +561,7 @@
             preview.hidden = !hasLink;
             if (hasLink) {
                 preview.querySelector('p').innerHTML = h(v).replace(CTA_LINK, function (m, t) {
-                    return '<span class="text-cta"><img src="../../bc-znak.webp" alt="" width="31" height="12">' + t.trim() + '</span>';
+                    return '<span class="text-cta"><img src="../bc-znak.webp" alt="" width="31" height="12">' + t.trim() + '</span>';
                 });
             }
             warn.hidden = !/[\[\]]/.test(v.replace(CTA_LINK, ''));
