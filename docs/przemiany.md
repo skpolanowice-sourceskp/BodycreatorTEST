@@ -35,8 +35,8 @@ Przebudowana po głosowym feedbacku klienta (07.10.2026). Zasada klienta: **mał
 Kolejność sekcji:
 1. Hero: okruszki, etykieta obszaru, nazwa celu. **Bez** `lead`, bez CTA na górze („ktoś wszedł zobaczyć przemiany, a nie umawiać się”).
 2. Przemiany, jedna pod drugą:
-   - przemiana z opisem (`BC.hasDescription`: jest `goal`, `actions` lub `effects`) to duży blok: suwak przed/po, wynik (`highlight`) + linia osoby, potem 3 krótkie bloki: **Cel** (w obszarze Ból i urazy: **Opis problemu**) / **Podjęte działania** (punkty) / **Efekty współpracy**, pod nimi wideo (jeśli jest `video`). Bez linku do konsultacji w bloku (klient go usunął, CTA jest raz, pod listą). Bez zdjęć blok pokazuje sam opis (bez cytatu, żeby nie dublować treści);
-   - same zdjęcia (bez opisu): siatka, pierwsze 6 widoczne, reszta pod przyciskiem „Zobacz więcej przemian”;
+   - wszystkie przemiany ze zdjęciami lub opisem: jedna siatka kart (najpierw te z opisem), pierwsze 6 widoczne, reszta pod przyciskiem „Zobacz więcej przemian”. Karta ma suwak przed/po w stałej ramce 5:8 (`object-fit: contain`, zdjęcia zawsze w całości), wynik (`highlight`) i linię osoby;
+   - przemiana z opisem (`BC.hasDescription`: jest `goal`, `actions` lub `effects`) ma na karcie „Dowiedz się więcej” (feedback klienta 11.2026: „ludzie są wygodni, nie chce im się czytać”). Przycisk otwiera `<dialog>` (na telefonie pełny ekran): **Cel** (w obszarze Ból i urazy: **Opis problemu**) / **Podjęte działania** (punkty) / **Efekty współpracy**, pod nimi wideo (jeśli jest `video`). Systemowe „wstecz” zamyka okno;
    - opinie bez zdjęć i bez opisu: karty z cytatem.
 3. Krótkie CTA z pilnością: „Terminy współpracy szybko się zapełniają. Nie zwlekaj, umów się już dziś.” + mały przycisk.
 4. „Inne przemiany”: karty innych celów z tego obszaru (tylko te z przemianami) przewijane w bok, z linkiem „Dostrzegasz swój problem? Kliknij” i „Zobacz więcej” do huba.

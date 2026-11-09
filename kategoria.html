@@ -35,18 +35,38 @@
         .results { padding: 0 0 24px; }
         .results-list { display: grid; gap: 24px; }
 
-        /* Przemiana z opisem: zdjęcie + cel / działania / efekty */
-        .story {
-            display: grid;
-            grid-template-columns: minmax(0, 5fr) minmax(0, 7fr);
-            border-radius: 24px;
-            overflow: hidden;
-            background: var(--dark-2);
+        /* Szczegóły przemiany: okno otwierane z karty, na telefonie pełny ekran */
+        .story-dialog {
+            width: calc(100% - 48px);
+            max-width: 640px;
+            max-height: 88vh;
+            margin: auto;
+            padding: 0;
             border: 1px solid var(--line);
+            border-radius: 24px;
+            background: var(--dark-2);
+            color: var(--white);
+            overflow-y: auto;
+            overscroll-behavior: contain;
         }
-        .story > .ba-slider { aspect-ratio: auto; height: 100%; min-height: 460px; }
-        .story.is-text { grid-template-columns: 1fr; }
-        .story-body { padding: 40px 44px; display: flex; flex-direction: column; gap: 22px; }
+        .story-dialog::backdrop { background: rgba(0, 0, 0, 0.78); }
+        .story-close {
+            position: sticky;
+            top: 12px;
+            z-index: 2;
+            display: grid;
+            place-items: center;
+            width: 44px;
+            height: 44px;
+            margin: 12px 12px 0 auto;
+            border: 1px solid var(--line);
+            border-radius: 50%;
+            background: var(--dark-3);
+            color: var(--white);
+            font-size: 1.05rem;
+            cursor: pointer;
+        }
+        .story-body { padding: 4px 44px 40px; display: flex; flex-direction: column; gap: 22px; }
         .story-top { display: flex; flex-wrap: wrap; align-items: baseline; gap: 6px 16px; }
         .story-highlight { font-size: clamp(2.4rem, 4.6vw, 3.4rem); font-weight: 900; line-height: 1; letter-spacing: -1px; }
         .story-meta { color: var(--gray); font-size: 0.88rem; font-weight: 600; }
@@ -98,6 +118,25 @@
         .results-list > .ba-grid { margin-top: 8px; }
         .ba-card { background: var(--dark-2); border: 1px solid var(--line); border-radius: 16px; overflow: hidden; }
         .ba-card[hidden] { display: none; }
+        /* Stała ramka 5:8 (format z panelu); inne proporcje mieszczą się w całości, bez przycinania */
+        .ba-card .ba-slider img { object-fit: contain; }
+        .ba-card-more {
+            display: inline-flex;
+            align-items: center;
+            gap: 8px;
+            min-height: 44px;
+            margin: -8px 18px 8px;
+            padding: 0;
+            border: 0;
+            background: none;
+            color: var(--yellow);
+            font: inherit;
+            font-size: 0.85rem;
+            font-weight: 700;
+            cursor: pointer;
+        }
+        .ba-card-more i { transition: transform var(--transition); }
+        .ba-card-more:hover i { transform: translateX(4px); }
         .ba-card-info { display: flex; align-items: baseline; justify-content: space-between; gap: 10px; padding: 16px 18px 18px; }
         .ba-card-highlight { font-size: 1.15rem; font-weight: 800; }
         .ba-card-who { font-size: 0.78rem; color: var(--gray); font-weight: 600; text-align: right; }
@@ -171,21 +210,20 @@
 
         /* ============ RESPONSIVE ============ */
         @media (max-width: 1024px) {
-            .story { grid-template-columns: 1fr 1fr; }
-            .story-body { padding: 32px; }
+            .story-body { padding: 4px 32px 32px; }
         }
 
         @media (max-width: 768px) {
             .cat-hero { padding: 124px 0 24px; }
 
             .results-list { gap: 16px; }
-            .story { grid-template-columns: 1fr; border-radius: 20px; }
-            .story > .ba-slider { aspect-ratio: 5 / 6; min-height: 0; height: auto; }
-            .story-body { padding: 24px 20px 26px; gap: 18px; }
+            .story-dialog { width: 100%; max-width: none; height: 100dvh; max-height: none; border: 0; border-radius: 0; }
+            .story-body { padding: 4px 20px 32px; gap: 18px; }
             .story-video { max-width: 200px; }
 
             .ba-grid { grid-template-columns: 1fr 1fr; gap: 10px; }
             .ba-card { border-radius: 12px; }
+            .ba-card-more { margin: -8px 12px 6px; font-size: 0.8rem; }
             .ba-card-info { flex-direction: column; gap: 2px; padding: 12px 12px 14px; }
             .ba-card-highlight { font-size: 1rem; }
             .ba-card-who { text-align: left; font-size: 0.72rem; }
@@ -300,15 +338,13 @@
             // Ból i urazy opisujemy problemem, pozostałe obszary celem
             var firstLabel = cat.area === 'bol' ? 'Opis problemu' : 'Cel';
 
-            function storyHTML(c) {
-                // Bez zdjęć sam opis (cytat by go dublował)
-                var media = BC.mediaHTML(c, BC.altFor(c));
+            // Pełny opis przemiany: wstawiany do okna dopiero po kliknięciu „Dowiedz się więcej”
+            function storyBodyHTML(c) {
                 var actions = Array.isArray(c.actions)
                     ? '<ul>' + c.actions.map(function (a) { return '<li><i class="fas fa-check" aria-hidden="true"></i><span>' + BC.richText(a) + '</span></li>'; }).join('') + '</ul>'
                     : (c.actions ? '<p>' + BC.richText(c.actions) + '</p>' : '');
                 var meta = [BC.whoLine(c)].filter(Boolean).join('');
-                return '<article class="story reveal' + (media ? '' : ' is-text') + '">' + media +
-                    '<div class="story-body">' +
+                return '<div class="story-body">' +
                         ((c.highlight || meta) ? '<div class="story-top">' +
                             (c.highlight ? '<span class="story-highlight">' + esc(c.highlight) + '</span>' : '') +
                             (meta ? '<span class="story-meta">' + esc(meta) + '</span>' : '') + '</div>' : '') +
@@ -317,7 +353,7 @@
                         (c.effects ? '<div class="story-block"><h3>Efekty współpracy</h3><p>' + BC.richText(c.effects) + '</p></div>' : '') +
                         (c.video ? '<div class="story-video"><video src="' + esc(c.video) + '" preload="metadata" playsinline loop></video>' +
                             '<button class="video-play" type="button" aria-label="Odtwórz wideo"><span class="video-play-icon"><i class="fas fa-play"></i></span></button></div>' : '') +
-                    '</div></article>';
+                    '</div>';
             }
 
             function photoHTML(c, i) {
@@ -329,7 +365,10 @@
                         (who ? '<span class="ba-card-who">' + esc(who) + '</span>' : '') +
                       '</figcaption>'
                     : '';
-                return '<figure class="ba-card reveal"' + (i >= PHOTOS_VISIBLE ? ' hidden' : '') + '>' + BC.mediaHTML(c, BC.altFor(c)) + caption + '</figure>';
+                var more = BC.hasDescription(c)
+                    ? '<button class="ba-card-more" type="button" data-story="' + esc(c.id) + '">Dowiedz się więcej <i class="fas fa-arrow-right" aria-hidden="true"></i></button>'
+                    : '';
+                return '<figure class="ba-card reveal"' + (i >= PHOTOS_VISIBLE ? ' hidden' : '') + '>' + BC.mediaHTML(c, BC.altFor(c)) + caption + more + '</figure>';
             }
 
             var resultsHTML;
@@ -339,9 +378,10 @@
                     '<div><h2>Pierwsze historie w drodze</h2><p>Nasi podopieczni są właśnie w trakcie. Wkrótce pokażemy tu ich efekty.</p></div>' +
                     '</div>';
             } else {
-                resultsHTML = stories.map(storyHTML).join('') +
-                    (photos.length ? '<div class="ba-grid">' + photos.map(photoHTML).join('') + '</div>' +
-                        (photos.length > PHOTOS_VISIBLE ? '<button class="btn btn-outline more-btn" type="button">Zobacz więcej przemian <i class="fas fa-arrow-down"></i></button>' : '') : '') +
+                var cards = stories.concat(photos);
+                resultsHTML =
+                    (cards.length ? '<div class="ba-grid">' + cards.map(photoHTML).join('') + '</div>' +
+                        (cards.length > PHOTOS_VISIBLE ? '<button class="btn btn-outline more-btn" type="button">Zobacz więcej przemian <i class="fas fa-arrow-down"></i></button>' : '') : '') +
                     (quotes.length ? '<div class="quote-grid">' + quotes.map(function (c) {
                         return '<figure class="quote-card reveal">' +
                             '<span class="quote-card-highlight">' + esc(c.highlight) + '</span>' +
@@ -384,16 +424,54 @@
                     '<div class="others-head"><div><span class="section-label">Zobacz też</span><h2>Inne przemiany</h2></div>' +
                     '<a class="others-all" href="' + BC.areaUrl(area.id) + '">Zobacz więcej <i class="fas fa-arrow-right"></i></a></div>' +
                     (others ? '<div class="others-track">' + others + '</div>' : '') +
-                '</div></section>';
+                '</div></section>' +
 
-            app.querySelectorAll('.story-video').forEach(function (tile) {
-                var v = tile.querySelector('video');
-                tile.querySelector('.video-play').addEventListener('click', function () {
-                    tile.classList.add('is-playing');
-                    v.controls = true;
-                    v.play();
+                '<dialog class="story-dialog" id="storyDialog" data-lenis-prevent>' +
+                    '<button class="story-close" type="button" aria-label="Zamknij"><i class="fas fa-xmark" aria-hidden="true"></i></button>' +
+                    '<div id="storyContent"></div>' +
+                '</dialog>';
+
+            /* Okno szczegółów. Wpis w historii sprawia, że „wstecz” na telefonie zamyka okno zamiast opuszczać stronę. */
+            var dialog = document.getElementById('storyDialog');
+            var content = document.getElementById('storyContent');
+
+            function openStory(c) {
+                content.innerHTML = storyBodyHTML(c);
+                dialog.setAttribute('aria-label', 'Przemiana: ' + ([c.highlight, BC.whoLine(c)].filter(Boolean).join(', ') || cat.title));
+                content.querySelectorAll('.story-video').forEach(function (tile) {
+                    var v = tile.querySelector('video');
+                    tile.querySelector('.video-play').addEventListener('click', function () {
+                        tile.classList.add('is-playing');
+                        v.controls = true;
+                        v.play();
+                    });
                 });
+                dialog.showModal();
+                dialog.scrollTop = 0;
+                if (BC.lenis) BC.lenis.stop();
+                history.pushState({ bcStory: c.id }, '');
+            }
+
+            app.addEventListener('click', function (e) {
+                var btn = e.target.closest('[data-story]');
+                if (!btn) return;
+                var c = BC.caseById(btn.getAttribute('data-story'));
+                if (c) openStory(c);
             });
+
+            dialog.querySelector('.story-close').addEventListener('click', function () { dialog.close(); });
+            // Klik w tło poza oknem (na desktopie)
+            dialog.addEventListener('click', function (e) {
+                if (e.target !== dialog) return;
+                var r = dialog.getBoundingClientRect();
+                if (e.clientX < r.left || e.clientX > r.right || e.clientY < r.top || e.clientY > r.bottom) dialog.close();
+            });
+            dialog.addEventListener('close', function () {
+                content.innerHTML = ''; // zatrzymuje też odtwarzany film
+                if (BC.lenis) BC.lenis.start();
+                if (history.state && history.state.bcStory) history.back();
+            });
+            window.addEventListener('popstate', function () { if (dialog.open) dialog.close(); });
 
             var more = app.querySelector('.more-btn');
             if (more) more.addEventListener('click', function () {
